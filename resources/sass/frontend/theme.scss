@@ -1,0 +1,89 @@
+@import "variables.scss";
+@import "apploading.scss";
+
+a {
+    color: $gray-600;
+}
+a:hover {
+    color: $gray-600;
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.navbar {
+    box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.25) !important;
+}
+a.navbar-brand {
+    opacity: 1 !important;
+}
+h1.mug-hot-large {
+    font-size: 100px;
+    color: $gray;
+}
+div.image-header {
+    font-size: 15rem;
+    color: $gray-light;
+}
+div.post-header {
+    height: 300px;
+    background-size: cover !important;
+    background-position: center !important;
+}
+div.card {
+    margin-bottom: 30px;
+}
+div.card-list {
+    padding: 0;
+}
+div.card-list ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+div.card-list ul.category-list li {
+    padding: 1.25rem;
+    list-style: none;
+    list-style-type: none;
+}
+div.card-list ul.category-list li {
+    border-bottom: solid 1px $border-color;
+}
+div.card-list ul.category-list li:last-child {
+    border-bottom: none;
+}
+div.card-list ul.category-list li > a:hover {
+    text-decoration: none; 
+}
+div.post-timeline {
+    color: $gray-800;
+    padding-bottom: 5px;
+    margin-bottom: 25px;
+}
+
+.navbar-top > li.nav-item > a.nav-link {
+    color: $white;
+}
+.navbar-top > li.nav-item > a.nav-link:hover {
+    color: $white;
+}
+.brand-color {
+    color: $theme-color;
+}
+.loading-bar { 
+    background: #fff;
+}
+.navbar {
+    background-color: $theme-color;
+}
+
+.navbar-light .navbar-brand {
+    color: $white;
+}
+
+.navbar-light .navbar-toggler {
+    color: $white;
+    border-color: $white-opacity-less;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+}

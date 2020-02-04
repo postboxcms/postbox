@@ -1,0 +1,32 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Http\Request;
+
+use DummyRootNamespaceHttp\Requests;
+
+use App\Http\Controllers\Controller;
+
+class DummyClass extends Controller
+{
+
+    /**
+     * Constructor initialized.
+     */
+    public function __construct() {
+        // Constructor function
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function main()
+    {
+        //Your code goes here
+        $data['title'] = 'DummyClass';
+        return view('DummyClass::DummyClass', $data);
+    }
+}
