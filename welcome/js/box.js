@@ -8,7 +8,7 @@ function readURL(input) {
             var image = document.createElement('img');
             var imagePlaceholder = document.getElementById('image-placeholder');
             // imagePlaceholder.parentNode.removeChild(imagePlaceholder);
-            imagePlaceholder.setAttribute('style','display:none');            
+            imagePlaceholder.classList.add('d-none');
             image.setAttribute('id','data-image');
             image.setAttribute("src", e.target.result);
             image.setAttribute("width", "90%");
@@ -41,7 +41,7 @@ function removeImage() {
      var image = document.getElementById('data-image');
      var imagePlaceholder = document.getElementById('image-placeholder');
      image.parentNode.removeChild(image);
-     imagePlaceholder.setAttribute('style','');
+     imagePlaceholder.classList.remove('d-none');
      return false;
 }
   
