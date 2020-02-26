@@ -125,12 +125,14 @@
                         <div class="form-group">                        
                             <div class="upload-btn-wrapper">
                                 <button class="btn-upload btn-primary">{{__('posts.upload_btn_label')}}</button>
-                                <input onchange="readURL(this)" type="file" name="image" value="{{$post['image']}}"/>
+                                <input id="image-file" onchange="readURL(this)" type="file" name="image" value="{{$post['image']}}"/>
                                 @if(isset($post['image']) && $post['image'] != '' && file_exists(assets_path('storage/posts/'.$post['image'])))
-                                    <img width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/posts/'.$post['image'])}}"/>
+                                    <img onmouseover="showDeleteOverlay()" width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/posts/'.$post['image'])}}"/>
+                                    <div id="image-placeholder" class="image-placeholder d-none" style="margin:5px auto">{!! __('posts.no_img_message') !!}</div>
                                 @else
-                                    <div class="image-placeholder" style="margin:5px auto">{!! __('posts.no_img_message') !!}</div>
+                                    <div id="image-placeholder" class="image-placeholder" style="margin:5px auto">{!! __('posts.no_img_message') !!}</div>
                                 @endif
+                                <div onmouseout="hideDeleteOverlay()" id="image-overlay"><a onclick="removeImage()" class="rounded" href="javascript:;"><i class="fas fa-times"></i></a></div>
                             </div>
                         </div>
                     </div>

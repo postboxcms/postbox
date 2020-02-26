@@ -45,12 +45,11 @@ class Installer extends Controller
     }
 
     private function _updateEnv($env, $val) {
-        if(preg_match('/\\s/',env($env))) {
+        if(preg_match('/\\s/',env($env)) || preg_match('/\\s/',$val)) {
             file_put_contents($this->envPath, str_replace(
                 $env.'="'.env($env).'"', $env . '=' . '"'.$val.'"', file_get_contents($this->envPath)
             ));
         } else {
-            $val = is_numeric($val)?$val:'"'.$val.'"';
             file_put_contents($this->envPath, str_replace(
                 $env . '=' . env($env), $env . '=' . $val , file_get_contents($this->envPath)
             ));

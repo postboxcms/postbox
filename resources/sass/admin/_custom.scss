@@ -256,7 +256,7 @@ div.user .btn-user {
     opacity: 0;
   }
 
-  .image-placeholder {
+  #image-placeholder {
     text-align: center;
     font-size: 15px;
     font-weight: 600;
@@ -267,6 +267,28 @@ div.user .btn-user {
     color: $gray-500 !important;
     border: solid 1px $gray-400;
     margin: 0 auto;
+  }
+
+  #image-overlay {
+    visibility: hidden; 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    opacity: 0.7;
+    background: $blue;
+  }
+  #image-overlay > a {
+    width:40px; 
+    height:40px; 
+    position:absolute; 
+    top: 50%; left: 50%; 
+    background: #fff; 
+    vertical-align: middle; 
+    line-height: 15px;
+  }
+  #image-overlay > a > i {
+    font-size: 40px; 
   }
 
   .status-label {
