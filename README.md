@@ -26,7 +26,7 @@ The CMS is built with a mindset to keep the software as easy to use as possible 
 ***Note**: If you face error 'Failed to create symbolic link' while installation run the command 'php artisan assets:link' or 'sudo php artisan assets:link' through your terminal from the root folder of your application and then click on the Refresh button on screen*
 
 ## License
-The software is licensed under [MIT license](https://bitbucket.org/sraut/bitbox-open-source/raw/ce28e1c2a330cfbb6600a5130086cf0cdd499f78/LICENSE)
+The software is licensed under [MIT license](https://github.com/postboxcms/postbox/blob/master/LICENSE)
 
 ## Credits
 Postbox CMS is a home brewed software created by [Sanket Raut](https://twitter.com/sanketmraut) as a hobby project at [Digitalbit Labs](https://digitalbit.in), a personal space dedicated to research on web technologies, develop cool apps and more. Reach me out at: [sanket@digitalbit.in](mailto:sanket@digitalbit.in)
