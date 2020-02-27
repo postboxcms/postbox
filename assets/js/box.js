@@ -4,24 +4,18 @@ function readURL(input) {
   
         reader.onload = function (e) {
             $('#data-image').remove();
-            // $('.image-placeholder').remove();
             var image = document.createElement('img');
             var imagePlaceholder = document.getElementById('image-placeholder');
-            // imagePlaceholder.parentNode.removeChild(imagePlaceholder);
+            var imageFlag = document.getElementById('image_flag');
             imagePlaceholder.classList.add('d-none');
+            imageFlag.value = "0";
             image.setAttribute('id','data-image');
             image.setAttribute("src", e.target.result);
             image.setAttribute("width", "90%");
             image.setAttribute("style", "margin-top:5px");
             image.setAttribute("onmouseover","showDeleteOverlay()");
             image.setAttribute('id','data-image');
-
             $(image).insertAfter(input);
-            // input.referenceNode.insertAfter()
-            // $('#blah')
-            //     .attr('src', e.target.result)
-            //     .width(150)
-            //     .height(200);
         };
   
         reader.readAsDataURL(input.files[0]);
@@ -38,11 +32,13 @@ function hideDeleteOverlay() {
 }
 
 function removeImage() {
-     var image = document.getElementById('data-image');
-     var imagePlaceholder = document.getElementById('image-placeholder');
-     image.parentNode.removeChild(image);
-     imagePlaceholder.classList.remove('d-none');
-     return false;
+    var image = document.getElementById('data-image');
+    var imagePlaceholder = document.getElementById('image-placeholder');
+    var imageFlag = document.getElementById('image_flag');
+    image.parentNode.removeChild(image);
+    imagePlaceholder.classList.remove('d-none');
+    imageFlag.value = '1';
+    return false;
 }
   
 function animateProgressBar() {

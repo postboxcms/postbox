@@ -125,6 +125,7 @@
                         <div class="form-group">                        
                             <div class="upload-btn-wrapper">
                                 <button class="btn-upload btn-primary">{{__('posts.upload_btn_label')}}</button>
+                                <input type="hidden" id="image_flag" name="image_flag" value = "0" />
                                 <input id="image-file" onchange="readURL(this)" type="file" name="image" value="{{$post['image']}}"/>
                                 @if(isset($post['image']) && $post['image'] != '' && file_exists(assets_path('storage/posts/'.$post['image'])))
                                     <img onmouseover="showDeleteOverlay()" width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/posts/'.$post['image'])}}"/>

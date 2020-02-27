@@ -82,6 +82,7 @@
                         <div class="form-group">                        
                             <div class="upload-btn-wrapper">
                                 <button class="btn-upload btn-primary">{{__('pages.upload_btn_label')}}</button>
+                                <input type="hidden" id="image_flag" name="image_flag" value = "0" />
                                 <input id="image-file" onchange="readURL(this)" type="file" name="image" value="{{$page['image']}}"/>
                                 @if(isset($page['image']) && $page['image'] != '' && file_exists(assets_path('storage/pages/'.$page['image'])))
                                     <img onmouseover="showDeleteOverlay()" width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/pages/'.$page['image'])}}"/>

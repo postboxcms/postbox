@@ -29,6 +29,7 @@ class Pages extends Controller
     private function _saveToDB(PageModel $page, Request $request) {
         $data = $request->all();
         unset($data['_token']);
+        unset($data['image_flag']);
         if($data['url'] == '') {
             $data['url'] = generate_url($data['title']);
         } else {
@@ -59,6 +60,10 @@ class Pages extends Controller
     private function _updateToDB(PageModel $page, Request $request) {
         foreach($this->schema as $col=>$val) {
             if($col == 'image') {
+                if($request->image_flag == "1") {
+                    $post->$col = null;
+                    continue;
+                }
                 if($request->$col != null) {
                     $request->$col = $request->$col->hashName();
                 } else {
