@@ -61,7 +61,7 @@ class Pages extends Controller
         foreach($this->schema as $col=>$val) {
             if($col == 'image') {
                 if($request->image_flag == "1") {
-                    $post->$col = null;
+                    $page->$col = null;
                     continue;
                 }
                 if($request->$col != null) {

@@ -114,12 +114,15 @@
                     <div class="form-group">                        
                         <div class="upload-btn-wrapper">
                             <button class="btn-upload btn-primary">{{__('user.upload_btn_label')}}</button>
-                            <input onchange="readURL(this)" type="file" name="image" value="{{$user['image']}}"/>
+                            <input type="hidden" id="image_flag" name="image_flag" value = "0" />                            
+                            <input id="image-file" onchange="readURL(this)" type="file" name="image" value="{{$user['image']}}"/>
                             @if(isset($user['image']) && $user['image'] != '' && file_exists(assets_path('storage/users/'.$user['image'])))
-                                <img width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/users/'.$user['image'])}}"/>
+                                <img onmouseover="showDeleteOverlay()" width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/users/'.$user['image'])}}"/>
+                                <div id="image-placeholder" class="image-placeholder d-none" style="margin:5px auto">{!! __('posts.no_img_message') !!}</div>
                             @else
                                 <div class="image-placeholder" style="margin:5px auto">{!! __('user.no_img_message') !!}</div>
                             @endif
+                            <div onmouseout="hideDeleteOverlay()" id="image-overlay"><a onclick="removeImage()" class="rounded" href="javascript:;"><i class="fas fa-times"></i></a></div>                                
                         </div>
                     </div>                    
                 </div>

@@ -46,6 +46,10 @@ class User extends Controller
                 $user->$col = bcrypt($request->$col);
             }
             if($col == 'image') {
+                if($request->image_flag == "1") {
+                    $user->$col = null;
+                    continue;
+                }
                 if($request->$col != null) {
                     $user->$col = $request->$col->hashName();
                 } else {
@@ -65,6 +69,7 @@ class User extends Controller
         $data = $request->all();
         unset($data['_token']);
         unset($data['password_confirmation']);
+        unset($data['image_flag']);
 
         foreach($data as $field=>$record) {
             if($field == 'image' && $data[$field] != null) {
