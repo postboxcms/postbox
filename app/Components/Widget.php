@@ -40,4 +40,8 @@ class Widget
     private function categories() {
         return DB::table('categories')->get();
     }
+
+    private function footer() {
+        return;
+    }
 }

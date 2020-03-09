@@ -11,6 +11,9 @@
         <div class="col-md-4">
             {!! Widget::render('categories') !!}
         </div>
+        <div class="col-md-8">
+            {!! Widget::render('copyright') !!} 
+        </div>
     </div>
 </div>
 @endsection
