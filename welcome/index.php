@@ -7,7 +7,11 @@ $reqExtsCodes = array_map('strtolower',$reqExts);
 
 $basePath = realpath(dirname(__FILE__) . '/..');
 $_serverVars = filter_input_array(INPUT_SERVER);
-$baseUrl = $_serverVars['REQUEST_SCHEME'] . "://" . $_serverVars['SERVER_NAME'] . str_replace('/welcome','',$_serverVars['REQUEST_URI']);
+if(isset($this->serverVars['HTTP_X_FORWARDED_PROTO'])) {
+    $baseUrl = $_serverVars['HTTP_X_FORWARDED_PROTO'] . "://" . $_serverVars['SERVER_NAME'] . str_replace('/welcome','',$_serverVars['REQUEST_URI']);
+} else {
+    $baseUrl = $_serverVars['REQUEST_SCHEME'] . "://" . $_serverVars['SERVER_NAME'] . str_replace('/welcome','',$_serverVars['REQUEST_URI']);
+}
 
 if(count(array_diff($reqExtsCodes,$loadedExtsCodes)) > 0 || version_compare( phpversion(),'7.1.3' ) < 1 || !is_accesible('storage') || !is_writable(dirname($basePath.'/bootstrap/cache')) || !is_writable($basePath.'/.env')) {
     $errFlag = 1;

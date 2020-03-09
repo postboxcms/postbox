@@ -30,7 +30,11 @@ class Installer extends Controller
         // Constructor function
         $this->envPath = getcwd().'/.env';
         $this->serverVars = filter_input_array(INPUT_SERVER);
-        $this->currentUrl = $this->serverVars['REQUEST_SCHEME'] . "://" . $this->serverVars['SERVER_NAME'] . $this->serverVars['REQUEST_URI'];
+        if(isset($this->serverVars['HTTP_X_FORWARDED_PROTO'])) {
+            $this->currentUrl = $this->serverVars['HTTP_X_FORWARDED_PROTO'] . "://" . $this->serverVars['SERVER_NAME'] . $this->serverVars['REQUEST_URI'];
+        } else {
+            $this->currentUrl = $this->serverVars['REQUEST_SCHEME'] . "://" . $this->serverVars['SERVER_NAME'] . $this->serverVars['REQUEST_URI'];
+        }
         $this->baseUrl = substr($this->currentUrl,0,strpos($this->currentUrl,'/install'));
         $this->envKey = 'base64:'.base64_encode(
             Encrypter::generateKey(config('app.cipher'))
