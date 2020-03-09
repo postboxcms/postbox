@@ -152,7 +152,7 @@
                                     $('.environment span > i').removeClass('fa-circle-notch');
                                     $('.environment span').addClass('btn-danger');                        
                                     $('.environment span > i').addClass('fa-times');
-                                    $('.environment div > h3').text("{{__('installer.app_install_update_env_failed')}}");
+                                    $('.environment div > h3').text("{!!__('installer.app_install_update_env_failed')!!}");
                                     $('.environment span').removeClass('btn-primary');
                                     $('.install-heading span.btn').removeClass('btn-primary');
                                     $('.install-heading span.btn > i').removeClass('fa-sync-alt');
@@ -179,7 +179,7 @@
                         $('.storage span > i').removeClass('fa-circle-notch');
                         $('.storage span').addClass('btn-danger');                        
                         $('.storage span > i').addClass('fa-times');
-                        $('.storage div > h3').text("{{__('installer.app_install_update_env_failed')}}");
+                        $('.storage div > h3').text("{!!__('installer.app_install_update_env_failed')!!}");
                         $('.install-heading span.btn').removeClass('btn-primary');
                         $('.install-heading span.btn > i').removeClass('fa-sync-alt');
                         $('.install-heading span.btn').addClass('btn-danger');
