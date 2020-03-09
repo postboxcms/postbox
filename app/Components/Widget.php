@@ -41,7 +41,7 @@ class Widget
         return DB::table('categories')->get();
     }
 
-    private function footer() {
+    private function copyright() {
         return;
     }
 }
