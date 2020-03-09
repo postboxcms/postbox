@@ -26,7 +26,7 @@ class Widget
     }
 
     private function logo() {
-        return DB::table('settings')->whereNotNull('value')->where('parameter','site.image_full')->orWhere('parameter','site.image')->orderBy('parameter','desc')->first();
+        return DB::table('settings')->whereNotNull('value')->where('parameter','site.image_full')->orWhere('parameter','site.image')->orWhere('parameter','site.name')->orderBy('parameter','desc')->first();
     }
 
     private function posts() {
