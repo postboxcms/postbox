@@ -7,7 +7,7 @@ $reqExtsCodes = array_map('strtolower',$reqExts);
 
 $basePath = realpath(dirname(__FILE__) . '/..');
 $_serverVars = filter_input_array(INPUT_SERVER);
-if(isset($this->serverVars['HTTP_X_FORWARDED_PROTO'])) {
+if(isset($_serverVars['HTTP_X_FORWARDED_PROTO'])) {
     $baseUrl = $_serverVars['HTTP_X_FORWARDED_PROTO'] . "://" . $_serverVars['SERVER_NAME'] . str_replace('/welcome','',$_serverVars['REQUEST_URI']);
 } else {
     $baseUrl = $_serverVars['REQUEST_SCHEME'] . "://" . $_serverVars['SERVER_NAME'] . str_replace('/welcome','',$_serverVars['REQUEST_URI']);
