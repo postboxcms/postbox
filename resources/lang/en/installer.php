@@ -15,7 +15,7 @@ return [
     'app_install_update_env_failed' => 'Failed to update environment variables',
     'app_install_update_storage_link' => 'Creating a symbolic link for storage folder',
     'app_install_update_storage_link_success' => 'Symbolic link created successfully',
-    'app_install_update_storage_link_failed' => 'Failed to create symbolic link',
+    'app_install_update_storage_link_failed' => 'Failed to create symbolic link. Try running "php artisan assets:link" from your command line using administrator permissions',
     'db_success' => 'Database settings updated successfully',
     'db_conn_fail' => 'Could not connect to the database using the credentials specified',
     'db_conn' => 'Database connection',
