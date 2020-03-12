@@ -10,10 +10,8 @@
         {{--  Theme::widget('categories_list')  --}}
         <div class="col-md-4">
             {!! Widget::render('categories') !!}
-        </div>
-        <div class="col-md-4">
             {!! Widget::render('copyright') !!} 
-        </div>
+        </div>       
     </div>
 </div>
 @endsection
