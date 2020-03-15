@@ -16,6 +16,7 @@ use Artisan;
 class Installer extends Controller
 {
     protected $envPath;
+    // protected $configPath;
     protected $serverVars;
     protected $currentUrl;
     protected $baseUrl;
@@ -29,7 +30,10 @@ class Installer extends Controller
     {
         // Constructor function
         $this->envPath = getcwd().'/.env';
+        // $this->configPath = getcwd().'/postbox.config';
         $this->serverVars = filter_input_array(INPUT_SERVER);
+        // Create environment file if not present
+        // $this->_createEnvFile();
         if(isset($this->serverVars['HTTP_X_FORWARDED_PROTO'])) {
             $this->currentUrl = $this->serverVars['HTTP_X_FORWARDED_PROTO'] . "://" . $this->serverVars['SERVER_NAME'] . $this->serverVars['REQUEST_URI'];
         } else {
@@ -48,6 +52,16 @@ class Installer extends Controller
 
     }
 
+    // private function _createEnvFile() {
+    //     if(!file_exists($this->envPath)) {
+    //         if(file_exists($this->configPath)) {
+    //             \File::copy($this->configPath,$this->envPath);
+    //         } else {
+    //             abort(400);
+    //         }
+    //     }
+    // }
+
     private function _updateEnv($env, $val) {
         if(preg_match('/\\s/',env($env)) || preg_match('/\\s/',$val)) {
             file_put_contents($this->envPath, str_replace(
@@ -62,7 +76,7 @@ class Installer extends Controller
     }
 
     public function checkEnvironmentConfig()
-    {   
+    {
         if (file_exists($this->envPath) && env('APP_URL') !== $this->baseUrl) {
             $this->_updateEnv('APP_URL',$this->baseUrl);
             $this->_updateEnv('APP_KEY',$this->envKey);
@@ -86,18 +100,18 @@ class Installer extends Controller
     public function dbDetails()
     {
         //Your code goes here
-        $data['db'] = session('dbData');        
+        $data['db'] = session('dbData');
         $data['title'] = 'Installer';
         return view('Installer::DatabaseDetails', $data);
     }
 
-    public function verifyDetails() 
+    public function verifyDetails()
     {
         $data['title'] = 'Installer';
         return view('Installer::VerifyDetails', $data);
     }
 
-    public function installCore() 
+    public function installCore()
     {
         $data['title'] = 'Installer';
         return view('Installer::InstallCore', $data);
@@ -114,13 +128,13 @@ class Installer extends Controller
     public function storeDBDetails(StoreDBData $request) {
         $request->session()->put('dbData',$request->all());
 
-        try {            
+        try {
 
             config(['database.connections.'. $request->connection .'.host' => $request->host]);
             config(['database.connections.'. $request->connection .'.database' => $request->database]);
             config(['database.connections.'. $request->connection .'.username' => $request->user]);
             config(['database.connections.'. $request->connection .'.password' => $request->password]);
-                
+
             DB::connection($request->connection)->getPdo();
             $this->_updateEnv('DB_CONNECTION',$request->connection!=null?$request->connection:env('DB_CONNECTION'));
             $this->_updateEnv('DB_HOST',$request->host!=null?$request->host:env('DB_HOST'));
@@ -128,10 +142,10 @@ class Installer extends Controller
             $this->_updateEnv('DB_DATABASE',$request->database!=null?$request->database:env('DB_DATABASE'));
             $this->_updateEnv('DB_USERNAME',$request->user!=null?$request->user:env('DB_USERNAME'));
             $this->_updateEnv('DB_PASSWORD',$request->password!=null?$request->password:env('DB_PASSWORD'));
- 
+
             return response()->json(['message'=>__('installer.db_success')]);
 
-        } catch(\Exception $e) {            
+        } catch(\Exception $e) {
 
             return response()->json(['message'=>__('installer.db_conn_fail')],422);
 
@@ -143,7 +157,7 @@ class Installer extends Controller
         try {
             Artisan::call('migrate:refresh', ['--path' => 'database/migrations','--force'=>true]);
             Artisan::call('db:seed', ['--force'=>true]);
-            return response()->json(['flag' => 1]);            
+            return response()->json(['flag' => 1]);
         } catch(\Exception $e) {
             return response()->json(['flag' => 0,'message'=>$e->getMessage()]);
         }

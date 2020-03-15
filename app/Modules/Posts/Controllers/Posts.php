@@ -36,7 +36,6 @@ class Posts extends Controller
         $data = $request->all();
         unset($data['_token']);
         unset($data['image_flag']);
-        
         if($data['url'] == '') {
             $data['url'] = generate_url($data['title']);
         } else {
@@ -85,6 +84,7 @@ class Posts extends Controller
             }
             $post->$col = $request->$col;
         }
+
         return $post->save();
     }
 

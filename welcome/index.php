@@ -1,5 +1,11 @@
-<?php 
-error_reporting(0); 
+<?php
+error_reporting(0);
+
+// Create a blank .env file
+if(!file_exists(getcwd().'/../.env')) {
+    fopen(getcwd().'/../.env','w');
+}
+
 $loadedExts = get_loaded_extensions();
 $loadedExtsCodes = array_map('strtolower',$loadedExts);
 $reqExts = array('BCMath','Ctype','JSON','Mbstring','OpenSSL','PDO','Tokenizer','XML');
@@ -13,6 +19,7 @@ if(isset($_serverVars['HTTP_X_FORWARDED_PROTO'])) {
     $baseUrl = $_serverVars['REQUEST_SCHEME'] . "://" . $_serverVars['SERVER_NAME'] . str_replace('/welcome','',$_serverVars['REQUEST_URI']);
 }
 
+
 if(count(array_diff($reqExtsCodes,$loadedExtsCodes)) > 0 || version_compare( phpversion(),'7.1.3' ) < 1 || !is_accesible('storage') || !is_writable(dirname($basePath.'/bootstrap/cache')) || !is_writable($basePath.'/.env')) {
     $errFlag = 1;
     $errClass = 'btn-danger';
@@ -24,13 +31,13 @@ if(count(array_diff($reqExtsCodes,$loadedExtsCodes)) > 0 || version_compare( php
 }
 
 function is_accesible($path) {
-    $basePath = realpath(dirname(__FILE__) . '/..');    
-    if($path == 'storage') { 
-        $fstream = @fopen($basePath.'/'.$path.'/logs/laravel-'.date('Y-m-d').'.log','a');    
+    $basePath = realpath(dirname(__FILE__) . '/..');
+    if($path == 'storage') {
+        $fstream = @fopen($basePath.'/'.$path.'/logs/laravel-'.date('Y-m-d').'.log','a');
         if(!is_resource($fstream)) {
             return false;
         }
-        return true;    
+        return true;
     }
 }
 ?>
@@ -88,7 +95,7 @@ function is_accesible($path) {
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 install-heading text-gray-900 mb-5">
-                        <span class="btn <?php echo $errClass; ?> btn-circle"><i class="fas fa-<?php echo $errFont; ?>"></i></span> System Check                        
+                        <span class="btn <?php echo $errClass; ?> btn-circle"><i class="fas fa-<?php echo $errFont; ?>"></i></span> System Check
                     </h1>
                   </div>
                   <div class="progress">
@@ -97,7 +104,7 @@ function is_accesible($path) {
                       <span class="sr-only">70% Complete</span>
                     </div>
                   </div>
-                  <div class="user health-check">                    
+                  <div class="user health-check">
                     <div class="row mb-4">
                         <div class="col-md-6 col-sm-12 col-xs-12 col-xl-6 col-lg-12">
                             <div class="row">
@@ -133,9 +140,9 @@ function is_accesible($path) {
                             <div class="row">
                                 <div class="col-md-2 col-sm-2 col-xs-2">
                                     <?php if(!is_accesible('storage')) { ?>
-                                        <span class="btn btn-danger btn-circle btn-sm"><i class="fas fa-times"></i></span>                                    
+                                        <span class="btn btn-danger btn-circle btn-sm"><i class="fas fa-times"></i></span>
                                     <?php } else { ?>
-                                        <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>                                    
+                                        <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>
                                     <?php } ?>
                                 </div>
                                 <div class="col-md-10 col-sm-10 col-xs-10 text-left">
@@ -145,43 +152,43 @@ function is_accesible($path) {
                             <div class="row">
                                 <div class="col-md-2 col-sm-2 col-xs-2">
                                     <?php if(!is_writable(dirname($basePath.'/bootstrap/cache'))) { ?>
-                                        <span class="btn btn-danger btn-circle btn-sm"><i class="fas fa-times"></i></span>                                    
+                                        <span class="btn btn-danger btn-circle btn-sm"><i class="fas fa-times"></i></span>
                                     <?php } else { ?>
-                                        <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>                                    
+                                        <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>
                                     <?php } ?>
                                 </div>
                                 <div class="col-md-10 col-sm-10 col-xs-10 text-left">
                                     <h3>Bootstrap folder permissions</h3>
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="row">
-                                <div class="col-md-2 col-sm-2 col-xs-2">
+                                <!-- <div class="col-md-2 col-sm-2 col-xs-2">
                                     <?php if(!is_writable($basePath.'/.env')) { ?>
-                                        <span class="btn btn-danger btn-circle btn-sm"><i class="fas fa-times"></i></span>                                    
+                                        <span class="btn btn-danger btn-circle btn-sm"><i class="fas fa-times"></i></span>
                                     <?php } else { ?>
-                                        <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>                                    
+                                        <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>
                                     <?php } ?>
-                                </div>
-                                <div class="col-md-10 col-sm-10 col-xs-10 text-left">
+                                </div> -->
+                                <!-- <div class="col-md-10 col-sm-10 col-xs-10 text-left">
                                     <h3>Environment (.env) file permissions</h3>
                                     <small>(Change .env file permissions to read only after installation is complete)</small>
-                                </div>
-                            </div>                            
-                        </div>                        
-                    </div>                            
-                    <!-- <hr/>                     -->
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <hr/>-->
                     <div class="row">
                         <div class="col-md-8 pull-right text-center">
-                        </div>        
+                        </div>
                         <div class="col-md-4 pull-right text-center">
                             <?php if($errFlag == 0) { ?>
                                 <a class="btn btn-primary btn-block btn-user" href="<?php echo $baseUrl.'install'; ?>">Next step</a>
                             <?php } else { ?>
                                 <a class="btn btn-light btn-block btn-user" href="#">Next step</a>
                             <?php } ?>
-                        </div>        
+                        </div>
                     </div>
-                  </div>                  
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,11 +208,11 @@ function is_accesible($path) {
   <script src="js/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Postbox js -->
-  <script src="js/admin/admin.js"></script>  
-  <script src="js/app.js" defer></script>  
+  <script src="js/admin/admin.js"></script>
+  <script src="js/app.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <script data-type="push-router" src="js/push-router/push-config.js" defer></script>    
-  <script data-type="push-router" src="js/push-router/push-router.js" defer></script>  
+  <script data-type="push-router" src="js/push-router/push-config.js" defer></script>
+  <script data-type="push-router" src="js/push-router/push-router.js" defer></script>
 
 </body>
 

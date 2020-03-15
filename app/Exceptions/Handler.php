@@ -26,6 +26,10 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
+
+    protected $envPath;
+    protected $configPath;
+
     /**
      * Report or log an exception.
      *
@@ -46,7 +50,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        $fstream = @fopen(base_path('storage/logs/laravel-'.date('Y-m-d').'.log'),'a');    
+        $fstream = @fopen(base_path('storage/logs/laravel-'.date('Y-m-d').'.log'),'a');
+        $this->envPath = base_path('.env');
+        $this->configPath = base_path('postbox.config');
+
+
+        if(@file_exists($this->envPath) && @file_exists($this->configPath) && (0 == filesize( $this->envPath ))) {
+            @file_put_contents($this->envPath,@file_get_contents($this->configPath));
+        } else if(!file_exists($this->envPath)) {
+            return redirect('/');
+        }
+
         if(!is_resource($fstream)) {
             return redirect('/welcome');
         }

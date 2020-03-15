@@ -51,16 +51,23 @@ div.card-list ul.category-list li:last-child {
     border-bottom: none;
 }
 div.card-list ul.category-list li > a:hover {
-    text-decoration: none; 
+    text-decoration: none;
 }
 div.post-timeline {
     color: $gray-800;
     padding-bottom: 5px;
     margin-bottom: 25px;
 }
+
 div.copyright-text {
+    font-size: $font-small;
     color: $theme-color;
 }
+
+a.copyright-link {
+    color: $postbox-color;
+}
+
 
 .navbar-top > li.nav-item > a.nav-link {
     color: $white;
@@ -71,7 +78,7 @@ div.copyright-text {
 .brand-color {
     color: $theme-color;
 }
-.loading-bar { 
+.loading-bar {
     background: #fff;
 }
 .navbar {

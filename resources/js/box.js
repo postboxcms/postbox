@@ -32,13 +32,13 @@ function hideDeleteOverlay() {
 }
 
 function removeImage() {
-    var image = document.getElementById('data-image');
-    var imagePlaceholder = document.getElementById('image-placeholder');
-    var imageFlag = document.getElementById('image_flag');
-    image.parentNode.removeChild(image);
-    imagePlaceholder.classList.remove('d-none');
-    imageFlag.value = '1';
-    return false;
+     var image = document.getElementById('data-image');
+     var imagePlaceholder = document.getElementById('image-placeholder');
+     var imageFlag = document.getElementById('image_flag');
+     image.parentNode.removeChild(image);
+     imagePlaceholder.classList.remove('d-none');
+     imageFlag.value = '1';
+     return false;
 }
   
 function animateProgressBar() {
