@@ -54,6 +54,9 @@ class Handler extends ExceptionHandler
         $this->envPath = base_path('.env');
         $this->configPath = base_path('postbox.config');
 
+        if(!is_resource($fstream)) {
+            return redirect('/welcome');
+        }
 
         if(@file_exists($this->envPath) && @file_exists($this->configPath) && (0 == filesize( $this->envPath ))) {
             @file_put_contents($this->envPath,@file_get_contents($this->configPath));
@@ -61,9 +64,6 @@ class Handler extends ExceptionHandler
             return redirect('/');
         }
 
-        if(!is_resource($fstream)) {
-            return redirect('/welcome');
-        }
         return parent::render($request, $exception);
     }
 }
