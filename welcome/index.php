@@ -1,9 +1,12 @@
 <?php
 error_reporting(0);
 
-// Create a blank .env file
-if(!file_exists(getcwd().'/../.env')) {
-    fopen(getcwd().'/../.env','w');
+// Create .env file from postbox.config file
+$envPath = getcwd().'/../.env';
+$configPath = getcwd().'/../postbox.config';
+if(!file_exists($envPath)) {
+    @fopen($envPath,'w');
+    @file_put_contents($envPath,@file_get_contents($configPath));
 }
 
 $loadedExts = get_loaded_extensions();
