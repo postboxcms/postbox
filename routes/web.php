@@ -13,8 +13,8 @@
 
 Route::get('/', function () {
     $data['pageData'] = [];
-    $data['pageData']['meta_description'] = env('APP_DESCRIPTION');
-    $data['pageData']['meta_keywords'] = env('APP_TAGS');
+    $data['pageData']['meta_description'] = Template::display('description');
+    $data['pageData']['meta_keywords'] = Template::display('keywords');
     return view('theme.home', $data);
 });
 

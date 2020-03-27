@@ -14,7 +14,7 @@
     <meta name="robots" content="index,follow"/>
 
 
-    <title>{{ Widget::render('title') }}</title>
+    <title>{{ Template::display('title') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

@@ -34,14 +34,14 @@
                                 <div class="col-md-2 col-sm-2 col-xs-2">
                                     <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>                                    </div>
                                 <div class="col-md-10 col-sm-10 col-xs-10 text-left">
-                                    <h3><b>{{__('installer.app_description')}}:</b> <br/>{{env('APP_DESCRIPTION')}}</b></h3>
+                                    <h3><b>{{__('installer.app_description')}}:</b> <br/>{{ $appData['description'] }}</b></h3>
                                 </div>
                             </div>                                        
                             <div class="row">
                                 <div class="col-md-2 col-sm-2 col-xs-2">
                                     <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>                                    </div>
                                 <div class="col-md-10 col-sm-10 col-xs-10 text-left">
-                                    <h3><b>{{__('installer.app_keywords')}}:</b> <br/>{{env('APP_TAGS')}}</b></h3>
+                                    <h3><b>{{__('installer.app_keywords')}}:</b> <br/>{{ $appData['keywords'] }}</b></h3>
                                 </div>
                             </div>
                         </div>

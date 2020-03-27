@@ -120,9 +120,9 @@ class Installer extends Controller
 
     public function storeAppDetails(StoreAppData $request) {
         $request->session()->put('appData',$request->all());
-        $this->_updateEnv('APP_NAME',$request->title);
-        $this->_updateEnv('APP_DESCRIPTION',$request->description!=null?$request->description:env('APP_DESCRIPTION'));
-        $this->_updateEnv('APP_TAGS',$request->keywords!=null?$request->keywords:env('APP_TAGS'));
+        // $this->_updateEnv('APP_NAME',$request->title);
+        // $this->_updateEnv('APP_DESCRIPTION',$request->description!=null?$request->description:env('APP_DESCRIPTION'));
+        // $this->_updateEnv('APP_TAGS',$request->keywords!=null?$request->keywords:env('APP_TAGS'));
         return response()->json(['message'=>__('installer.app_success')]);
     }
 

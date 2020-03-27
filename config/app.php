@@ -230,6 +230,7 @@ return [
         'Menu' => Harimayco\Menu\Facades\Menu::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Widget' => App\Components\Widget::class,
+        'Template' => App\Components\Template::class,
         'Page'  => App\Components\Page::class,
     ],
 

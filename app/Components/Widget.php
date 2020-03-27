@@ -54,13 +54,4 @@ class Widget
     private function copyright() {
         return;
     }
-
-    private function title() {
-        $title = DB::table('settings')->where('parameter','site.name')->whereNotNull('value')->first();
-        if(isset($title->value) && $title->value != NULL) {
-            return $title->value;
-        } else {
-            return config('app.name','Postbox');
-        }
-    }
 }
