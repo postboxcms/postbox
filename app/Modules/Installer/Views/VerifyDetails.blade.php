@@ -27,7 +27,7 @@
                                     <span class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></span>
                                 </div>
                                 <div class="col-md-10 col-sm-10 col-xs-10 text-left">
-                                    <h3><b>{{__('installer.app_name')}}:</b> <br/> {{env('APP_NAME')}}</h3>
+                                    <h3><b>{{__('installer.app_name')}}:</b> <br/> {{ $appData['title'] }}</h3>
                                 </div>
                             </div>
                             <div class="row">

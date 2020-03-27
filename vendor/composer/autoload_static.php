@@ -7,12 +7,12 @@ namespace Composer\Autoload;
 class ComposerStaticInit5e5ba6d1bc93ff6ec72d3464d4eb48cb
 {
     public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
@@ -20,8 +20,8 @@ class ComposerStaticInit5e5ba6d1bc93ff6ec72d3464d4eb48cb
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         '5fd98b6cac3b5d6d5cc40dc2955a8938' => __DIR__ . '/../..' . '/resources/helpers/postbox.php',
     );
@@ -154,8 +154,8 @@ class ComposerStaticInit5e5ba6d1bc93ff6ec72d3464d4eb48cb
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -434,6 +434,7 @@ class ComposerStaticInit5e5ba6d1bc93ff6ec72d3464d4eb48cb
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
+        'App\\Http\\Middleware\\CheckIfAppIsInstalled' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckIfAppIsInstalled.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
@@ -447,6 +448,9 @@ class ComposerStaticInit5e5ba6d1bc93ff6ec72d3464d4eb48cb
         'App\\Modules\\Comments\\Controllers\\Comments' => __DIR__ . '/../..' . '/app/Modules/Comments/Controllers/Comments.php',
         'App\\Modules\\Comments\\Models\\CommentsModel' => __DIR__ . '/../..' . '/app/Modules/Comments/Models/CommentsModel.php',
         'App\\Modules\\Dashboard\\Controllers\\Dashboard' => __DIR__ . '/../..' . '/app/Modules/Dashboard/Controllers/Dashboard.php',
+        'App\\Modules\\Installer\\Controllers\\Installer' => __DIR__ . '/../..' . '/app/Modules/Installer/Controllers/Installer.php',
+        'App\\Modules\\Installer\\Requests\\StoreAppData' => __DIR__ . '/../..' . '/app/Modules/Installer/Requests/StoreAppData.php',
+        'App\\Modules\\Installer\\Requests\\StoreDBData' => __DIR__ . '/../..' . '/app/Modules/Installer/Requests/StoreDBData.php',
         'App\\Modules\\Pages\\Controllers\\Pages' => __DIR__ . '/../..' . '/app/Modules/Pages/Controllers/Pages.php',
         'App\\Modules\\Pages\\Models\\PageModel' => __DIR__ . '/../..' . '/app/Modules/Pages/Models/PageModel.php',
         'App\\Modules\\Pages\\Requests\\StorePage' => __DIR__ . '/../..' . '/app/Modules/Pages/Requests/StorePage.php',
@@ -3469,6 +3473,7 @@ class ComposerStaticInit5e5ba6d1bc93ff6ec72d3464d4eb48cb
         'SebastianBergmann\\Timer\\RuntimeException' => __DIR__ . '/..' . '/phpunit/php-timer/src/RuntimeException.php',
         'SebastianBergmann\\Timer\\Timer' => __DIR__ . '/..' . '/phpunit/php-timer/src/Timer.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SettingsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/SettingsTableSeeder.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface' => __DIR__ . '/..' . '/symfony/console/CommandLoader/CommandLoaderInterface.php',
         'Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader' => __DIR__ . '/..' . '/symfony/console/CommandLoader/ContainerCommandLoader.php',

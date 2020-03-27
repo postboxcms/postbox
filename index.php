@@ -9,7 +9,9 @@ if(!file_exists(getcwd().'/.env')) {
 // A user-defined error handler function
 function boxErrorHandler($errno, $errstr, $errfile, $errline) {
     echo "<div style='text-align:center;font-family:Segoe UI,Arial, sans-serif'><h1>Something went wrong.</h1>";
-    echo "<p>Either the application isn't configured correctly or seems to have some technical errors.</p></div>";
+    echo "<p>Either the application isn't configured correctly or seems to have some technical errors.</p>";
+    echo "<p>In case if the apache user doesn't have write permissions on this directory please change them to 777 until installation is complete</p>";
+    echo "</div>";
     // echo "<p style='color:#fff; background-color:#313131'>".$errstr." in ".$errfile." on ".$errline."</p></div>";
     exit();
 }

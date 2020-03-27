@@ -63,7 +63,7 @@ class Installer extends Controller
     // }
 
     private function _updateEnv($env, $val) {
-        if(preg_match('/\\s/',env($env)) || preg_match('/\\s/',$val)) {
+        if(preg_match('/\\s/',env($env))) {
             file_put_contents($this->envPath, str_replace(
                 $env.'="'.env($env).'"', $env . '=' . '"'.$val.'"', file_get_contents($this->envPath)
             ));
@@ -108,6 +108,7 @@ class Installer extends Controller
     public function verifyDetails()
     {
         $data['title'] = 'Installer';
+        $data['appData'] = session('appData');
         return view('Installer::VerifyDetails', $data);
     }
 
