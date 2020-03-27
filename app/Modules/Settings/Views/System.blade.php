@@ -84,32 +84,52 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 col-xs-12 col-lg-6">
+                                <div class="col-md-12 col-xs-12 col-lg-12">
                                     <div class="form-group">                        
                                         <div class="upload-btn-wrapper">
-                                            <button class="btn-upload btn-primary">{{__('settings.upload_site_btn_label')}}</button>
+                                            {{-- <button class="btn-upload btn-primary">{{__('settings.upload_site_btn_label')}}</button>
                                             <input onchange="readURL(this)" type="file" name="image" value="{{$site['image']}}"/>
                                             @if(isset($site['image']) && $site['image'] != '' && file_exists(assets_path('storage/settings/'.$site['image'])))
                                                 <img width="90%" style="margin-top:5px" id="data-image" src="{{asset('/storage/settings/'.$site['image'])}}"/>
                                             @else
                                                 <div class="image-placeholder" style="margin:5px auto">{!! __('settings.no_img_message') !!}</div>
+                                            @endif --}}
+                                            <button class="btn-upload btn-primary">{{__('settings.upload_site_btn_label')}}</button>
+                                            <input type="hidden" id="image_flag" name="image_flag" value = "0" />
+                                            <input id="image-file" onchange="readURL(this)" type="file" name="image" value="{{$site['image']}}"/>
+                                            @if(isset($site['image']) && $site['image'] != '' && file_exists(assets_path('storage/settings/'.$site['image'])))
+                                                <img onmouseover="showDeleteOverlay()" width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/settings/'.$site['image'])}}"/>
+                                                <div id="image-placeholder" class="image-placeholder d-none" style="margin:5px auto">{!! __('settings.no_img_message') !!}</div>
+                                            @else
+                                                <div id="image-placeholder" class="image-placeholder" style="margin:5px auto">{!! __('settings.no_img_message') !!}</div>
                                             @endif
+                                            <div onmouseout="hideDeleteOverlay()" id="image-overlay"><a onclick="removeImage()" class="rounded" href="javascript:;"><i class="fas fa-times"></i></a></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-lg-6">
+                                {{-- <div class="col-md-6 col-xs-12 col-lg-6 hide">
                                     <div class="form-group">                        
                                         <div class="upload-btn-wrapper">
-                                            <button class="btn-upload btn-primary">{{__('settings.upload_site_btn_full_label')}}</button>
+                                            {{-- <button class="btn-upload btn-primary">{{__('settings.upload_site_btn_full_label')}}</button>
                                             <input onchange="readURL(this)" type="file" name="image_full" value="{{$site['image_full']}}"/>
                                             @if(isset($site['image_full']) && $site['image_full'] != '' && file_exists(assets_path('storage/settings/'.$site['image_full'])))
                                                 <img width="90%" style="margin-top:5px" id="data-image" src="{{asset('/storage/settings/'.$site['image_full'])}}"/>
                                             @else
                                                 <div class="image-placeholder" style="margin:5px auto">{!! __('settings.no_img_message') !!}</div>
+                                            @endif --}}
+                                            {{-- <button class="btn-upload btn-primary">{{__('settings.upload_site_btn_full_label')}}</button>
+                                            <input type="hidden" id="image_flag" name="image_flag" value = "0" />
+                                            <input id="image-file" onchange="readURL(this)" type="file" name="image_full" value="{{$site['image_full']}}"/>
+                                            @if(isset($site['image_full']) && $site['image_full'] != '' && file_exists(assets_path('storage/settings/'.$site['image_full'])))
+                                                <img onmouseover="showDeleteOverlay()" width="200px" style="margin-top:5px" id="data-image" src="{{asset('/storage/settings/'.$site['image_full'])}}"/>
+                                                <div id="image-placeholder" class="image-placeholder d-none" style="margin:5px auto">{!! __('settings.no_img_message') !!}</div>
+                                            @else
+                                                <div id="image-placeholder" class="image-placeholder" style="margin:5px auto">{!! __('settings.no_img_message') !!}</div>
                                             @endif
+                                            <div onmouseout="hideDeleteOverlay()" id="image-overlay"><a onclick="removeImage()" class="rounded" href="javascript:;"><i class="fas fa-times"></i></a></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">                            
                                 <div class="col-md-12 col-xs-12 col-lg-12">
@@ -149,7 +169,7 @@
                     spanClass: 'invalid-feedback',
                     fieldClass: 'validation-error'
                 },
-                files: ['image','image_full'],
+                files: ['image'],
                 // redirect: 'settings/system'
             });
             $('.site-form').pushForm({
@@ -157,7 +177,7 @@
                     spanClass: 'invalid-feedback',
                     fieldClass: 'validation-error'
                 },
-                files: ['image','image_full'],
+                files: ['image'],
                 // redirect: 'settings/system'
             });
         });        

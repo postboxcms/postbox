@@ -14,7 +14,7 @@
     <meta name="robots" content="index,follow"/>
 
 
-    <title>{{ config('app.name', 'Postbox') }}</title>
+    <title>{{ Widget::render('title') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

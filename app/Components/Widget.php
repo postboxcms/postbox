@@ -17,7 +17,12 @@ class Widget
 
     public static function render(String $table) {
         self::$renderData[$table] = (new self)->$table();
-        return view(config('app.theme_directory').'.widgets.'.$table, self::$renderData);
+        if(view()->exists(config('app.theme_directory').'.widgets.'.$table)) {
+            return view(config('app.theme_directory').'.widgets.'.$table, self::$renderData);
+        } else {
+            return self::$renderData[$table];
+        }
+
     }
 
     public static function menu(String $table) {
@@ -26,7 +31,12 @@ class Widget
     }
 
     private function logo() {
-        return DB::table('settings')->whereNotNull('value')->where('parameter','site.image_full')->orWhere('parameter','site.image')->orWhere('parameter','site.name')->orderBy('parameter','desc')->first();
+        $image = DB::table('settings')->where('parameter','site.image')->whereNotNull('value')->first();
+        if(isset($image->value) && $image->value != NULL) {
+            return $image;
+        } else {
+            return DB::table('settings')->where('parameter','site.name')->whereNotNull('value')->first();
+        }
     }
 
     private function posts() {
@@ -43,5 +53,14 @@ class Widget
 
     private function copyright() {
         return;
+    }
+
+    private function title() {
+        $title = DB::table('settings')->where('parameter','site.name')->whereNotNull('value')->first();
+        if(isset($title->value) && $title->value != NULL) {
+            return $title->value;
+        } else {
+            return config('app.name','Postbox');
+        }
     }
 }
