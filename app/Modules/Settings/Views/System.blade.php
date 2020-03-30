@@ -85,6 +85,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 col-xs-12 col-lg-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" placeholder="{{__('settings.site_description')}}" name="description">{{$site['description']}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input value="{{$site['keywords']}}" class="form-control" type="text" placeholder="{{__('settings.site_keywords')}}" name="keywords"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12 col-lg-12">
                                     <div class="form-group">                        
                                         <div class="upload-btn-wrapper">
                                             {{-- <button class="btn-upload btn-primary">{{__('settings.upload_site_btn_label')}}</button>
