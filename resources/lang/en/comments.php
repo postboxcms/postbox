@@ -3,5 +3,6 @@
 return [
     'title' => 'Comments',
     'actions' => 'Actions',
-    'add' => 'Add Comment'
+    'add' => 'Add Comment',
+    'unavailable' => 'No comments available'
 ];
