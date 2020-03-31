@@ -47,18 +47,13 @@
     //         };
 
     // },
-    // $.pushScripts = function(opts) {
-    //   console.log('script loaded')
-    //   var scripts = opts.scripts;
-    //   $.when(
-    //     scripts.forEach(function(script) {
-    //       $.getScript(script)
-    //     }),
-    //     $.Deferred(function( deferred ){
-    //           $( deferred.resolve );
-    //     })
-    //   ).done(
-    //     opts.code
-    //   )
-    // }
+    $.pushScripts = function(scripts) {
+        loadScript = $.Deferred(function( deferred ){
+            $( deferred.resolve );
+        })
+        $.each(scripts, function(idx) {
+            loadScript = $.getScript(scripts[idx]);
+        });
+        return loadScript;
+    }
 }(jQuery))

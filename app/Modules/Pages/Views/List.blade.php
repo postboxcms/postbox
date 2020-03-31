@@ -167,18 +167,14 @@
 @stop
 @section('scripts')
 <script>
-
-  $.when(
-        $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" ),        
-        $.getScript( "{{asset('js/push-router/push-form.js')}}" ),        
-        $.Deferred(function( deferred ){
-            $( deferred.resolve );
-        })
-    ).done(function(){
-      $(document).ready(function() {
-            // console.log(document.getElementById('dataTable'));
+    $(document).ready(function() {
+      $.pushScripts([
+        "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}",
+        "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}",
+        "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}",
+        "{{asset('js/push-router/push-form.js')}}"
+      ]).done(function() {
+          $(document).ready(function() {
               $('#dataTable').DataTable({
                 "retrieve": true,
                 "bInfo" : false,
@@ -187,7 +183,29 @@
                 modal: 'deleteModal',
                 redirect: '{{config("app.admin_prefix")}}/pages'
               });
+          });
       });
     });
+  // $.when(
+  //       $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
+  //       $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
+  //       $.getScript( "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" ),        
+  //       $.getScript( "{{asset('js/push-router/push-form.js')}}" ),        
+  //       $.Deferred(function( deferred ){
+  //           $( deferred.resolve );
+  //       })
+  //   ).done(function(){
+  //     $(document).ready(function() {
+  //           // console.log(document.getElementById('dataTable'));
+  //             $('#dataTable').DataTable({
+  //               "retrieve": true,
+  //               "bInfo" : false,
+  //             });
+  //             $('.push-form').pushForm({
+  //               modal: 'deleteModal',
+  //               redirect: '{{config("app.admin_prefix")}}/pages'
+  //             });
+  //     });
+  //   });
 </script>
 @stop

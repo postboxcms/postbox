@@ -75,24 +75,6 @@
 @stop
 @section('scripts')
 <script>
-  // $.getScript("{{asset('js/push-router/push-router.config.js')}}", function() {
-  //   $.pushConfig({
-  //     usejQuery: true,
-  //     dependencies:{              
-  //       "jquery": "{{asset('js/admin/vendor/jquery/jquery.min')}}",
-  //       "datatables.net": "{{asset('js/admin/vendor/datatables/jquery.dataTables.min')}}",
-  //       "datatables": "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min')}}",
-  //     },
-  //     code: function() {
-  //       $(document).ready(function() {
-  //           // console.log(document.getElementById('dataTable'));
-  //             $('#dataTable').DataTable({
-  //               "retrieve": true,
-  //             });
-  //       });
-  //     }
-  //   });
-  // });
   $.when(
         $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
         $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
@@ -108,12 +90,10 @@
                 "retrieve": true,
                 "bInfo" : false,
               });
-              // $.getScript("{{asset('js/push-router/push-form.js')}}", function() {
-                $('.push-form').pushForm({
-                  modal: 'deleteModal',
-                  redirect: '{{config("app.admin_prefix")}}/user/list'
-                });
-              // });
+              $('.push-form').pushForm({
+                modal: 'deleteModal',
+                redirect: '{{config("app.admin_prefix")}}/user/list'
+              });
       });
     });
 </script>
