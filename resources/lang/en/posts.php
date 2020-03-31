@@ -46,5 +46,6 @@ return [
     'restore_post_confirm' => 'Restore post',
     'restore_post_confirm_message' => 'Do you want to restore this post?',
     'restore_post_success_message' => 'Post restored successfully',
-    'upload_btn_label' => 'Click here to upload image'
+    'upload_btn_label' => 'Click here to upload image',
+    'unavailable'   => 'No posts available'
 ];

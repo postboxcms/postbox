@@ -34,47 +34,59 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($posts as $post)
-              <tr class="feed-row">
-                <td>
-                  <input type="checkbox" name="select_element" value="1"/>
-                </td>
-                <td class="title">
-                  {{$post->title}}
-                  <span class="hidden-popup">
-                    @if($pagemode == 'trash')
-                      <a onclick="javascript:document.getElementById('restoreId').value = {{$post->id}};" data-toggle="modal" data-target="#restoreModal" href="#" class=""><i class="fas fa-undo-alt"></i> {{ __('posts.restore_label') }}</a>
-                      <a onclick="javascript:document.getElementById('postDelId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deletePermModal" class=""><i class="fas fa-trash"></i> {{ __('posts.delete_permanently_label') }}</a>
-                    @elseif($pagemode == 'edit')
-                      <a href="{{url(config('app.admin_prefix').'/post/edit/'.$post->id)}}" class=""><i class="fas fa-edit"></i> {{ __('posts.edit_label') }}</a> | 
-                      <a onclick="javascript:document.getElementById('postId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class=""><i class="fas fa-trash"></i> {{ __('posts.delete_label') }}</a>
+            @if(count($posts) > 0) 
+              @foreach($posts as $post)
+                <tr class="feed-row">
+                  <td>
+                    <input type="checkbox" name="select_element" value="1"/>
+                  </td>
+                  <td class="title">
+                    {{$post->title}}
+                    <span class="hidden-popup">
+                      @if($pagemode == 'trash')
+                        <a onclick="javascript:document.getElementById('restoreId').value = {{$post->id}};" data-toggle="modal" data-target="#restoreModal" href="#" class=""><i class="fas fa-undo-alt"></i> {{ __('posts.restore_label') }}</a>
+                        <a onclick="javascript:document.getElementById('postDelId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deletePermModal" class=""><i class="fas fa-trash"></i> {{ __('posts.delete_permanently_label') }}</a>
+                      @elseif($pagemode == 'edit')
+                        <a href="{{url(config('app.admin_prefix').'/post/edit/'.$post->id)}}" class=""><i class="fas fa-edit"></i> {{ __('posts.edit_label') }}</a> | 
+                        <a onclick="javascript:document.getElementById('postId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class=""><i class="fas fa-trash"></i> {{ __('posts.delete_label') }}</a>
+                      @endif
+                    </span>
+                  </td>
+                  <td class="">
+                    @if($post->image !== null && file_exists(assets_path('storage/posts/'.$post->image)))
+                      <div class="image-placeholder"><img src="{{asset('storage/posts/'.$post->image)}}" width="100px"/></div>
+                    @else
+                      <div class="image-placeholder">{!! __('posts.no_img_message') !!}</div>
                     @endif
-                  </span>
-                </td>
-                <td class="">
-                  @if($post->image !== null && file_exists(assets_path('storage/posts/'.$post->image)))
-                    <div class="image-placeholder"><img src="{{asset('storage/posts/'.$post->image)}}" width="100px"/></div>
-                  @else
-                    <div class="image-placeholder">{!! __('posts.no_img_message') !!}</div>
+                  </td>
+                  <td class="">
+                    @if($post->status == 1)
+                      <label class="status-label draft">{{ __('posts.draft_label')}}</label>
+                    @elseif($post->status == 2)
+                      <label class="status-label published">{{ __('posts.published_label')}}</label>
+                    @elseif($post->status == 3)
+                      <label class="status-label trash">{{ __('posts.deleted_label')}}</label>
+                    @endif
+                  </td>
+                  @if($pagemode == 'trash')
+                    <td class="">{{date('D d M, Y',strtotime($post->deleted_at))}}</td>
+                  @elseif($pagemode == 'edit')
+                    <td class="">{{date('D d M, Y',strtotime($post->created_at))}}</td>
+                    <td class="">{{date('D d M, Y',strtotime($post->updated_at))}}</td>
                   @endif
-                </td>
-                <td class="">
-                  @if($post->status == 1)
-                    <label class="status-label draft">{{ __('posts.draft_label')}}</label>
-                  @elseif($post->status == 2)
-                    <label class="status-label published">{{ __('posts.published_label')}}</label>
-                  @elseif($post->status == 3)
-                    <label class="status-label trash">{{ __('posts.deleted_label')}}</label>
-                  @endif
-                </td>
+                </tr>
+              @endforeach
+            @else
                 @if($pagemode == 'trash')
-                  <td class="">{{date('D d M, Y',strtotime($post->deleted_at))}}</td>
-                @elseif($pagemode == 'edit')
-                  <td class="">{{date('D d M, Y',strtotime($post->created_at))}}</td>
-                  <td class="">{{date('D d M, Y',strtotime($post->updated_at))}}</td>
+                  <tr>
+                    <td colspan="5" class="text-center">{{__('posts.unavailable')}}</td>
+                  </tr>
+                @else
+                  <tr>
+                    <td colspan="6" class="text-center">{{__('posts.unavailable')}}</td>
+                  </tr>
                 @endif
-              </tr>
-            @endforeach
+            @endif
           </tbody>
         </table>
       </div>
