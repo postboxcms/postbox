@@ -14,9 +14,6 @@
 </div>
 
 <div class="card shadow mb-4">
-    <!-- <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary"></h6>
-    </div> -->
     <div class="card-body card-datatable">
       <div class="table-responsive">
         <table class="table " id="dataTable" width="100%" cellspacing="0">
@@ -25,7 +22,7 @@
               <th width="5%">
                 <input type="checkbox" name="select_element" value="1"/>
               </th>
-              <th width="25%">{{__('posts.title')}}</th>
+              <th width="40%">{{__('posts.title')}}</th>
               <th>{{__('posts.image')}}</th>
               <th>{{__('posts.status')}}</th>
               @if($pagemode == 'trash')
@@ -34,7 +31,6 @@
                 <th>{{__('posts.created')}}</th>
                 <th>{{__('posts.updated')}}</th>
               @endif
-              <!-- <th>{{__('posts.actions')}}</th> -->
             </tr>
           </thead>
           <tbody>
@@ -43,9 +39,9 @@
                 <td>
                   <input type="checkbox" name="select_element" value="1"/>
                 </td>
-                <td>
+                <td class="title">
                   {{$post->title}}
-                  <div class="clear hidden-popup">
+                  <span class="hidden-popup">
                     @if($pagemode == 'trash')
                       <a onclick="javascript:document.getElementById('restoreId').value = {{$post->id}};" data-toggle="modal" data-target="#restoreModal" href="#" class=""><i class="fas fa-undo-alt"></i> {{ __('posts.restore_label') }}</a>
                       <a onclick="javascript:document.getElementById('postDelId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deletePermModal" class=""><i class="fas fa-trash"></i> {{ __('posts.delete_permanently_label') }}</a>
@@ -53,7 +49,7 @@
                       <a href="{{url(config('app.admin_prefix').'/post/edit/'.$post->id)}}" class=""><i class="fas fa-edit"></i> {{ __('posts.edit_label') }}</a> | 
                       <a onclick="javascript:document.getElementById('postId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class=""><i class="fas fa-trash"></i> {{ __('posts.delete_label') }}</a>
                     @endif
-                  </div>
+                  </span>
                 </td>
                 <td class="">
                   @if($post->image !== null && file_exists(assets_path('storage/posts/'.$post->image)))
@@ -72,20 +68,11 @@
                   @endif
                 </td>
                 @if($pagemode == 'trash')
-                  <td class="">{{$post->deleted_at}}</td>
+                  <td class="">{{date('D d M, Y',strtotime($post->deleted_at))}}</td>
                 @elseif($pagemode == 'edit')
-                  <td class="">{{$post->created_at}}</td>
-                  <td class="">{{$post->updated_at}}</td>
+                  <td class="">{{date('D d M, Y',strtotime($post->created_at))}}</td>
+                  <td class="">{{date('D d M, Y',strtotime($post->updated_at))}}</td>
                 @endif
-                <!-- <td class="text-center">
-                  @if($pagemode == 'trash')
-                    <a onclick="javascript:document.getElementById('restoreId').value = {{$post->id}};" data-toggle="modal" data-target="#restoreModal" href="#" class="btn btn-success"><i class="fas fa-undo-alt"></i> Restore</a>
-                    <a onclick="javascript:document.getElementById('postDelId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deletePermModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete Permanently</a>
-                  @elseif($pagemode == 'edit')
-                    <a href="{{url('/post/edit/'.$post->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                    <a onclick="javascript:document.getElementById('postId').value = {{$post->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                  @endif
-                </td> -->
               </tr>
             @endforeach
           </tbody>
@@ -155,7 +142,6 @@
           <form class="push-form" id="delete-perm-form" action="{{ url(config('app.admin_prefix').'/post/remove/') }}"  method="POST">          
             @csrf          
             <input type="hidden" name="id" id="postDelId" value=""/>
-            <!-- <input type="hidden" name="status" id="postStatus" value="3"/> -->
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-danger">
               <i class="fas fa-trash"></i> Delete
@@ -170,17 +156,9 @@
 <script>
   $(document).ready(function() {
       $.pushScripts([
-        "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}",
-        "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}",
-        "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}",
         "{{asset('js/push-router/push-form.js')}}"
-      ]).then(function() {
+      ]).done(function() {
             $(document).ready(function() {
-                // console.log(document.getElementById('dataTable'));
-                $('#dataTable').DataTable({
-                  "retrieve": true,
-                  "bInfo" : false,
-                });
                 $('.push-form').pushForm({
                   modal: 'deleteModal',
                   redirect: '{{config("app.admin_prefix")}}/posts'
@@ -188,26 +166,5 @@
             });
       });
   });
-  // $.when(
-  //       $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
-  //       $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
-  //       $.getScript( "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" ),        
-  //       $.getScript( "{{asset('js/push-router/push-form.js')}}" ),        
-  //       $.Deferred(function( deferred ){
-  //           $( deferred.resolve );
-  //       })
-  //   ).done(function(){
-  //     $(document).ready(function() {
-  //           // console.log(document.getElementById('dataTable'));
-  //             $('#dataTable').DataTable({
-  //               "retrieve": true,
-  //               "bInfo" : false,
-  //             });
-  //             $('.push-form').pushForm({
-  //               modal: 'deleteModal',
-  //               redirect: '{{config("app.admin_prefix")}}/posts'
-  //             });
-  //     });
-  //   });
 </script>
 @stop

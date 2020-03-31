@@ -436,13 +436,29 @@ div.user .btn-user {
     border-radius: 0.2rem !important;
   }
 
-  .hidden-popup {
-    display: none;
-    margin-top: 10px;
+  table#dataTable thead tr > th {
+    text-align: left;
+    color: $blue;
   }
 
-  table.dataTable tbody tr.feed-row:hover .hidden-popup{
-    display: block;
+  table#dataTable tbody tr.feed-row td.title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  table#dataTable tbody tr.feed-row {
+    min-height: 100px;
+  }
+
+  table#dataTable tbody tr.feed-row .hidden-popup {
+    display: none;
+    margin-left: 20px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  table#dataTable tbody tr.feed-row:hover .hidden-popup{
+    display: inline-block;
   }
 
   .user-image-rounded {
