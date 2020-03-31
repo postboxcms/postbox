@@ -12,9 +12,6 @@
 </div>
 
 <div class="card shadow mb-4">
-    <!-- <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary"></h6>
-    </div> -->
     <div class="card-body card-datatable">
       <div class="table-responsive">
         <table class="table " id="dataTable" width="100%" cellspacing="0">
@@ -30,20 +27,24 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($users as $user)
-              <tr>            
-                <td><input type="checkbox" value=""/></td>
-                <td>{{$user->username}}</td>
-                <td>{{$user->email}}</td>              
-                <td>{{$user->name}}</td>
-                <td>{{$user->roles[0]->rolename}}</td>
-                <td>{{date('d M, Y',strtotime($user->created_at))}}</td>
-                <td>
-                  <a href="{{url(config('app.admin_prefix').'/user/edit/'.$user->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                  <a onclick="javascript:document.getElementById('userId').value = {{$user->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                </td>
-              </tr>              
-            @endforeach
+            @if(count($users) > 0 )
+              @foreach($users as $user)
+                <tr>            
+                  <td><input type="checkbox" value=""/></td>
+                  <td>{{$user->username}}</td>
+                  <td>{{$user->email}}</td>              
+                  <td>{{$user->name}}</td>
+                  <td>{{$user->roles[0]->rolename}}</td>
+                  <td>{{date('d M, Y',strtotime($user->created_at))}}</td>
+                  <td>
+                    <a href="{{url(config('app.admin_prefix').'/user/edit/'.$user->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                    <a onclick="javascript:document.getElementById('userId').value = {{$user->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                  </td>
+                </tr>              
+              @endforeach
+            @else
+              <tr><td colspan="7">{{__('user.unavailable')}}</td></tr>
+            @endif
           </tbody>
         </table>
       </div>
@@ -75,26 +76,17 @@
 @stop
 @section('scripts')
 <script>
-  $.when(
-        $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" ),        
-        $.getScript( "{{asset('js/push-router/push-form.js')}}" ),        
-        $.Deferred(function( deferred ){
-            $( deferred.resolve );
-        })
+  $(document).ready(function() {
+    $.pushScripts(
+      ["{{asset('js/push-router/push-form.js')}}"]        
     ).done(function(){
-      $(document).ready(function() {
-            // console.log(document.getElementById('dataTable'));
-              $('#dataTable').DataTable({
-                "retrieve": true,
-                "bInfo" : false,
-              });
-              $('.push-form').pushForm({
-                modal: 'deleteModal',
-                redirect: '{{config("app.admin_prefix")}}/user/list'
-              });
-      });
+        $(document).ready(function() {
+          $('.push-form').pushForm({
+            modal: 'deleteModal',
+            redirect: '{{config("app.admin_prefix")}}/user/list'
+          });
+        });
     });
+  });
 </script>
 @stop

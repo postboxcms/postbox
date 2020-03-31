@@ -24,17 +24,21 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($roles as $role)
-              <tr>            
-                <td><input type="checkbox" value=""/></td>
-                <td>{{$role->rolename}}</td>
-                <td>{{date('d M, Y', strtotime($role->created_at))}}</td>              
-                <td>
-                  <a href="{{url(config('app.admin_prefix').'/user/role/edit/'.$role->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                  <a onclick="javascript:document.getElementById('roleId').value = {{$role->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                </td>
-              </tr>              
-            @endforeach
+            @if(count($roles) > 0 )
+              @foreach($roles as $role)
+                <tr>            
+                  <td><input type="checkbox" value=""/></td>
+                  <td>{{$role->rolename}}</td>
+                  <td>{{date('d M, Y', strtotime($role->created_at))}}</td>              
+                  <td width="15%">
+                    <a href="{{url(config('app.admin_prefix').'/user/role/edit/'.$role->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                    <a onclick="javascript:document.getElementById('roleId').value = {{$role->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                  </td>
+                </tr>              
+              @endforeach
+            @else
+              <tr><td colspan="7">{{__('user.roles__unavailable')}}</td></tr>
+            @endif
           </tbody>
         </table>
       </div>
@@ -66,28 +70,17 @@
 @stop
 @section('scripts')
 <script>
-  $.when(
-        $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" ),        
-        $.getScript( "{{asset('js/push-router/push-form.js')}}" ),        
-        $.Deferred(function( deferred ){
-            $( deferred.resolve );
-        })
-    ).done(function(){
+  $(document).ready(function() {
+    $.pushScripts(
+        ["{{asset('js/push-router/push-form.js')}}"]        
+    ).done(function() {
       $(document).ready(function() {
-            // console.log(document.getElementById('dataTable'));
-              $('#dataTable').DataTable({
-                "retrieve": true,
-                "bInfo" : false,
-              });
-              // $.getScript("{{asset('js/push-router/push-form.js')}}", function() {
-                $('.push-form').pushForm({
-                  modal: 'deleteModal',
-                  redirect: '{{config("app.admin_prefix")}}/user/roles'
-                });
-              // });
+        $('.push-form').pushForm({
+          modal: 'deleteModal',
+          redirect: '{{config("app.admin_prefix")}}/user/roles'
+        });
       });
     });
+  });
 </script>
 @stop

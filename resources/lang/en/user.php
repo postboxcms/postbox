@@ -46,5 +46,8 @@ return [
     'delete_user_success_message' => 'User has been deleted successfully',
     'delete_user_fail_message' => 'You are not authorized to delete the user',
     'upload_btn_label' => 'Click to upload profile picture',
-    'no_img_message' => 'No image uploaded'
+    'no_img_message' => 'No image uploaded',
+    'unavailable' => 'No users available',
+    'roles_unavailable' => 'No user role available'
+
 ];
