@@ -436,14 +436,19 @@ div.user .btn-user {
     border-radius: 0.2rem !important;
   }
 
+  table#dataTable thead tr {
+    background-color: $gray-100;
+  }
   table#dataTable thead tr > th {
     text-align: left;
-    color: $blue;
+    color: $gray-800;
+    font-weight: 600;
   }
 
   table#dataTable tbody tr.feed-row td.title {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 500;
+    color: $blue;
   }
 
   table#dataTable tbody tr.feed-row {
