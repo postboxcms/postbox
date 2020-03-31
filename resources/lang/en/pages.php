@@ -46,5 +46,6 @@ return [
     'restore_page_confirm' => 'Restore page',
     'restore_page_confirm_message' => 'Do you want to restore this page?',
     'restore_page_success_message' => 'Page restored successfully',
-    'upload_btn_label' => 'Click here to upload image'
+    'upload_btn_label' => 'Click here to upload image',
+    'unavailable'   => 'No pages available'
 ];

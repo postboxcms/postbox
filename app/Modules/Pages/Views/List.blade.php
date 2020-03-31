@@ -14,9 +14,6 @@
 </div>
 
 <div class="card shadow mb-4">
-    <!-- <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary"></h6>
-    </div> -->
     <div class="card-body card-datatable">
       <div class="table-responsive">
         <table class="table " id="dataTable" width="100%" cellspacing="0">
@@ -25,7 +22,7 @@
               <th width="5%">
                 <input type="checkbox" name="select_element" value="1"/>
               </th>
-              <th width="">{{__('pages.title')}}</th>
+              <th width="40%" class="title">{{__('pages.title')}}</th>
               <th width="15%">{{__('pages.image')}}</th>
               <th width="10%">{{__('pages.status')}}</th>
               @if($pagemode == 'trash')
@@ -34,59 +31,61 @@
                 <th width="15%">{{__('pages.created')}}</th>
                 <th width="15%">{{__('pages.updated')}}</th>
               @endif
-              <!-- <th>{{__('pages.actions')}}</th> -->
             </tr>
           </thead>
           <tbody>
-            @foreach($pages as $page)
-              <tr class="feed-row">
-                <td>
-                  <input type="checkbox" name="select_element" value="1"/>
-                </td>
-                <td>{{$page->title}}
-                  <div class="clear hidden-popup">
-                    @if($pagemode == 'trash')
-                      <a onclick="javascript:document.getElementById('restoreId').value = {{$page->id}};" data-toggle="modal" data-target="#restoreModal" href="#" class=""><i class="fas fa-undo-alt"></i> {{__('pages.restore_label')}}</a>
-                      <a onclick="javascript:document.getElementById('pageDelId').value = {{$page->id}};" href="#" data-toggle="modal" data-target="#deletePermModal" class=""><i class="fas fa-trash"></i> {{__('pages.delete_permanently_label')}}</a>
-                    @elseif($pagemode == 'edit')
-                      <a href="{{url(config('app.admin_prefix').'/page/edit/'.$page->id)}}" class=""><i class="fas fa-edit"></i> {{__('pages.edit_label')}}</a>
-                      <a onclick="javascript:document.getElementById('pageId').value = {{$page->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class=""><i class="fas fa-trash"></i> {{__('pages.delete_label')}} </a>
+            @if(count($pages) > 0) 
+              @foreach($pages as $page)
+                <tr class="feed-row">
+                  <td>
+                    <input type="checkbox" name="select_element" value="1"/>
+                  </td>
+                  <td>{{$page->title}}
+                    <span class="hidden-popup">
+                      @if($pagemode == 'trash')
+                        <a onclick="javascript:document.getElementById('restoreId').value = {{$page->id}};" data-toggle="modal" data-target="#restoreModal" href="#" class=""><i class="fas fa-undo-alt"></i> {{__('pages.restore_label')}}</a>
+                        <a onclick="javascript:document.getElementById('pageDelId').value = {{$page->id}};" href="#" data-toggle="modal" data-target="#deletePermModal" class=""><i class="fas fa-trash"></i> {{__('pages.delete_permanently_label')}}</a>
+                      @elseif($pagemode == 'edit')
+                        <a href="{{url(config('app.admin_prefix').'/page/edit/'.$page->id)}}" class=""><i class="fas fa-edit"></i> {{__('pages.edit_label')}}</a>
+                        <a onclick="javascript:document.getElementById('pageId').value = {{$page->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class=""><i class="fas fa-trash"></i> {{__('pages.delete_label')}} </a>
+                      @endif
+                    </span>
+                  </td>
+                  <td class="">
+                    @if($page->image !== null && file_exists(assets_path('storage/pages/'.$page->image)))
+                      <img src="{{asset('storage/pages/'.$page->image)}}" width="100px"/>
+                    @else
+                      <div class="image-placeholder">{!! __('pages.no_img_message') !!}</div>
                     @endif
-                  </div>
-                </td>
-                <td class="">
-                  @if($page->image !== null && file_exists(assets_path('storage/pages/'.$page->image)))
-                    <img src="{{asset('storage/pages/'.$page->image)}}" width="100px"/>
-                  @else
-                    <div class="image-placeholder">{!! __('pages.no_img_message') !!}</div>
-                  @endif
-                </td>
-                <td class="">
-                  @if($page->status == 1)
-                    <label class="status-label draft">{{ __('posts.draft_label')}}</label>
-                  @elseif($page->status == 2)
-                    <label class="status-label published">{{ __('posts.published_label')}}</label>
-                  @elseif($page->status == 3)
-                    <label class="status-label trash">{{ __('posts.deleted_label')}}</label>
-                  @endif
-                </td>
-                @if($pagemode == 'trash')
-                  <td class="">{{$page->deleted_at}}</td>
-                @elseif($pagemode == 'edit')
-                  <td class="">{{$page->created_at}}</td>
-                  <td class="">{{$page->updated_at}}</td>
-                @endif
-                <!-- <td class="text-center">
+                  </td>
+                  <td class="">
+                    @if($page->status == 1)
+                      <label class="status-label draft">{{ __('posts.draft_label')}}</label>
+                    @elseif($page->status == 2)
+                      <label class="status-label published">{{ __('posts.published_label')}}</label>
+                    @elseif($page->status == 3)
+                      <label class="status-label trash">{{ __('posts.deleted_label')}}</label>
+                    @endif
+                  </td>
                   @if($pagemode == 'trash')
-                    <a onclick="javascript:document.getElementById('restoreId').value = {{$page->id}};" data-toggle="modal" data-target="#restoreModal" href="#" class="btn btn-success"><i class="fas fa-undo-alt"></i> Restore</a>
-                    <a onclick="javascript:document.getElementById('pageDelId').value = {{$page->id}};" href="#" data-toggle="modal" data-target="#deletePermModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete Permanently</a>
+                    <td class="">{{date('d M,Y',strtotime($page->deleted_at))}}</td>
                   @elseif($pagemode == 'edit')
-                    <a href="{{url('/page/edit/'.$page->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                    <a onclick="javascript:document.getElementById('pageId').value = {{$page->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                    <td class="">{{date('d M,Y',strtotime($page->created_at))}}</td>
+                    <td class="">{{date('d M,Y',strtotime($page->updated_at))}}</td>
                   @endif
-                </td> -->
-              </tr>
-            @endforeach
+                </tr>
+              @endforeach
+            @else
+              @if($pagemode == 'trash')
+                <tr>
+                  <td colspan="5" class="text-center">{{__('pages.unavailable')}}</td>
+                </tr>
+              @else
+                <tr>
+                  <td colspan="6" class="text-center">{{__('pages.unavailable')}}</td>
+                </tr>
+              @endif
+            @endif
           </tbody>
         </table>
       </div>
@@ -167,44 +166,16 @@
 @stop
 @section('scripts')
 <script>
-    // $(document).ready(function() {
-    //   $.pushScripts([
-    //     "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}",
-    //     "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}",
-    //     "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}",
-    //     "{{asset('js/push-router/push-form.js')}}"
-    //   ]).done(function() {
-    //       $(document).ready(function() {
-    //           $('#dataTable').DataTable({
-    //             "retrieve": true,
-    //             "bInfo" : false,
-    //           });
-    //           $('.push-form').pushForm({
-    //             modal: 'deleteModal',
-    //             redirect: '{{config("app.admin_prefix")}}/pages'
-    //           });
-    //       });
-    //   });
-    // });
-  $.when(
-        $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" ),        
-        $.getScript( "{{asset('js/push-router/push-form.js')}}" ),        
-        $.Deferred(function( deferred ){
-            $( deferred.resolve );
-        })
-    ).done(function(){
-      $(document).ready(function() {
-            // console.log(document.getElementById('dataTable'));
-              $('#dataTable').DataTable({
-                "retrieve": true,
-                "bInfo" : false,
-              });
+    $(document).ready(function() {
+      $.pushScripts([
+        "{{asset('js/push-router/push-form.js')}}"
+      ]).done(function() {
+          $(document).ready(function() {
               $('.push-form').pushForm({
                 modal: 'deleteModal',
                 redirect: '{{config("app.admin_prefix")}}/pages'
               });
+          });
       });
     });
 </script>
