@@ -12,30 +12,35 @@
 </div>
 
 <div class="card shadow mb-4">
-    <!-- <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary"></h6>
-    </div> -->
     <div class="card-body card-datatable">
       <div class="table-responsive">
         <table class="table " id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th><input type="checkbox" name="select_element" value="1"/></th>
               <th>{{__('categories.title')}}</th>
               <th>{{__('categories.parent')}}</th>
               <th>{{__('categories.actions')}}</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($categories as $category)
+            @if(count($categories) > 0)
+              @foreach($categories as $category)
+                <tr>
+                  <td width="5%"><input type="checkbox" name="select_element" value="1"/></td>
+                  <td>{{$category->name}}</td>
+                  <td>{{$category->parent}}</td>
+                  <td width="10%">
+                    <a href="{{url(config('app.admin_prefix').'/category/edit/'.$category->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                    <a onclick="javascript:document.getElementById('categoryId').value = {{$category->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                  </td>
+                </tr>            
+              @endforeach
+            @else
               <tr>
-                <td>{{$category->name}}</td>
-                <td>{{$category->parent}}</td>
-                <td>
-                  <a href="{{url(config('app.admin_prefix').'/category/edit/'.$category->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                  <a onclick="javascript:document.getElementById('categoryId').value = {{$category->id}};" href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                </td>
-              </tr>            
-            @endforeach
+                <td colspan="3" class="text-center">{{__('categories.unavailable')}}</td>
+              </tr>
+            @endif
           </tbody>
         </table>
       </div>
@@ -67,28 +72,17 @@
 @stop
 @section('scripts')
 <script>
-  $.when(
-        $.getScript( "{{asset('js/admin/vendor/datatables/jquery.dataTables.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}" ),
-        $.getScript( "{{asset('js/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" ),        
-        $.getScript( "{{asset('js/push-router/push-form.js')}}" ),        
-        $.Deferred(function( deferred ) {
-            $( deferred.resolve );
-        })
+  $(document).ready(function() {
+    $.pushScripts(
+        ["{{asset('js/push-router/push-form.js')}}"]        
     ).done(function(){
       $(document).ready(function() {
-            // console.log(document.getElementById('dataTable'));
-              $('#dataTable').DataTable({
-                "retrieve": true,
-                "bInfo" : false,
-              });
-              // $.getScript("{{asset('js/push-router/push-form.js')}}", function() {
-                $('.push-form').pushForm({
-                  modal: 'deleteModal',
-                  redirect: '{{config("app.admin_prefix")}}/categories'
-                });
-              // });
+        $('.push-form').pushForm({
+          modal: 'deleteModal',
+          redirect: '{{config("app.admin_prefix")}}/categories'
+        });
       });
-    });
+    })
+  });
 </script>
 @stop
