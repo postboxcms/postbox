@@ -15,5 +15,6 @@ return [
     'update_category_success' => 'Category updated successfully',
     'delete_category_confirm' => 'Delete category?',
     'delete_category_confirm_message' => 'Do you want to delete this category?',
-    'delete_category_success_message' => 'Category deleted successfully'
+    'delete_category_success_message' => 'Category deleted successfully',
+    'unavailable' => 'No categories available'
 ];
