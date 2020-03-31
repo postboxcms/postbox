@@ -47,18 +47,14 @@
     //         };
 
     // },
-    // $.pushScripts = function(opts) {
-    //   console.log('script loaded')
-    //   var scripts = opts.scripts;
-    //   $.when(
-    //     scripts.forEach(function(script) {
-    //       $.getScript(script)
-    //     }),
-    //     $.Deferred(function( deferred ){
-    //           $( deferred.resolve );
-    //     })
-    //   ).done(
-    //     opts.code
-    //   )
-    // }
+    $.pushScripts = async function(scripts) {
+        return $.when(
+            $.each(scripts, function(idx) {
+                return $.getScript(scripts[idx]);
+            }),
+            $.Deferred(function( deferred ){
+                $( deferred.resolve );
+            })
+        )
+    }
 }(jQuery))

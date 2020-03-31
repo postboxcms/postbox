@@ -47,13 +47,14 @@
     //         };
 
     // },
-    $.pushScripts = function(scripts) {
-        loadScript = $.Deferred(function( deferred ){
-            $( deferred.resolve );
-        })
-        $.each(scripts, function(idx) {
-            loadScript = $.getScript(scripts[idx]);
-        });
-        return loadScript;
+    $.pushScripts = async function(scripts) {
+        return $.when(
+            $.each(scripts, function(idx) {
+                return $.getScript(scripts[idx]);
+            }),
+            $.Deferred(function( deferred ){
+                $( deferred.resolve );
+            })
+        )
     }
 }(jQuery))
