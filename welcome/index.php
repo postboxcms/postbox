@@ -4,8 +4,13 @@ error_reporting(0);
 // Create .env file from postbox.config file
 $envPath = getcwd().'/../.env';
 $configPath = getcwd().'/../postbox.config';
-@fopen($envPath,'w');
-@file_put_contents($envPath,@file_get_contents($configPath));
+
+if(@!file_exists($envPath) || (0 == filesize( $envPath ))) {
+    @fopen($envPath,'w');
+    @file_put_contents($envPath,@file_get_contents($configPath));
+} else {
+    die("<h2 style='text-align:center; font-family:Calibri,Arial,sans-serif'>Postbox is already installed</h2>");
+}
 
 $loadedExts = get_loaded_extensions();
 $loadedExtsCodes = array_map('strtolower',$loadedExts);
