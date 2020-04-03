@@ -22,7 +22,7 @@ Route::group(['prefix' => config('app.admin_prefix')], function() {
     Route::get('/', function() {
         return redirect(config('app.admin_prefix').'/dashboard');
     });
-    Auth::routes();
+    Auth::routes(['register'=>false]);
 });
 
 // Route::get('/home', 'HomeController@index')->name('home');

@@ -236,7 +236,7 @@ return [
 
     // Theme (Postbox variables)
     'theme_directory' => 'theme',
-    'admin_prefix' => '/admin',
+    'admin_prefix' => env('APP_ADMIN_PREFIX','/admin'),
     'app_key' => 'base64:Lm4pS2bFMrs9J01224dmQy9hSj9CCDiWzFOJidMxC+8='
 
 ];
