@@ -22,6 +22,9 @@ The CMS is built with a mindset to keep the software as easy to use as possible 
 
 - Create a database for your project. 
 - Copy or git clone the app folder to the root folder of your Apache server and then follow onscreen instructions.
+- To log in to the backend visit https://&lt;yourpostboxinstallation&gt;/admin and use the credentials
+    -  Username: admin@admin.com
+    -  Password: admin
 
 ***Note**: If you face error 'Failed to create symbolic link' while installation run the command 'php artisan assets:link' or 'sudo php artisan assets:link' through your terminal from the root folder of your application and then click on the Refresh button on screen*
 

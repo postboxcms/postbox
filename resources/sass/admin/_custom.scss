@@ -109,6 +109,10 @@ div.user .btn-user {
       background-color: $white;
   }
 
+  .card-body > nav {
+    margin: 0 20px;
+  }
+
   .navbar-search {
     .form-control {
       border:solid 1px $gray-400 !important;
@@ -256,20 +260,24 @@ div.user .btn-user {
     opacity: 0;
   }
 
-  #image-placeholder {
+  .upload-image {
+    width: 90%;
+  }
+
+  .image-placeholder {
     text-align: center;
-    font-size: 15px;
-    font-weight: 600;
+    // font-size: 15px;
+    // font-weight: 600;
     max-width: 90%;
     height: 100px;
     line-height: 100px;
     vertical-align: middle;
-    color: $gray-500 !important;
-    border: solid 1px $gray-400;
+    // color: $gray-500 !important;
+    // border: solid 1px $gray-400;
     margin: 0 auto;
   }
 
-  #image-overlay {
+  .image-overlay {
     visibility: hidden; 
     position: absolute; 
     width: 100%; 
@@ -278,17 +286,17 @@ div.user .btn-user {
     opacity: 0.7;
     background: $blue;
   }
-  #image-overlay > a {
-    width:40px; 
-    height:40px; 
+  .image-overlay > a {
+    width:50px; 
+    height:50px; 
     position:absolute; 
     top: 50%; left: 50%; 
     background: #fff; 
     vertical-align: middle; 
     line-height: 15px;
   }
-  #image-overlay > a > i {
-    font-size: 40px; 
+  .image-overlay > a > i {
+    font-size: 50px; 
   }
 
   .status-label {
@@ -420,7 +428,8 @@ div.user .btn-user {
 
   .nav-tabs .nav-link {
     color: $gray-800;
-    padding: 0.5rem 2rem;
+    border: none;
+    padding: 0.5rem 1rem;
   }
 
   .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {

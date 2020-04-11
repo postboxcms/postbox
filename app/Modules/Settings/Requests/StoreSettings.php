@@ -33,9 +33,13 @@ class StoreSettings extends FormRequest
     {
             return [
                 // validation rules while creating or updating form
-                'name' => 'required|max:255',
+                'name' => 'nullable|max:255',
                 'image' => 'nullable|image|mimes:jpeg,bmp,png,jpg,gif,svg|max:100000',
-                'image_full' => 'nullable|image|mimes:jpeg,bmp,png,jpg,gif,svg|max:100000',
+                'twitter_title' => 'nullable|min:10|max:255',
+                'twitter_image' => 'nullable|image|mimes:jpeg,bmp,png,jpg,gif,svg|max:100000',
+                'facebook_title' => 'nullable|min:10|max:255',
+                'facebook_image' => 'nullable|image|mimes:jpeg,bmp,png,jpg,gif,svg|max:100000',
+
             ];
     }
 }

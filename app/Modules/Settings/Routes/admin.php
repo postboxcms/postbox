@@ -13,5 +13,5 @@
 Route::middleware(['auth'])->get('/settings','Settings@main');
 Route::middleware(['auth'])->get('/settings/system','Settings@systemSettings');
 Route::middleware(['auth'])->get('/settings/menus/builder','Settings@menuBuilder');
-Route::middleware(['auth'])->post('/settings/app/save','Settings@saveSettings');
+Route::middleware(['auth'])->post('/settings/seo/save','Settings@saveSettings');
 Route::middleware(['auth'])->post('/settings/site/save','Settings@saveSettings');

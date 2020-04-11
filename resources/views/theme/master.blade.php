@@ -27,6 +27,20 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Styles -->
     <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
+
+    <!--====== SEO Tags ======-->
+    <meta name="twitter:image:src" content="{{ SEO::twitter('image') }}" />
+    <meta name="twitter:site" content="{{ SEO::twitter('site') }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{ SEO::twitter('title') }}" />
+    <meta name="twitter:description" content="{{ SEO::twitter('description') }}" />
+    <meta property="og:image" content="{{ SEO::facebook('image') }}" />
+    <meta property="og:site_name" content="{{ SEO::facebook('site') }}" />
+    <meta property="og:type" content="object" />
+    <meta property="og:title" content="{{ SEO::facebook('title') }}" />
+    <meta property="og:url" content="{{ url('/') }}" />
+    <meta property="og:description" content="{{ SEO::facebook('description') }}" />
+    
 </head>
 <body>
     <div id="box">

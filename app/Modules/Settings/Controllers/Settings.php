@@ -14,7 +14,14 @@ class Settings extends Controller
     protected $data = [
         'name' => '',
         'image' => '',
-        'image_full' => ''
+        'twitter_title' => '',
+        'twitter_description' => '',
+        'twitter_site' => '',
+        'twitter_image' => '',
+        'facebook_title' => '',
+        'facebook_description' => '',
+        'facebook_site' => '',
+        'facebook_image' => ''
     ];
     protected $recordExists;
     // protected $requests;
@@ -27,19 +34,10 @@ class Settings extends Controller
     }
 
     private function _saveToDB(String $mode, Array $settings) {
-        // Check if data is present already else insert
-        if(!$this->recordExists) {
-            SettingsModel::insert($settings);
-        } else {
-            // dd($settings);
-            foreach($settings as $setting) {
-                if(($setting['parameter'] == $mode.'.image' || $setting['parameter'] == $mode.'.image_full') && $setting['value'] == null) {
-                    $setting['value'] = SettingsModel::where('parameter',$setting['parameter'])->get('value')->toArray()[0]['value'];
-                }
-                SettingsModel::where('parameter',$setting['parameter'])->update(['value'=>$setting['value']]);
-            }
+        foreach($settings as $setting) {
+            SettingsModel::where('parameter',$setting['parameter'])->updateOrCreate(['parameter'=>$setting['parameter']]);
+            SettingsModel::where('parameter',$setting['parameter'])->update(['value'=>$setting['value']]);
         }
-        // If data is already present update it
         return true;
     }
 
@@ -78,26 +76,48 @@ class Settings extends Controller
     public function systemSettings() {
         $data['title'] = __('settings.system_title');
         $data['icon'] = admin_menu_icon();      
-        $data['app']  = $this->_getData('app');
+        $data['seo']  = $this->_getData('seo');
         $data['site']  = $this->_getData('site');
-
         return view('Settings::System', $data);
     }
 
     public function saveSettings(StoreSettings $request) {
-        // $this->requests = $request->all();
+        $mode = $request->mode;
+        $prefix = $request->_prefix;
+
         if($request->hasFile('image')) {
             $request->image->store('settings', 'assets');
         }
-        if($request->hasFile('image_full')) {
-            $request->image_full->store('settings', 'assets');
+
+        foreach($prefix as $_prefix) {
+            if($request->hasFile($_prefix.'image')) {
+                $request->{$_prefix.'image'}->store('settings', 'assets');
+            }    
         }
 
-        $mode = $request->mode;
         foreach($request->all() as $parameter=>$value) {
-            if($parameter !== 'mode' && $parameter !== '_token') {
+            if($parameter !== 'mode' && $parameter !== '_token' && $parameter !== '_prefix') {
                 if(is_object($value) && $value->hashName() !== null) {
                     $value = (string)$value->hashName();
+                }
+                if($parameter == "image_flag") {
+                    continue;
+                }
+                if($parameter == "image") {
+                    if($request->image_flag == "1") {
+                        $value = null;
+                    }
+                }
+
+                foreach($prefix as $_prefix) {
+                    if($parameter == $_prefix."image") {
+                        if($request->{$_prefix.'image_flag'} == "1") {
+                            $value = null;
+                        }
+                    }    
+                    if($parameter == $_prefix."image_flag") {
+                        continue;
+                    }    
                 }
                 $settings[] = [
                     'parameter' => $mode.'.'.$parameter,
@@ -105,7 +125,6 @@ class Settings extends Controller
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s')
                 ];
-                $this->recordExists = SettingsModel::where('parameter',$mode.'.'.$parameter)->exists();
             }
         }
 

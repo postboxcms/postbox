@@ -232,6 +232,7 @@ return [
         'Widget' => App\Components\Widget::class,
         'Template' => App\Components\Template::class,
         'Page'  => App\Components\Page::class,
+        'SEO'  => App\Components\SEO::class,
     ],
 
     // Theme (Postbox variables)

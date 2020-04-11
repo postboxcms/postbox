@@ -30,24 +30,8 @@
         }
         return path;
     }
-
-    // $.pushConfig = function (opts) {
-    //         var dependencies = opts.dependencies;
-
-    //         require.config({
-    //             waitSeconds: 10,
-    //             paths: dependencies
-    //         });
-    //         // console.log(opts)
-
-    //         require( Object.keys(dependencies), opts.code);
-
-    //         require.onError = function(err){
-    //           console.log(err)
-    //         };
-
-    // },
-    $.pushScripts = async function(scripts) {
+    
+    $.pushScripts = function(scripts) {
         return $.when(
             $.each(scripts, function(idx) {
                 return $.getScript(scripts[idx]);
