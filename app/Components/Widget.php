@@ -40,7 +40,7 @@ class Widget
     }
 
     private function posts() {
-        return DB::table('posts')->where('status',2)->get();
+        return DB::table('posts')->where('status',2)->orderBy('id','desc')->get();
     }
 
     private function pages() {
