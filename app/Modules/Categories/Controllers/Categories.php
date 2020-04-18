@@ -14,6 +14,11 @@ use App\Modules\Categories\Requests\StoreCategory;
 class Categories extends Controller
 {
     protected $schema;
+    protected $pageData = [
+        'name'  => 'Uncategorized',
+        'url'   => 'all',
+        'parent'=> 0
+    ];
     protected $table = 'categories';
 
     /**
@@ -134,8 +139,13 @@ class Categories extends Controller
 
     public function pageView($url) {
         $data['page'] = 'categories';
-        $data['pageData'] = CategoryModel::where('url',$url)->firstOrFail()->toArray();
-        $data['pageData']['posts'] = DB::table('posts')->where(['category'=>$data['pageData']['id'],'status'=>2])->get()->toArray();
+        if($url == 'all') {
+            $data['pageData'] = $this->pageData;            
+            $data['pageData']['posts'] = DB::table('posts')->where('status',2)->orderBy('id','desc')->get()->toArray();                        
+        } else {
+            $data['pageData'] = CategoryModel::where('url',$url)->firstOrFail()->toArray();
+            $data['pageData']['posts'] = DB::table('posts')->where(['category'=>$data['pageData']['id'],'status'=>2])->get()->toArray();            
+        }
 
         return view('theme.page',$data);
     }

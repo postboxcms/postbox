@@ -12,10 +12,7 @@
 */
 
 Route::get('/', function () {
-    $data['pageData'] = [];
-    $data['pageData']['meta_description'] = Template::display('description');
-    $data['pageData']['meta_keywords'] = Template::display('keywords');
-    return view('theme.home', $data);
+    return view('theme.home');
 });
 
 Route::group(['prefix' => config('app.admin_prefix')], function() {

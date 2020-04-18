@@ -11,4 +11,4 @@
 */
 
 // Frontend routes
-Route::get('/categories/{slug}','Categories@pageView');
+Route::get('/category/{slug}','Categories@pageView');

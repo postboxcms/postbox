@@ -9,8 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- SEO tags -->
-    <meta name="description" content="{{ $pageData['meta_description'] }}"/>
-    <meta name="keywords" content="{{ $pageData['meta_keywords'] }}"/>
+    <meta name="description" content="{{ Template::display('description') }}"/>
+    <meta name="keywords" content="{{ Template::display('keywords') }}"/>
     <meta name="robots" content="index,follow"/>
 
 
@@ -38,7 +38,7 @@
     <meta property="og:site_name" content="{{ SEO::facebook('site') }}" />
     <meta property="og:type" content="object" />
     <meta property="og:title" content="{{ SEO::facebook('title') }}" />
-    <meta property="og:url" content="{{ url('/') }}" />
+    <meta property="og:url" content="{{ SEO::facebook('url') }}" />
     <meta property="og:description" content="{{ SEO::facebook('description') }}" />
     
 </head>

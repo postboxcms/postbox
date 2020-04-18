@@ -53,7 +53,7 @@
                   </td>
                   <td class="">
                     @if($page->image !== null && file_exists(assets_path('storage/pages/'.$page->image)))
-                      <img src="{{asset('storage/pages/'.$page->image)}}" width="100px"/>
+                      <img src="{{asset('storage/pages/'.$page->image)}}" width="150px"/>
                     @else
                       <div class="image-placeholder">{!! __('pages.no_img_message') !!}</div>
                     @endif

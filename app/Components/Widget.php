@@ -48,7 +48,12 @@ class Widget
     }
 
     private function categories() {
-        return DB::table('categories')->get();
+        $categories = array_map(function($val) {
+            return $val['id'];
+        },DB::table('categories')->get()->toArray());
+        $data['uncategorizedPosts'] = DB::table('posts')->whereNotIn('category',$categories)->count();
+        $data['categoryList'] = DB::table('categories')->get();
+        return $data;
     }
 
     private function copyright() {

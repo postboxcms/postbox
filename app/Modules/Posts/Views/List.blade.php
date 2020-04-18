@@ -54,7 +54,7 @@
                   </td>
                   <td class="">
                     @if($post->image !== null && file_exists(assets_path('storage/posts/'.$post->image)))
-                      <div class="image-placeholder"><img src="{{asset('storage/posts/'.$post->image)}}" width="100px"/></div>
+                      <div class="image-placeholder"><img src="{{asset('storage/posts/'.$post->image)}}" width="150px"/></div>
                     @else
                       <div class="image-placeholder">{!! __('posts.no_img_message') !!}</div>
                     @endif
