@@ -90,7 +90,7 @@ class Pages extends Controller
     public function listPage()
     {
         //Your code goes here
-        $data['pages'] = PageModel::where('status',1)->orWhere('status',2)->get();
+        $data['pages'] = PageModel::where('status',1)->orWhere('status',2)->orderBy('id','desc')->get();
         $data['pagemode'] = 'edit';
         return admin_view('Pages::List', $data);
     }

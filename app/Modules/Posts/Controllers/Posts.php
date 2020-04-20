@@ -104,7 +104,7 @@ class Posts extends Controller
     public function listPost()
     {
         //Your code goes here
-        $data['posts'] = PostModel::where('status',1)->orWhere('status',2)->get();
+        $data['posts'] = PostModel::where('status',1)->orWhere('status',2)->orderBy('id','desc')->get();
         $data['pagemode'] = 'edit';
         return admin_view('Posts::List', $data);
     }
