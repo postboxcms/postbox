@@ -68,8 +68,8 @@ class SEO
 
         if(isset($property->value) && $property->value != NULL) {
             return $property->value;
-        } else if(isset($property->meta_description) && $property->meta_description != NULL) {
-            return $property->meta_description;
+        } else if(isset($property->summary) && $property->summary != NULL) {
+            return $property->summary;
         } else {
             return env('APP_DESCRIPTION','Postbox CMS');
         }
