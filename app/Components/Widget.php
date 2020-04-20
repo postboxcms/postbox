@@ -51,7 +51,7 @@ class Widget
         $categories = array_map(function($val) {
             return $val['id'];
         },DB::table('categories')->get()->toArray());
-        $data['uncategorizedPosts'] = DB::table('posts')->whereNotIn('category',$categories)->count();
+        $data['uncategorizedPosts'] = DB::table('posts')->whereNotIn('category',$categories)->where('status',2)->count();
         $data['categoryList'] = DB::table('categories')->get();
         return $data;
     }
