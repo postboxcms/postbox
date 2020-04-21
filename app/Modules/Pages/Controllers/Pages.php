@@ -178,7 +178,12 @@ class Pages extends Controller
             if($request->hasFile('image')) {
                 $request->image->store('pages','assets');
             }
-            $request->created_at = date('Y-m-d H:i:s');
+            if($page->status !== 2) {
+                $request->created_at = date('Y-m-d H:i:s');
+            } else {
+                $request->created_at = $page->created_at;
+            }
+
             $request->updated_at = date('Y-m-d H:i:s');
     
             $updatePage = $this->_updateToDB($page, $request);
