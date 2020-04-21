@@ -205,7 +205,12 @@ class Posts extends Controller
                 $this->thumb = assets_path('storage/posts/thumbs/'.$request->image->hashName());
                 $this->_createThumbnail($this->thumb,16,16);
             }
-            $request->created_at = date('Y-m-d H:i:s');
+            if($post->status !== 2) {
+                $request->created_at = date('Y-m-d H:i:s');
+            } else {
+                $request->created_at = $post->created_at;
+            }
+
             $request->updated_at = date('Y-m-d H:i:s');
     
             $updatePost = $this->_updateToDB($post, $request);
