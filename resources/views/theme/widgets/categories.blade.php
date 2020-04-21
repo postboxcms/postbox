@@ -9,8 +9,9 @@
             <ul class="category-list">        
                 @foreach ($categories['categoryList'] as $category)
                     <li>
-                        <a class="brand-color" href="{{url('category/'.$category->url)}}">{{$category->name}}</a>
+                        <a class="brand-color" href="{{url('category/'.$category->url)}}">{{$category->name}}({{$category->posts}})</a>
                     </li>
+                    <li><a href="{{url('category/all')}}">Uncategorized ({{$categories['uncategorizedPosts']}})</a></li>
                 @endforeach
             </ul>
         @endif
