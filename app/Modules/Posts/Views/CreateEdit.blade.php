@@ -17,6 +17,7 @@
 <form action="{{url($post['form'])}}" id="post-form" enctype="multipart/form-data" method="post" class="push-form">
     <div class="row">
             {{ csrf_field() }}
+            <input type="hidden" value="{{auth()->user()->id}}" name="author"/>
             @if(isset($post['id']))
                 <input type="hidden" value="{{$post['id']}}" name="id"/>
             @endif

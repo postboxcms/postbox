@@ -15,7 +15,7 @@
                 {{$title}}
             </h1>
             <div class="post-timeline">
-                Posted on {{ $created_at }} under {{ $category }}
+                Posted by {{ $author }} on {{ $created_at }} under {{ $category }}
             </div>
         </div>
     </div>

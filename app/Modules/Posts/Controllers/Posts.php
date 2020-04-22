@@ -210,7 +210,6 @@ class Posts extends Controller
             } else {
                 $request->created_at = $post->created_at;
             }
-
             $request->updated_at = date('Y-m-d H:i:s');
     
             $updatePost = $this->_updateToDB($post, $request);
@@ -261,12 +260,12 @@ class Posts extends Controller
     public function pageView($url) {
         $data['page'] = 'posts';
         $data['pageData'] = PostModel::where('url',$url)->where('status',2)->firstOrFail()->toArray();
+        $data['pageData']['author'] = PostModel::where('url',$url)->where('status',2)->first()->authorId->name;
         $data['pageData']['meta_description'] = (isset($data['pageData']['meta_description']) && $data['pageData']['meta_description'] != null)?$data['pageData']['meta_description']:env('APP_DESCRIPTION');
         $data['pageData']['meta_keywords'] = (isset($data['pageData']['meta_keywords']) && $data['pageData']['meta_keywords'] != null)?$data['pageData']['meta_keywords']:env('APP_TAGS');
         $data['pageData']['category'] = $data['pageData']['category'] == null ? 'Uncategorized':$this->_getCategoryName($data['pageData']['category']);
         $data['pageData']['created_at'] = date('D d M, Y', strtotime($data['pageData']['created_at']));
         $data['pageData']['updated_at'] = date('D d M, Y', strtotime($data['pageData']['updated_at']));
-        // dd($data);
         return view('theme.page',$data);
     }
 
