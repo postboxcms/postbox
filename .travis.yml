@@ -5,7 +5,8 @@ php:
   - '7.2'
 before_script:
   - composer self-update
-  - composer .env.testing .env
+  - composer install --no-interaction
+  - cp .env.testing .env
   - cp .env.travis .env
   - nvm install node
   - npm install npm@latest -g
