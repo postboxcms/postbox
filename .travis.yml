@@ -11,4 +11,4 @@ before_script:
   - npm install npm@latest -g
   - npm install
 script:
-  - sudo vendor/bin/phpunit
+  - sudo ./vendor/bin/phpunit
