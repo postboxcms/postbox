@@ -47,5 +47,6 @@ return [
     'restore_post_confirm_message' => 'Do you want to restore this post?',
     'restore_post_success_message' => 'Post restored successfully',
     'upload_btn_label' => 'Click here to upload image',
-    'unavailable'   => 'No posts available'
+    'unavailable'   => 'No posts available',
+    'updatepost_failed_message' => 'Failed to update post'
 ];

@@ -16,7 +16,7 @@ class AlterUsersTable extends Migration
         if (Schema::hasTable('users')) {
             Schema::table('users', function (Blueprint $table) {
                 $table->smallInteger('role')->after('password')->default(1);
-                $table->string('username')->after('id');
+                $table->string('username')->after('id')->nullable();
                 $table->tinyInteger('status')->after('role')->default(1);
                 $table->string('image')->after('name')->nullable();
             });

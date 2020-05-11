@@ -214,6 +214,8 @@ class Posts extends Controller
     
             $updatePost = $this->_updateToDB($post, $request);
             return response()->json(['message'=>__('posts.updatepost_message')]);
+        } else {
+            return response()->json(['error'=>__('posts.updatepost_failed_message')],400);
         }
     }
 
