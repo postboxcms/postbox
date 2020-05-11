@@ -12,4 +12,4 @@ before_script:
   - npm install
   - php artisan migrate --seed --env=testing
 script:
-  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit
+  - vendor/bin/phpunit
