@@ -1,6 +1,8 @@
 <p align="center"><img src="https://github.com/postboxcms/postbox/blob/master/assets/images/logo_blue_min.png" width="250"></p>
 
-<img align="center" src="https://travis-ci.com/postboxcms/postbox.svg?branch=master"/>
+<p align="center">
+[![Build Status](https://travis-ci.com/postboxcms/postbox.svg?branch=master)](https://travis-ci.com/postboxcms/postbox)
+</p>
 
 ## About Postbox
 
