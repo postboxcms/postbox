@@ -1,0 +1,15 @@
+os:
+  - linux
+language: php
+php:
+  - '7.2'
+before_script:
+  - composer self-update
+  - composer .env.testing .env
+  - cp .env.travis .env
+  - nvm install node
+  - npm install npm@latest -g
+  - npm install -g jshint
+  - npm install
+script:
+  - vendor/bin/phpunit
