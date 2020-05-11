@@ -1,5 +1,7 @@
 <p align="center"><img src="https://github.com/postboxcms/postbox/blob/master/assets/images/logo_blue_min.png" width="250"></p>
 
+[![Build Status](https://travis-ci.com/postboxcms/postbox.svg?branch=master)](https://travis-ci.com/postboxcms/postbox)
+
 ## About Postbox
 
 Postbox is a simple CMS to create beautiful blogs and websites. Built on top of Laravel framework, the software has an intuitive interface which uses custom push state routing implemented in jQuery and vanilla JS. 
