@@ -4,6 +4,7 @@ language: php
 php:
   - '7.2'
 before_script:
+  - rn -rf vendor
   - composer self-update
   - composer install --no-interaction
   - cp .env.testing .env
