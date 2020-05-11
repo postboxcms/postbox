@@ -10,5 +10,6 @@ before_script:
   - nvm install node
   - npm install npm@latest -g
   - npm install
+  - php artisan migrate --seed --env=testing
 script:
-  - sudo ./vendor/bin/phpunit
+  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit
