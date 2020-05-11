@@ -9,7 +9,6 @@ before_script:
   - cp .env.testing .env
   - nvm install node
   - npm install npm@latest -g
-  - npm install -g jshint
   - npm install
 script:
-  - vendor/bin/phpunit
+  - sudo vendor/bin/phpunit
