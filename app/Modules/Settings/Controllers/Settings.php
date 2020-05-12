@@ -89,10 +89,12 @@ class Settings extends Controller
             $request->image->store('settings', 'assets');
         }
 
-        foreach($prefix as $_prefix) {
-            if($request->hasFile($_prefix.'image')) {
-                $request->{$_prefix.'image'}->store('settings', 'assets');
-            }    
+        if(isset($request->_prefix) && $prefix != '') {
+            foreach($prefix as $_prefix) {
+                if($request->hasFile($_prefix.'image')) {
+                    $request->{$_prefix.'image'}->store('settings', 'assets');
+                }    
+            }
         }
 
         foreach($request->all() as $parameter=>$value) {
@@ -109,16 +111,19 @@ class Settings extends Controller
                     }
                 }
 
-                foreach($prefix as $_prefix) {
-                    if($parameter == $_prefix."image") {
-                        if($request->{$_prefix.'image_flag'} == "1") {
-                            $value = null;
-                        }
-                    }    
-                    if($parameter == $_prefix."image_flag") {
-                        continue;
-                    }    
+                if(isset($request->_prefix) && $prefix != '') {                
+                    foreach($prefix as $_prefix) {
+                        if($parameter == $_prefix."image") {
+                            if($request->{$_prefix.'image_flag'} == "1") {
+                                $value = null;
+                            }
+                        }    
+                        if($parameter == $_prefix."image_flag") {
+                            continue;
+                        }    
+                    }
                 }
+                
                 $settings[] = [
                     'parameter' => $mode.'.'.$parameter,
                     'value' => $value,
