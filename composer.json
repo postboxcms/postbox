@@ -1,6 +1,6 @@
 {
     "name": "postboxcms/postbox",
-    "type": "project",
+    "type": "cms",
     "description": "Postbox CMS",
     "keywords": [
         "framework",
