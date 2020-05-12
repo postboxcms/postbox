@@ -1,10 +1,12 @@
 {
-    "name": "laravel/laravel",
+    "name": "postboxcms/postbox",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Postbox CMS",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "postbox",
+        "cms"
     ],
     "license": "MIT",
     "require": {
