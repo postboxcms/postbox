@@ -1,16 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import PeopleIcon from '@material-ui/icons/People';
+import LocalPostOfficeIcon from '@material-ui/icons/LocalPostOffice';
 
 import Title from './Title';
 import { DashboardCard, DashboardPanel, DashboardContent } from './Dashboard/DashboardPanel';
@@ -25,7 +25,7 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
 }
 
 const useStyles = makeStyles({
-    subscriberContext: {
+    postContext: {
         flex: 1,
         fontSize: "14px"
     },
@@ -48,11 +48,11 @@ const rows = [
     createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
 ];
 
-const SubscribersBody = () => {
+const PostsBody = () => {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Subscribers</Title>
+            <Title>Posts</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -84,28 +84,28 @@ const SubscribersBody = () => {
     );
 }
 
-export const SubscribersCard = () => {
+export const PostCard = () => {
     const classes = useStyles();
     return (
         <React.Fragment>
             <Grid container>
             <Grid item xs={10} md={9} lg={10}>
-                <Title>Subscribers</Title>
+                <Title>Posts</Title>
                 <Typography component="p" variant="h4">
                     0
                 </Typography>
-                <Typography color="textSecondary" className={classes.subscriberContext}>
+                <Typography color="textSecondary" className={classes.postContext}>
                     Last updated: a few seconds ago
                 </Typography>
                 <div>
-                    <Link color="primary" href="#" onClick={preventDefault}>
+                    <Link color="primary" to="/posts">
                         View more
                     </Link>
                 </div>
             </Grid>
             <Grid item xs={2} md={3} lg={2}>
                 <Typography align="right" className={classes.iconClass}>
-                    <PeopleIcon />
+                    <LocalPostOfficeIcon />
                 </Typography>
             </Grid>
             </Grid>
@@ -113,12 +113,12 @@ export const SubscribersCard = () => {
     );
 }
 
-export default function Subscribers() {
+export default function Posts() {
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>
                 <DashboardContent>
-                    <SubscribersBody />
+                    <PostsBody />
                 </DashboardContent>
             </DashboardCard>
         </DashboardPanel>

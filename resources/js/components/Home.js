@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { DashboardCard, DashboardPanel, DashboardContent } from './Dashboard/DashboardPanel';
-import { VideoCard } from './Videos';
-import { ChannelsCard } from './Channels';
-import { SubscribersCard } from './Subscribers';
+import { PageCard } from './Pages';
+import { PostCard } from './Posts';
+import { UsersCard } from './Users';
 
 const Home = () => {
     return (
         <DashboardPanel spacing={3}>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
-                    <VideoCard />
+                    <PostCard />
                 </DashboardContent>
             </DashboardCard>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
-                    <ChannelsCard />
+                    <PageCard />
                 </DashboardContent>
             </DashboardCard>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
-                    <SubscribersCard />
+                    <UsersCard />
                 </DashboardContent>
             </DashboardCard>
         </DashboardPanel>

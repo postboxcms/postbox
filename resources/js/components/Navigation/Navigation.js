@@ -7,8 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import LocalPostOfficeIcon from '@material-ui/icons/LocalPostOffice';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
@@ -26,28 +26,28 @@ export const mainListItems = (
                 <ListItemText primary="Dashboard" />
             </ListItem>
         </Link>
-        <Link to="/videos">
+        <Link to="/pages">
             <ListItem button>
                 <ListItemIcon>
-                    <VideocamIcon />
+                    <LibraryBooksIcon />
                 </ListItemIcon>
-                <ListItemText primary="Videos" />
+                <ListItemText primary="Pages" />
             </ListItem>
         </Link>
-        <Link to="/channels">
+        <Link to="/posts">
             <ListItem button>
                 <ListItemIcon>
-                    <VideoLibraryIcon />
+                    <LocalPostOfficeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Channels" />
+                <ListItemText primary="Posts" />
             </ListItem>
         </Link>
-        <Link to="/subscribers">
+        <Link to="/users">
             <ListItem button>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Subscribers" />
+                <ListItemText primary="Users" />
             </ListItem>
         </Link>
     </div>

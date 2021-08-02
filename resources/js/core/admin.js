@@ -5,9 +5,9 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Dashboard from '../components/Dashboard/Dashboard';
 import Home from '../components/Home';
-import Videos from '../components/Videos';
-import Channels from '../components/Channels';
-import Subscribers from '../components/Subscribers';
+import Pages from '../components/Pages';
+import Posts from '../components/Posts';
+import Users from '../components/Users';
 
 const THEME = createMuiTheme({
     typography: {
@@ -18,6 +18,7 @@ const THEME = createMuiTheme({
      "fontWeightMedium": 500
     }
  });
+ /** React router to setup UI routes */
 const Admin = () => {
     return (
         <Router>
@@ -25,19 +26,15 @@ const Admin = () => {
                 <Route exact path="/">
                     <Dashboard title="Dashboard" component={Home}/>
                 </Route>
-                <Route path="/dashboard">
-                    <Dashboard title="Dashboard" />
+                <Route path="/posts">
+                    <Dashboard title="Posts" component={Posts} />
                 </Route>
-                <Route path="/videos">
-                    <Dashboard title="Videos" component={Videos} />
+                <Route path="/pages">
+                    <Dashboard title="Pages" component={Pages} />
                 </Route>
-                <Route path="/channels">
-                    <Dashboard title="Channels" component={Channels} />
+                <Route path="/users">
+                    <Dashboard title="Users" component={Users} />
                 </Route>
-                <Route path="/subscribers">
-                    <Dashboard title="Subscribers" component={Subscribers} />
-                </Route>
-
             </Switch>
         </Router>
     );

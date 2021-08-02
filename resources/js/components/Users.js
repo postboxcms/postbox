@@ -1,16 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import VideocamIcon from '@material-ui/icons/Videocam';
+import PeopleIcon from '@material-ui/icons/People';
 
 import Title from './Title';
 import { DashboardCard, DashboardPanel, DashboardContent } from './Dashboard/DashboardPanel';
@@ -24,9 +24,8 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
     return { id, date, name, shipTo, paymentMethod, amount };
 }
 
-
 const useStyles = makeStyles({
-    videoContext: {
+    userContext: {
         flex: 1,
         fontSize: "14px"
     },
@@ -49,11 +48,11 @@ const rows = [
     createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
 ];
 
-const VideosBody = () => {
+const UsersBody = () => {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Videos</Title>
+            <Title>Users</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -85,28 +84,26 @@ const VideosBody = () => {
     );
 }
 
-export const VideoCard = ()  => {
+export const UsersCard = () => {
     const classes = useStyles();
     return (
         <React.Fragment>
             <Grid container>
             <Grid item xs={10} md={9} lg={10}>
-                <Title>Videos</Title>
+                <Title>Users</Title>
                 <Typography component="p" variant="h4">
                     0
                 </Typography>
-                <Typography color="textSecondary" className={classes.videoContext}>
+                <Typography color="textSecondary" className={classes.UserContext}>
                     Last updated: a few seconds ago
                 </Typography>
-                <div>
-                    <Link color="primary" href="#" onClick={preventDefault}>
-                        View more
-                    </Link>
-                </div>
+                <Link color="primary" to="/users">
+                    View more
+                </Link>
             </Grid>
             <Grid item xs={2} md={3} lg={2}>
                 <Typography align="right" className={classes.iconClass}>
-                    <VideocamIcon />
+                    <PeopleIcon />
                 </Typography>
             </Grid>
             </Grid>
@@ -114,12 +111,12 @@ export const VideoCard = ()  => {
     );
 }
 
-export default function Videos() {
+export default function Users() {
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>
                 <DashboardContent>
-                    <VideosBody />
+                    <UsersBody />
                 </DashboardContent>
             </DashboardCard>
         </DashboardPanel>

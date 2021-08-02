@@ -1,16 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 import Title from './Title';
 import { DashboardCard, DashboardPanel, DashboardContent } from './Dashboard/DashboardPanel';
@@ -24,8 +24,9 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
     return { id, date, name, shipTo, paymentMethod, amount };
 }
 
+
 const useStyles = makeStyles({
-    channelContext: {
+    pageContext: {
         flex: 1,
         fontSize: "14px"
     },
@@ -48,11 +49,11 @@ const rows = [
     createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
 ];
 
-const ChannelsBody = () => {
+const PagesBody = () => {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Channels</Title>
+            <Title>Pages</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -84,28 +85,28 @@ const ChannelsBody = () => {
     );
 }
 
-export const ChannelsCard = () => {
+export const PageCard = ()  => {
     const classes = useStyles();
     return (
         <React.Fragment>
             <Grid container>
             <Grid item xs={10} md={9} lg={10}>
-                <Title>Channels</Title>
+                <Title>Pages</Title>
                 <Typography component="p" variant="h4">
                     0
                 </Typography>
-                <Typography color="textSecondary" className={classes.channelContext}>
+                <Typography color="textSecondary" className={classes.pageContext}>
                     Last updated: a few seconds ago
                 </Typography>
                 <div>
-                    <Link color="primary" href="#" onClick={preventDefault}>
+                    <Link color="primary" to="/pages">
                         View more
                     </Link>
                 </div>
             </Grid>
             <Grid item xs={2} md={3} lg={2}>
                 <Typography align="right" className={classes.iconClass}>
-                    <VideoLibraryIcon />
+                    <LibraryBooksIcon />
                 </Typography>
             </Grid>
             </Grid>
@@ -113,12 +114,12 @@ export const ChannelsCard = () => {
     );
 }
 
-export default function Channels() {
+export default function Pages() {
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>
                 <DashboardContent>
-                    <ChannelsBody />
+                    <PagesBody />
                 </DashboardContent>
             </DashboardCard>
         </DashboardPanel>
