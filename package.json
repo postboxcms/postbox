@@ -11,12 +11,12 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
-        "axios": "^0.19",
+        "axios": "^0.21.1",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "popper.js": "^1.12",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
@@ -26,7 +26,9 @@
     },
     "dependencies": {
         "@material-ui/core": "^4.11.0",
+        "@material-ui/data-grid": "^4.0.0-alpha.35",
         "@material-ui/icons": "^4.9.1",
+        "moment": "^2.29.1",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "recharts": "^1.8.5"

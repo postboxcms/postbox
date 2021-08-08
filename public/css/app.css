@@ -8243,7 +8243,6 @@ button.bg-dark:focus {
 }
 
 .position-sticky {
-  position: -webkit-sticky !important;
   position: sticky !important;
 }
 
@@ -8263,9 +8262,8 @@ button.bg-dark:focus {
   z-index: 1030;
 }
 
-@supports ((position: -webkit-sticky) or (position: sticky)) {
+@supports (position: sticky) {
   .sticky-top {
-    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 1020;
@@ -10899,10 +10897,6 @@ a.text-dark:focus {
   }
 }
 
-header {
-  background-color: #472791 !important;
-}
-
 a,
 a:hover {
   text-decoration: none;
@@ -10939,5 +10933,9 @@ a:hover {
 
 .coaster {
   border-left: solid 5px #472791;
+}
+
+.table-header-light {
+  text-transform: uppercase;
 }
 

@@ -10,3 +10,6 @@
   * Home (Individual component)
 * HomeComponent:
   * Loads individual components with their cards
+
+### Dashboard Component
+* Wrapper component or master component, applies theme layout and custom css, alongwith primary or brand colors

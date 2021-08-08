@@ -1,12 +1,20 @@
+import { makeStyles } from '@material-ui/core';
 import * as React from 'react';
 import { DashboardCard, DashboardPanel, DashboardContent } from './Dashboard/DashboardPanel';
 import { PageCard } from './Pages';
 import { PostCard } from './Posts';
 import { UsersCard } from './Users';
 
+const useStyles = makeStyles((theme) => ({
+    body: {
+        paddingTop: theme.spacing(4)
+    }
+}));
+
 const Home = () => {
+    const classes = useStyles();
     return (
-        <DashboardPanel spacing={3}>
+        <DashboardPanel className={classes.body} spacing={3}>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
                     <PostCard />

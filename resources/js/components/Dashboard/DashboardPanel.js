@@ -7,7 +7,7 @@ import { useStyles } from './Dashboard';
 
 export const DashboardPanel = (props) => {
     return (
-        <Grid container spacing={props.spacing}>
+        <Grid container spacing={props.spacing} className={props.className}>
             {props.children}
         </Grid>
     );
@@ -31,9 +31,9 @@ export const DashboardContent = (props) => {
     )
 }
 
-DashboardPanel.propTypes = {
-    children: PropTypes.element
-}
+// DashboardPanel.propTypes = {
+//     children: PropTypes.element
+// }
 DashboardCard.propTypes = {
     children: PropTypes.element
 }

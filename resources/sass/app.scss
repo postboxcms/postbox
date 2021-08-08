@@ -12,9 +12,8 @@ $navbar-dark-color: #ddd;
 $navbar-dark-bar-color: #131313;
 $navbar-dark-subheading-color: #888;
 $brand-color: #472791;
-header {
-    background-color: $brand-color !important;
-}
+$table-header-color: $navbar-dark-color;
+
 a, a:hover {
     text-decoration: none;
 }
@@ -42,4 +41,7 @@ a, a:hover {
 }
 .coaster {
     border-left: solid 5px $brand-color;
+}
+.table-header-light {
+    text-transform: uppercase;
 }
