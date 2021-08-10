@@ -8,6 +8,7 @@ import HomeIcon from '@material-ui/icons/Home';
 const useStyles = makeStyles((theme) => ({
     breadcrumb: {
         display: 'inline-block',
+        fontSize: theme.spacing(1.8),
         backgroundColor: '#281850',
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(0.6),
         width: 20,
         height: 20
+    },
+    breadcrumbText: {
+        fontSize: theme.spacing(1.8),
     }
 }));
 
@@ -29,11 +33,11 @@ export default function Breadcrumb(props) {
 
     return (
         <Breadcrumbs separator=">" aria-label="breadcrumb" className={classes.breadcrumb}>
-            <Link color="inherit" href="/">
+            <Link color="inherit" href="/" className={classes.breadcrumbText}>
                 <HomeIcon className={classes.icon}/>
                 Dashboard
             </Link>
-            <Typography>
+            <Typography className={classes.breadcrumbText}>
                 {props.title}
             </Typography>
         </Breadcrumbs>

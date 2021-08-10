@@ -2,15 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
+// layout
+import { DashboardCard, DashboardPanel } from './Dashboard/DashboardPanel';
+
 // elements
 import { DataGrid } from '@material-ui/data-grid';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import { green, grey } from '@material-ui/core/colors';
 
 // icons
 import LocalPostOfficeIcon from '@material-ui/icons/LocalPostOffice';
@@ -21,60 +22,8 @@ import AddIcon from '@material-ui/icons/Add';
 
 
 import Title from './Elements/Title';
-import { DashboardCard, DashboardPanel } from './Dashboard/DashboardPanel';
+import { Styles } from './Elements/Styles';
 
-const useStyles = makeStyles((theme) => ({
-    grid: {
-        height: 400,
-        width: '100%',
-        backgroundColor: '#fff'
-    },
-    post: {
-        flex: 1,
-        fontSize: "14px"
-    },
-    body: {
-        backgroundColor: '#fff'
-    },
-    icon: {
-        float: "right",
-        fontSize: 80,
-        opacity: 0.5,
-        color: "#ddd"
-    },
-    avatar: {
-        color: '#fff',
-        backgroundColor: grey[500],
-    },
-    label: {
-        backgroundColor: green[500],
-        fontSize: theme.spacing(1.5),
-        fontWeight: 500,
-        paddingRight: theme.spacing(0.2),
-        paddingLeft: theme.spacing(0.2),
-        width: theme.spacing(8),
-        height: theme.spacing(3)
-    },
-    button: {
-        marginRight: theme.spacing(1)
-    },
-    largebutton: {
-        marginBottom: theme.spacing(1),
-        float: 'right'
-    },
-    header: {
-        overflow: 'hidden',
-        clear: 'both'
-    },
-    headerIcon: {
-        marginBottom: theme.spacing(0.6)
-    },
-    title: {
-        float: 'left',
-        marginBottom: 0
-    }
-
-}));
 
 const columns = [
     { field: 'id', headerClassName: 'table-header-light', headerName: 'ID', width: 0, hide: true },
@@ -92,7 +41,7 @@ const columns = [
         width: 150,
         editable: false,
         renderCell: (params) => {
-            const classes = useStyles();
+            const classes = Styles();
             return (
                 <Avatar variant="rounded" className={classes.avatar}>
                     <AssignmentIcon />
@@ -107,7 +56,7 @@ const columns = [
         width: 150,
         editable: false,
         renderCell: () => {
-            const classes = useStyles();
+            const classes = Styles();
             return (
                 <Avatar variant="rounded" className={classes.label}>
                     Published
@@ -128,7 +77,7 @@ const columns = [
         headerClassName: 'table-header-light',
         width: 200,
         renderCell: () => {
-            const classes = useStyles();
+            const classes = Styles();
             return (
                 <div>
                     <Button
@@ -174,7 +123,7 @@ const rows = [
 ];
 
 const PostsBody = () => {
-    const classes = useStyles();
+    const classes = Styles();
     return (
         <React.Fragment>
             <div className={classes.header}>
@@ -204,7 +153,7 @@ const PostsBody = () => {
 }
 
 export const PostCard = () => {
-    const classes = useStyles();
+    const classes = Styles();
     return (
         <React.Fragment>
             <Grid container>
@@ -213,9 +162,9 @@ export const PostCard = () => {
                     <Typography component="p" variant="h4">
                         0
                 </Typography>
-                    <Typography color="textSecondary" className={classes.post}>
+                    <Typography color="textSecondary" className={classes.cardText}>
                         Last updated: a few seconds ago
-                </Typography>
+                    </Typography>
                     <Link color="primary" to="/posts">
                         View more
                 </Link>
@@ -231,7 +180,7 @@ export const PostCard = () => {
 }
 
 export default function Posts() {
-    const classes = useStyles();
+    const classes = Styles();
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>

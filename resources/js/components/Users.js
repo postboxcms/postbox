@@ -1,89 +1,145 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
+// layout
+import { DashboardCard, DashboardPanel } from './Dashboard/DashboardPanel';
+
+// elements
 import { DataGrid } from '@material-ui/data-grid';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+
+// icons
 import PeopleIcon from '@material-ui/icons/People';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+
 
 import Title from './Elements/Title';
-import { DashboardCard, DashboardPanel, DashboardContent } from './Dashboard/DashboardPanel';
+import { Styles } from './Elements/Styles';
 
-function preventDefault(event) {
-    event.preventDefault();
-}
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-    return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const useStyles = makeStyles({
-    userContext: {
-        flex: 1,
-        fontSize: "14px"
-    },
-    icon: {
-        float: "right",
-        fontSize: 80,
-        opacity: 0.5,
-        color: "#ddd"
-    }
-});
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 90, hide: true },
+    { field: 'id', headerClassName: 'table-header-light', headerName: 'ID', width: 0, hide: true },
     {
-        field: 'firstName',
-        headerName: 'First name',
+        field: 'name',
+        headerName: 'Name',
+        headerClassName: 'table-header-light',
+        width: 300,
+        editable: true,
+    },
+    {
+        field: 'image',
+        headerName: 'Image',
+        headerClassName: 'table-header-light',
         width: 150,
-        editable: true,
+        editable: false,
+        renderCell: (params) => {
+            const classes = Styles();
+            return (
+                <Avatar variant="rounded" className={classes.avatar}>
+                    <AssignmentIcon />
+                </Avatar>
+            )
+        }
     },
     {
-        field: 'lastName',
-        headerName: 'Last name',
+        field: 'role',
+        headerName: 'User Role',
+        headerClassName: 'table-header-light',
         width: 150,
-        editable: true,
+        editable: false,
+        renderCell: () => {
+            const classes = Styles();
+            return (
+                <Avatar variant="rounded" className={classes.label}>
+                    Administrator
+                </Avatar>
+            )
+        }
     },
     {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 110,
-        editable: true,
+        field: 'updated',
+        headerName: 'Updated On',
+        headerClassName: 'table-header-light',
+        width: 180,
+        type: 'date'
     },
     {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.getValue(params.id, 'firstName') || ''} ${params.getValue(params.id, 'lastName') || ''
-            }`,
+        field: 'actions',
+        headerName: 'Actions',
+        headerClassName: 'table-header-light',
+        width: 200,
+        renderCell: () => {
+            const classes = Styles();
+            return (
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        className={classes.button}
+                        startIcon={<EditIcon />}>
+                        Edit
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        className={classes.button}
+                        startIcon={<DeleteIcon />}>
+                        Delete
+                    </Button>
+                </div>
+            );
+        }
     },
 ];
 
 const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    {
+        id: 1,
+        name: 'Welcome to postbox',
+        image: '',
+        role: '',
+        updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
+        actions: null
+    },
+    {
+        id: 2,
+        name: 'This is a demo',
+        image: '',
+        role: '',
+        updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
+        actions: null
+    }
+
 ];
 
 const UsersBody = () => {
-    const classes = useStyles();
+    const classes = Styles();
     return (
         <React.Fragment>
-            <Title></Title>
-            <div style={{ height: 400, width: '100%' }}>
+            <div className={classes.header}>
+                <Title className={classes.title}>
+                    <PeopleIcon className={classes.headerIcon}/> Users
+                </Title>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                    className={classes.largebutton}
+                    startIcon={<AddIcon />}>
+                    Add User
+                </Button>
+            </div>
+            <div className={classes.grid}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -96,40 +152,39 @@ const UsersBody = () => {
     );
 }
 
-export const UsersCard = () => {
-    const classes = useStyles();
+export const UserCard = () => {
+    const classes = Styles();
     return (
         <React.Fragment>
             <Grid container>
-            <Grid item xs={10} md={9} lg={10}>
-                <Title>Users</Title>
-                <Typography component="p" variant="h4">
-                    0
+                <Grid item xs={10} md={9} lg={10}>
+                    <Title>Users</Title>
+                    <Typography component="p" variant="h4">
+                        0
                 </Typography>
-                <Typography color="textSecondary" className={classes.userContext}>
-                    Last updated: a few seconds ago
-                </Typography>
-                <Link color="primary" to="/users">
-                    View more
+                    <Typography color="textSecondary" className={classes.cardText}>
+                        Last updated: a few seconds ago
+                    </Typography>
+                    <Link color="primary" to="/users">
+                        View more
                 </Link>
-            </Grid>
-            <Grid item xs={2} md={3} lg={2}>
-                <Typography align="right" className={classes.iconClass}>
-                    <PeopleIcon className={classes.icon}/>
-                </Typography>
-            </Grid>
+                </Grid>
+                <Grid item xs={2} md={3} lg={2}>
+                    <Typography align="right">
+                        <PeopleIcon className={classes.icon} />
+                    </Typography>
+                </Grid>
             </Grid>
         </React.Fragment>
     );
 }
 
 export default function Users() {
+    const classes = Styles();
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>
-                <DashboardContent>
-                    <UsersBody />
-                </DashboardContent>
+                <UsersBody />
             </DashboardCard>
         </DashboardPanel>
     );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
-import { useStyles } from './Dashboard';
+import { Styles } from './Styles';
 
 export const DashboardPanel = (props) => {
     return (
@@ -21,7 +21,7 @@ export const DashboardCard = (props) => {
 }
 
 export const DashboardContent = (props) => {
-    const classes = useStyles();
+    const classes = Styles();
     const paperClass = props.height == "fixed"?(clsx(classes.paper, classes.fixedHeight))+' '+props.className:classes.paper+ ' ' +props.className;
     return (
         <Paper elevation={3} className={paperClass}>

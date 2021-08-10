@@ -3,7 +3,7 @@ import * as React from 'react';
 import { DashboardCard, DashboardPanel, DashboardContent } from './Dashboard/DashboardPanel';
 import { PageCard } from './Pages';
 import { PostCard } from './Posts';
-import { UsersCard } from './Users';
+import { UserCard } from './Users';
 
 const useStyles = makeStyles((theme) => ({
     body: {
@@ -27,7 +27,7 @@ const Home = () => {
             </DashboardCard>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
-                    <UsersCard />
+                    <UserCard />
                 </DashboardContent>
             </DashboardCard>
         </DashboardPanel>
