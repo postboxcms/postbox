@@ -122,13 +122,13 @@ const rows = [
 
 ];
 
-const PagesBody = () => {
+const PagesBody = (props) => {
     const classes = Styles();
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <LibraryBooksIcon className={classes.headerIcon}/> Pages
+                    <LibraryBooksIcon className={classes.headerIcon}/> {props.title}
                 </Title>
                 <Button
                     variant="contained"
@@ -152,13 +152,13 @@ const PagesBody = () => {
     );
 }
 
-export const PageCard = () => {
+export const PageCard = (props) => {
     const classes = Styles();
     return (
         <React.Fragment>
             <Grid container>
                 <Grid item xs={10} md={9} lg={10}>
-                    <Title>Pages</Title>
+                    <Title>{props.title}</Title>
                     <Typography component="p" variant="h4">
                         0
                 </Typography>
@@ -179,12 +179,11 @@ export const PageCard = () => {
     );
 }
 
-export default function Pages() {
-    const classes = Styles();
+export default function Pages(props) {
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>
-                <PagesBody />
+                <PagesBody {...props}/>
             </DashboardCard>
         </DashboardPanel>
     );

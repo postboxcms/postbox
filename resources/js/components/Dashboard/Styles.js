@@ -1,33 +1,6 @@
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
-
-export const Theme = createMuiTheme({
-    typography: {
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-        ].join(','),
-    },
-    palette: {
-        type: 'light',
-        primary: {
-            main: '#472791'
-        },
-        plain: {
-            main: '#fff'
-        }
-    }
-});
 
 export const Styles = makeStyles((theme) => ({
     root: {

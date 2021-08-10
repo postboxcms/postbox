@@ -37,8 +37,6 @@ export const DashboardContent = (props) => {
 DashboardCard.propTypes = {
     children: PropTypes.element
 }
-DashboardContent.propTypes = {
-    children: PropTypes.element
-}
-
-export default DashboardPanel;
+// DashboardContent.propTypes = {
+//     children: PropTypes.element
+// }

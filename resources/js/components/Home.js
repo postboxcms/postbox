@@ -17,17 +17,17 @@ const Home = () => {
         <DashboardPanel className={classes.body} spacing={3}>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
-                    <PostCard />
+                    <PostCard title="Posts"/>
                 </DashboardContent>
             </DashboardCard>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
-                    <PageCard />
+                    <PageCard title="Pages"/>
                 </DashboardContent>
             </DashboardCard>
             <DashboardCard xs={12} md={4} lg={4}>
                 <DashboardContent height="fixed" className="coaster">
-                    <UserCard />
+                    <UserCard title="Users"/>
                 </DashboardContent>
             </DashboardCard>
         </DashboardPanel>

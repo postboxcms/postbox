@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 // layout
-import { DashboardCard, DashboardPanel } from './Dashboard/DashboardPanel';
+import { DashboardCard, DashboardContent, DashboardPanel } from './Dashboard/DashboardPanel';
 
 // elements
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, filterGridColumnLookupSelector } from '@material-ui/data-grid';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
@@ -122,18 +122,25 @@ const rows = [
 
 ];
 
-const PostsBody = () => {
+
+const PostsBody = (props) => {
     const classes = Styles();
+    const history = useHistory();
+    const addPost = () => {
+        history.push('/post/add');
+    };
+
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <LocalPostOfficeIcon className={classes.headerIcon}/> Posts
+                    <LocalPostOfficeIcon className={classes.headerIcon} /> {props.title}
                 </Title>
                 <Button
                     variant="contained"
                     color="primary"
                     size="medium"
+                    onClick={addPost}
                     className={classes.largebutton}
                     startIcon={<AddIcon />}>
                     Add Post
@@ -152,13 +159,25 @@ const PostsBody = () => {
     );
 }
 
-export const PostCard = () => {
+const AddEditPosts = (props) => {
+    // use quilljs for rich text editor
+    return (
+        <React.Fragment>
+            <Title>{props.title}</Title>
+            <DashboardContent className="coaster">
+                {props.title}
+            </DashboardContent>
+        </React.Fragment>
+    );
+};
+
+export const PostCard = (props) => {
     const classes = Styles();
     return (
         <React.Fragment>
             <Grid container>
                 <Grid item xs={10} md={9} lg={10}>
-                    <Title>Posts</Title>
+                    <Title>{props.title}</Title>
                     <Typography component="p" variant="h4">
                         0
                 </Typography>
@@ -179,12 +198,22 @@ export const PostCard = () => {
     );
 }
 
-export default function Posts() {
-    const classes = Styles();
+export default function Posts(props) {
+    if (typeof props.mode !== typeof undefined) {
+        if (props.mode == 'edit' || props.mode == 'add') {
+            return (
+                <DashboardPanel>
+                    <DashboardCard xs={12}>
+                        <AddEditPosts {...props} />
+                    </DashboardCard>
+                </DashboardPanel>
+            );
+        }
+    }
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>
-                <PostsBody />
+                <PostsBody {...props} />
             </DashboardCard>
         </DashboardPanel>
     );

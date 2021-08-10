@@ -9,15 +9,9 @@ import Pages from '../components/Pages';
 import Posts from '../components/Posts';
 import Users from '../components/Users';
 
-const THEME = createMuiTheme({
-    typography: {
-     "fontFamily": `"Segoe UI", "Helvetica", "Arial", sans-serif`,
-     "fontSize": 14,
-     "fontWeightLight": 300,
-     "fontWeightRegular": 400,
-     "fontWeightMedium": 500
-    }
- });
+// theme provider
+import { theme } from './theme';
+
  /** React router to setup UI routes */
 const Admin = () => {
     return (
@@ -28,6 +22,9 @@ const Admin = () => {
                 </Route>
                 <Route path="/posts">
                     <Dashboard title="Posts" component={Posts} />
+                </Route>
+                <Route path="/post/add">
+                    <Dashboard title="Add Post" mode="add" component={Posts} />
                 </Route>
                 <Route path="/pages">
                     <Dashboard title="Pages" component={Pages} />
@@ -44,7 +41,7 @@ export default Admin;
 
 if (document.getElementById('app')) {
     ReactDOM.render((
-        <MuiThemeProvider theme={THEME}>
+        <MuiThemeProvider theme={theme}>
             <BrowserRouter>
                 <Admin />
             </BrowserRouter>

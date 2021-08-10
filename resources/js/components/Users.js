@@ -122,13 +122,13 @@ const rows = [
 
 ];
 
-const UsersBody = () => {
+const UsersBody = (props) => {
     const classes = Styles();
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <PeopleIcon className={classes.headerIcon}/> Users
+                    <PeopleIcon className={classes.headerIcon}/> {props.title}
                 </Title>
                 <Button
                     variant="contained"
@@ -152,13 +152,13 @@ const UsersBody = () => {
     );
 }
 
-export const UserCard = () => {
+export const UserCard = (props) => {
     const classes = Styles();
     return (
         <React.Fragment>
             <Grid container>
                 <Grid item xs={10} md={9} lg={10}>
-                    <Title>Users</Title>
+                    <Title>{props.title}</Title>
                     <Typography component="p" variant="h4">
                         0
                 </Typography>
@@ -179,12 +179,11 @@ export const UserCard = () => {
     );
 }
 
-export default function Users() {
-    const classes = Styles();
+export default function Users(props) {
     return (
         <DashboardPanel>
             <DashboardCard xs={12}>
-                <UsersBody />
+                <UsersBody {...props}/>
             </DashboardCard>
         </DashboardPanel>
     );

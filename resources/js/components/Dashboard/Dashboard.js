@@ -25,8 +25,7 @@ import { mainListItems, secondaryListItems } from '../Navigation/Navigation';
 import Breadcrumb from '../Elements/Breadcrumb';
 
 // styles and css
-import { ThemeProvider } from '@material-ui/styles';
-import { Styles, Theme } from './Styles';
+import { Styles } from './Styles';
 
 const Copyright = () => {
     return (
@@ -54,12 +53,11 @@ export default function Dashboard(props) {
     const renderComponent = (props) => {
         const GridComponent = props.component;
         return (
-            <GridComponent/>
+            <GridComponent {...props} />
         );
     };
 
     return (
-        <ThemeProvider theme={Theme}>
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -74,7 +72,7 @@ export default function Dashboard(props) {
                             <MenuIcon />
                         </IconButton>
                         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                            <Breadcrumb title={props.title}/>
+                            <Breadcrumb title={props.title} />
                             {/* {props.title} */}
                         </Typography>
                         <IconButton color="inherit">
@@ -111,6 +109,5 @@ export default function Dashboard(props) {
                     </Container>
                 </main>
             </div>
-        </ThemeProvider>
     );
 }

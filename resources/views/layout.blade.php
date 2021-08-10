@@ -4,11 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{env('APP_NAME','Digitalbit')}}</title>
+        <title>{{env('APP_NAME','Postbox')}}</title>
         <link href="{{asset('css/app.css')}}" rel="stylesheet"/>
     </head>
     <body>
         <div id="app">
+            {{-- React code UI rendered here --}}
         </div>
         <script src="{{asset('js/app.js')}}"></script>
     </body>

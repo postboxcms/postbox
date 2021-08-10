@@ -17,7 +17,12 @@ Route::get('/', function () {
     return view('layout');
 });
 
-Route::get('/{route}', function () {
-    // return view('welcome');
-    return view('layout');
+// admin routes
+Route::group(['prefix'=>'{module}'], function () {
+    Route::get('/', function() {
+        return view('layout');
+    });
+    Route::get('{action}', function() {
+        return view('layout');
+    });
 });
