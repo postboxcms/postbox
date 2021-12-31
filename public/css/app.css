@@ -10925,6 +10925,7 @@ a:hover {
 
 .navbar-dark ul > div > li {
   color: #888 !important;
+  background-color: transparent !important;
 }
 
 .navbar-dark ul li {

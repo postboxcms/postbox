@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
     typography: {
         // Use the system font instead of the default Roboto font.
         fontFamily: [
@@ -21,7 +21,7 @@ export const theme = createMuiTheme({
         fontWeightMedium: 500
     },
     palette: {
-        type: 'light',
+        mode: 'light',
         primary: {
             main: '#472791'
         },

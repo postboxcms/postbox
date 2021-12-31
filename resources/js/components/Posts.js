@@ -1,29 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 // layout
-import { DashboardCard, DashboardContent, DashboardPanel } from './Dashboard/DashboardPanel';
+import { Card, Body, Frame } from './ui/Frame';
 
 // elements
-import { DataGrid, filterGridColumnLookupSelector } from '@material-ui/data-grid';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { DataGrid } from '@mui/x-data-grid';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 
 // icons
-import LocalPostOfficeIcon from '@material-ui/icons/LocalPostOffice';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import AddIcon from '@material-ui/icons/Add';
+import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 
 
-import Title from './Elements/Title';
-import { Styles } from './Elements/Styles';
-
+import Title from './ui/elements/Title';
+import { comStyles } from './ui/elements/comStyles';
 
 const columns = [
     { field: 'id', headerClassName: 'table-header-light', headerName: 'ID', width: 0, hide: true },
@@ -41,7 +40,7 @@ const columns = [
         width: 150,
         editable: false,
         renderCell: (params) => {
-            const classes = Styles();
+            const classes = comStyles();
             return (
                 <Avatar variant="rounded" className={classes.avatar}>
                     <AssignmentIcon />
@@ -56,7 +55,7 @@ const columns = [
         width: 150,
         editable: false,
         renderCell: () => {
-            const classes = Styles();
+            const classes = comStyles();
             return (
                 <Avatar variant="rounded" className={classes.label}>
                     Published
@@ -77,7 +76,7 @@ const columns = [
         headerClassName: 'table-header-light',
         width: 200,
         renderCell: () => {
-            const classes = Styles();
+            const classes = comStyles();
             return (
                 <div>
                     <Button
@@ -124,7 +123,7 @@ const rows = [
 
 
 const PostsBody = (props) => {
-    const classes = Styles();
+    const classes = comStyles();
     const history = useHistory();
     const addPost = () => {
         history.push('/post/add');
@@ -164,29 +163,41 @@ const AddEditPosts = (props) => {
     return (
         <React.Fragment>
             <Title>{props.title}</Title>
-            <DashboardContent className="coaster">
+            <Body className="coaster">
                 {props.title}
-            </DashboardContent>
+            </Body>
         </React.Fragment>
     );
 };
 
 export const PostCard = (props) => {
-    const classes = Styles();
+    const classes = comStyles();
+    const [data, setData] = useState({
+        posts:0,
+        pages:0,
+        users:0
+    });
+
+    useEffect(() => {
+        // fetch()
+        data.posts = 2;
+        setData((data) => ({ ...data }));
+    },[]);
+
     return (
         <React.Fragment>
             <Grid container>
                 <Grid item xs={10} md={9} lg={10}>
                     <Title>{props.title}</Title>
                     <Typography component="p" variant="h4">
-                        0
-                </Typography>
+                        {data.posts}
+                    </Typography>
                     <Typography color="textSecondary" className={classes.cardText}>
                         Last updated: a few seconds ago
                     </Typography>
                     <Link color="primary" to="/posts">
                         View more
-                </Link>
+                    </Link>
                 </Grid>
                 <Grid item xs={2} md={3} lg={2}>
                     <Typography align="right">
@@ -202,19 +213,19 @@ export default function Posts(props) {
     if (typeof props.mode !== typeof undefined) {
         if (props.mode == 'edit' || props.mode == 'add') {
             return (
-                <DashboardPanel>
-                    <DashboardCard xs={12}>
+                <Frame>
+                    <Card xs={12}>
                         <AddEditPosts {...props} />
-                    </DashboardCard>
-                </DashboardPanel>
+                    </Card>
+                </Frame>
             );
         }
     }
     return (
-        <DashboardPanel>
-            <DashboardCard xs={12}>
+        <Frame>
+            <Card xs={12}>
                 <PostsBody {...props} />
-            </DashboardCard>
-        </DashboardPanel>
+            </Card>
+        </Frame>
     );
 }

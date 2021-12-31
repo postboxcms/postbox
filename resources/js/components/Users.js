@@ -3,26 +3,26 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 // layout
-import { DashboardCard, DashboardPanel } from './Dashboard/DashboardPanel';
+import { Card, Frame } from './ui/Frame';
 
 // elements
-import { DataGrid } from '@material-ui/data-grid';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { DataGrid } from '@mui/x-data-grid';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 
 // icons
-import PeopleIcon from '@material-ui/icons/People';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import AddIcon from '@material-ui/icons/Add';
+import PeopleIcon from '@mui/icons-material/People';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 
 
-import Title from './Elements/Title';
-import { Styles } from './Elements/Styles';
+import Title from './ui/elements/Title';
+import { comStyles } from './ui/elements/comStyles';
 
 
 const columns = [
@@ -41,7 +41,7 @@ const columns = [
         width: 150,
         editable: false,
         renderCell: (params) => {
-            const classes = Styles();
+            const classes = comStyles();
             return (
                 <Avatar variant="rounded" className={classes.avatar}>
                     <AssignmentIcon />
@@ -56,7 +56,7 @@ const columns = [
         width: 150,
         editable: false,
         renderCell: () => {
-            const classes = Styles();
+            const classes = comStyles();
             return (
                 <Avatar variant="rounded" className={classes.label}>
                     Administrator
@@ -77,7 +77,7 @@ const columns = [
         headerClassName: 'table-header-light',
         width: 200,
         renderCell: () => {
-            const classes = Styles();
+            const classes = comStyles();
             return (
                 <div>
                     <Button
@@ -123,7 +123,7 @@ const rows = [
 ];
 
 const UsersBody = (props) => {
-    const classes = Styles();
+    const classes = comStyles();
     return (
         <React.Fragment>
             <div className={classes.header}>
@@ -153,7 +153,7 @@ const UsersBody = (props) => {
 }
 
 export const UserCard = (props) => {
-    const classes = Styles();
+    const classes = comStyles();
     return (
         <React.Fragment>
             <Grid container>
@@ -181,10 +181,10 @@ export const UserCard = (props) => {
 
 export default function Users(props) {
     return (
-        <DashboardPanel>
-            <DashboardCard xs={12}>
+        <Frame>
+            <Card xs={12}>
                 <UsersBody {...props}/>
-            </DashboardCard>
-        </DashboardPanel>
+            </Card>
+        </Frame>
     );
 }
