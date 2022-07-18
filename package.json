@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
-        "axios": "^0.21.1",
+        "axios": "^0.21.4",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
         "jquery": "^3.2",
@@ -35,7 +35,11 @@
         "@mui/material": "^5.2.6",
         "@mui/styles": "^5.2.3",
         "@mui/x-data-grid": "^5.2.1",
-        "moment": "^2.29.1",
+        "babel-plugin-macros": "^3.1.0",
+        "core-js": "^3.21.1",
+        "dotenv": "^16.0.0",
+        "moment": "^2.29.4",
+        "react-moment": "^1.1.2",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "recharts": "^1.8.5"

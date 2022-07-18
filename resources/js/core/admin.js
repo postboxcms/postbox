@@ -1,21 +1,15 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-
-import Frameset from '../components/ui/Frameset';
-
-import Dashboard from '../components/Dashboard';
-import Login from '../components/Login';
-
-import Pages from '../components/Pages';
-import Posts from '../components/Posts';
-import Users from '../components/Users';
-
+// layout
+import Frameset from './ui/layout/Frameset';
+// core modules
+import Dashboard from './modules/Dashboard';
+import Login from './modules/Login';
+import ContentType from './modules/ContentType';
 // theme provider
 import { theme } from './theme';
-
 // routers
 import PrivateRoute from './routers/private';
 import PublicRoute from './routers/public';
@@ -32,16 +26,13 @@ const Admin = () => {
                     <Frameset title="Dashboard" controller={Dashboard} />
                 </PrivateRoute>
                 <PrivateRoute path="/posts">
-                    <Frameset title="Posts" controller={Posts} />
-                </PrivateRoute>
-                <PrivateRoute path="/post/add">
-                    <Frameset title="Add Post" mode="add" controller={Posts} />
+                    <Frameset title="Posts" controller={ContentType} />
                 </PrivateRoute>
                 <PrivateRoute path="/pages">
-                    <Frameset title="Pages" controller={Pages} />
+                    <Frameset title="Pages" controller={ContentType} />
                 </PrivateRoute>
                 <PrivateRoute path="/users">
-                    <Frameset title="Users" controller={Users} />
+                    <Frameset title="Users" controller={ContentType} />
                 </PrivateRoute>
             </Switch>
         </Router>

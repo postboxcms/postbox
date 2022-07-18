@@ -13,3 +13,9 @@ require('./bootstrap');
  */
 
 require('./core/admin');
+
+/**
+ * Later we load dotenv file into the project to use environment variables
+ * from .env file
+ */
+// require('dotenv').config();
