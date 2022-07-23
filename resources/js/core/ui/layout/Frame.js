@@ -73,8 +73,7 @@ export const Data = (props) => {
                 </Grid>
                 <Grid item xs={2} md={3} lg={2}>
                     <Typography align="right">
-                        {/* <LocalPostOfficeIcon className={classes.icon} /> */}
-                        <FontAwesomeIcon icon={props.icon} size="lg" />
+                        <FontAwesomeIcon icon={props.icon} size="xl" />
                     </Typography>
                 </Grid>
             </Grid>

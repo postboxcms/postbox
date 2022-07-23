@@ -76,6 +76,10 @@ a, a:hover {
         margin-left: 4px;
     }
 }
+svg[data-prefix="fas"].fa-xl {
+    font-size: 3em;
+    color: #ccc;
+}
 .coaster {
     border-left: solid 5px $brand-color;
 }
