@@ -10969,6 +10969,10 @@ a:hover {
   color: #ddd !important;
 }
 
+.navbar-dark svg[data-prefix=fas] {
+  margin-left: 4px;
+}
+
 .coaster {
   border-left: solid 5px #472791;
 }

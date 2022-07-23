@@ -10,7 +10,7 @@ export default function Breadcrumb(props) {
     const classes = ElementCSS();
 
     return (
-        <Breadcrumbs separator=">" aria-label="breadcrumb" className={classes.breadcrumb}>
+        <Breadcrumbs separator="/" aria-label="breadcrumb" className={classes.breadcrumb}>
             <Link
                 color="inherit"
                 href="/"

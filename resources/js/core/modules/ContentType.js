@@ -13,10 +13,12 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // layout
 import { Card, Frame } from '../ui/layout/Frame';
 import Title from '../ui/elements/Title';
 import { ElementCSS } from '../ui/elements/element.css';
+import iconList from '../libs/icons';
 
 const columns = [
     {
@@ -127,7 +129,7 @@ const CTBody = (props) => {
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <PeopleIcon className={classes.headerIcon}/> {props.title}
+                    <FontAwesomeIcon size='lg' icon={props.icon} /> {props.title}
                 </Title>
                 <Button
                     variant="contained"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
+
 import { Card, Frame, Body, Data } from '../ui/layout/Frame';
 
 import {api} from '../libs/vars';
@@ -38,7 +39,7 @@ const Dashboard = (props) => {
                         <Body height="fixed" className="coaster">
                             <Data { ...props } { ...data }
                                 title={data.name}
-                                icon={<Icon className={classes.icon} />}/>
+                                icon={data.icon}/>
                         </Body>
                     </Card>
                 );

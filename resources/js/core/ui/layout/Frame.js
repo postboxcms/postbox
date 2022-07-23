@@ -7,10 +7,12 @@ import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { LayoutCSS } from './layout.css';
 import { ElementCSS } from '../elements/element.css';
 import Title from '../elements/Title';
+import iconList from '../../libs/icons';
 
 export const Frame = (props) => {
     return (
@@ -72,7 +74,7 @@ export const Data = (props) => {
                 <Grid item xs={2} md={3} lg={2}>
                     <Typography align="right">
                         {/* <LocalPostOfficeIcon className={classes.icon} /> */}
-                        {props.icon}
+                        <FontAwesomeIcon icon={props.icon} size="lg" />
                     </Typography>
                 </Grid>
             </Grid>

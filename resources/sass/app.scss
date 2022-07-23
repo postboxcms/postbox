@@ -72,6 +72,9 @@ a, a:hover {
     ul li {
         color: $navbar-dark-color !important;
     }
+    svg[data-prefix="fas"] {
+        margin-left: 4px;
+    }
 }
 .coaster {
     border-left: solid 5px $brand-color;
