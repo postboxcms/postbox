@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -34,7 +34,6 @@ export const Body = (props) => {
     const paperClass = props.height == "fixed" ? (clsx(classes.paper, classes.fixedHeight)) + ' ' + props.className : classes.paper + ' ' + props.className;
     return (
         <Paper elevation={3} className={paperClass}>
-            {/* <CardComponent /> */}
             {props.children}
         </Paper>
     )
@@ -42,17 +41,6 @@ export const Body = (props) => {
 
 export const Data = (props) => {
     const classes = ElementCSS();
-    const [data, setData] = useState({
-        posts: 0,
-        pages: 0,
-        users: 0
-    });
-
-    useEffect(() => {
-        // fetch(props.api+'/post/')
-        setData((data) => ({ ...data }));
-    }, []);
-
     return (
         <React.Fragment>
             <Grid container>

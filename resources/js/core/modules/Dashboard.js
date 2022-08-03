@@ -21,19 +21,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = (props) => {
     const classes = useStyles();
-    const [contentTypes,setContentTypes] = useState({content_types:[]});
+    const [contentTypes,setContentTypes] = useState([]);
 
     React.useEffect(() => {
         // fetch all content types
         if(jwt.getToken('postbox_token') !== null) {
-            auth.get('/ContentType').then((response) => setContentTypes(response.data))
+            auth.get('/ContentType').then((response) => setContentTypes(response.data.content_types))
         }
     },[]);
     return (
         <Frame className={classes.body} spacing={3}>
             {/* LOOP OVER CARDS */}
-            {contentTypes['content_types'].map((data,i) => {
-                const Icon = `${data.icon}`;
+            {contentTypes.map((data,i) => {
                 return(
                     <Card xs={12} md={4} lg={4} key={data['id']}>
                         <Body height="fixed" className="coaster">

@@ -153,33 +153,6 @@ const CTBody = (props) => {
     );
 }
 
-export const CTCard = (props) => {
-    const classes = ElementCSS();
-    return (
-        <React.Fragment>
-            <Grid container>
-                <Grid item xs={10} md={9} lg={10}>
-                    <Title>{props.title}</Title>
-                    <Typography component="p" variant="h4">
-                        0
-                </Typography>
-                    <Typography color="textSecondary" className={classes.cardText}>
-                        Last updated: a few seconds ago
-                    </Typography>
-                    <Link color="primary" to="/users">
-                        View more
-                </Link>
-                </Grid>
-                <Grid item xs={2} md={3} lg={2}>
-                    <Typography align="right">
-                        <PeopleIcon className={classes.icon} />
-                    </Typography>
-                </Grid>
-            </Grid>
-        </React.Fragment>
-    );
-}
-
 export default function ContentType(props) {
     return (
         <Frame>
