@@ -24,7 +24,7 @@ export const MainItems = (props) => {
     React.useEffect(() => {
         // fetch all content types
         if(jwt.getToken('postbox_token') !== null) {
-            auth.get(api.url+'/ContentType').then((response) => setContentTypes(response.data))
+            auth.get('/ContentType').then((response) => setContentTypes(response.data))
         }
     },[]);
     return (
@@ -40,12 +40,12 @@ export const MainItems = (props) => {
                 </Link>
                 {contentTypes['content_types'].map((data) => {
                     return(
-                        <Link to={data.slug}>
+                        <Link to={data['slug']} key={data['id']}>
                             <ListItem button>
                                 <ListItemIcon>
-                                    <FontAwesomeIcon size='lg' icon={data.icon} />
+                                    <FontAwesomeIcon size='lg' icon={data['icon']} />
                                 </ListItemIcon>
-                                <ListItemText primary={data.name} />
+                                <ListItemText primary={data['name']} />
                             </ListItem>
                         </Link>
                     );

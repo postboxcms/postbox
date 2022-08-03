@@ -26,13 +26,13 @@ const Admin = () => {
                     <Frameset title="Dashboard" controller={Dashboard} />
                 </PrivateRoute>
                 <PrivateRoute path="/posts">
-                    <Frameset title="Posts" path="/posts" controller={ContentType} />
+                    <Frameset path="/posts" controller={ContentType} />
                 </PrivateRoute>
                 <PrivateRoute path="/pages">
-                    <Frameset title="Pages" path="/pages" controller={ContentType} />
+                    <Frameset path="/pages" controller={ContentType} />
                 </PrivateRoute>
                 <PrivateRoute path="/users">
-                    <Frameset title="Users" path="/users" controller={ContentType} />
+                    <Frameset path="/users" controller={ContentType} />
                 </PrivateRoute>
             </Switch>
         </Router>

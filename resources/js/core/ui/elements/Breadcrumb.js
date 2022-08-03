@@ -19,9 +19,12 @@ export default function Breadcrumb(props) {
                 <HomeIcon className={classes.icon}/>
                 Dashboard
             </Link>
-            <Typography className={classes.breadcrumbText}>
-                {props.title}
-            </Typography>
+            {props.title?(
+                <Typography className={classes.breadcrumbText}>
+                    {props.title}
+                </Typography>
+            ):""
+            }
         </Breadcrumbs>
     );
 }

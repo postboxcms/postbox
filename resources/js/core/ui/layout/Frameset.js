@@ -22,6 +22,8 @@ import { MainItems, SubItems } from '../navigation/Navigation';
 import Breadcrumb from '../elements/Breadcrumb';
 // styles and css
 import { LayoutCSS } from './layout.css';
+// auth manager
+import auth from '../../libs/authmanager';
 
 const Copyright = () => {
     return (
@@ -38,21 +40,30 @@ const Copyright = () => {
 
 export default function Frameset(props) {
     const classes = LayoutCSS();
+    const [data,setData] = React.useState({});
     const [open, setOpen] = React.useState(true);
-    // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const renderComponent = (props) => {
+    const renderComponent = (props,data) => {
         const GridComponent = props.controller;
-        const apiUrl = process.env.MIX_APP_URL;
         return (
-            <GridComponent api={apiUrl} {...props} />
+            <GridComponent {...props} {...data} />
         );
     };
+
+    React.useEffect(function() {
+        if(typeof props.path !== typeof undefined) {
+            auth.get('/ContentType' + props.path)
+                .then(response =>  setData(response['data']['content_type']));
+        } else {
+            setData({});
+        }
+    },[props.path]);
+
 
     return (
         <div className="app-root">
@@ -69,8 +80,7 @@ export default function Frameset(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
-                        <Breadcrumb title={props.title} />
-                        {/* {props.title} */}
+                        <Breadcrumb title={data['name']} />
                     </Typography>
                     <IconButton color="inherit" size="large">
                         <Badge badgeContent={4} color="secondary">
@@ -99,7 +109,7 @@ export default function Frameset(props) {
             <main className="content">
                 <div className="appbar-spacer" />
                 <Container maxWidth="lg" className="container">
-                    {renderComponent(props)}
+                    {renderComponent(props,data)}
                     <Box pt={4}>
                         <Copyright />
                     </Box>

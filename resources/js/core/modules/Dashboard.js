@@ -26,7 +26,7 @@ const Dashboard = (props) => {
     React.useEffect(() => {
         // fetch all content types
         if(jwt.getToken('postbox_token') !== null) {
-            auth.get(api.url+'/ContentType').then((response) => setContentTypes(response.data))
+            auth.get('/ContentType').then((response) => setContentTypes(response.data))
         }
     },[]);
     return (
@@ -35,7 +35,7 @@ const Dashboard = (props) => {
             {contentTypes['content_types'].map((data,i) => {
                 const Icon = `${data.icon}`;
                 return(
-                    <Card xs={12} md={4} lg={4}>
+                    <Card xs={12} md={4} lg={4} key={data['id']}>
                         <Body height="fixed" className="coaster">
                             <Data { ...props } { ...data }
                                 title={data.name}

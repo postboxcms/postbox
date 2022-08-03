@@ -12,4 +12,8 @@ class ContentType extends Model
     protected $fillable = ['name','description','icon'];
 
     protected $table = 'content_types';
+
+    public function getRouteKeyName() {
+        return 'slug';
+    }
 }

@@ -129,7 +129,7 @@ const CTBody = (props) => {
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size='lg' icon={props.icon} /> {props.title}
+                    <FontAwesomeIcon size='lg' icon={props['icon']} /> {props['name']}
                 </Title>
                 <Button
                     variant="contained"
@@ -137,7 +137,7 @@ const CTBody = (props) => {
                     size="medium"
                     className={classes.largebutton}
                     startIcon={<AddIcon />}>
-                    Add {props.title}
+                    Add {props['name']}
                 </Button>
             </div>
             <div className={classes.grid}>
@@ -184,7 +184,7 @@ export default function ContentType(props) {
     return (
         <Frame>
             <Card xs={12}>
-                <CTBody {...props}/>
+                <CTBody { ...props }/>
             </Card>
         </Frame>
     );
