@@ -5,10 +5,10 @@ import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 // layout
 import Frameset from './ui/layout/Frameset';
 // core modules
-import Dashboard from './modules/Dashboard';
+import Dashboard from '../components/Dashboard';
 import Login from './modules/Login';
-import ContentType from './modules/ContentType';
-import CRUD from './modules/CRUD';
+import ContentType from '../components/ContentType';
+import CRUD from '../components/CRUD';
 // theme provider
 import { theme } from './theme';
 // routers

@@ -5,12 +5,12 @@ import FormControl from '@mui/material/FormControl';
 import { DataGrid } from '@mui/x-data-grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { Card, Frame } from '../ui/layout/Frame';
-import Title from '../ui/elements/Title';
-import { ElementCSS } from '../ui/elements/element.css';
+import { Card, Frame } from '../core/ui/layout/Frame';
+import Title from '../core/ui/elements/Title';
+import { ElementCSS } from '../core/ui/elements/element.css';
 
-import auth from '../libs/authmanager';
-import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
+import auth from '../core/libs/authmanager';
+import NoRowsOverlay from '../core/ui/elements/NoRowsOverlay';
 
 const Body = (props) => {
     const classes = ElementCSS();

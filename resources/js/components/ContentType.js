@@ -12,12 +12,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // layout
-import { Card, Frame } from '../ui/layout/Frame';
-import Title from '../ui/elements/Title';
-import { ElementCSS } from '../ui/elements/element.css';
-import iconList from '../libs/icons';
+import { Card, Frame } from '../core/ui/layout/Frame';
+import Title from '../core/ui/elements/Title';
+import { ElementCSS } from '../core/ui/elements/element.css';
+import iconList from '../core/libs/icons';
 // auth manager
-import auth from '../libs/authmanager';
+import auth from '../core/libs/authmanager';
 
 const columns = [
     {

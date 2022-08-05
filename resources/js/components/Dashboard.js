@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 
-import { Card, Frame, Body, Data } from '../ui/layout/Frame';
+import { Card, Frame, Body, Data } from '../core/ui/layout/Frame';
 
-import jwt from '../libs/jwtmanager';
-import auth from '../libs/authmanager';
+import jwt from '../core/libs/jwtmanager';
+import auth from '../core/libs/authmanager';
 
 const useStyles = makeStyles((theme) => ({
     body: {
