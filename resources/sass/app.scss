@@ -69,6 +69,9 @@ $element-border-color: #ccc;
         font-size: 15px;
         color: $navbar-dark-color;
     }
+    p.MuiTablePagination-displayedRows {
+        margin-bottom: 0;
+    }
 }
 
 a, a:hover {

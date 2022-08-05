@@ -9327,6 +9327,9 @@ h3 {
   font-size: 15px;
   color: #ddd;
 }
+.app-root p.MuiTablePagination-displayedRows {
+  margin-bottom: 0;
+}
 
 a, a:hover {
   text-decoration: none;
