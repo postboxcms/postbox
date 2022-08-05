@@ -3,7 +3,6 @@ import makeStyles from '@mui/styles/makeStyles';
 
 import { Card, Frame, Body, Data } from '../ui/layout/Frame';
 
-import {api} from '../libs/vars';
 import jwt from '../libs/jwtmanager';
 import auth from '../libs/authmanager';
 

@@ -12,7 +12,6 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 // icons
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -20,27 +19,13 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 // app elements
 import { MainItems, SubItems } from '../navigation/Navigation';
 import Breadcrumb from '../elements/Breadcrumb';
+import Copyright from '../elements/Copyright';
 // styles and css
 import { LayoutCSS } from './layout.css';
-// auth manager
-import auth from '../../libs/authmanager';
 
-const Copyright = () => {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://digitalbit.in" underline="hover">
-                Digitalbit Labs
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {/* {'.'} */}
-        </Typography>
-    );
-}
 
 export default function Frameset(props) {
     const classes = LayoutCSS();
-    const [data,setData] = React.useState({});
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -48,22 +33,12 @@ export default function Frameset(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const renderComponent = (props,data) => {
+    const renderComponent = (props) => {
         const GridComponent = props.controller;
         return (
-            <GridComponent {...props} {...data} />
+            <GridComponent {...props} />
         );
     };
-
-    React.useEffect(function() {
-        if(typeof props.path !== typeof undefined) {
-            auth.get('/ContentType' + props.path)
-                .then(response =>  setData(response['data']['content_type']));
-        } else {
-            setData({});
-        }
-    },[props.path]);
-
 
     return (
         <div className="app-root">
@@ -80,7 +55,7 @@ export default function Frameset(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
-                        <Breadcrumb title={data['name']} />
+                        <Breadcrumb title={props.title} />
                     </Typography>
                     <IconButton color="inherit" size="large">
                         <Badge badgeContent={4} color="secondary">
@@ -109,7 +84,7 @@ export default function Frameset(props) {
             <main className="content">
                 <div className="appbar-spacer" />
                 <Container maxWidth="lg" className="container">
-                    {renderComponent(props,data)}
+                    {renderComponent(props)}
                     <Box pt={4}>
                         <Copyright />
                     </Box>

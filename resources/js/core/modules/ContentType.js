@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 // elements
 import { DataGrid } from '@mui/x-data-grid';
-import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 // icons
-import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,6 +16,8 @@ import { Card, Frame } from '../ui/layout/Frame';
 import Title from '../ui/elements/Title';
 import { ElementCSS } from '../ui/elements/element.css';
 import iconList from '../libs/icons';
+// auth manager
+import auth from '../libs/authmanager';
 
 const columns = [
     {
@@ -129,7 +128,7 @@ const CTBody = (props) => {
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size='lg' icon={props['icon']} /> {props['name']}
+                    <FontAwesomeIcon size='lg' icon={props['icon']} /> {props['title']?props['title']:props['name']}
                 </Title>
                 <Button
                     variant="contained"
@@ -137,7 +136,7 @@ const CTBody = (props) => {
                     size="medium"
                     className={classes.largebutton}
                     startIcon={<AddIcon />}>
-                    Add {props['name']}
+                    Add {props['title']?props['title']:props['name']}
                 </Button>
             </div>
             <div className={classes.grid}>
@@ -154,10 +153,20 @@ const CTBody = (props) => {
 }
 
 export default function ContentType(props) {
+    const [data,setData] = React.useState({});
+    React.useEffect(function() {
+        if(typeof props.path !== typeof undefined) {
+            auth.get('/ContentType' + props.path)
+                .then(response =>  setData(response['data']['content_type']));
+        } else {
+            setData({});
+        }
+    },[props.path]);
+
     return (
         <Frame>
             <Card xs={12}>
-                <CTBody { ...props }/>
+                <CTBody { ...props } { ...data } />
             </Card>
         </Frame>
     );

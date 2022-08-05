@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class ContentTypeController extends Controller
 {
     protected $data;
+    protected $tableFields;
     protected $contentType;
     protected $contentTypes;
     protected $validator;
@@ -26,7 +27,7 @@ class ContentTypeController extends Controller
         $this->contentTypes = ContentType::where('status',1)->get();
         return response([
             'content_types' => ContentTypeResource::collection($this->contentTypes),
-            'message'       => trans('content_types.success')
+            'message'       => trans('app.success')
         ],200);
     }
 
@@ -53,7 +54,7 @@ class ContentTypeController extends Controller
         $this->contentType = ContentType::create($this->data);
         return response([
             'content_type'  => new ContentTypeResource($this->contentType),
-            'message'       => trans('content_types.success')
+            'message'       => trans('app.success')
         ],200);
     }
 
@@ -67,8 +68,9 @@ class ContentTypeController extends Controller
     {
         // show content type info
         return response([
-            'content_type' => new ContentTypeResource($ContentType),
-            'message'      => trans('content_types.success')
+            'content_type'  => new ContentTypeResource($ContentType),
+            'fields'        => $ContentType->getTableColumns($ContentType->slug),
+            'message'       => trans('app.success')
         ],200);
     }
 
@@ -86,7 +88,7 @@ class ContentTypeController extends Controller
 
         return response([
             'content_type'  => new ContentTypeResource($ContentType),
-            'message'       => trans('content_types.success')
+            'message'       => trans('app.success')
         ],200);
     }
 
@@ -101,6 +103,6 @@ class ContentTypeController extends Controller
         // destroy a content type
         $ContentType->delete();
 
-        return response(['message' => trans('content_types.delete')],200);
+        return response(['message' => trans('app.delete')],200);
     }
 }

@@ -19,18 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {api} from '../libs/vars';
 import jwt from '../libs/jwtmanager';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://digitalbit.in/">
-        Digitalbit Labs
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../ui/elements/Copyright';
 
 const theme = createTheme();
 

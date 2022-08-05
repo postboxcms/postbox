@@ -9305,6 +9305,28 @@ h3 {
   justify-content: flex-end;
   padding: 0 8px;
 }
+.app-root .dropdown {
+  float: right;
+  margin: 0;
+  margin-bottom: 8px;
+}
+.app-root .dropdown legend {
+  width: 0;
+}
+.app-root .dropdown div.MuiSelect-select {
+  background-color: #fff;
+  padding: 8px 35px 8px 25px;
+  line-height: 20px;
+}
+.app-root .no-rows-overlay {
+  display: flex;
+  align-self: center;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: #ddd;
+}
 
 a, a:hover {
   text-decoration: none;

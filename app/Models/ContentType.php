@@ -16,4 +16,8 @@ class ContentType extends Model
     public function getRouteKeyName() {
         return 'slug';
     }
+
+    public function getTableColumns($table) {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($table);
+    }
 }

@@ -14,6 +14,7 @@ $navbar-dark-bg-color: #18202c;
 $navbar-dark-subheading-color: #888;
 $brand-color: #472791;
 $table-header-color: $navbar-dark-color;
+$element-border-color: #ccc;
 
 .app-root {
     display: flex;
@@ -44,6 +45,29 @@ $table-header-color: $navbar-dark-color;
         align-items: center;
         justify-content: flex-end;
         padding: 0 8px;
+    }
+    .dropdown {
+        float: right;
+        margin: 0;
+        margin-bottom: 8px;
+
+        legend {
+            width: 0;
+        }
+        div.MuiSelect-select {
+            background-color: $white;
+            padding: 8px 35px 8px 25px;
+            line-height: 20px;
+        }
+    }
+    .no-rows-overlay {
+        display: flex;
+        align-self: center;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        color: $navbar-dark-color;
     }
 }
 

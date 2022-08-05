@@ -12,21 +12,21 @@ import LayersIcon from '@mui/icons-material/Layers';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {api} from '../../libs/vars';
+import { api } from '../../libs/vars';
 import jwt from '../../libs/jwtmanager';
 import auth from '../../libs/authmanager';
 import iconList from '../../libs/icons';
 
 
 export const MainItems = (props) => {
-    const [contentTypes,setContentTypes] = useState({content_types:[]});
+    const [contentTypes, setContentTypes] = useState({ content_types: [] });
 
     React.useEffect(() => {
         // fetch all content types
-        if(jwt.getToken('postbox_token') !== null) {
+        if (jwt.getToken('postbox_token') !== null) {
             auth.get('/ContentType').then((response) => setContentTypes(response.data))
         }
-    },[]);
+    }, []);
     return (
         <React.Fragment>
             <div className={props.navbar}>
@@ -39,7 +39,7 @@ export const MainItems = (props) => {
                     </ListItem>
                 </Link>
                 {contentTypes['content_types'].map((data) => {
-                    return(
+                    return (
                         <Link to={data['slug']} key={data['id']}>
                             <ListItem button>
                                 <ListItemIcon>
@@ -60,17 +60,19 @@ export const SubItems = (props) => {
         <React.Fragment>
             <div className={props.navbar}>
                 <ListSubheader inset>Preferences</ListSubheader>
+                <Link to="/crud" key="0">
+                    <ListItem button>
+                        <ListItemIcon>
+                            <FontAwesomeIcon size='lg' icon="layer-group" />
+                        </ListItemIcon>
+                        <ListItemText primary="CRUD" />
+                    </ListItem>
+                </Link>
                 <ListItem button>
                     <ListItemIcon>
                         <BarChartIcon />
                     </ListItemIcon>
                     <ListItemText primary="Reports" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <LayersIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Integrations" />
                 </ListItem>
             </div>
         </React.Fragment>

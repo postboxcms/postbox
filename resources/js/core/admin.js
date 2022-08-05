@@ -8,6 +8,7 @@ import Frameset from './ui/layout/Frameset';
 import Dashboard from './modules/Dashboard';
 import Login from './modules/Login';
 import ContentType from './modules/ContentType';
+import CRUD from './modules/CRUD';
 // theme provider
 import { theme } from './theme';
 // routers
@@ -23,16 +24,19 @@ const Admin = () => {
                     <Login/>
                 </PublicRoute>
                 <PrivateRoute exact path="/">
-                    <Frameset title="Dashboard" controller={Dashboard} />
+                    <Frameset controller={Dashboard} />
                 </PrivateRoute>
                 <PrivateRoute path="/posts">
-                    <Frameset path="/posts" controller={ContentType} />
+                    <Frameset title="Posts" path="/posts" controller={ContentType} />
                 </PrivateRoute>
                 <PrivateRoute path="/pages">
-                    <Frameset path="/pages" controller={ContentType} />
+                    <Frameset title="Pages" path="/pages" controller={ContentType} />
                 </PrivateRoute>
                 <PrivateRoute path="/users">
-                    <Frameset path="/users" controller={ContentType} />
+                    <Frameset title="Users" path="/users" controller={ContentType} />
+                </PrivateRoute>
+                <PrivateRoute path="/crud">
+                    <Frameset title="CRUD" icon="layer-group" controller={CRUD} />
                 </PrivateRoute>
             </Switch>
         </Router>

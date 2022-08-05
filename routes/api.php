@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\OAuth;
 use App\Http\Controllers\ContentTypeController;
+use App\Http\Controllers\CRUDController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,8 @@ use App\Http\Controllers\ContentTypeController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:api');
 
+// authorization routes
 Route::get('/Login',function() {
     return response()->json(['message' => trans('auth.unauthorised',['app'=>env('APP_NAME')])]);
 })->name('login');
@@ -26,7 +25,11 @@ Route::get('/VerifyToken', function() {
     return auth()->guard('api')->check();
 })->middleware('auth:api');
 
+// authentication routes
 Route::post('/Login', [OAuth::class,'login']);
 Route::post('/Register', [OAuth::class,'register']);
 
+// api routes
 Route::apiResource('/ContentType',ContentTypeController::class)->middleware('auth:api');
+Route::apiResource('/CRUD',CRUDController::class)->middleware('auth:api');
+
