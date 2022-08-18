@@ -42,6 +42,7 @@
         "core-js": "^3.21.1",
         "dotenv": "^16.0.0",
         "moment": "^2.29.4",
+        "react-loading-skeleton": "^3.1.0",
         "react-moment": "^1.1.2",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
