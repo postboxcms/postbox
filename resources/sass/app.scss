@@ -16,6 +16,19 @@ $brand-color: #472791;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
 
+fieldset {
+    legend {
+        width: unset;
+    }
+}
+a, a:hover {
+    text-decoration: none;
+}
+svg[data-prefix="fas"].fa-xl {
+    font-size: 3em;
+    color: #ccc;
+}
+
 .app-root {
     display: flex;
 
@@ -71,19 +84,17 @@ $element-border-color: #ccc;
         justify-content: center;
         font-size: 15px;
         color: $navbar-dark-color;
+        .icon {
+            margin-right: 10px;
+            font-size: 40px;
+        }
+        .message {
+            font-size: 20px;
+        }
     }
     p.MuiTablePagination-displayedRows {
         margin-bottom: 0;
     }
-}
-
-fieldset {
-    legend {
-        width: unset;
-    }
-}
-a, a:hover {
-    text-decoration: none;
 }
 .navbar-dark {
     color: $navbar-dark-color;
@@ -111,13 +122,15 @@ a, a:hover {
         margin-left: 4px;
     }
 }
-svg[data-prefix="fas"].fa-xl {
-    font-size: 3em;
-    color: #ccc;
-}
 .coaster {
     border-left: solid 5px $brand-color;
 }
 .table-header-light {
     text-transform: uppercase;
 }
+.MuiDataGrid-cell{
+    .MuiSwitch-root {
+        margin: 0 50%;
+    }
+}
+

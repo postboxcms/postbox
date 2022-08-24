@@ -5,6 +5,7 @@ import { Card, Frame, Body, Data } from '../ui/layout/Frame';
 
 import jwt from '../libs/jwtmanager';
 import auth from '../libs/authmanager';
+import Placeholder from '../ui/elements/Placeholder';
 
 const useStyles = makeStyles((theme) => ({
     body: {
@@ -31,7 +32,7 @@ const Dashboard = (props) => {
     return (
         <Frame className={classes.body} spacing={3}>
             {/* LOOP OVER CARDS */}
-            {contentTypes.map((data,i) => {
+            {contentTypes.length > 0?contentTypes.map((data,i) => {
                 return(
                     <Card xs={12} md={4} lg={4} key={data['id']}>
                         <Body height="fixed" className="coaster">
@@ -41,7 +42,17 @@ const Dashboard = (props) => {
                         </Body>
                     </Card>
                 );
-            })}
+            }):
+            [...Array(3)].map((e, i) => {
+                return(
+                    <Card xs={12} md={4} lg={4}>
+                        <Body height="fixed" className="coaster">
+                            <Placeholder count={4} />
+                        </Body>
+                    </Card>
+                )
+            })
+            }
         </Frame>
 
     );

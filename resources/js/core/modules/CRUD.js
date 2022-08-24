@@ -8,8 +8,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 import { DataGrid } from '@mui/x-data-grid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Card, Frame } from '../ui/layout/Frame';
 import Title from '../ui/elements/Title';
@@ -93,6 +93,7 @@ const Body = (props) => {
                                 <MenuItem value="radio">Radio</MenuItem>
                                 <MenuItem value="editor">Editor</MenuItem>
                                 <MenuItem value="textarea">Textarea</MenuItem>
+                                <MenuItem value="textarea">Image</MenuItem>
                             </Select>
                         </FormControl>
                     </>
@@ -152,6 +153,7 @@ const Body = (props) => {
                         <Button
                             onClick={() => saveField(params.row)}
                             variant="contained"
+                            disableElevation={true}
                             color="primary"
                             size="small"
                             className={classes.button}
@@ -217,7 +219,7 @@ const Body = (props) => {
                     disableSelectionOnClick
                     components={{
                         NoRowsOverlay: function () {
-                            return (<NoRowsOverlay message="No content type selected" />)
+                            return (<NoRowsOverlay icon={props['icon']} message="No content type selected" />)
                         },
                     }}
                 />
