@@ -1,9 +1,10 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton from '@mui/material/Skeleton';
 
 export default function Placeholder(props) {
-    return (
-        <Skeleton count={props.count} />
-    );
+    return [...Array(props.count)].map((e,i) => {
+        return (
+            <Skeleton key={i} height={props.height?props.height:30} />
+        )
+    })
 }

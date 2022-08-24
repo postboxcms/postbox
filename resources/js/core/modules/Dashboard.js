@@ -45,7 +45,7 @@ const Dashboard = (props) => {
             }):
             [...Array(3)].map((e, i) => {
                 return(
-                    <Card xs={12} md={4} lg={4}>
+                    <Card xs={12} md={4} lg={4} key={i}>
                         <Body height="fixed" className="coaster">
                             <Placeholder count={4} />
                         </Body>

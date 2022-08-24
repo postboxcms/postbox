@@ -17,12 +17,14 @@ import { ElementCSS } from '../ui/elements/element.css';
 
 import auth from '../libs/authmanager';
 import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
+import Placeholder from '../ui/elements/Placeholder';
 import { IOSSwitch } from '../libs/elements';
 
 const Body = (props) => {
     const classes = ElementCSS();
     const [rows,setRows] = React.useState([]);
     const [cellFocus, setCellFocus] = React.useState(false);
+    const [loader, setLoader] = React.useState(false);
     const columns = [
         {
             field: 'id',
@@ -167,11 +169,16 @@ const Body = (props) => {
     ];
 
     const setContentType = (e) => {
+        setLoader(true);
         if(e.target.value !== "") {
             auth.get('/CRUD/'+e.target.value)
-                .then((response) => setRows(response.data.fields))
+                .then((response) => {
+                    setRows(response.data.fields);
+                    setLoader(true);
+                })
         } else {
             setRows([]);
+            setLoader(false);
         }
     }
 
@@ -215,11 +222,18 @@ const Body = (props) => {
                     rows={rows}
                     columns={columns}
                     pageSize={5}
-                    // checkboxSelection
                     disableSelectionOnClick
                     components={{
                         NoRowsOverlay: function () {
-                            return (<NoRowsOverlay icon={props['icon']} message="No content type selected" />)
+                            if(!loader) {
+                                return (
+                                    <NoRowsOverlay icon={props['icon']} message="No content type selected" />
+                                );
+                            } else {
+                                return (
+                                    <Placeholder height={50} count={5} />
+                                );
+                            }
                         },
                     }}
                 />
