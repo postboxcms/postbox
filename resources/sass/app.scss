@@ -60,6 +60,9 @@ $element-border-color: #ccc;
             line-height: 20px;
         }
     }
+    .dropdown.data-dropdown {
+        margin-bottom: 0;
+    }
     .no-rows-overlay {
         display: flex;
         align-self: center;
@@ -74,6 +77,11 @@ $element-border-color: #ccc;
     }
 }
 
+fieldset {
+    legend {
+        width: unset;
+    }
+}
 a, a:hover {
     text-decoration: none;
 }

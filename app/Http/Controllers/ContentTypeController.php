@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContentType;
-use App\Http\Resources\ContentTypeResource;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+use App\Models\ContentType;
+use App\Http\Resources\ContentTypeResource;
 
 class ContentTypeController extends Controller
 {
@@ -69,7 +69,6 @@ class ContentTypeController extends Controller
         // show content type info
         return response([
             'content_type'  => new ContentTypeResource($ContentType),
-            'fields'        => $ContentType->getTableColumns($ContentType->slug),
             'message'       => trans('app.success')
         ],200);
     }

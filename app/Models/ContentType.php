@@ -9,7 +9,7 @@ class ContentType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','description','icon'];
+    protected $fillable = ['name','description','icon','slug'];
 
     protected $table = 'content_types';
 

@@ -9318,6 +9318,9 @@ h3 {
   padding: 8px 35px 8px 25px;
   line-height: 20px;
 }
+.app-root .dropdown.data-dropdown {
+  margin-bottom: 0;
+}
 .app-root .no-rows-overlay {
   display: flex;
   align-self: center;
@@ -9329,6 +9332,10 @@ h3 {
 }
 .app-root p.MuiTablePagination-displayedRows {
   margin-bottom: 0;
+}
+
+fieldset legend {
+  width: unset;
 }
 
 a, a:hover {

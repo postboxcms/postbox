@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\ContentType;
+use App\Models\CRUD;
 use App\Http\Resources\ContentTypeResource;
 
 class CRUDController extends Controller
 {
     protected $contentType;
+    protected $fields;
+    protected $data;
+    protected $table;
+    protected $missingFields;
+    protected $crud;
+    protected $counter = 1;
+    protected $validator;
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +43,24 @@ class CRUDController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // store CRUD data
+        $this->data = $request->all();
+        $this->validator = Validator::make($this->data, [
+            'alias'          => 'required|max:20'
+        ]);
+
+        if($this->validator->fails()) {
+            return response(['message' => $this->validator->errors(),trans('crud.validationerror')]);
+        }
+
+        $this->crud = CRUD::updateOrCreate([
+            'field' => $this->data['field'],
+            'table' => $this->data['table']
+        ],$this->data);
+
+        return response([
+            'message' => trans('app.success')
+        ],200);
     }
 
     /**
@@ -42,9 +69,34 @@ class CRUDController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ContentType $ContentType)
     {
-        //
+        // show CRUD fields
+        $this->table = \Request::segment(count(\Request::segments()));
+        $this->fields = $ContentType->getTableColumns($this->table);
+        $this->fields = collect($this->fields)->map(function($field) {
+            $this->counter += 1;
+            return [
+                'id'        => $this->counter,
+                'table'     => $this->table,
+                'field'     => $field,
+                'alias'     => strtoupper($field),
+                'type'      => 'text',
+                'position'  => 'none',
+                'list'      => true,
+                'actions'   => null
+            ];
+        });
+        $this->data = CRUD::where('table',\Request::segment(count(\Request::segments())))->get()->toArray();
+        $this->missingFields = array_diff(array_column($this->fields->toArray(),'field'),array_column($this->data,'field'));
+        $this->fields = collect($this->fields)->map(function($field) {
+            if(in_array($field['field'],$this->missingFields)) {
+                return $field;
+            }
+        });
+        return  response([
+            'fields'        => count($this->data) > 0?array_merge($this->data,array_filter($this->fields->toArray())):$this->fields,
+        ],200);
     }
 
     /**
