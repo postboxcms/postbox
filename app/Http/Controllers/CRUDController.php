@@ -13,6 +13,7 @@ class CRUDController extends Controller
 {
     protected $contentType;
     protected $fields;
+    protected $columns;
     protected $data;
     protected $table;
     protected $missingFields;
@@ -94,8 +95,21 @@ class CRUDController extends Controller
                 return $field;
             }
         });
-        return  response([
-            'fields'        => count($this->data) > 0?array_merge($this->data,array_filter($this->fields->toArray())):$this->fields,
+        $this->fields = count($this->data) > 0?array_merge($this->data,array_filter($this->fields->toArray())):$this->fields;
+        $this->columns = collect($this->fields)->map(function($field){
+            if($field['list'] == 1) {
+                return [
+                    'field'             => $field['field'],
+                    'headerClassName'   => 'table-header-light',
+                    'headerName'        => str_replace('_',' ',$field['alias']),
+                    'flex'              => 1
+                ];
+            }
+        })->filter()->values();
+
+        return response([
+            'fields'    => $this->fields,
+            'columns'   => $this->columns
         ],200);
     }
 

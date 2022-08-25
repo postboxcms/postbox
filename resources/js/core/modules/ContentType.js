@@ -18,112 +18,71 @@ import { ElementCSS } from '../ui/elements/element.css';
 import iconList from '../libs/icons';
 // auth manager
 import auth from '../libs/authmanager';
+import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
+import Placeholder, {Loader} from '../ui/elements/Placeholder';
 
-const columns = [
-    {
-        field: 'id',
-        headerClassName: 'table-header-light',
-        headerName: 'ID',
-        width: 0,
-        hide: true
-    },
-    {
-        field: 'name',
-        headerName: 'Name',
-        headerClassName: 'table-header-light',
-        width: 300,
-        editable: true,
-    },
-    {
-        field: 'image',
-        headerName: 'Image',
-        headerClassName: 'table-header-light',
-        width: 150,
-        editable: false,
-        renderCell: (params) => {
-            const classes = ElementCSS();
-            return (
-                <Avatar variant="rounded" className={classes.avatar}>
-                    <AssignmentIcon />
-                </Avatar>
-            )
-        }
-    },
-    {
-        field: 'role',
-        headerName: 'User Role',
-        headerClassName: 'table-header-light',
-        width: 150,
-        editable: false,
-        renderCell: () => {
-            const classes = ElementCSS();
-            return (
-                <Avatar variant="rounded" className={classes.label}>
-                    Administrator
-                </Avatar>
-            )
-        }
-    },
-    {
-        field: 'updated',
-        headerName: 'Updated On',
-        headerClassName: 'table-header-light',
-        width: 180,
-        type: 'date'
-    },
-    {
-        field: 'actions',
-        headerName: 'Actions',
-        headerClassName: 'table-header-light',
-        width: 200,
-        renderCell: () => {
-            const classes = ElementCSS();
-            return (
-                <div>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        className={classes.button}
-                        startIcon={<EditIcon />}>
-                        Edit
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                        className={classes.button}
-                        startIcon={<DeleteIcon />}>
-                        Delete
-                    </Button>
-                </div>
-            );
-        }
-    },
-];
+// const rows = [
+//     {
+//         id: 1,
+//         name: 'Welcome to postbox',
+//         image: '',
+//         role: '',
+//         updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
+//         actions: null
+//     },
+//     {
+//         id: 2,
+//         name: 'This is a demo',
+//         image: '',
+//         role: '',
+//         updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
+//         actions: null
+//     }
 
-const rows = [
-    {
-        id: 1,
-        name: 'Welcome to postbox',
-        image: '',
-        role: '',
-        updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
-        actions: null
-    },
-    {
-        id: 2,
-        name: 'This is a demo',
-        image: '',
-        role: '',
-        updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
-        actions: null
-    }
-
-];
+// ];
 
 const CTBody = (props) => {
     const classes = ElementCSS();
+    const [loader, setLoader] = React.useState(false);
+    const [rows, setRows] = React.useState([]);
+    const [columns, setColumns] = React.useState([]);
+    const noRowsMessage = "No "+(props['title']?props['title']:props['name'])+" added yet";
+    React.useEffect(() => {
+        auth.get('/CRUD'+props['path'])
+            .then((response) => {
+                response.data.columns.push({
+                    field: 'actions',
+                    headerName: 'Actions',
+                    headerClassName: 'table-header-light',
+                    flex:1,
+                    renderCell: () => {
+                        const classes = ElementCSS();
+                        return (
+                            <div>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    className={classes.button}
+                                    startIcon={<EditIcon />}>
+                                    Edit
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    size="small"
+                                    className={classes.button}
+                                    startIcon={<DeleteIcon />}>
+                                    Delete
+                                </Button>
+                            </div>
+                        );
+                    }
+                });
+                setColumns(response.data.columns);
+
+            })
+    },[props['path']]);
     return (
         <React.Fragment>
             <div className={classes.header}>
@@ -146,6 +105,18 @@ const CTBody = (props) => {
                     pageSize={5}
                     checkboxSelection
                     disableSelectionOnClick
+                    components={{
+                        NoRowsOverlay: function () {
+                            return (
+                                <>
+                                    <Placeholder check={loader}>
+                                        <Loader height={50} lines={8} />
+                                    </Placeholder>
+                                    <NoRowsOverlay icon={props['icon']} message={noRowsMessage} />
+                                </>
+                            );
+                        },
+                    }}
                 />
             </div>
         </React.Fragment>

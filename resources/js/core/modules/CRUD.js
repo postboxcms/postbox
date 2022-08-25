@@ -175,7 +175,7 @@ const Body = (props) => {
                 .then((response) => {
                     setRows(response.data.fields);
                     setLoader(false);
-                })
+                });
         } else {
             setRows([]);
             setLoader(false);
@@ -194,8 +194,9 @@ const Body = (props) => {
 
     const saveField = (data) => {
         auth.post('/CRUD', data)
-            .then((response) => console.log(response.data))
+            .then((response) => console.log(response.data));
     }
+    
     return (
         <React.Fragment>
             <div className={classes.header}>
