@@ -8,16 +8,5 @@ const PublicRoute = ({restricted, ...rest}) => {
         : <Redirect to="/" />
     );
 }
-// const PublicRoute = ({restricted, ...rest}) => {
-//     return isLogin().then((response) => {
-//         return (
-//             <Redirect to="/login"/>
-//         );
-//     }).catch((error) => {
-//         return (
-//             <Route {...rest} />
-//         );
-//     });
-// }
 
 export default PublicRoute;

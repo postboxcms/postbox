@@ -5,7 +5,7 @@ import { Card, Frame, Body, Data } from '../ui/layout/Frame';
 
 import jwt from '../libs/jwtmanager';
 import auth from '../libs/authmanager';
-import Placeholder from '../ui/elements/Placeholder';
+import Placeholder, {Loader} from '../ui/elements/Placeholder';
 
 const useStyles = makeStyles((theme) => ({
     body: {
@@ -32,27 +32,24 @@ const Dashboard = (props) => {
     return (
         <Frame className={classes.body} spacing={3}>
             {/* LOOP OVER CARDS */}
-            {contentTypes.length > 0?contentTypes.map((data,i) => {
+            <Placeholder repeat={3} map={contentTypes}>
+                <Card xs={12} md={4} lg={4}>
+                    <Body height="fixed" className="coaster">
+                        <Loader lines={4} />
+                    </Body>
+                </Card>
+            </Placeholder>
+            {contentTypes.map((data,i) => {
                 return(
                     <Card xs={12} md={4} lg={4} key={data['id']}>
                         <Body height="fixed" className="coaster">
                             <Data { ...props } { ...data }
                                 title={data.name}
-                                icon={data.icon}/>
+                                icon={data.icon} />
                         </Body>
                     </Card>
                 );
-            }):
-            [...Array(3)].map((e, i) => {
-                return(
-                    <Card xs={12} md={4} lg={4} key={i}>
-                        <Body height="fixed" className="coaster">
-                            <Placeholder count={4} />
-                        </Body>
-                    </Card>
-                )
-            })
-            }
+            })}
         </Frame>
 
     );

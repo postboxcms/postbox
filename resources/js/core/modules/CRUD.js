@@ -17,7 +17,7 @@ import { ElementCSS } from '../ui/elements/element.css';
 
 import auth from '../libs/authmanager';
 import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
-import Placeholder from '../ui/elements/Placeholder';
+import Placeholder, {Loader} from '../ui/elements/Placeholder';
 import { IOSSwitch } from '../libs/elements';
 
 const Body = (props) => {
@@ -174,7 +174,7 @@ const Body = (props) => {
             auth.get('/CRUD/'+e.target.value)
                 .then((response) => {
                     setRows(response.data.fields);
-                    setLoader(true);
+                    setLoader(false);
                 })
         } else {
             setRows([]);
@@ -225,15 +225,14 @@ const Body = (props) => {
                     disableSelectionOnClick
                     components={{
                         NoRowsOverlay: function () {
-                            if(!loader) {
-                                return (
+                            return (
+                                <>
+                                    <Placeholder check={loader}>
+                                        <Loader height={50} lines={5} />
+                                    </Placeholder>
                                     <NoRowsOverlay icon={props['icon']} message="No content type selected" />
-                                );
-                            } else {
-                                return (
-                                    <Placeholder height={50} count={5} />
-                                );
-                            }
+                                </>
+                            );
                         },
                     }}
                 />

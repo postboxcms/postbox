@@ -7,17 +7,5 @@ const PrivateRoute = ({ ...rest}) => {
         <Route {...rest} />
     :<Redirect to="/login"/>);
 }
-// const PrivateRoute = ({ ...rest}) => {
-//     return isLogin().then((response) => {
-//         return (
-//             response?<Route {...rest} />:<Redirect to="/login"/>
-//         );
-//     }).catch((error) => {
-//         return (
-//             <Redirect to="/login"/>
-//         );
-//     });
-// }
-
 
 export default PrivateRoute;
