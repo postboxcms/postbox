@@ -3,7 +3,7 @@ import { green, grey } from '@mui/material/colors';
 
 export const ElementCSS = makeStyles((theme) => ({
     grid: {
-        height: 400,
+        height: 450,
         width: '100%',
         backgroundColor: '#fff'
     },

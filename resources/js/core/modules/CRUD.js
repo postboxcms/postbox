@@ -221,14 +221,14 @@ const Body = (props) => {
                 <DataGrid
                     rows={rows}
                     columns={columns}
-                    pageSize={5}
+                    pageSize={rows.length}
                     disableSelectionOnClick
                     components={{
                         NoRowsOverlay: function () {
                             return (
                                 <>
                                     <Placeholder check={loader}>
-                                        <Loader height={50} lines={5} />
+                                        <Loader height={50} lines={8} />
                                     </Placeholder>
                                     <NoRowsOverlay icon={props['icon']} message="No content type selected" />
                                 </>
