@@ -4,9 +4,11 @@ import Skeleton from '@mui/material/Skeleton';
 export const Loader = (props) => {
     return props.lines?[...Array(props.lines)].map((e,i) => {
         return (
-            <Skeleton key={i} height={props.height?props.height:30} />
+            <div className='skeleton-loader'>
+                <Skeleton key={i} height={props.height?props.height:30} />
+            </div>
         )
-    }):<Skeleton key={0} height={props.height?props.height:30} />;
+    }):<div className='skeleton-loader'><Skeleton key={0} height={props.height?props.height:30} /></div>;
 }
 export default function Placeholder(props) {
     if((typeof props.map !== typeof undefined && props.map.length <= 0) || (typeof props.check !== typeof undefined && props.check)) {

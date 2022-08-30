@@ -16,6 +16,9 @@ $brand-color: #472791;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 fieldset {
     legend {
         width: unset;
@@ -92,8 +95,14 @@ svg[data-prefix="fas"].fa-xl {
             font-size: 20px;
         }
     }
+    .skeleton-loader {
+        padding: 0 10px;
+    }
     p.MuiTablePagination-displayedRows {
         margin-bottom: 0;
+    }
+    header.MuiPaper-root {
+        box-shadow: none;
     }
 }
 .navbar-dark {

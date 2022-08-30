@@ -80,14 +80,14 @@ const CTBody = (props) => {
                     }
                 });
                 setColumns(response.data.columns);
-
-            })
+            });
     },[props['path']]);
+    
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size='lg' icon={props['icon']} /> {props['title']?props['title']:props['name']}
+                    <FontAwesomeIcon size='lg' icon={typeof props['icon'] !== typeof undefined?props['icon']:'square'} /> {props['title']?props['title']:props['name']}
                 </Title>
                 <Button
                     variant="contained"
@@ -112,7 +112,7 @@ const CTBody = (props) => {
                                     <Placeholder check={loader}>
                                         <Loader height={50} lines={8} />
                                     </Placeholder>
-                                    <NoRowsOverlay icon={props['icon']} message={noRowsMessage} />
+                                    <NoRowsOverlay icon={typeof props['icon'] !== typeof undefined?props['icon']:'square'} message={noRowsMessage} />
                                 </>
                             );
                         },

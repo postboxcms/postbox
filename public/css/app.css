@@ -9277,6 +9277,10 @@ h3 {
     border-color: #dee2e6;
   }
 }
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 fieldset legend {
   width: unset;
 }
@@ -9350,8 +9354,14 @@ svg[data-prefix=fas].fa-xl {
 .app-root .no-rows-overlay .message {
   font-size: 20px;
 }
+.app-root .skeleton-loader {
+  padding: 0 10px;
+}
 .app-root p.MuiTablePagination-displayedRows {
   margin-bottom: 0;
+}
+.app-root header.MuiPaper-root {
+  box-shadow: none;
 }
 
 .navbar-dark {

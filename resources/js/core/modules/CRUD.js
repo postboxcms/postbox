@@ -8,17 +8,19 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 import { DataGrid } from '@mui/x-data-grid';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
 
 import { Card, Frame } from '../ui/layout/Frame';
-import Title from '../ui/elements/Title';
 import { ElementCSS } from '../ui/elements/element.css';
+import Title from '../ui/elements/Title';
 
-import auth from '../libs/authmanager';
-import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
-import Placeholder, {Loader} from '../ui/elements/Placeholder';
 import { IOSSwitch } from '../libs/elements';
+import { useNotifier } from '../libs/notifications';
+import auth from '../libs/authmanager';
+
+import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
+import Placeholder, { Loader } from '../ui/elements/Placeholder';
 
 const Body = (props) => {
     const classes = ElementCSS();
@@ -91,6 +93,8 @@ const Body = (props) => {
                             >
                                 <MenuItem value="hidden">Hidden</MenuItem>
                                 <MenuItem value="text">Text</MenuItem>
+                                <MenuItem value="email">Email</MenuItem>
+                                <MenuItem value="password">Password</MenuItem>
                                 <MenuItem value="dropdown">Dropdown</MenuItem>
                                 <MenuItem value="radio">Radio</MenuItem>
                                 <MenuItem value="editor">Editor</MenuItem>
@@ -167,6 +171,7 @@ const Body = (props) => {
             }
         },
     ];
+    const notify = useNotifier();
 
     const setContentType = (e) => {
         setLoader(true);
@@ -194,9 +199,9 @@ const Body = (props) => {
 
     const saveField = (data) => {
         auth.post('/CRUD', data)
-            .then((response) => console.log(response.data));
+            .then((response) => notify(response.data.message));
     }
-    
+
     return (
         <React.Fragment>
             <div className={classes.header}>
