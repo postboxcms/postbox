@@ -99,7 +99,7 @@ const Body = (props) => {
                                 <MenuItem value="radio">Radio</MenuItem>
                                 <MenuItem value="editor">Editor</MenuItem>
                                 <MenuItem value="textarea">Textarea</MenuItem>
-                                <MenuItem value="textarea">Image</MenuItem>
+                                <MenuItem value="image">Image</MenuItem>
                             </Select>
                         </FormControl>
                     </>

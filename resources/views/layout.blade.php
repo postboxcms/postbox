@@ -11,6 +11,10 @@
     </head>
     <body>
         <div id="app">
+            <div class="spinner">
+                <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                <div class="lds-text">{{env('APP_NAME','Postbox')}} is loading...</div>
+            </div>
             {{-- React code UI rendered here --}}
         </div>
         <script src="{{asset('js/app.js')}}"></script>

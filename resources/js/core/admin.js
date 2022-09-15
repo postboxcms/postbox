@@ -18,7 +18,7 @@ import PublicRoute from './routers/public';
 /** React router to setup UI routes */
 const Admin = () => {
     return (
-        <Router>
+        <Router basename="/admin">
             <Switch>
                 <PublicRoute restricted={true} exact path="/login">
                     <Login/>
