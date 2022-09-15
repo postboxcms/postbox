@@ -21,73 +21,62 @@ import auth from '../libs/authmanager';
 import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
 import Placeholder, {Loader} from '../ui/elements/Placeholder';
 
-// const rows = [
-//     {
-//         id: 1,
-//         name: 'Welcome to postbox',
-//         image: '',
-//         role: '',
-//         updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
-//         actions: null
-//     },
-//     {
-//         id: 2,
-//         name: 'This is a demo',
-//         image: '',
-//         role: '',
-//         updated: moment(new Date().toLocaleString()).format('MMMM Do YYYY'),
-//         actions: null
-//     }
-
-// ];
+const ActionsButton = () => {
+    const classes = ElementCSS();
+    return (
+        <div>
+            <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className={classes.button}
+                startIcon={<EditIcon />}>
+                Edit
+            </Button>
+            <Button
+                variant="contained"
+                color="secondary"
+                size="small"
+                className={classes.button}
+                startIcon={<DeleteIcon />}>
+                Delete
+            </Button>
+        </div>
+    );
+}
 
 const CTBody = (props) => {
     const classes = ElementCSS();
-    const [loader, setLoader] = React.useState(false);
     const [rows, setRows] = React.useState([]);
+    const [data, setData] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
     const noRowsMessage = "No "+(props['title']?props['title']:props['name'])+" added yet";
+    const Icon = typeof data['icon'] !== typeof undefined?data['icon']:'square';
+
     React.useEffect(() => {
-        auth.get('/CRUD'+props['path'])
+        auth.get('/CRUD' + props['path'])
             .then((response) => {
                 response.data.columns.push({
                     field: 'actions',
                     headerName: 'Actions',
                     headerClassName: 'table-header-light',
                     flex:1,
-                    renderCell: () => {
-                        const classes = ElementCSS();
-                        return (
-                            <div>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                    className={classes.button}
-                                    startIcon={<EditIcon />}>
-                                    Edit
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    size="small"
-                                    className={classes.button}
-                                    startIcon={<DeleteIcon />}>
-                                    Delete
-                                </Button>
-                            </div>
-                        );
-                    }
+                    renderCell: () => <ActionsButton />
                 });
                 setColumns(response.data.columns);
+                auth.get('/ContentType' + props['path'])
+                    .then(response =>  {
+                        setData(response.data.content_type);
+                        setRows(response.data.content_type.data);
+                    });
             });
     },[props['path']]);
-    
+
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size='lg' icon={typeof props['icon'] !== typeof undefined?props['icon']:'square'} /> {props['title']?props['title']:props['name']}
+                    <FontAwesomeIcon size='lg' icon={Icon} /> {props['title']?props['title']:props['name']}
                 </Title>
                 <Button
                     variant="contained"
@@ -109,10 +98,10 @@ const CTBody = (props) => {
                         NoRowsOverlay: function () {
                             return (
                                 <>
-                                    <Placeholder check={loader}>
+                                    <Placeholder check={false}>
                                         <Loader height={50} lines={8} />
                                     </Placeholder>
-                                    <NoRowsOverlay icon={typeof props['icon'] !== typeof undefined?props['icon']:'square'} message={noRowsMessage} />
+                                    <NoRowsOverlay icon={Icon} message={noRowsMessage} />
                                 </>
                             );
                         },
@@ -124,20 +113,10 @@ const CTBody = (props) => {
 }
 
 export default function ContentType(props) {
-    const [data,setData] = React.useState({});
-    React.useEffect(function() {
-        if(typeof props.path !== typeof undefined) {
-            auth.get('/ContentType' + props.path)
-                .then(response =>  setData(response['data']['content_type']));
-        } else {
-            setData({});
-        }
-    },[props.path]);
-
     return (
         <Frame>
             <Card xs={12}>
-                <CTBody { ...props } { ...data } />
+                <CTBody { ...props } />
             </Card>
         </Frame>
     );
