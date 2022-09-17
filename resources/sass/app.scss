@@ -15,6 +15,7 @@ $navbar-dark-subheading-color: #888;
 $brand-color: #472791;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
+$element-font-size: 14px;
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -36,8 +37,11 @@ svg[data-prefix="fas"].fa-xl {
     color: #ccc;
 }
 
-#app {
+input[type="text"] {
+    font-size: $element-font-size;
+}
 
+#app {
     .app-loader {
 
         //custom mixins
@@ -273,7 +277,7 @@ svg[data-prefix="fas"].fa-xl {
             i {
                 font-style: normal;
                 color: #f50057;
-                font-size: 14px;
+                font-size: $element-font-size;
                 position: relative;
                 top: 2px;
             }
@@ -289,7 +293,6 @@ svg[data-prefix="fas"].fa-xl {
         }
 
     }
-
 }
 
 .app-root {
@@ -339,6 +342,7 @@ svg[data-prefix="fas"].fa-xl {
             background-color: $white;
             padding: 8px 35px 8px 25px;
             line-height: 20px;
+            font-size: 14px;
         }
     }
 
@@ -367,6 +371,9 @@ svg[data-prefix="fas"].fa-xl {
 
     .skeleton-loader {
         padding: 0 10px;
+        .MuiSkeleton-root {
+            border-radius: 30px;
+        }
     }
 
     p.MuiTablePagination-displayedRows {

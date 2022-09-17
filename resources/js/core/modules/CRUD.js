@@ -236,7 +236,7 @@ const Body = (props) => {
                             return (
                                 <>
                                     <Placeholder check={loader}>
-                                        <Loader height={50} lines={8} />
+                                        <Loader height={30} lines={10} />
                                     </Placeholder>
                                     <NoRowsOverlay icon={props['icon']} message="No content type selected" />
                                 </>

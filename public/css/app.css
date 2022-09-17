@@ -9295,6 +9295,10 @@ svg[data-prefix=fas].fa-xl {
   color: #ccc;
 }
 
+input[type=text] {
+  font-size: 14px;
+}
+
 #app .app-loader {
   @import url(https://fonts.googleapis.com/css?family=Archivo+Narrow);
 }
@@ -9535,6 +9539,7 @@ svg[data-prefix=fas].fa-xl {
   background-color: #fff;
   padding: 8px 35px 8px 25px;
   line-height: 20px;
+  font-size: 14px;
 }
 .app-root .dropdown.data-dropdown {
   margin-bottom: 0;
@@ -9557,6 +9562,9 @@ svg[data-prefix=fas].fa-xl {
 }
 .app-root .skeleton-loader {
   padding: 0 10px;
+}
+.app-root .skeleton-loader .MuiSkeleton-root {
+  border-radius: 30px;
 }
 .app-root p.MuiTablePagination-displayedRows {
   margin-bottom: 0;
