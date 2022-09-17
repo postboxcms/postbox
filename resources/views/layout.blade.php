@@ -11,9 +11,16 @@
     </head>
     <body>
         <div id="app">
-            <div class="spinner">
-                <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                <div class="lds-text">{{env('APP_NAME','Postbox')}} is loading...</div>
+            <div class="app-loader">
+                <div class="cube-wrapper">
+                    <div class="cube-folding">
+                        <span class="leaf1"></span>
+                        <span class="leaf2"></span>
+                        <span class="leaf3"></span>
+                        <span class="leaf4"></span>
+                    </div>
+                    <span class="loading" data-name="{{env('APP_NAME','Postbox')}}">{{env('APP_NAME','Postbox')}} is loading</span>
+                </div>
             </div>
             {{-- React code UI rendered here --}}
         </div>

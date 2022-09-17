@@ -9285,7 +9285,8 @@ fieldset legend {
   width: unset;
 }
 
-a, a:hover {
+a,
+a:hover {
   text-decoration: none;
 }
 
@@ -9294,99 +9295,204 @@ svg[data-prefix=fas].fa-xl {
   color: #ccc;
 }
 
-#app .spinner {
-  text-align: center;
-  width: 100%;
-  margin-top: 10%;
+#app .app-loader {
+  @import url(https://fonts.googleapis.com/css?family=Archivo+Narrow);
 }
-#app .spinner .lds-text {
-  color: #472791;
-  font-size: 20px;
-}
-#app .spinner .lds-grid {
+#app .app-loader .cube-folding {
+  width: 50px;
+  height: 50px;
   display: inline-block;
+  transform: rotate(45deg);
+  font-size: 0;
+}
+#app .app-loader .cube-folding span {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 25px;
+  height: 25px;
+  transform: scale(1.1);
+  display: inline-block;
 }
-#app .spinner .lds-grid div {
+#app .app-loader .cube-folding span::before {
+  content: "";
+  background-color: #472791;
   position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #472791;
-  -webkit-animation: lds-grid 1.2s linear infinite;
-          animation: lds-grid 1.2s linear infinite;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 25px;
+  height: 25px;
+  transform-origin: 100% 100%;
+  -webkit-animation: folding 2.5s infinite linear both;
+  animation: folding 2.5s infinite linear both;
 }
-#app .spinner .lds-grid div:nth-child(1) {
-  top: 8px;
-  left: 8px;
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s;
+#app .app-loader .cube-folding .leaf2 {
+  transform: rotateZ(90deg) scale(1.1);
 }
-#app .spinner .lds-grid div:nth-child(2) {
-  top: 8px;
-  left: 32px;
-  -webkit-animation-delay: -0.4s;
-          animation-delay: -0.4s;
+#app .app-loader .cube-folding .leaf2::before {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+  background-color: #3d227d;
 }
-#app .spinner .lds-grid div:nth-child(3) {
-  top: 8px;
-  left: 56px;
-  -webkit-animation-delay: -0.8s;
-          animation-delay: -0.8s;
+#app .app-loader .cube-folding .leaf3 {
+  transform: rotateZ(270deg) scale(1.1);
 }
-#app .spinner .lds-grid div:nth-child(4) {
-  top: 32px;
-  left: 8px;
-  -webkit-animation-delay: -0.4s;
-          animation-delay: -0.4s;
+#app .app-loader .cube-folding .leaf3::before {
+  -webkit-animation-delay: 0.9s;
+  animation-delay: 0.9s;
+  background-color: #3d227d;
 }
-#app .spinner .lds-grid div:nth-child(5) {
-  top: 32px;
-  left: 32px;
-  -webkit-animation-delay: -0.8s;
-          animation-delay: -0.8s;
+#app .app-loader .cube-folding .leaf4 {
+  transform: rotateZ(180deg) scale(1.1);
 }
-#app .spinner .lds-grid div:nth-child(6) {
-  top: 32px;
-  left: 56px;
-  -webkit-animation-delay: -1.2s;
-          animation-delay: -1.2s;
+#app .app-loader .cube-folding .leaf4::before {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+  background-color: #331c69;
 }
-#app .spinner .lds-grid div:nth-child(7) {
-  top: 56px;
-  left: 8px;
-  -webkit-animation-delay: -0.8s;
-          animation-delay: -0.8s;
-}
-#app .spinner .lds-grid div:nth-child(8) {
-  top: 56px;
-  left: 32px;
-  -webkit-animation-delay: -1.2s;
-          animation-delay: -1.2s;
-}
-#app .spinner .lds-grid div:nth-child(9) {
-  top: 56px;
-  left: 56px;
-  -webkit-animation-delay: -1.6s;
-          animation-delay: -1.6s;
-}
-@-webkit-keyframes lds-grid {
-  0%, 100% {
+@-webkit-keyframes folding {
+  0%, 10% {
+    transform: perspective(140px) rotateX(-180deg);
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+  25%, 75% {
+    transform: perspective(140px) rotateX(0deg);
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
     opacity: 1;
   }
-  50% {
-    opacity: 0.5;
+  90%, 100% {
+    transform: perspective(140px) rotateY(180deg);
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    opacity: 0;
   }
 }
-@keyframes lds-grid {
-  0%, 100% {
+@keyframes folding {
+  0%, 10% {
+    transform: perspective(140px) rotateX(-180deg);
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+  25%, 75% {
+    transform: perspective(140px) rotateX(0deg);
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
     opacity: 1;
   }
-  50% {
-    opacity: 0.5;
+  90%, 100% {
+    transform: perspective(140px) rotateY(180deg);
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    opacity: 0;
   }
+}
+#app .app-loader .cube-wrapper {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+}
+#app .app-loader .cube-wrapper:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 150px;
+  bottom: -78px;
+  margin: auto;
+  width: 90px;
+  height: 6px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+  filter: blur(2px);
+  border-radius: 100%;
+  -webkit-animation: shadow 0.5s ease infinite alternate;
+  animation: shadow 0.5s ease infinite alternate;
+}
+#app .app-loader .cube-wrapper .loading {
+  font-size: 16px;
+  display: block;
+  color: #472791;
+  position: relative;
+  top: 25px;
+  z-index: 2;
+  -webkit-animation: text 0.5s ease infinite alternate;
+  animation: text 0.5s ease infinite alternate;
+}
+@-webkit-keyframes text {
+  100% {
+    top: 35px;
+  }
+}
+@keyframes text {
+  100% {
+    top: 35px;
+  }
+}
+@-webkit-keyframes shadow {
+  100% {
+    bottom: -18px;
+    width: 100px;
+  }
+}
+@keyframes shadow {
+  100% {
+    bottom: -18px;
+    width: 100px;
+  }
+}
+#app .app-loader html,
+#app .app-loader body {
+  min-height: 100%;
+}
+#app .app-loader body {
+  background: #00c6ff;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #00c6ff, #0072ff);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: arial;
+}
+#app .app-loader h1 {
+  font-size: 26px;
+  display: block;
+  text-align: center;
+  color: #fff;
+  padding: 50px 20px;
+  font-weight: 300;
+  font-family: "Archivo Narrow", sans-serif;
+}
+#app .app-loader .made-with-love {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  bottom: 10px;
+  text-align: center;
+  font-size: 10px;
+  z-index: 9999;
+  font-family: arial;
+  color: #fff;
+}
+#app .app-loader .made-with-love i {
+  font-style: normal;
+  color: #f50057;
+  font-size: 14px;
+  position: relative;
+  top: 2px;
+}
+#app .app-loader .made-with-love a {
+  color: #fff;
+  text-decoration: none;
+}
+#app .app-loader .made-with-love a:hover {
+  text-decoration: underline;
 }
 
 .app-root {

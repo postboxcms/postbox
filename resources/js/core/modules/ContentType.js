@@ -66,8 +66,18 @@ const CTBody = (props) => {
                 setColumns(response.data.columns);
                 auth.get('/ContentType' + props['path'])
                     .then(response =>  {
+                        const dataset = [];
+                        const rowdata = {};
                         setData(response.data.content_type);
-                        setRows(response.data.content_type.data);
+                        response.data.content_type.data.map((data) => {
+                            const dataKeys = Object.keys(data);
+                            const dataValues = Object.values(data);
+                            dataKeys.forEach((parameter,index) => {
+                                rowdata[parameter] = dataValues[index].value
+                            });
+                            dataset.push(rowdata);
+                        });
+                        setRows(dataset);
                     });
             });
     },[props['path']]);

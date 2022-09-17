@@ -100,6 +100,8 @@ const Body = (props) => {
                                 <MenuItem value="editor">Editor</MenuItem>
                                 <MenuItem value="textarea">Textarea</MenuItem>
                                 <MenuItem value="image">Image</MenuItem>
+                                <MenuItem value="timestamp">Timestamp</MenuItem>
+                                <MenuItem value="user">User</MenuItem>
                             </Select>
                         </FormControl>
                     </>
