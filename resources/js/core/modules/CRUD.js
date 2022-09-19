@@ -27,6 +27,8 @@ const Body = (props) => {
     const [rows,setRows] = React.useState([]);
     const [cellFocus, setCellFocus] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
+    const notify = useNotifier();
+
     const columns = [
         {
             field: 'id',
@@ -173,7 +175,6 @@ const Body = (props) => {
             }
         },
     ];
-    const notify = useNotifier();
 
     const setContentType = (e) => {
         setLoader(true);
@@ -236,7 +237,7 @@ const Body = (props) => {
                             return (
                                 <>
                                     <Placeholder check={loader}>
-                                        <Loader height={30} lines={10} />
+                                        <Loader lines={10} />
                                     </Placeholder>
                                     <NoRowsOverlay icon={props['icon']} message="No content type selected" />
                                 </>
