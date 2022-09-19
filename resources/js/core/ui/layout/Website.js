@@ -33,7 +33,7 @@ export default function Website(props) {
                 <Toolbar className="toolbar">
                     <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
                         {/* <Breadcrumb title={props.title} /> */}
-                        {"{{minimalist}}"}
+                        {"{minimalist}"}
                     </Typography>
                 </Toolbar>
             </AppBar>
