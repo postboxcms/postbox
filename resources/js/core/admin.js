@@ -24,22 +24,22 @@ const Admin = () => {
     return (
         <Router>
             <Switch>
-                <PublicRoute restricted={true} exact path={api.admin_prefix+"/login"}>
+                <PublicRoute restricted={true} exact path={api.adminPrefix+"/login"}>
                     <Login/>
                 </PublicRoute>
-                <PrivateRoute exact path={api.admin_prefix}>
-                    <Frameset path={api.admin_prefix} controller={Dashboard} />
+                <PrivateRoute exact path={api.adminPrefix}>
+                    <Frameset path={api.adminPrefix} controller={Dashboard} />
                 </PrivateRoute>
-                <PrivateRoute path={api.admin_prefix+"/posts"}>
+                <PrivateRoute path={api.adminPrefix+"/posts"}>
                     <Frameset title="Posts" path="/posts" controller={ContentType} />
                 </PrivateRoute>
-                <PrivateRoute path={api.admin_prefix+"/pages"}>
+                <PrivateRoute path={api.adminPrefix+"/pages"}>
                     <Frameset title="Pages" path="/pages" controller={ContentType} />
                 </PrivateRoute>
-                <PrivateRoute path={api.admin_prefix+"/users"}>
+                <PrivateRoute path={api.adminPrefix+"/users"}>
                     <Frameset title="Users" path="/users" controller={ContentType} />
                 </PrivateRoute>
-                <PrivateRoute path={api.admin_prefix+"/crud"}>
+                <PrivateRoute path={api.adminPrefix+"/crud"}>
                     <Frameset title="CRUD" icon="layer-group" controller={CRUD} />
                 </PrivateRoute>
                 <PrivateRoute path="*">

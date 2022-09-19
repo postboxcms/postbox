@@ -38,7 +38,7 @@ export const MainItems = (props) => {
     return (
         <React.Fragment>
             <div className={props.navbar}>
-                <Link to={api.admin_prefix}>
+                <Link to={api.adminPrefix}>
                     <ListItem button>
                         <ListItemIcon>
                             <DashboardIcon />
@@ -59,7 +59,7 @@ export const MainItems = (props) => {
                     <List component="div" disablePadding>
                         {contentTypes['content_types'].map((data) => {
                             return (
-                                <Link to={api['admin_prefix'] + '/' + data['slug']} key={data['id']}>
+                                <Link to={api['adminPrefix'] + '/' + data['slug']} key={data['id']}>
                                     <ListItem button>
                                         <ListItemIcon>
                                             <FontAwesomeIcon size='lg' icon={data['icon']} />
@@ -81,7 +81,7 @@ export const SubItems = (props) => {
         <React.Fragment>
             <div className={props.navbar}>
                 <ListSubheader inset>Preferences</ListSubheader>
-                <Link to={api.admin_prefix + "/crud"} key="0">
+                <Link to={api.adminPrefix + "/crud"} key="0">
                     <ListItem button>
                         <ListItemIcon>
                             <FontAwesomeIcon size='lg' icon="layer-group" />
