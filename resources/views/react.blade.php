@@ -7,7 +7,7 @@
 
         <title>{{env('APP_NAME','Postbox')}}</title>
         <link href="{{asset('css/app.css')}}" rel="stylesheet"/>
-        <link href="{{asset('css/element.css')}}" rel="stylesheet"/>
+        <link href="{{asset('css/theme.css')}}" rel="stylesheet"/>
     </head>
     <body>
         <div id="app">

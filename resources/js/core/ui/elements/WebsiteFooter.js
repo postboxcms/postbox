@@ -7,8 +7,9 @@ export default function WebsiteFooter () {
         <Typography variant="body2" color="textSecondary" align="center">
             {'Powered by '}
             <Link color="inherit" href="https://digitalbit.in" underline="hover">
-                {'Postbox © '}
+                {'Postbox'}
             </Link>
+            {' © '}
             {new Date().getFullYear()}
         </Typography>
     );
