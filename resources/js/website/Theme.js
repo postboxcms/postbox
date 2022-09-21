@@ -11,17 +11,6 @@ import { Card, Frame, Body } from './../core/ui/layout/Frame';
 
 export default function Theme(props) {
     const classes = LayoutCSS();
-    const renderComponent = (props) => {
-        const GridComponent = props.controller;
-        return (
-            <Frame>
-                <Card xs={12}>
-                    <GridComponent {...props} />
-                </Card>
-            </Frame>
-        );
-    };
-
     return (
         <div className="content">
             <AppBar position="absolute" className={clsx(classes.appBar, open)}>
@@ -35,7 +24,7 @@ export default function Theme(props) {
                 <div className="appbar-spacer" />
                 <Container maxWidth="lg" className="container">
                     {/* shift the above code to Theme and render the theme as a module through Website layout */}
-                    {renderComponent(props)}
+                    Theme content goes here...
                 </Container>
             </main>
         </div>

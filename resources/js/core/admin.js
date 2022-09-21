@@ -10,7 +10,7 @@ import Dashboard from './modules/Dashboard';
 import Login from './modules/Login';
 import ContentType from './modules/ContentType';
 import CRUD from './modules/CRUD';
-import Content from './modules/Content';
+import Theme from '../website/Theme';
 // theme provider
 import { theme } from './theme';
 // routers
@@ -43,7 +43,7 @@ const Admin = () => {
                     <Frameset title="CRUD" icon="layer-group" controller={CRUD} />
                 </PrivateRoute>
                 <PrivateRoute path="*">
-                    <Website controller={Content} />
+                    <Website controller={Theme} />
                 </PrivateRoute>
             </Switch>
         </Router>
