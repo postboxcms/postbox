@@ -9567,8 +9567,13 @@ input[type=text] {
   border-radius: 30px;
 }
 .app-root .grid-image-column {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #ccc;
+}
+.app-root .grid-image-column .cell-image {
+  width: 50px;
+  border: solid 2px #ccc;
+  border-radius: 5px;
 }
 .app-root p.MuiTablePagination-displayedRows {
   margin-bottom: 0;

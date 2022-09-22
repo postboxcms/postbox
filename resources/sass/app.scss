@@ -34,7 +34,7 @@ a:hover {
 
 svg[data-prefix="fas"].fa-xl {
     font-size: 3em;
-    color: #ccc;
+    color: $element-border-color;
 }
 
 input[type="text"] {
@@ -377,8 +377,13 @@ input[type="text"] {
     }
 
     .grid-image-column {
-        font-size: 2rem;
-        color: #ccc;
+        font-size: 2.5rem;
+        color: $element-border-color;
+        .cell-image {
+            width: 50px;
+            border: solid 2px $element-border-color;
+            border-radius: 5px;
+        }
     }
 
     p.MuiTablePagination-displayedRows {

@@ -19,7 +19,7 @@ import iconList from '../libs/icons';
 // auth manager
 import auth from '../libs/authmanager';
 import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
-import Placeholder, {Loader} from '../ui/elements/Placeholder';
+import Placeholder, { Loader } from '../ui/elements/Placeholder';
 
 const ActionsButton = () => {
     const classes = ElementCSS();
@@ -50,8 +50,8 @@ const CTBody = (props) => {
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
-    const noRowsMessage = "No "+(props['title']?props['title']:props['name'])+" added yet";
-    const Icon = typeof data['icon'] !== typeof undefined?data['icon']:'square';
+    const noRowsMessage = "No " + (props['title'] ? props['title'] : props['name']) + " added yet";
+    const Icon = typeof data['icon'] !== typeof undefined ? data['icon'] : 'square';
 
     React.useEffect(() => {
         auth.get('/CRUD' + props['path'])
@@ -61,26 +61,30 @@ const CTBody = (props) => {
                     field: 'actions',
                     headerName: 'ACTIONS',
                     headerClassName: 'table-header-light',
-                    flex:1,
+                    flex: 1,
                     renderCell: () => <ActionsButton />
                 });
                 // setColumns(columnData);
 
                 auth.get('/ContentType' + props['path'])
-                    .then(response =>  {
+                    .then(response => {
                         const dataset = [];
                         const rowdata = {};
                         setData(response.data.content_type);
                         response.data.content_type.data.map((data) => {
                             const dataKeys = Object.keys(data);
                             const dataValues = Object.values(data);
-                            dataKeys.forEach((parameter,index) => {
+                            dataKeys.forEach((parameter, index) => {
                                 rowdata[parameter] = dataValues[index].value;
-                                if(dataValues[index].type == "image") {
+                                if (dataValues[index].type == "image") {
                                     columnData.forEach((column) => {
-                                        if(column['field'] == parameter && rowdata[parameter] == null) {
+                                        if (column['field'] == parameter) {
                                             column['cellClassName'] = "grid-image-column";
-                                            column['renderCell'] = () => <FontAwesomeIcon icon={"image"} size='lg' />;
+                                            if (rowdata[parameter] == null || rowdata[parameter] == "") {
+                                                column['renderCell'] = () => <FontAwesomeIcon icon={"image"} size='lg' />;
+                                            } else {
+                                                column['renderCell'] = () => <img src={dataValues[index].value} className="cell-image" />;
+                                            }
                                         }
                                     });
                                 }
@@ -91,13 +95,13 @@ const CTBody = (props) => {
                         setColumns(columnData);
                     });
             });
-    },[props['path']]);
+    }, [props['path']]);
 
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size='lg' icon={Icon} /> {props['title']?props['title']:props['name']}
+                    <FontAwesomeIcon size='lg' icon={Icon} /> {props['title'] ? props['title'] : props['name']}
                 </Title>
                 <Button
                     variant="contained"
@@ -105,7 +109,7 @@ const CTBody = (props) => {
                     size="medium"
                     className={classes.largebutton}
                     startIcon={<AddIcon />}>
-                    Add {props['title']?props['title']:props['name']}
+                    Add {props['title'] ? props['title'] : props['name']}
                 </Button>
             </div>
             <div className={classes.grid}>
@@ -137,7 +141,7 @@ export default function ContentType(props) {
     return (
         <Frame>
             <Card xs={12}>
-                <CTBody { ...props } />
+                <CTBody {...props} />
             </Card>
         </Frame>
     );
