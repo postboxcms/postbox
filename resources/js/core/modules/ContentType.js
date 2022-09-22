@@ -56,14 +56,16 @@ const CTBody = (props) => {
     React.useEffect(() => {
         auth.get('/CRUD' + props['path'])
             .then((response) => {
-                response.data.columns.push({
+                const columnData = response.data.columns;
+                columnData.push({
                     field: 'actions',
-                    headerName: 'Actions',
+                    headerName: 'ACTIONS',
                     headerClassName: 'table-header-light',
                     flex:1,
                     renderCell: () => <ActionsButton />
                 });
-                setColumns(response.data.columns);
+                // setColumns(columnData);
+
                 auth.get('/ContentType' + props['path'])
                     .then(response =>  {
                         const dataset = [];
@@ -73,11 +75,20 @@ const CTBody = (props) => {
                             const dataKeys = Object.keys(data);
                             const dataValues = Object.values(data);
                             dataKeys.forEach((parameter,index) => {
-                                rowdata[parameter] = dataValues[index].value
+                                rowdata[parameter] = dataValues[index].value;
+                                if(dataValues[index].type == "image") {
+                                    columnData.forEach((column) => {
+                                        if(column['field'] == parameter && rowdata[parameter] == null) {
+                                            column['cellClassName'] = "grid-image-column";
+                                            column['renderCell'] = () => <FontAwesomeIcon icon={"image"} size='lg' />;
+                                        }
+                                    });
+                                }
                             });
                             dataset.push(rowdata);
                         });
                         setRows(dataset);
+                        setColumns(columnData);
                     });
             });
     },[props['path']]);

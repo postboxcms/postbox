@@ -14,6 +14,8 @@ import { ElementCSS } from '../elements/element.css';
 import Title from '../elements/Title';
 import iconList from '../../libs/icons';
 
+import {api} from '../../libs/vars';
+
 export const Frame = (props) => {
     return (
         <Grid container spacing={props.spacing} className={props.className}>
@@ -55,7 +57,7 @@ export const Data = (props) => {
                             <Moment fromNow>{props.updated_at}</Moment>
                         ):''}
                     </Typography>
-                    <Link color="primary" to={props.slug}>
+                    <Link color="primary" to={api.adminPrefix + '/' +props.slug}>
                         View more
                     </Link>
                 </Grid>

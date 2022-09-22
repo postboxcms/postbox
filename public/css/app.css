@@ -9566,6 +9566,10 @@ input[type=text] {
 .app-root .skeleton-loader .MuiSkeleton-root {
   border-radius: 30px;
 }
+.app-root .grid-image-column {
+  font-size: 2rem;
+  color: #ccc;
+}
 .app-root p.MuiTablePagination-displayedRows {
   margin-bottom: 0;
 }
