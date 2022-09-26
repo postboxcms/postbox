@@ -1,4 +1,5 @@
 import jwt from './jwtmanager';
+import auth from './authmanager';
 import { useHistory } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { api } from './vars';
@@ -9,6 +10,12 @@ export const isLogin = () => {
     const loginUrl = api.adminPrefix + api.loginUrl;
 
     if(jwt.getToken('postbox_token') !== null) {
+        auth.get('/VerifyToken')
+            .then((res) => console.log('login successful'))
+            .catch((err) => {
+                jwt.removeToken('postbox_token')
+                history.push(api.adminPrefix + api.loginUrl)
+            });
         return true;
     }
     if(browserHistory.location.pathname !== loginUrl) {

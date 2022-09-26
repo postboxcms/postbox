@@ -10,6 +10,8 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
+import { deepOrange, deepPurple } from '@mui/material/colors';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 // icons
@@ -58,9 +60,10 @@ export default function Frameset(props) {
                         <Breadcrumb title={props.title} />
                     </Typography>
                     <IconButton color="inherit" size="large">
-                        <Badge badgeContent={4} color="secondary">
+                        {/* <Badge badgeContent={4} color="secondary">
                             <NotificationsIcon />
-                        </Badge>
+                        </Badge> */}
+                        <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
                     </IconButton>
                 </Toolbar>
             </AppBar>

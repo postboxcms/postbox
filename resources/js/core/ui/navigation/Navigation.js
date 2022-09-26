@@ -27,14 +27,24 @@ export const MainItems = (props) => {
     const [open,setOpen] = useState(false);
     const collapsePanel = () => {
         setOpen(!open);
+        if(!open) {
+            jwt.setToken('postbox_menustate','open');
+        } else {
+            jwt.setToken('postbox_menustate','closed');
+        }
     }
 
     React.useEffect(() => {
         // fetch all content types
         if (jwt.getToken('postbox_token') !== null) {
-            auth.get('/ContentType').then((response) => setContentTypes(response.data))
+            auth.get('/ContentType').then((response) => setContentTypes(response.data));
+        }
+        // fetch menu state
+        if(jwt.getToken('postbox_menustate') == 'open') {
+            setOpen(true);
         }
     }, []);
+
     return (
         <React.Fragment>
             <div className={props.navbar}>

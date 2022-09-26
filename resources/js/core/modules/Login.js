@@ -33,7 +33,7 @@ const Login = () => {
         .then(response => {
             const token = response.data.token;
             jwt.setToken('postbox_token',token);
-            history.push("/");
+            history.push(api.adminPrefix);
         })
         .catch(error => {
             console.log(error)
