@@ -45,7 +45,31 @@ const ActionsButton = () => {
     );
 }
 
+const AddContent = (props) => {
+    props.setViewState(false);
+    console.log('add new content')
+}
+
 const CTBody = (props) => {
+    const [viewState, setViewState] = React.useState(true);
+    if(viewState) {
+        return <CTList { ...props} setViewState={setViewState} />
+    } else {
+        return <CTAddEdit { ...props} setViewState={setViewState} />
+    }
+}
+
+const CTAddEdit = (props) => {
+    return (
+        <React.Fragment>
+            <Card xs={12}>
+                Add a new component....
+            </Card>
+        </React.Fragment>
+    )
+}
+
+const CTList = (props) => {
     const classes = ElementCSS();
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
@@ -104,6 +128,7 @@ const CTBody = (props) => {
                     <FontAwesomeIcon size='lg' icon={Icon} /> {props['title'] ? props['title'] : props['name']}
                 </Title>
                 <Button
+                    onClick={() => AddContent(props)}
                     variant="contained"
                     color="primary"
                     size="medium"

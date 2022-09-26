@@ -14,38 +14,53 @@ import Theme from '../website/Theme';
 // theme provider
 import { theme } from './theme';
 // routers
+import ProtectedRoute from './routers/protected';
+
 import PrivateRoute from './routers/private';
 import PublicRoute from './routers/public';
 // variables
-import {api} from './libs/vars';
+import { api } from './libs/vars';
+// route manager
+import routeManager from '../routes';
 
 /** React router to setup UI routes */
 const Admin = () => {
     return (
         <Router>
             <Switch>
-                <PublicRoute restricted={true} exact path={api.adminPrefix+"/login"}>
-                    <Login/>
+                <ProtectedRoute restricted={true} exact path={api.adminPrefix + api.loginUrl}>
+                    <Login />
+                </ProtectedRoute>
+                <PublicRoute restricted={true} filter={api.adminPrefix} path="*">
+                    <Website controller={Theme} />
                 </PublicRoute>
+            </Switch>
+            <Switch>
                 <PrivateRoute exact path={api.adminPrefix}>
                     <Frameset path={api.adminPrefix} controller={Dashboard} />
                 </PrivateRoute>
-                <PrivateRoute path={api.adminPrefix+"/posts"}>
-                    <Frameset title="Posts" path="/posts" controller={ContentType} />
-                </PrivateRoute>
-                <PrivateRoute path={api.adminPrefix+"/pages"}>
-                    <Frameset title="Pages" path="/pages" controller={ContentType} />
-                </PrivateRoute>
-                <PrivateRoute path={api.adminPrefix+"/users"}>
-                    <Frameset title="Users" path="/users" controller={ContentType} />
-                </PrivateRoute>
-                <PrivateRoute path={api.adminPrefix+"/crud"}>
+                <PrivateRoute path={api.adminPrefix + "/crud"}>
                     <Frameset title="CRUD" icon="layer-group" controller={CRUD} />
                 </PrivateRoute>
-                <PrivateRoute path="*">
-                    <Website controller={Theme} />
-                </PrivateRoute>
             </Switch>
+            {routeManager.list.map((route) => {
+                return Object.keys(route).map((type, key) => {
+                    const routename = route[type];
+                    return (
+                        <Switch key={key}>
+                            <PrivateRoute path={api.adminPrefix + "/" + routename.plural}>
+                                <Frameset title={routename.title} path={"/" + routename.plural} controller={ContentType} />
+                            </PrivateRoute>
+                            <PrivateRoute path={api.adminPrefix + "/" + routename.singular + "/add"}>
+                                <Frameset title={routename.title} path={"/" + routename.singular + '/add'} controller={ContentType} />
+                            </PrivateRoute>
+                            <PrivateRoute path={api.adminPrefix + "/" + routename.singular + "/edit"}>
+                                <Frameset title={routename.title} path={"/" + routename.singular + '/edit'} controller={ContentType} />
+                            </PrivateRoute>
+                        </Switch>
+                    )
+                });
+            })}
         </Router>
     );
 }

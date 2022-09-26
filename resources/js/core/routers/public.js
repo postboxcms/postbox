@@ -1,12 +1,13 @@
 import React from 'react';
-import { Route, Redirect} from 'react-router-dom';
-import {isLogin} from '../libs/login';
+import { Route } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 
-const PublicRoute = ({restricted, ...rest}) => {
-    return (!isLogin() && restricted ?
-        <Route {...rest}/>
-        : <Redirect to="/" />
-    );
+const PublicRoute = ({filter, ...rest}) => {
+    let browserHistory = createBrowserHistory();
+    if(!browserHistory.location.pathname.startsWith(filter)) {
+        return <Route {...rest}/>;
+    }
+    return <></>;
 }
 
 export default PublicRoute;
