@@ -11,26 +11,35 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import Badge from '@mui/material/Badge';
+import { deepOrange } from '@mui/material/colors';
 import Container from '@mui/material/Container';
 // icons
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 // app elements
 import { MainItems, SubItems } from '../navigation/Navigation';
 import Breadcrumb from '../elements/Breadcrumb';
 import Copyright from '../elements/Copyright';
 // styles and css
 import { LayoutCSS } from './layout.css';
-
+// libs
+import { api } from '../../libs/vars';
+import jwt from '../../libs/jwtmanager';
+// menu
+import TopMenu from './TopMenu';
 
 export default function Frameset(props) {
     const classes = LayoutCSS();
+    const [anchor, setAnchor] = React.useState(null);
+    const [mstate,setMState] = React.useState(false);
     const [open, setOpen] = React.useState(true);
+
     const handleDrawerOpen = () => {
         setOpen(true);
+    };
+    const switchMenu = (event) => {
+        setAnchor(event.currentTarget);
+        setMState(!mstate);
     };
     const handleDrawerClose = () => {
         setOpen(false);
@@ -41,6 +50,7 @@ export default function Frameset(props) {
             <GridComponent {...props} />
         );
     };
+    const user = JSON.parse(jwt.getToken(api.userToken));
 
     return (
         <div className="app-root">
@@ -59,12 +69,10 @@ export default function Frameset(props) {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
                         <Breadcrumb title={props.title} />
                     </Typography>
-                    <IconButton color="inherit" size="large">
-                        {/* <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge> */}
-                        <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+                    <IconButton color="inherit" size="large" onClick={switchMenu}>
+                        <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name.charAt(0)}</Avatar>
                     </IconButton>
+                    <TopMenu anchor={anchor} state={mstate}/>
                 </Toolbar>
             </AppBar>
             <Drawer

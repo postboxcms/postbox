@@ -28,19 +28,19 @@ export const MainItems = (props) => {
     const collapsePanel = () => {
         setOpen(!open);
         if(!open) {
-            jwt.setToken('postbox_menustate','open');
+            jwt.setToken(api.menuToken,'open');
         } else {
-            jwt.setToken('postbox_menustate','closed');
+            jwt.setToken(api.menuToken,'closed');
         }
     }
 
     React.useEffect(() => {
         // fetch all content types
-        if (jwt.getToken('postbox_token') !== null) {
+        if (jwt.getToken(api.token) !== null) {
             auth.get('/ContentType').then((response) => setContentTypes(response.data));
         }
         // fetch menu state
-        if(jwt.getToken('postbox_menustate') == 'open') {
+        if(jwt.getToken(api.menuToken) == 'open') {
             setOpen(true);
         }
     }, []);

@@ -4,7 +4,7 @@ import Skeleton from '@mui/material/Skeleton';
 export const Loader = (props) => {
     return props.lines?[...Array(props.lines)].map((e,i) => {
         return (
-            <div className='skeleton-loader'>
+            <div key={i} className='skeleton-loader'>
                 <Skeleton key={i} height={props.height?props.height:20} />
             </div>
         )

@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         // passport routes
         if(!$this->app->routesAreCached()) {
             Passport::routes();
-            Passport::cookie('postbox_token');
+            Passport::cookie(env('APP_TOKEN'));
             Passport::tokensExpireIn(Carbon::now()->addDays(1));
             Passport::refreshTokensExpireIn(Carbon::now()->addDays(10));
         }

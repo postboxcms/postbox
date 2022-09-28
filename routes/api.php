@@ -27,6 +27,7 @@ Route::get('/VerifyToken', function() {
 
 // authentication routes
 Route::post('/Login', [OAuth::class,'login']);
+Route::post('/Logout', [OAuth::class,'logout'])->middleware('auth:api');
 Route::post('/Register', [OAuth::class,'register']);
 
 // api routes

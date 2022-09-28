@@ -9,11 +9,11 @@ export const isLogin = () => {
     let browserHistory = createBrowserHistory();
     const loginUrl = api.adminPrefix + api.loginUrl;
 
-    if(jwt.getToken('postbox_token') !== null) {
+    if(jwt.getToken(api.token) !== null) {
         auth.get('/VerifyToken')
-            .then((res) => console.log('login successful'))
+            .then((res) => console.log('Login successful'))
             .catch((err) => {
-                jwt.removeToken('postbox_token')
+                jwt.removeToken(api.token)
                 history.push(api.adminPrefix + api.loginUrl)
             });
         return true;

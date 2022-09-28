@@ -41,7 +41,7 @@ export const Body = (props) => {
     )
 }
 
-export const Data = (props) => {
+export const DataCard = (props) => {
     const classes = ElementCSS();
     return (
         <React.Fragment>

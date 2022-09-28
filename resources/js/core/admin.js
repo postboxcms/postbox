@@ -7,7 +7,7 @@ import Frameset from './ui/layout/Frameset';
 import Website from './ui/layout/Website';
 // core modules
 import Dashboard from './modules/Dashboard';
-import Login from './modules/Login';
+import Auth from './modules/Auth';
 import ContentType from './modules/ContentType';
 import CRUD from './modules/CRUD';
 import Theme from '../website/Theme';
@@ -29,8 +29,11 @@ const Admin = () => {
         <Router>
             <Switch>
                 <ProtectedRoute restricted={true} exact path={api.adminPrefix + api.loginUrl}>
-                    <Login />
+                    <Auth />
                 </ProtectedRoute>
+                <PublicRoute exact path={api.adminPrefix + api.logoutUrl}>
+                    <Auth mode="logout" />
+                </PublicRoute>
                 <PublicRoute restricted={true} filter={api.adminPrefix} path="*">
                     <Website controller={Theme} />
                 </PublicRoute>

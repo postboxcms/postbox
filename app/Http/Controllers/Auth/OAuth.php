@@ -40,4 +40,14 @@ class OAuth extends Controller
 
         return response(['user' => auth()->user(), 'token' => $this->token],200);
     }
+
+    // logout a user
+    public function logout() {
+        try {
+            auth()->user()->token()->revoke();
+            return response(['message' => 'logged out', 200]);
+        } catch(Exception $e) {
+            return response(['error' => 'unable to logout', 403]);
+        }
+    }
 }

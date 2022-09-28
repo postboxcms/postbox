@@ -3,5 +3,9 @@ export const api = {
     csrfToken   :   document.head.querySelector('meta[name="csrf-token"]').content,
     domain      :   process.env.MIX_APP_URL,
     loginUrl    :   "/login",
+    logoutUrl   :   "/logout",
     url         :   process.env.MIX_API,
+    token       :   process.env.MIX_API_TOKEN,
+    menuToken   :   process.env.MIX_MENU_TOKEN,
+    userToken   :   process.env.MIX_USER_TOKEN,
 };

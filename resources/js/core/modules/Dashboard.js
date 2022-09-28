@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 
-import { Card, Frame, Body, Data } from '../ui/layout/Frame';
+import { Card, Frame, Body, DataCard } from '../ui/layout/Frame';
 
 import jwt from '../libs/jwtmanager';
 import auth from '../libs/authmanager';
+import {api} from '../libs/vars';
 import Placeholder, {Loader} from '../ui/elements/Placeholder';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +26,7 @@ const Dashboard = (props) => {
 
     React.useEffect(() => {
         // fetch all content types
-        if(jwt.getToken('postbox_token') !== null) {
+        if(jwt.getToken(api.token) !== null) {
             auth.get('/ContentType').then((response) => setContentTypes(response.data.content_types))
         }
     },[]);
@@ -42,8 +43,9 @@ const Dashboard = (props) => {
             {contentTypes.map((data,i) => {
                 return(
                     <Card xs={12} md={4} lg={4} key={data['id']}>
-                        <Body height="fixed" className="coaster">
-                            <Data { ...props } { ...data }
+                        <Body key={data['id']} height="fixed" className="coaster">
+                            <DataCard { ...props } { ...data }
+                                key={data['id']}
                                 title={data.name}
                                 icon={data.icon} />
                         </Body>
