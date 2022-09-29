@@ -48,11 +48,9 @@ const Auth = (props) => {
   };
 
   React.useEffect(() => {
-    console.log(props.mode)
     if(props.mode == "logout") {
         auth.post("/Logout",{})
-            .then((res) => {
-                console.log(res)
+            .then(() => {
                 jwt.removeToken(api.token);
                 jwt.removeToken(api.userToken);
                 history.push(api.adminPrefix);

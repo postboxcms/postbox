@@ -14,16 +14,17 @@ export const TopMenu = (props) => {
     const [anchor, setAnchor] = React.useState(null);
     const [dropdown, setDropdown] = React.useState(false);
     const switchDropdown = () => {
-        setDropdown(!dropdown)
+        setDropdown(!Boolean(anchor))
         setAnchor(null)
+        props.state(null);
     }
 
     React.useEffect(() => {
-        setDropdown(!dropdown);
+        setDropdown(!Boolean(props.anchor));
         if(dropdown) {
             setAnchor(props.anchor)
         }
-    },[anchor,props.state])
+    },[props.anchor])
 
     return (
         <Menu

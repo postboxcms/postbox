@@ -31,15 +31,20 @@ import TopMenu from './TopMenu';
 export default function Frameset(props) {
     const classes = LayoutCSS();
     const [anchor, setAnchor] = React.useState(null);
-    const [mstate,setMState] = React.useState(false);
     const [open, setOpen] = React.useState(true);
 
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-    const switchMenu = (event) => {
-        setAnchor(event.currentTarget);
-        setMState(!mstate);
+    const updateState = (anchor) => {
+        setAnchor(anchor);
+    }
+    const switchTopMenu = (event) => {
+        if(!Boolean(anchor)) {
+            setAnchor(event.currentTarget);
+        } else {
+            setAnchor(null)
+        }
     };
     const handleDrawerClose = () => {
         setOpen(false);
@@ -69,10 +74,10 @@ export default function Frameset(props) {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
                         <Breadcrumb title={props.title} />
                     </Typography>
-                    <IconButton color="inherit" size="large" onClick={switchMenu}>
+                    <IconButton color="inherit" size="large" onClick={switchTopMenu}>
                         <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name.charAt(0)}</Avatar>
                     </IconButton>
-                    <TopMenu anchor={anchor} state={mstate}/>
+                    <TopMenu anchor={anchor} state={updateState}/>
                 </Toolbar>
             </AppBar>
             <Drawer
