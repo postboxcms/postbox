@@ -9279,6 +9279,7 @@ h3 {
 }
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #555;
 }
 
 fieldset legend {
@@ -9288,6 +9289,14 @@ fieldset legend {
 a,
 a:hover {
   text-decoration: none;
+}
+
+a.menu-link {
+  color: #555;
+}
+a.menu-link div {
+  margin-top: 2px;
+  float: left;
 }
 
 svg[data-prefix=fas].fa-xl {
@@ -9619,4 +9628,14 @@ input[type=text] {
 
 .MuiDataGrid-cell .MuiSwitch-root {
   margin: 0 50%;
+}
+
+.auth-screen a, .auth-screen button, .auth-screen h1, .auth-screen input, .auth-screen span {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.auth-screen a {
+  text-decoration: none;
+}
+.auth-screen .MuiInputBase-root {
+  margin-bottom: 10px;
 }

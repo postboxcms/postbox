@@ -6,6 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
@@ -15,6 +16,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { theme } from '../theme';
 
 import {api} from '../libs/vars';
 import jwt from '../libs/jwtmanager';
@@ -23,7 +25,7 @@ import { useNotifier } from '../libs/notifications';
 
 import Copyright from '../ui/elements/Copyright';
 
-const theme = createTheme();
+// const theme = createTheme();
 
 const Auth = (props) => {
   let history = useHistory();
@@ -77,7 +79,7 @@ const Auth = (props) => {
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid className="auth-screen" item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
               my: 8,
@@ -94,22 +96,22 @@ const Auth = (props) => {
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={submitForm} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
+              <OutlinedInput
+                margin="dense"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                placeholder="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
               />
-              <TextField
-                margin="normal"
+              <OutlinedInput
+                margin="dense"
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                placeholder="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -138,7 +140,9 @@ const Auth = (props) => {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Box pt={4}>
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
           </Box>
         </Grid>
@@ -146,4 +150,5 @@ const Auth = (props) => {
     </ThemeProvider>
   );
 }
+
 export default Auth;

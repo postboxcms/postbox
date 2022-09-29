@@ -70,11 +70,11 @@ export const TopMenu = (props) => {
             </MenuItem>
             <Divider />
             <MenuItem>
-                <Link to={api.adminPrefix + api.logoutUrl}>
+                <Link to={api.adminPrefix + api.logoutUrl} className="menu-link MuiMenuItem-root">
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
-                    Logout
+                    <span>Logout</span>
                 </Link>
             </MenuItem>
         </Menu>

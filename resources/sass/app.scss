@@ -16,9 +16,10 @@ $brand-color: #472791;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
 $element-font-size: 14px;
-
+$font-color: #555;
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: $font-color;
 }
 
 fieldset {
@@ -30,6 +31,14 @@ fieldset {
 a,
 a:hover {
     text-decoration: none;
+}
+
+a.menu-link {
+    color:$font-color;
+    div {
+        margin-top: 2px;
+        float: left;
+    }
 }
 
 svg[data-prefix="fas"].fa-xl {
@@ -440,5 +449,17 @@ input[type="text"] {
 .MuiDataGrid-cell {
     .MuiSwitch-root {
         margin: 0 50%;
+    }
+}
+
+.auth-screen {
+    a, button, h1, input, span {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    a {
+        text-decoration: none;
+    }
+    .MuiInputBase-root {
+        margin-bottom: 10px;
     }
 }
