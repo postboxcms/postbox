@@ -21,7 +21,10 @@ Route::group(['prefix' => env('MIX_ADMIN_PREFIX','/admin')], function () {
     Route::get('/', function() {
         return view('react');
     });
-    Route::get('{action}', function() {
+    Route::get('{module}', function() {
+        return view('react');
+    });
+    Route::get('{module}/{action}', function() {
         return view('react');
     });
 });
