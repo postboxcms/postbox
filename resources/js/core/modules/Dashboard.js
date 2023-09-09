@@ -4,7 +4,7 @@ import makeStyles from "@mui/styles/makeStyles";
 
 import { Card, Frame, Body, DataCard } from "../ui/layout/Frame";
 
-import jwt from "../libs/jwtmanager";
+import jwt from "../libs/cookies";
 import { useAuthentication } from "../hooks/auth";
 import { api } from "../libs/constants";
 import Placeholder, { Loader } from "../ui/elements/Placeholder";

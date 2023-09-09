@@ -6,6 +6,8 @@ export const api = {
     logoutUrl: process.env.MIX_LOGOUT_URL,
     url: process.env.MIX_API,
     token: process.env.MIX_API_TOKEN,
+};
+export const nav = {
     menuToken: process.env.MIX_MENU_TOKEN,
     userToken: process.env.MIX_USER_TOKEN,
-};
+}

@@ -16,8 +16,8 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { api } from "../../libs/constants";
-import jwt from "../../libs/jwtmanager";
+import { nav } from "../../libs/constants";
+import cookies from "../../libs/cookies";
 import { useAuthentication } from "../../hooks/auth";
 import iconList from "../../libs/icons";
 
@@ -28,9 +28,9 @@ export const MainItems = (props) => {
     const collapsePanel = () => {
         setOpen(!open);
         if (!open) {
-            jwt.setToken(api.menuToken, "open");
+            cookies.setCookie(nav.menuToken, "open");
         } else {
-            jwt.setToken(api.menuToken, "closed");
+            cookies.setCookie(nav.menuToken, "closed");
         }
     };
 

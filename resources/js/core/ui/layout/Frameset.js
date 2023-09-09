@@ -25,7 +25,7 @@ import Copyright from '../elements/Copyright';
 import { LayoutCSS } from './layout.css';
 // libs
 import { api } from '../../libs/constants';
-import jwt from '../../libs/jwtmanager';
+import jwt from '../../libs/cookies';
 import { getUser } from '../../store/jwt';
 // menu
 import TopMenu from './TopMenu';
