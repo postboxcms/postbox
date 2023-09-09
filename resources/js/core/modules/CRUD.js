@@ -1,97 +1,108 @@
-import React from 'react';
+import React from "react";
 
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
-import { DataGrid } from '@mui/x-data-grid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { DataGrid } from "@mui/x-data-grid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
-import { Card, Frame } from '../ui/layout/Frame';
-import { ElementCSS } from '../ui/elements/element.css';
-import Title from '../ui/elements/Title';
+import { Card, Frame } from "../ui/layout/Frame";
+import { useCSS } from "../hooks/css";
+import Title from "../ui/elements/Title";
 
-import { IOSSwitch } from '../libs/elements';
-import { useNotifier } from '../libs/notifications';
-import auth from '../libs/authmanager';
+import { IOSSwitch } from "../libs/elements";
+import { useNotifier } from "../hooks/notifications";
+import { useAuthentication } from "../hooks/auth";
 
-import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
-import Placeholder, { Loader } from '../ui/elements/Placeholder';
+import NoRowsOverlay from "../ui/elements/NoRowsOverlay";
+import Placeholder, { Loader } from "../ui/elements/Placeholder";
 
 const Body = (props) => {
-    const classes = ElementCSS();
-    const [rows,setRows] = React.useState([]);
+    const classes = useCSS();
+    const auth = useAuthentication();
+    const [rows, setRows] = React.useState([]);
     const [cellFocus, setCellFocus] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
     const notify = useNotifier();
 
     const columns = [
         {
-            field: 'id',
-            headerClassName: 'table-header-light',
-            headerName: 'ID',
+            field: "id",
+            headerClassName: "table-header-light",
+            headerName: "ID",
             width: 0,
-            hide: true
+            hide: true,
         },
         {
-            field: 'table',
-            headerClassName: 'table-header-light',
-            headerName: 'TABLE',
+            field: "table",
+            headerClassName: "table-header-light",
+            headerName: "TABLE",
             width: 0,
-            hide: true
+            hide: true,
         },
         {
-            field: 'field',
-            headerClassName: 'table-header-light',
-            headerName: 'FIELD',
-            width: 200,
-            renderCell: (params) => {
-                return (
-                    <div>
-                        <TextField disabled value={params.value} id="outlined-basic" label="" size='small' variant="outlined" />
-                    </div>
-                )
-            }
-        },
-        {
-            field: 'alias',
-            headerName: 'ALIAS',
-            headerClassName: 'table-header-light',
+            field: "field",
+            headerClassName: "table-header-light",
+            headerName: "FIELD",
             width: 200,
             renderCell: (params) => {
                 return (
                     <div>
                         <TextField
-                            onChange={(event) => updateCell(event,params)}
+                            disabled
+                            value={params.value}
+                            id="outlined-basic"
+                            label=""
+                            size="small"
+                            variant="outlined"
+                        />
+                    </div>
+                );
+            },
+        },
+        {
+            field: "alias",
+            headerName: "ALIAS",
+            headerClassName: "table-header-light",
+            width: 200,
+            renderCell: (params) => {
+                return (
+                    <div>
+                        <TextField
+                            onChange={(event) => updateCell(event, params)}
                             defaultValue={params.value}
                             label=""
-                            size='small'
+                            size="small"
                             variant="outlined"
                             onKeyDown={(event) => {
                                 event.stopPropagation();
                             }}
-                            />
+                        />
                     </div>
-                )
-            }
+                );
+            },
         },
         {
-            field: 'type',
-            headerName: 'TYPE',
-            headerClassName: 'table-header-light',
+            field: "type",
+            headerName: "TYPE",
+            headerClassName: "table-header-light",
             width: 150,
             renderCell: (params) => {
                 return (
                     <>
-                        <FormControl className='dropdown data-dropdown' sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl
+                            className="dropdown data-dropdown"
+                            sx={{ m: 1, minWidth: 120 }}
+                        >
                             <Select
                                 defaultValue={"hidden"}
-                                value={params.value?params.value:"hidden"}
-                                onChange={(event) => updateCell(event,params)}
+                                value={params.value ? params.value : "hidden"}
+                                onChange={(event) => updateCell(event, params)}
                             >
                                 <MenuItem value="hidden">Hidden</MenuItem>
                                 <MenuItem value="text">Text</MenuItem>
@@ -107,40 +118,52 @@ const Body = (props) => {
                             </Select>
                         </FormControl>
                     </>
-                )
-            }
+                );
+            },
         },
         {
-            field: 'list',
-            alignItems: 'center',
-            headerName: 'VIEW IN LIST',
-            headerClassName: 'table-header-light',
+            field: "list",
+            alignItems: "center",
+            headerName: "VIEW IN LIST",
+            headerClassName: "table-header-light",
             width: 150,
             renderCell: (params) => {
                 return (
                     <>
                         <FormControlLabel
-                            onChange={(event) => updateCell(event,params)}
-                            control={<IOSSwitch sx={{ m: 1 }} checked={params.value?Boolean(params.value):false} />}
+                            onChange={(event) => updateCell(event, params)}
+                            control={
+                                <IOSSwitch
+                                    sx={{ m: 1 }}
+                                    checked={
+                                        params.value
+                                            ? Boolean(params.value)
+                                            : false
+                                    }
+                                />
+                            }
                             label=""
                         />
                     </>
-                )
-            }
+                );
+            },
         },
         {
-            field: 'position',
-            headerName: 'EDIT PAGE POSITION',
-            headerClassName: 'table-header-light',
+            field: "position",
+            headerName: "EDIT PAGE POSITION",
+            headerClassName: "table-header-light",
             width: 200,
             renderCell: (params) => {
                 return (
                     <>
-                        <FormControl className='dropdown data-dropdown' sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl
+                            className="dropdown data-dropdown"
+                            sx={{ m: 1, minWidth: 120 }}
+                        >
                             <Select
-                                onChange={(event) => updateCell(event,params)}
+                                onChange={(event) => updateCell(event, params)}
                                 defaultValue={"none"}
-                                value={params.value?params.value:"none"}
+                                value={params.value ? params.value : "none"}
                             >
                                 <MenuItem value="none">None</MenuItem>
                                 <MenuItem value="left">Left</MenuItem>
@@ -148,16 +171,16 @@ const Body = (props) => {
                             </Select>
                         </FormControl>
                     </>
-                )
-            }
+                );
+            },
         },
         {
-            field: 'actions',
-            headerName: 'Actions',
-            headerClassName: 'table-header-light',
+            field: "actions",
+            headerName: "Actions",
+            headerClassName: "table-header-light",
             width: 150,
             renderCell: (params) => {
-                const classes = ElementCSS();
+                const classes = useCSS();
                 return (
                     <div>
                         <Button
@@ -167,62 +190,73 @@ const Body = (props) => {
                             color="primary"
                             size="small"
                             className={classes.button}
-                            startIcon={<SaveAltIcon />}>
+                            startIcon={<SaveAltIcon />}
+                        >
                             Save
                         </Button>
                     </div>
                 );
-            }
+            },
         },
     ];
 
     const setContentType = (e) => {
         setLoader(true);
-        if(e.target.value !== "") {
-            auth.get('/CRUD/'+e.target.value)
-                .then((response) => {
-                    setRows(response.data.fields);
-                    setLoader(false);
-                });
+        if (e.target.value !== "") {
+            auth.get("/CRUD/" + e.target.value).then((response) => {
+                setRows(response.data.fields);
+                setLoader(false);
+            });
         } else {
             setRows([]);
             setLoader(false);
         }
-    }
+    };
 
-    const updateCell = (event,data) => {
-        data.row[data.field] = typeof event.target.type !== typeof undefined && event.target.type == 'checkbox'?event.target.checked:event.target.value;
+    const updateCell = (event, data) => {
+        data.row[data.field] =
+            typeof event.target.type !== typeof undefined &&
+            event.target.type == "checkbox"
+                ? event.target.checked
+                : event.target.value;
         data.value = data.row[data.field];
         data.formattedValue = data.row[data.field];
-        if(typeof event.target.type === typeof undefined || event.target.type == 'checkbox') {
+        if (
+            typeof event.target.type === typeof undefined ||
+            event.target.type == "checkbox"
+        ) {
             setCellFocus(!cellFocus);
             data.api.setCellFocus(cellFocus);
         }
-    }
+    };
 
     const saveField = (data) => {
-        auth.post('/CRUD', data)
-            .then((response) => notify(response.data.message));
-    }
+        auth.post("/CRUD", data).then((response) =>
+            notify(response.data.message)
+        );
+    };
 
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size='lg' icon={props['icon']} /> {props['title'] ? props['title'] : props['name']}
+                    <FontAwesomeIcon size="lg" icon={props["icon"]} />{" "}
+                    {props["title"] ? props["title"] : props["name"]}
                 </Title>
-                <FormControl className='dropdown' sx={{ m: 1, minWidth: 120 }}>
+                <FormControl className="dropdown" sx={{ m: 1, minWidth: 120 }}>
                     <Select
                         onChange={setContentType}
                         defaultValue=""
                         displayEmpty
                     >
                         <MenuItem value="">Content Type</MenuItem>
-                        {props['content_types'] ?
-                            props['content_types'].map((ctype, i) =>
-                                <MenuItem key={ctype.id} value={ctype.slug}>{ctype.name}</MenuItem>)
-                            : ""
-                        }
+                        {props["content_types"]
+                            ? props["content_types"].map((ctype, i) => (
+                                  <MenuItem key={ctype.id} value={ctype.slug}>
+                                      {ctype.name}
+                                  </MenuItem>
+                              ))
+                            : ""}
                     </Select>
                 </FormControl>
             </div>
@@ -239,7 +273,10 @@ const Body = (props) => {
                                     <Placeholder check={loader}>
                                         <Loader lines={10} />
                                     </Placeholder>
-                                    <NoRowsOverlay icon={props['icon']} message="No content type selected" />
+                                    <NoRowsOverlay
+                                        icon={props["icon"]}
+                                        message="No content type selected"
+                                    />
                                 </>
                             );
                         },
@@ -248,14 +285,16 @@ const Body = (props) => {
             </div>
         </React.Fragment>
     );
-}
+};
 
 export default function CRUD(props) {
     const [data, setData] = React.useState({});
-    React.useEffect(function () {
-        auth.get('/CRUD')
-            .then(response => setData(response.data));
-    }, [props.path]);
+    React.useEffect(
+        function () {
+            auth.get("/CRUD").then((response) => setData(response.data));
+        },
+        [props.path]
+    );
 
     return (
         <Frame>

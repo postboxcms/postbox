@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
@@ -19,16 +19,15 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../theme";
 
 import { api } from "../libs/constants";
-import jwt from "../libs/jwtmanager";
-import auth from "../libs/authmanager";
+import { useAuthentication } from "../hooks/auth";
 import history from "../libs/history";
-import { useNotifier } from "../libs/notifications";
-import { setToken, setUser } from "../store/jwt";
+import { useNotifier } from "../hooks/notifications";
+import { setToken, setUser, unsetToken } from "../store/jwt";
 
 import Copyright from "../ui/elements/Copyright";
 
 const Auth = (props) => {
-    // let history = useHistory();
+    const auth = useAuthentication();
     const notify = useNotifier();
     const dispatch = useDispatch();
 
@@ -43,10 +42,8 @@ const Auth = (props) => {
                 const user = response.data.user;
                 dispatch(setToken(token));
                 dispatch(setUser(user));
-                // jwt.setToken(api.token,token);
-                // jwt.setToken(api.userToken,user);
-                history.push(api.adminPrefix);
                 notify("Login successful");
+                history.push(api.adminPrefix);
             })
             .catch((error) => {
                 const message = error?.response?.data.message;
@@ -60,8 +57,7 @@ const Auth = (props) => {
     React.useEffect(() => {
         if (props.mode == "logout") {
             auth.post("/Logout", {}).then(() => {
-                jwt.removeToken(api.token);
-                jwt.removeToken(api.userToken);
+                dispatch(unsetToken(token));
                 history.push(api.adminPrefix);
             });
         }

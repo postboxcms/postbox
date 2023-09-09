@@ -4,10 +4,10 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import HomeIcon from '@mui/icons-material/Home';
-import { ElementCSS } from './element.css';
+import { useCSS } from '../../hooks/css';
 
 export default function Breadcrumb(props) {
-    const classes = ElementCSS();
+    const classes = useCSS();
 
     return (
         <Breadcrumbs separator="/" aria-label="breadcrumb" className={classes.breadcrumb}>

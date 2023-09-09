@@ -1,28 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
+import React from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
 // elements
-import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
+import { DataGrid } from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 // icons
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // layout
-import { Card, Frame } from '../ui/layout/Frame';
-import Title from '../ui/elements/Title';
-import { ElementCSS } from '../ui/elements/element.css';
-import iconList from '../libs/icons';
+import { Card, Frame } from "../ui/layout/Frame";
+import Title from "../ui/elements/Title";
+import { useCSS } from "../hooks/css";
+import iconList from "../libs/icons";
 // auth manager
-import auth from '../libs/authmanager';
-import NoRowsOverlay from '../ui/elements/NoRowsOverlay';
-import Placeholder, { Loader } from '../ui/elements/Placeholder';
+import { useAuthentication } from "../hooks/auth";
+import NoRowsOverlay from "../ui/elements/NoRowsOverlay";
+import Placeholder, { Loader } from "../ui/elements/Placeholder";
 
 const ActionsButton = () => {
-    const classes = ElementCSS();
+    const classes = useCSS();
     return (
         <div>
             <Button
@@ -30,7 +30,8 @@ const ActionsButton = () => {
                 color="primary"
                 size="small"
                 className={classes.button}
-                startIcon={<EditIcon />}>
+                startIcon={<EditIcon />}
+            >
                 Edit
             </Button>
             <Button
@@ -38,94 +39,111 @@ const ActionsButton = () => {
                 color="secondary"
                 size="small"
                 className={classes.button}
-                startIcon={<DeleteIcon />}>
+                startIcon={<DeleteIcon />}
+            >
                 Delete
             </Button>
         </div>
     );
-}
+};
 
 const AddContent = (props) => {
     props.setViewState(false);
-    console.log('add new content')
-}
+    console.log("add new content");
+};
 
 const CTBody = (props) => {
     const [viewState, setViewState] = React.useState(true);
-    if(viewState) {
-        return <CTList { ...props} setViewState={setViewState} />
+    if (viewState) {
+        return <CTList {...props} setViewState={setViewState} />;
     } else {
-        return <CTAddEdit { ...props} setViewState={setViewState} />
+        return <CTAddEdit {...props} setViewState={setViewState} />;
     }
-}
+};
 
 const CTAddEdit = (props) => {
     return (
         <React.Fragment>
-            <Card xs={12}>
-                Add a new component....
-            </Card>
+            <Card xs={12}>Add a new component....</Card>
         </React.Fragment>
-    )
-}
+    );
+};
 
 const CTList = (props) => {
-    const classes = ElementCSS();
+    const classes = useCSS();
+    const auth = useAuthentication();
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
-    const noRowsMessage = "No " + (props['title'] ? props['title'] : props['name']) + " added yet";
-    const Icon = typeof data['icon'] !== typeof undefined ? data['icon'] : 'square';
+    const noRowsMessage =
+        "No " +
+        (props["title"] ? props["title"] : props["name"]) +
+        " added yet";
+    const Icon =
+        typeof data["icon"] !== typeof undefined ? data["icon"] : "square";
 
     React.useEffect(() => {
-        auth.get('/CRUD' + props['path'])
-            .then((response) => {
-                const columnData = response.data.columns;
-                columnData.push({
-                    field: 'actions',
-                    headerName: 'ACTIONS',
-                    headerClassName: 'table-header-light',
-                    flex: 1,
-                    renderCell: () => <ActionsButton />
-                });
-                // setColumns(columnData);
+        auth.get("/CRUD" + props["path"]).then((response) => {
+            const columnData = response.data.columns;
+            columnData.push({
+                field: "actions",
+                headerName: "ACTIONS",
+                headerClassName: "table-header-light",
+                flex: 1,
+                renderCell: () => <ActionsButton />,
+            });
+            // setColumns(columnData);
 
-                auth.get('/ContentType' + props['path'])
-                    .then(response => {
-                        const dataset = [];
-                        const rowdata = {};
-                        setData(response.data.content_type);
-                        response.data.content_type.data.map((data) => {
-                            const dataKeys = Object.keys(data);
-                            const dataValues = Object.values(data);
-                            dataKeys.forEach((parameter, index) => {
-                                rowdata[parameter] = dataValues[index].value;
-                                if (dataValues[index].type == "image") {
-                                    columnData.forEach((column) => {
-                                        if (column['field'] == parameter) {
-                                            column['cellClassName'] = "grid-image-column";
-                                            if (rowdata[parameter] == null || rowdata[parameter] == "") {
-                                                column['renderCell'] = () => <FontAwesomeIcon icon={"image"} size='lg' />;
-                                            } else {
-                                                column['renderCell'] = () => <img src={dataValues[index].value} className="cell-image" />;
-                                            }
-                                        }
-                                    });
+            auth.get("/ContentType" + props["path"]).then((response) => {
+                const dataset = [];
+                const rowdata = {};
+                setData(response.data.content_type);
+                response.data.content_type.data.map((data) => {
+                    const dataKeys = Object.keys(data);
+                    const dataValues = Object.values(data);
+                    dataKeys.forEach((parameter, index) => {
+                        rowdata[parameter] = dataValues[index].value;
+                        if (dataValues[index].type == "image") {
+                            columnData.forEach((column) => {
+                                if (column["field"] == parameter) {
+                                    column["cellClassName"] =
+                                        "grid-image-column";
+                                    if (
+                                        rowdata[parameter] == null ||
+                                        rowdata[parameter] == ""
+                                    ) {
+                                        column["renderCell"] = () => (
+                                            <FontAwesomeIcon
+                                                icon={"image"}
+                                                size="lg"
+                                            />
+                                        );
+                                    } else {
+                                        column["renderCell"] = () => (
+                                            <img
+                                                src={dataValues[index].value}
+                                                className="cell-image"
+                                            />
+                                        );
+                                    }
                                 }
                             });
-                            dataset.push(rowdata);
-                        });
-                        setRows(dataset);
-                        setColumns(columnData);
+                        }
                     });
+                    dataset.push(rowdata);
+                });
+                setRows(dataset);
+                setColumns(columnData);
             });
-    }, [props['path']]);
+        });
+    }, [props["path"]]);
 
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size='lg' icon={Icon} /> {props['title'] ? props['title'] : props['name']}
+                    <FontAwesomeIcon size="lg" icon={Icon} />{" "}
+                    {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <Button
                     onClick={() => AddContent(props)}
@@ -133,8 +151,9 @@ const CTList = (props) => {
                     color="primary"
                     size="medium"
                     className={classes.largebutton}
-                    startIcon={<AddIcon />}>
-                    Add {props['title'] ? props['title'] : props['name']}
+                    startIcon={<AddIcon />}
+                >
+                    Add {props["title"] ? props["title"] : props["name"]}
                 </Button>
             </div>
             <div className={classes.grid}>
@@ -151,7 +170,10 @@ const CTList = (props) => {
                                     <Placeholder check={false}>
                                         <Loader height={50} lines={8} />
                                     </Placeholder>
-                                    <NoRowsOverlay icon={Icon} message={noRowsMessage} />
+                                    <NoRowsOverlay
+                                        icon={Icon}
+                                        message={noRowsMessage}
+                                    />
                                 </>
                             );
                         },
@@ -160,7 +182,7 @@ const CTList = (props) => {
             </div>
         </React.Fragment>
     );
-}
+};
 
 export default function ContentType(props) {
     return (

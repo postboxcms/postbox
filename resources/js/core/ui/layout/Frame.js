@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { LayoutCSS } from './layout.css';
-import { ElementCSS } from '../elements/element.css';
+import { useCSS } from '../../hooks/css';
 import Title from '../elements/Title';
 import iconList from '../../libs/icons';
 
@@ -42,7 +42,7 @@ export const Body = (props) => {
 }
 
 export const DataCard = (props) => {
-    const classes = ElementCSS();
+    const classes = useCSS();
     return (
         <React.Fragment>
             <Grid container>

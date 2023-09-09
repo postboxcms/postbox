@@ -10,8 +10,14 @@ const jwtSlice = createSlice({
         setToken: (state, action) => {
             state.token = action.payload;
         },
+        unsetToken: (state) => {
+            state.token = null;
+        },
         setUser: (state, action) => {
             state.user = action.payload;
+        },
+        unsetUser: (state) => {
+            state.user = null;
         },
     },
 });
@@ -19,6 +25,6 @@ const jwtSlice = createSlice({
 export const getToken = (state) => state.token;
 export const getUser = (state) => state.user;
 
-export const { setToken, setUser } = jwtSlice.actions;
+export const { setToken, setUser, unsetToken, unsetUser } = jwtSlice.actions;
 
 export default jwtSlice.reducer;

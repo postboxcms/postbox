@@ -1,46 +1,48 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import Collapse from '@mui/material/Collapse';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import Collapse from "@mui/material/Collapse";
 
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { api } from '../../libs/constants';
-import jwt from '../../libs/jwtmanager';
-import auth from '../../libs/authmanager';
-import iconList from '../../libs/icons';
-
+import { api } from "../../libs/constants";
+import jwt from "../../libs/jwtmanager";
+import { useAuthentication } from "../../hooks/auth";
+import iconList from "../../libs/icons";
 
 export const MainItems = (props) => {
     const [contentTypes, setContentTypes] = useState({ content_types: [] });
-    const [open,setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+    const auth = useAuthentication();
     const collapsePanel = () => {
         setOpen(!open);
-        if(!open) {
-            jwt.setToken(api.menuToken,'open');
+        if (!open) {
+            jwt.setToken(api.menuToken, "open");
         } else {
-            jwt.setToken(api.menuToken,'closed');
+            jwt.setToken(api.menuToken, "closed");
         }
-    }
+    };
 
     React.useEffect(() => {
         // fetch all content types
         if (jwt.getToken(api.token) !== null) {
-            auth.get('/ContentType').then((response) => setContentTypes(response.data));
+            auth.get("/ContentType").then((response) =>
+                setContentTypes(response.data)
+            );
         }
         // fetch menu state
-        if(jwt.getToken(api.menuToken) == 'open') {
+        if (jwt.getToken(api.menuToken) == "open") {
             setOpen(true);
         }
     }, []);
@@ -67,14 +69,20 @@ export const MainItems = (props) => {
                 </Link>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {contentTypes['content_types'].map((data) => {
+                        {contentTypes["content_types"].map((data) => {
                             return (
-                                <Link to={api['adminPrefix'] + '/' + data['slug']} key={data['id']}>
+                                <Link
+                                    to={api["adminPrefix"] + "/" + data["slug"]}
+                                    key={data["id"]}
+                                >
                                     <ListItem button>
                                         <ListItemIcon>
-                                            <FontAwesomeIcon size='lg' icon={data['icon']} />
+                                            <FontAwesomeIcon
+                                                size="lg"
+                                                icon={data["icon"]}
+                                            />
                                         </ListItemIcon>
-                                        <ListItemText primary={data['name']} />
+                                        <ListItemText primary={data["name"]} />
                                     </ListItem>
                                 </Link>
                             );
@@ -83,7 +91,7 @@ export const MainItems = (props) => {
                 </Collapse>
             </div>
         </React.Fragment>
-    )
+    );
 };
 
 export const SubItems = (props) => {
@@ -94,7 +102,7 @@ export const SubItems = (props) => {
                 <Link to={api.adminPrefix + "/crud"} key="0">
                     <ListItem button>
                         <ListItemIcon>
-                            <FontAwesomeIcon size='lg' icon="layer-group" />
+                            <FontAwesomeIcon size="lg" icon="layer-group" />
                         </ListItemIcon>
                         <ListItemText primary="CRUD" />
                     </ListItem>
@@ -107,5 +115,5 @@ export const SubItems = (props) => {
                 </ListItem>
             </div>
         </React.Fragment>
-    )
+    );
 };
