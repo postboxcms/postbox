@@ -5,7 +5,7 @@ import { Card, Frame, Body, DataCard } from '../ui/layout/Frame';
 
 import jwt from '../libs/jwtmanager';
 import auth from '../libs/authmanager';
-import {api} from '../libs/vars';
+import {api} from '../libs/constants';
 import Placeholder, {Loader} from '../ui/elements/Placeholder';
 
 const useStyles = makeStyles((theme) => ({

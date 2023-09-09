@@ -5,6 +5,7 @@ export const theme = createTheme({
         // Use the system font instead of the default Roboto font.
         fontFamily: [
           '-apple-system',
+          'Ubuntu',
           'BlinkMacSystemFont',
           '"Segoe UI"',
           'Roboto',

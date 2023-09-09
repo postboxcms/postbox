@@ -14,7 +14,7 @@ import { ElementCSS } from '../elements/element.css';
 import Title from '../elements/Title';
 import iconList from '../../libs/icons';
 
-import {api} from '../../libs/vars';
+import {api} from '../../libs/constants';
 
 export const Frame = (props) => {
     return (

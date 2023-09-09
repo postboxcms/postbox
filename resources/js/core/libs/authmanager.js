@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from './jwtmanager';
-import { api } from './vars';
+import { api } from './constants';
 
 const authManager = () => {
     const get = (url) => {

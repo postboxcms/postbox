@@ -16,7 +16,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { api } from '../../libs/vars';
+import { api } from '../../libs/constants';
 import jwt from '../../libs/jwtmanager';
 import auth from '../../libs/authmanager';
 import iconList from '../../libs/icons';

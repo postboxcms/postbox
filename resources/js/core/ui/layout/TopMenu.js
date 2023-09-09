@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
 // libs
-import { api } from '../../libs/vars';
+import { api } from '../../libs/constants';
 
 export const TopMenu = (props) => {
     const [anchor, setAnchor] = React.useState(null);

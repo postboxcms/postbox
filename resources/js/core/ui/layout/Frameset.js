@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 // elements
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,13 +24,15 @@ import Copyright from '../elements/Copyright';
 // styles and css
 import { LayoutCSS } from './layout.css';
 // libs
-import { api } from '../../libs/vars';
+import { api } from '../../libs/constants';
 import jwt from '../../libs/jwtmanager';
+import { getUser } from '../../store/jwt';
 // menu
 import TopMenu from './TopMenu';
 
 export default function Frameset(props) {
     const classes = LayoutCSS();
+    const user = useSelector(getUser);
     const [anchor, setAnchor] = React.useState(null);
     const [open, setOpen] = React.useState(true);
 
@@ -55,7 +58,7 @@ export default function Frameset(props) {
             <GridComponent {...props} />
         );
     };
-    const user = JSON.parse(jwt.getToken(api.userToken));
+    // const user = JSON.parse(jwt.getToken(api.userToken));
 
     return (
         <div className="app-root">
@@ -75,7 +78,7 @@ export default function Frameset(props) {
                         <Breadcrumb title={props.title} />
                     </Typography>
                     <IconButton color="inherit" size="large" onClick={switchTopMenu}>
-                        <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name.charAt(0)}</Avatar>
+                        <Avatar sx={{ bgcolor: deepOrange[500] }}>{user?.name.charAt(0)}</Avatar>
                     </IconButton>
                     <TopMenu anchor={anchor} state={updateState}/>
                 </Toolbar>

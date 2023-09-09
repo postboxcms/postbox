@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import { LayoutCSS } from './../core/ui/layout/layout.css';
-import { Card, Frame, Body } from './../core/ui/layout/Frame';
 
 export default function Theme(props) {
     const classes = LayoutCSS();
@@ -16,7 +15,7 @@ export default function Theme(props) {
             <AppBar position="absolute" className={clsx(classes.appBar, open)}>
                 <Toolbar className="toolbar">
                     <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
-                        {"{minimalist}"}
+                        {"[minimalist]"}
                     </Typography>
                 </Toolbar>
             </AppBar>
