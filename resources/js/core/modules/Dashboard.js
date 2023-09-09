@@ -8,7 +8,7 @@ import jwt from "../libs/jwtmanager";
 import { useAuthentication } from "../hooks/auth";
 import { api } from "../libs/constants";
 import Placeholder, { Loader } from "../ui/elements/Placeholder";
-import { getToken } from "../store/jwt";
+import { getToken, getUser } from "../store/jwt";
 
 const useStyles = makeStyles((theme) => ({
     body: {
@@ -25,12 +25,13 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = (props) => {
     const classes = useStyles();
     const auth = useAuthentication();
-    const userToken = useSelector(getToken);
+    const token = useSelector(getToken);
+    const user = useSelector(getUser);
     const [contentTypes, setContentTypes] = useState([]);
 
     React.useEffect(() => {
         // fetch all content types
-        if (userToken !== null) {
+        if (token !== null) {
             auth.get("/ContentType").then((response) =>
                 setContentTypes(response.data.content_types)
             );

@@ -22,12 +22,15 @@ import { api } from "../libs/constants";
 import { useAuthentication } from "../hooks/auth";
 import history from "../libs/history";
 import { useNotifier } from "../hooks/notifications";
-import { setToken, setUser, unsetToken } from "../store/jwt";
+import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "../store/jwt";
 
 import Copyright from "../ui/elements/Copyright";
 
 const Auth = (props) => {
+    // const history = useHistory();
     const auth = useAuthentication();
+    const token = useSelector(getToken);
+    const user = useSelector(getUser);
     const notify = useNotifier();
     const dispatch = useDispatch();
 
@@ -58,7 +61,8 @@ const Auth = (props) => {
         if (props.mode == "logout") {
             auth.post("/Logout", {}).then(() => {
                 dispatch(unsetToken(token));
-                history.push(api.adminPrefix);
+                dispatch(unsetUser(user));
+                history.push(api.adminPrefix + api.loginUrl);
             });
         }
     }, [props.mode]);

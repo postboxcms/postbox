@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import jwt from '../libs/jwtmanager';
 import { api } from '../libs/constants';
 import { getToken } from '../store/jwt';
 
-export const useAuthentication = () => () => {
+export const useAuthentication = () => {
     const token = useSelector(getToken);
     const get = (url) => {
         return axios.get(api.url + url,{
