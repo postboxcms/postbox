@@ -8,10 +8,8 @@ import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import Frameset from "./ui/layout/Frameset";
 import Website from "./ui/layout/Website";
 // core modules
-import Dashboard from "./modules/Dashboard";
 import Auth from "./modules/Auth";
 import ContentType from "./modules/ContentType";
-import CRUD from "./modules/CRUD";
 import Theme from "../website/Theme";
 // theme provider
 import { theme } from "./theme";
@@ -25,6 +23,7 @@ import { api } from "./libs/constants";
 // route manager
 import contentTypeRoutes from "../routes/contentTypeRoutes";
 import adminRoutes from "../routes/adminRoutes";
+import authRoutes from "../routes/authRoutes";
 // store
 import { store, persistor } from "./store";
 import history from "./libs/history";
@@ -37,42 +36,47 @@ const Admin = () => {
                 <PersistGate loading={null} persistor={persistor}>
                     <Router history={history}>
                         {/* public routes */}
-                        <Switch>
-                            <ProtectedRoute
-                                restricted={true}
-                                exact
-                                path={api.adminPrefix + api.loginUrl}
-                            >
-                                <Auth />
-                            </ProtectedRoute>
-                            <PublicRoute
-                                exact
-                                path={api.adminPrefix + api.logoutUrl}
-                            >
-                                <Auth mode="logout" />
-                            </PublicRoute>
-                            <PublicRoute
-                                restricted={true}
-                                filter={api.adminPrefix}
-                                path="*"
-                            >
-                                <Website controller={Theme} />
-                            </PublicRoute>
-                        </Switch>
+                        {authRoutes.map((route) => {
+                            return Object.keys(route).map((type, key) => {
+                                const routename = route[type];
+                                return (
+                                    <Switch key={key}>
+                                        {routename.type == "protected" &&
+                                            <ProtectedRoute
+                                                restricted={true}
+                                                exact
+                                                path={routename.path}
+                                            >
+                                                <Auth mode={routename.mode} />
+                                            </ProtectedRoute>
+                                        }
+                                        {routename.type == "public" &&
+                                            <PublicRoute
+                                                exact
+                                                path={routename.path}
+                                            >
+                                                <Auth mode={routename.mode} />
+                                            </PublicRoute>
+                                        }
+
+                                    </Switch>
+                                )
+                            });
+                        })}
                         {/* admin private routes */}
                         {adminRoutes.map((route) => {
                             return Object.keys(route).map((type, key) => {
                                 const routename = route[type];
                                 return (
                                     <Switch key={key}>
-                                        <PrivateRoute exact path={api.adminPrefix + routename.path}>
+                                        <PrivateRoute exact path={routename.path}>
                                             <Frameset
-                                                path={api.adminPrefix}
+                                                path={routename.path}
                                                 controller={routename.controller} />
                                         </PrivateRoute>
                                     </Switch>
                                 );
-                        });
+                            });
                         })}
                         {/* content_type routes */}
                         {contentTypeRoutes.map((route) => {
@@ -133,6 +137,15 @@ const Admin = () => {
                                 );
                             });
                         })}
+                        <Switch>
+                            <PublicRoute
+                                restricted={true}
+                                filter={api.adminPrefix}
+                                path="*"
+                            >
+                                <Website controller={Theme} />
+                            </PublicRoute>
+                        </Switch>
                     </Router>
                 </PersistGate>
             </Provider>
