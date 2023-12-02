@@ -12,7 +12,7 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./core/admin');
+require('./framework');
 
 /**
  * Later we load dotenv file into the project to use environment variables
