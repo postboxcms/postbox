@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { LayoutCSS } from '../app/ui/layout/layout.css';
+import { LayoutCSS } from '../app/layout/layout/layout.css';
 
 const Theme = (props) => {
     const classes = LayoutCSS();

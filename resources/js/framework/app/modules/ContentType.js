@@ -12,14 +12,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // layout
-import { Card, Frame } from "../ui/layout/Frame";
-import Title from "../ui/elements/Title";
+import { Card, Frame } from "../layout/layout/Frame";
+import Title from "../layout/elements/Title";
 import { useCSS } from "../hooks/css";
 import iconList from "../utils/icons";
 // auth manager
 import { useAuthentication } from "../hooks/auth";
-import NoRowsOverlay from "../ui/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../ui/elements/Placeholder";
+import NoRowsOverlay from "../layout/elements/NoRowsOverlay";
+import Placeholder, { Loader } from "../layout/elements/Placeholder";
 
 const ActionsButton = () => {
     const classes = useCSS();

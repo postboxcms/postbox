@@ -5,8 +5,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 // layout
-import Frameset from "./ui/layout/Frameset";
-import Website from "./ui/layout/Website";
+import Frameset from "./layout/layout/Frameset";
+import Website from "./layout/layout/Website";
 // core modules
 import Auth from "./modules/Auth";
 import ContentType from "./modules/ContentType";

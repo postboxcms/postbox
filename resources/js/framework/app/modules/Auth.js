@@ -24,7 +24,7 @@ import history from "../utils/history";
 import { useNotifier } from "../hooks/notifications";
 import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "../store/jwt";
 
-import Copyright from "../ui/elements/Copyright";
+import Copyright from "../layout/elements/Copyright";
 
 const Auth = (props) => {
     // const history = useHistory();
