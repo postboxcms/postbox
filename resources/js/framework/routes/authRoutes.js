@@ -1,4 +1,4 @@
-import { api } from "../app/libs/constants";
+import { api } from "../app/utils/constants";
 
 const routes = [
     {

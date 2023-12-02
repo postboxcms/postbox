@@ -16,8 +16,8 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { nav, api } from "../../libs/constants";
-import cookies from "../../libs/cookies";
+import { nav, api } from "../../utils/constants";
+import cookies from "../../utils/cookies";
 
 export const MainItems = (props) => {
     const [contentTypes, setContentTypes] = useState({ content_types: [] });

@@ -15,7 +15,7 @@ import { Card, Frame } from "../ui/layout/Frame";
 import { useCSS } from "../hooks/css";
 import Title from "../ui/elements/Title";
 
-import { IOSSwitch } from "../libs/elements";
+import { IOSSwitch } from "../utils/elements";
 import { useNotifier } from "../hooks/notifications";
 import { useAuthentication } from "../hooks/auth";
 

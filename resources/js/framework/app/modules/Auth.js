@@ -18,9 +18,9 @@ import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../theme";
 
-import { api } from "../libs/constants";
+import { api } from "../utils/constants";
 import { useAuthentication } from "../hooks/auth";
-import history from "../libs/history";
+import history from "../utils/history";
 import { useNotifier } from "../hooks/notifications";
 import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "../store/jwt";
 

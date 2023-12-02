@@ -12,9 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LayoutCSS } from './layout.css';
 import { useCSS } from '../../hooks/css';
 import Title from '../elements/Title';
-import iconList from '../../libs/icons';
+import iconList from '../../utils/icons';
 
-import {api} from '../../libs/constants';
+import {api} from '../../utils/constants';
 
 export const Frame = (props) => {
     return (

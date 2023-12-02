@@ -24,7 +24,7 @@ import Copyright from '../elements/Copyright';
 // styles and css
 import { LayoutCSS } from './layout.css';
 // libs
-import jwt from '../../libs/cookies';
+import jwt from '../../utils/cookies';
 import { getUser } from '../../store/jwt';
 // menu
 import TopMenu from './TopMenu';

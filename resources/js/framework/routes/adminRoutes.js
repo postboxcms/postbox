@@ -1,6 +1,6 @@
 import Dashboard from "../app/modules/Dashboard";
 import CRUD from "../app/modules/CRUD";
-import { api } from "../app/libs/constants";
+import { api } from "../app/utils/constants";
 
 const routes = [
     {

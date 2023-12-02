@@ -19,14 +19,14 @@ import ProtectedRoute from "./routers/protected";
 import PrivateRoute from "./routers/private";
 import PublicRoute from "./routers/public";
 // variables
-import { api } from "./libs/constants";
+import { api } from "./utils/constants";
 // route manager
 import contentTypeRoutes from "../routes/contentTypeRoutes";
 import adminRoutes from "../routes/adminRoutes";
 import authRoutes from "../routes/authRoutes";
 // store
 import { store, persistor } from "./store";
-import history from "./libs/history";
+import history from "./utils/history";
 
 /** React router to setup UI routes */
 const Admin = () => {

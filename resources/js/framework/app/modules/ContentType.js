@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Frame } from "../ui/layout/Frame";
 import Title from "../ui/elements/Title";
 import { useCSS } from "../hooks/css";
-import iconList from "../libs/icons";
+import iconList from "../utils/icons";
 // auth manager
 import { useAuthentication } from "../hooks/auth";
 import NoRowsOverlay from "../ui/elements/NoRowsOverlay";

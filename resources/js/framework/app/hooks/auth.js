@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { api } from '../libs/constants';
+import { api } from '../utils/constants';
 import { getToken } from '../store/jwt';
 
 export const useAuthentication = () => {
