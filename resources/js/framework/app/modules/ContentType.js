@@ -21,6 +21,7 @@ import { useAuthentication } from "../hooks/auth";
 import NoRowsOverlay from "../layout/elements/NoRowsOverlay";
 import Placeholder, { Loader } from "../layout/elements/Placeholder";
 
+
 const ActionsButton = () => {
     const classes = useCSS();
     return (
@@ -81,6 +82,50 @@ const CTList = (props) => {
         " added yet";
     const Icon =
         typeof data["icon"] !== typeof undefined ? data["icon"] : "square";
+
+    React.useEffect(() => {
+        auth.get('/CRUD' + props['path'])
+            .then((response) => {
+                const columnData = response.data.columns;
+                columnData.push({
+                    field: 'actions',
+                    headerName: 'ACTIONS',
+                    headerClassName: 'table-header-light',
+                    flex: 1,
+                    renderCell: () => <ActionsButton />
+                });
+
+                auth.get('/ContentType' + props['path'])
+                    .then(response => {
+                        const dataset = [];
+                        const rowdata = {};
+                        setData(response.data.content_type);
+                        console.log(response.data.content_type);
+                        response.data.content_type.data.map((data) => {
+                            const dataKeys = Object.keys(data);
+                            const dataValues = Object.values(data);
+                            dataKeys.forEach((parameter, index) => {
+                                rowdata[parameter] = dataValues[index].value;
+                                if (dataValues[index].type == "image") {
+                                    columnData.forEach((column) => {
+                                        if (column['field'] == parameter) {
+                                            column['cellClassName'] = "grid-image-column";
+                                            if (rowdata[parameter] == null || rowdata[parameter] == "") {
+                                                column['renderCell'] = () => <FontAwesomeIcon icon={"image"} size='lg' />;
+                                            } else {
+                                                column['renderCell'] = () => <img src={dataValues[index].value} className="cell-image" />;
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                            dataset.push(rowdata);
+                        });
+                        setRows(dataset);
+                        setColumns(columnData);
+                    });
+            });
+    }, [props['path']]);
 
     return (
         <React.Fragment>
