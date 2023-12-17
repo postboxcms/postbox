@@ -14,16 +14,20 @@ class OAuth extends Controller
 
     // register a user
     public function register(Request $request) {
-        $this->data = $request->validate([
-            'name'      => 'required|max:255',
-            'email'     => 'required|email|unique:users',
-            'password'  => 'required|confirmed'
-        ]);
-        $this->data['password'] = bcrypt($request->password);
-        $this->user = User::create($this->data);
-        $this->token = $this->user->createToken(env('APP_NAME').' Token')->accessToken;
-
-        return response(['user' => $this->user, 'token' => $this->token]);
+        try {
+            $this->data = $request->validate([
+                'name'      => 'required|max:255',
+                'email'     => 'required|email|unique:users',
+                'password'  => 'required|confirmed'
+            ]);
+            $this->data['password'] = bcrypt($request->password);
+            $this->user = User::create($this->data);
+            $this->token = $this->user->createToken(env('APP_NAME').' Token')->accessToken;
+    
+            return response(['user' => $this->user, 'token' => $this->token], 200);    
+        } catch(Exception $e) {
+            return response(['error' => $e->getMessage()], 400);
+        }
     }
 
     // login a user

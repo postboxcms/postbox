@@ -10,7 +10,7 @@ import Website from "./layout/layout/Website";
 // core modules
 import Auth from "./modules/Auth";
 import ContentType from "./modules/ContentType";
-import Theme from "../website/Theme";
+import Theme from "../website";
 // theme provider
 import { theme } from "./theme";
 // routers
