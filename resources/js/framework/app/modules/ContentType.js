@@ -98,10 +98,9 @@ const CTList = (props) => {
                 auth.get('/ContentType' + props['path'])
                     .then(response => {
                         const dataset = [];
-                        const rowdata = {};
                         setData(response.data.content_type);
-                        console.log(response.data.content_type);
                         response.data.content_type.data.map((data) => {
+                            const rowdata = {};    
                             const dataKeys = Object.keys(data);
                             const dataValues = Object.values(data);
                             dataKeys.forEach((parameter, index) => {
