@@ -289,7 +289,7 @@ const Body = (props) => {
 
 const CRUD = (props) => {
     const [data, setData] = React.useState({});
-    const auth = useAuthentication();
+    const auth = useAuthentication(); 
 
     React.useEffect(
         function () {
