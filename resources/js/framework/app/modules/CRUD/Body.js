@@ -11,25 +11,24 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
-import { Card, Frame } from "../layout/layout/Frame";
-import { useCSS } from "../hooks/css";
-import Title from "../layout/elements/Title";
+import { useCSS } from "../../hooks/css";
+import Title from "../../layout/elements/Title";
 
-import { IOSSwitch } from "../utils/elements";
-import { useNotifier } from "../hooks/notifications";
-import { useAuthentication } from "../hooks/auth";
+import { IOSSwitch } from "../../utils/elements";
+import { useNotifier } from "../../hooks/notifications";
+import { useAuthentication } from "../../hooks/auth";
 
-import NoRowsOverlay from "../layout/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../layout/elements/Placeholder";
+import NoRowsOverlay from "../../layout/elements/NoRowsOverlay";
+import Placeholder, { Loader } from "../../layout/elements/Placeholder";
 
 const Body = (props) => {
     const classes = useCSS();
+    const auth = useAuthentication();
     const [rows, setRows] = React.useState([]);
     const [cellFocus, setCellFocus] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
     const notify = useNotifier();
 
-    const auth = props.auth;
     const columns = [
         {
             field: "id",
@@ -287,24 +286,4 @@ const Body = (props) => {
     );
 };
 
-const CRUD = (props) => {
-    const [data, setData] = React.useState({});
-    const auth = useAuthentication(); 
-
-    React.useEffect(
-        function () {
-            auth.get("/CRUD").then((response) => setData(response.data));
-        },
-        [props.path]
-    );
-
-    return (
-        <Frame>
-            <Card xs={12}>
-                <Body auth={auth} {...props} {...data} />
-            </Card>
-        </Frame>
-    );
-}
-
-export default CRUD;
+export default Body;
