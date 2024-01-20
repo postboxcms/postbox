@@ -24,12 +24,12 @@ import Placeholder, { Loader } from "../layout/elements/Placeholder";
 
 const Body = (props) => {
     const classes = useCSS();
-    const auth = useAuthentication();
     const [rows, setRows] = React.useState([]);
     const [cellFocus, setCellFocus] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
     const notify = useNotifier();
 
+    const auth = props.auth;
     const columns = [
         {
             field: "id",
@@ -289,9 +289,11 @@ const Body = (props) => {
 
 const CRUD = (props) => {
     const [data, setData] = React.useState({});
+    const auth = useAuthentication();
+
     React.useEffect(
         function () {
-            // auth.get("/CRUD").then((response) => setData(response.data));
+            auth.get("/CRUD").then((response) => setData(response.data));
         },
         [props.path]
     );
@@ -299,7 +301,7 @@ const CRUD = (props) => {
     return (
         <Frame>
             <Card xs={12}>
-                <Body {...props} {...data} />
+                <Body auth={auth} {...props} {...data} />
             </Card>
         </Frame>
     );
