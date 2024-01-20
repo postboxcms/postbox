@@ -5,14 +5,11 @@ import Body from "./Body";
 
 const CRUD = (props) => {
     const [data, setData] = React.useState({});
-    const auth = useAuthentication(); 
+    const auth = useAuthentication();
 
-    React.useEffect(
-        function () {
-            auth.get("/CRUD").then((response) => setData(response.data));
-        },
-        [props.path]
-    );
+    React.useEffect(() => {
+        auth.get("/CRUD").then((response) => setData(response.data));
+    }, [props.path]);
 
     return (
         <Frame>

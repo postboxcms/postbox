@@ -18,10 +18,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { nav, api } from "../../utils/constants";
 import cookies from "../../utils/cookies";
+import { useAuthentication } from "../../hooks/auth";
 
 export const MainItems = (props) => {
     const [contentTypes, setContentTypes] = useState({ content_types: [] });
     const [open, setOpen] = useState(false);
+    const auth = useAuthentication();
     const collapsePanel = () => {
         setOpen(!open);
         if (!open) {
@@ -30,6 +32,10 @@ export const MainItems = (props) => {
             cookies.setCookie(nav.menuToken, "closed");
         }
     };
+
+    React.useEffect(() => {
+        auth.get('/ContentType').then((response) => setContentTypes(response.data));
+    },[]);
 
     return (
         <React.Fragment>

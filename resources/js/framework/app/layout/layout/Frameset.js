@@ -18,7 +18,7 @@ import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 // app elements
-import { MainItems, SubItems } from '../navigation/Navigation';
+import { MainItems, SubItems } from '../navigation';
 import Breadcrumb from '../elements/Breadcrumb';
 import Copyright from '../elements/Copyright';
 // styles and css
