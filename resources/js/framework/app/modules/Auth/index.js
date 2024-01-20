@@ -16,15 +16,15 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "../theme";
+import { theme } from "../../theme";
 
-import { api } from "../utils/constants";
-import { useAuthentication } from "../hooks/auth";
-import history from "../utils/history";
-import { useNotifier } from "../hooks/notifications";
-import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "../store/jwt";
+import { api } from "../../utils/constants";
+import { useAuthentication } from "../../hooks/auth";
+import history from "../../utils/history";
+import { useNotifier } from "../../hooks/notifications";
+import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "../../store/jwt";
 
-import Copyright from "../layout/elements/Copyright";
+import Copyright from "../../layout/elements/Copyright";
 
 const Auth = (props) => {
     // const history = useHistory();

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import makeStyles from "@mui/styles/makeStyles";
 
-import { Card, Frame, Body, DataCard } from "../layout/layout/Frame";
+import { Card, Frame, Body, DataCard } from "../../layout/layout/Frame";
 
-import { useAuthentication } from "../hooks/auth";
-import Placeholder, { Loader } from "../layout/elements/Placeholder";
-import { getToken, getUser } from "../store/jwt";
+import { useAuthentication } from "../../hooks/auth";
+import Placeholder, { Loader } from "../../layout/elements/Placeholder";
+import { getToken, getUser } from "../../store/jwt";
 
 const useStyles = makeStyles((theme) => ({
     body: {
