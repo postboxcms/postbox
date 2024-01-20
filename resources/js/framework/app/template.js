@@ -9,11 +9,8 @@ import Website from "./layout/layout/Website";
 import Auth from "./modules/Auth";
 import ContentType from "./modules/ContentType";
 import Theme from "../website";
-// routers
-import ProtectedRoute from "./routers/protected";
-
-import PrivateRoute from "./routers/private";
-import PublicRoute from "./routers/public";
+// routes
+import { PrivateRoute, ProtectedRoute, PublicRoute } from './routes';
 // variables
 import { api } from "./utils/constants";
 // route manager
@@ -119,15 +116,15 @@ const Template = () => {
                                                 "/edit"
                                             }
                                         >
-                                        <Frameset
-                                            title={routename.title}
-                                            path={
-                                                "/" +
-                                                routename.singular +
-                                                "/edit"
-                                            }
-                                            controller={ContentType}
-                                        />
+                                            <Frameset
+                                                title={routename.title}
+                                                path={
+                                                    "/" +
+                                                    routename.singular +
+                                                    "/edit"
+                                                }
+                                                controller={ContentType}
+                                            />
                                         </PrivateRoute>
                                     </Switch>
                                 );
