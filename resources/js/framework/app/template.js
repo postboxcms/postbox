@@ -14,9 +14,7 @@ import { PrivateRoute, ProtectedRoute, PublicRoute } from './routes';
 // variables
 import { api } from "./utils/constants";
 // route manager
-import contentTypeRoutes from "../routes/contentTypeRoutes";
-import adminRoutes from "../routes/adminRoutes";
-import authRoutes from "../routes/authRoutes";
+import { adminRoutes, authRoutes, contentTypeRoutes } from "./routes/data";
 // store
 import { store, persistor } from "./store";
 import history from "./utils/history";
