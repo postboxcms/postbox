@@ -5,7 +5,6 @@ import { getToken } from '../store/jwt';
 
 export const useAuthentication = () => {
     const token = useSelector(getToken);
-    console.log(token)
     const get = (url) => {
         return axios.get(api.url + url,{
             headers:{
