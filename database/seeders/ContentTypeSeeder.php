@@ -20,7 +20,7 @@ class ContentTypeSeeder extends Seeder
             'description' => 'Blog posts',
             'slug' => 'posts',
             'type' => 1,
-            'icon' => 'LocalPostOfficeIcon',
+            'icon' => 'message',
             'status' => 1,
         ]);
         DB::table('content_types')->insert([
@@ -28,7 +28,7 @@ class ContentTypeSeeder extends Seeder
             'description' => 'Website pages',
             'slug' => 'pages',
             'type' => 1,
-            'icon' => 'ArticleIcon',
+            'icon' => 'file-lines',
             'status' => 1,
         ]);
         DB::table('content_types')->insert([
@@ -36,7 +36,7 @@ class ContentTypeSeeder extends Seeder
             'description' => 'Website users',
             'slug' => 'users',
             'type' => 1,
-            'icon' => 'PeopleIcon',
+            'icon' => 'user-group',
             'status' => 1,
         ]);
     }

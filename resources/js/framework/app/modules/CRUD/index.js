@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Frame } from "../../layout/layout/Frame";
+import { Card, Frame } from "../../ui/layout/Frame";
 import { useAuthentication } from "../../hooks/auth";
 import Body from "./Body";
 

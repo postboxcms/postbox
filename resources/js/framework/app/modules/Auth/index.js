@@ -18,13 +18,12 @@ import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
 
-import { api } from "../../utils/constants";
+import { api, history } from "../../utils";
 import { useAuthentication } from "../../hooks/auth";
-import history from "../../utils/history";
 import { useNotifier } from "../../hooks/notifications";
 import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "../../store/jwt";
 
-import Copyright from "../../layout/elements/Copyright";
+import Copyright from "../../ui/elements/Copyright";
 
 const Auth = (props) => {
     // const history = useHistory();
@@ -34,7 +33,7 @@ const Auth = (props) => {
     const notify = useNotifier();
     const dispatch = useDispatch();
 
-    const submitForm = (event) => {
+    const doLogin = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
@@ -45,8 +44,8 @@ const Auth = (props) => {
                 const user = response.data.user;
                 dispatch(setToken(token));
                 dispatch(setUser(user));
-                notify("Login successful");
                 history.push(api.adminPrefix);
+                notify("Login successful");
             })
             .catch((error) => {
                 const message = error?.response?.data.message;
@@ -117,7 +116,7 @@ const Auth = (props) => {
                         <Box
                             component="form"
                             noValidate
-                            onSubmit={submitForm}
+                            onSubmit={doLogin}
                             sx={{ mt: 1 }}
                         >
                             <OutlinedInput

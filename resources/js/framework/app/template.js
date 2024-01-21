@@ -3,8 +3,8 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 // layout
-import Frameset from "./layout/layout/Frameset";
-import Website from "./layout/layout/Website";
+import Frameset from "./ui/layout/Frameset";
+import Website from "./ui/layout/Website";
 // core modules
 import Auth from "./modules/Auth";
 import ContentType from "./modules/ContentType";
@@ -12,12 +12,11 @@ import Theme from "../website";
 // routes
 import { PrivateRoute, ProtectedRoute, PublicRoute } from './routes';
 // variables
-import { api } from "./utils/constants";
+import { api, history } from "./utils";
 // route manager
 import { adminRoutes, authRoutes, contentTypeRoutes } from "./routes/data";
 // store
 import { store, persistor } from "./store";
-import history from "./utils/history";
 
 /** React router to setup UI routes */
 const Template = () => {

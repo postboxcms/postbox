@@ -12,14 +12,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
 import { useCSS } from "../../hooks/css";
-import Title from "../../layout/elements/Title";
+import Title from "../../ui/elements/Title";
 
 import { IOSSwitch } from "../../utils/elements";
 import { useNotifier } from "../../hooks/notifications";
 import { useAuthentication } from "../../hooks/auth";
 
-import NoRowsOverlay from "../../layout/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../../layout/elements/Placeholder";
+import NoRowsOverlay from "../../ui/elements/NoRowsOverlay";
+import Placeholder, { Loader } from "../../ui/elements/Placeholder";
 
 const Body = (props) => {
     const classes = useCSS();

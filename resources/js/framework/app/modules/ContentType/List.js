@@ -6,12 +6,12 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // layout
-import Title from "../../layout/elements/Title";
+import Title from "../../ui/elements/Title";
 import { useCSS } from "../../hooks/css";
 // auth manager
 import { useAuthentication } from "../../hooks/auth";
-import NoRowsOverlay from "../../layout/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../../layout/elements/Placeholder";
+import NoRowsOverlay from "../../ui/elements/NoRowsOverlay";
+import Placeholder, { Loader } from "../../ui/elements/Placeholder";
 import ActionsButton from "./ActionsButton";
 
 const List = (props) => {
