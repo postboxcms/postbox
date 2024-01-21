@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -16,21 +17,30 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { nav, api } from "../../utils/constants";
-import cookies from "../../utils/cookies";
+import { api } from "../../utils/constants";
 import { useAuthentication } from "../../hooks/auth";
+import { getRoute } from "../../store/route";
 
 export const MainItems = (props) => {
     const [contentTypes, setContentTypes] = useState({ content_types: [] });
     const [open, setOpen] = useState(false);
     const auth = useAuthentication();
+    const route = useSelector(getRoute);
     const collapsePanel = () => {
         setOpen(!open);
     };
 
     React.useEffect(() => {
-        auth.get('/ContentType').then((response) => setContentTypes(response.data));
-    },[]);
+        auth.get('/ContentType').then((response) => {
+            setContentTypes(response.data);
+            response.data?.content_types.map((type) => {
+                console.log('route', route);
+                if (route.includes(type.slug)) {
+                    setOpen(true);
+                }
+            })
+        });
+    }, []);
 
     return (
         <React.Fragment>
