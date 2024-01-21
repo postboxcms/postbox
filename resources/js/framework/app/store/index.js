@@ -10,7 +10,7 @@ const persistConfig = {
     key: "root",
     storage,
 };
-const persistedReducer = persistReducer(persistConfig, jwtReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,

@@ -26,11 +26,6 @@ export const MainItems = (props) => {
     const auth = useAuthentication();
     const collapsePanel = () => {
         setOpen(!open);
-        if (!open) {
-            cookies.setCookie(nav.menuToken, "open");
-        } else {
-            cookies.setCookie(nav.menuToken, "closed");
-        }
     };
 
     React.useEffect(() => {

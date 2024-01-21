@@ -22,8 +22,8 @@ const jwtSlice = createSlice({
     },
 });
 
-export const getToken = (state) => state.token;
-export const getUser = (state) => state.user;
+export const getToken = (state) => state.jwt.token;
+export const getUser = (state) => state.jwt.user;
 
 export const { setToken, setUser, unsetToken, unsetUser } = jwtSlice.actions;
 
