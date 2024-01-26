@@ -12230,7 +12230,7 @@ input[type=text] {
   padding: 0 10px;
 }
 .app-root .skeleton-loader .MuiSkeleton-root {
-  border-radius: 30px;
+  border-radius: 10px;
 }
 .app-root .grid-image-column {
   font-size: 2.5rem;

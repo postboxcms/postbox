@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { theme } from "./theme";
 import Template from "./template";
-import init from "./init";
+import { setup } from "./setup";
 
 if (document.getElementById("app")) {
-    init();
+    setup();
     ReactDOM.render(
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>

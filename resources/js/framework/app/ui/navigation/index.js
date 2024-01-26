@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -19,13 +19,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { api } from "../../utils/constants";
 import { useAuthentication } from "../../hooks/auth";
-import { getRoute } from "../../store/route";
 
 export const MainItems = (props) => {
     const [contentTypes, setContentTypes] = useState({ content_types: [] });
     const [open, setOpen] = useState(false);
     const auth = useAuthentication();
-    const route = useSelector(getRoute);
+    const location = useLocation();
     const collapsePanel = () => {
         setOpen(!open);
     };
@@ -34,8 +33,8 @@ export const MainItems = (props) => {
         auth.get('/ContentType').then((response) => {
             setContentTypes(response.data);
             response.data?.content_types.map((type) => {
-                console.log('route', route);
-                if (route.includes(type.slug)) {
+                console.log('route', location.pathname);
+                if (location.pathname.includes(type.slug)) {
                     setOpen(true);
                 }
             })

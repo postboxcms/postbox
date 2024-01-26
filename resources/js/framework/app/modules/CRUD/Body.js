@@ -270,7 +270,7 @@ const Body = (props) => {
                             return (
                                 <>
                                     <Placeholder check={loader}>
-                                        <Loader lines={10} />
+                                        <Loader lines={10} height={30} />
                                     </Placeholder>
                                     <NoRowsOverlay
                                         icon={props["icon"]}
