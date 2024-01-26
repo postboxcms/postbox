@@ -45,7 +45,7 @@ export const MainItems = (props) => {
         <React.Fragment>
             <div className={props.navbar}>
                 <Link to={api.adminPrefix}>
-                    <ListItem button>
+                    <ListItem>
                         <ListItemIcon>
                             <DashboardIcon />
                         </ListItemIcon>
@@ -69,7 +69,7 @@ export const MainItems = (props) => {
                                     to={api["adminPrefix"] + "/" + data["slug"]}
                                     key={data["id"]}
                                 >
-                                    <ListItem button>
+                                    <ListItem>
                                         <ListItemIcon>
                                             <FontAwesomeIcon
                                                 size="lg"
@@ -94,14 +94,14 @@ export const SubItems = (props) => {
             <div className={props.navbar}>
                 <ListSubheader inset>Preferences</ListSubheader>
                 <Link to={api.adminPrefix + "/crud"} key="0">
-                    <ListItem button>
+                    <ListItem>
                         <ListItemIcon>
                             <FontAwesomeIcon size="lg" icon="layer-group" />
                         </ListItemIcon>
                         <ListItemText primary="CRUD" />
                     </ListItem>
                 </Link>
-                <ListItem button>
+                <ListItem>
                     <ListItemIcon>
                         <BarChartIcon />
                     </ListItemIcon>

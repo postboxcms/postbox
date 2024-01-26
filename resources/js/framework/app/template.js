@@ -61,6 +61,7 @@ const Template = () => {
                                     <Switch key={key}>
                                         <PrivateRoute exact path={routename.path}>
                                             <Frameset
+                                                title={routename.title}
                                                 path={routename.path}
                                                 controller={routename.controller} />
                                         </PrivateRoute>

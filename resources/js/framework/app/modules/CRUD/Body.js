@@ -48,7 +48,7 @@ const Body = (props) => {
             field: "field",
             headerClassName: "table-header-light",
             headerName: "FIELD",
-            width: 200,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <div>
@@ -68,7 +68,7 @@ const Body = (props) => {
             field: "alias",
             headerName: "ALIAS",
             headerClassName: "table-header-light",
-            width: 200,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <div>
@@ -90,7 +90,7 @@ const Body = (props) => {
             field: "type",
             headerName: "TYPE",
             headerClassName: "table-header-light",
-            width: 150,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <>
@@ -125,7 +125,7 @@ const Body = (props) => {
             alignItems: "center",
             headerName: "VIEW IN LIST",
             headerClassName: "table-header-light",
-            width: 150,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <>
@@ -151,7 +151,7 @@ const Body = (props) => {
             field: "position",
             headerName: "EDIT PAGE POSITION",
             headerClassName: "table-header-light",
-            width: 200,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <>
@@ -173,30 +173,6 @@ const Body = (props) => {
                 );
             },
         },
-        {
-            field: "actions",
-            headerName: "Actions",
-            headerClassName: "table-header-light",
-            width: 150,
-            renderCell: (params) => {
-                const classes = useCSS();
-                return (
-                    <div>
-                        <Button
-                            onClick={() => saveField(params.row)}
-                            variant="contained"
-                            disableElevation={true}
-                            color="primary"
-                            size="small"
-                            className={classes.button}
-                            startIcon={<SaveAltIcon />}
-                        >
-                            Save
-                        </Button>
-                    </div>
-                );
-            },
-        },
     ];
 
     const setContentType = (e) => {
@@ -215,7 +191,7 @@ const Body = (props) => {
     const updateCell = (event, data) => {
         data.row[data.field] =
             typeof event.target.type !== typeof undefined &&
-            event.target.type == "checkbox"
+                event.target.type == "checkbox"
                 ? event.target.checked
                 : event.target.value;
         data.value = data.row[data.field];
@@ -227,6 +203,7 @@ const Body = (props) => {
             setCellFocus(!cellFocus);
             data.api.setCellFocus(cellFocus);
         }
+        saveField(data.row);
     };
 
     const saveField = (data) => {
@@ -251,10 +228,10 @@ const Body = (props) => {
                         <MenuItem value="">Content Type</MenuItem>
                         {props["content_types"]
                             ? props["content_types"].map((ctype, i) => (
-                                  <MenuItem key={ctype.id} value={ctype.slug}>
-                                      {ctype.name}
-                                  </MenuItem>
-                              ))
+                                <MenuItem key={ctype.id} value={ctype.slug}>
+                                    {ctype.name}
+                                </MenuItem>
+                            ))
                             : ""}
                     </Select>
                 </FormControl>
