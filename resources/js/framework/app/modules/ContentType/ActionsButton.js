@@ -1,6 +1,6 @@
 import React from "react";
 // elements
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 // icons
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,24 +11,18 @@ const ActionsButton = () => {
     const classes = useCSS();
     return (
         <div>
-            <Button
+            <IconButton
                 variant="contained"
                 color="primary"
                 size="small"
                 className={classes.button}
-                startIcon={<EditIcon />}
-            >
-                Edit
-            </Button>
-            <Button
+            ><EditIcon /></IconButton>
+            <IconButton
                 variant="contained"
-                color="secondary"
+                color="primary"
                 size="small"
                 className={classes.button}
-                startIcon={<DeleteIcon />}
-            >
-                Delete
-            </Button>
+            ><DeleteIcon /></IconButton>
         </div>
     );
 };

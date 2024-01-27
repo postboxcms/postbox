@@ -12173,7 +12173,7 @@ input[type=text] {
   min-height: 64px;
 }
 .app-root .container {
-  padding: 4px 8px;
+  padding: 8px;
 }
 .app-root .content {
   flex-grow: 1;

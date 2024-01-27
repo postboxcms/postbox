@@ -103,7 +103,7 @@ export default function Frameset(props) {
                 <div className="appbar-spacer" />
                 <Container maxWidth="lg" className="container">
                     {renderComponent(props)}
-                    <Box pt={4}>
+                    <Box pt={2}>
                         <Copyright />
                     </Box>
                 </Container>
