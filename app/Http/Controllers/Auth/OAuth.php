@@ -25,7 +25,7 @@ class OAuth extends Controller
             $this->token = $this->user->createToken(env('APP_NAME').' Token')->accessToken;
     
             return response(['user' => $this->user, 'token' => $this->token], 200);    
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             return response(['error' => $e->getMessage()], 400);
         }
     }
@@ -50,7 +50,7 @@ class OAuth extends Controller
         try {
             auth()->user()->token()->revoke();
             return response(['message' => 'logged out', 200]);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             return response(['error' => 'unable to logout', 403]);
         }
     }
