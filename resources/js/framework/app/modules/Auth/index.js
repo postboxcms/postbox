@@ -21,7 +21,7 @@ import { theme } from "../../theme";
 import { api, history } from "../../utils";
 import { useAuthentication } from "../../hooks/auth";
 import { useNotifier } from "../../hooks/notifications";
-import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "../../store/jwt";
+import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "./reducers/jwt";
 
 import Copyright from "../../ui/elements/Copyright";
 

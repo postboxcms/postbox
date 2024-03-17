@@ -1,7 +1,7 @@
 import React from "react";
 // layout
 import { Card, Frame } from "../../ui/layout/Frame";
-import Body from "./Body";
+import Body from "./components/Body";
 
 const ContentType = (props) => {
     return (

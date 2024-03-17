@@ -72,7 +72,7 @@ class CRUDController extends Controller
      */
     public function show(ContentType $ContentType)
     {
-        // show CRUD fields
+        // display CRUD fields
         $this->table = \Request::segment(count(\Request::segments()));
         $this->fields = $ContentType->getTableColumns($this->table);
         $this->fields = collect($this->fields)->map(function($field) {

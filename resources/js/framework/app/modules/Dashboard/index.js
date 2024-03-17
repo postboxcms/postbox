@@ -6,7 +6,7 @@ import { Card, Frame, Body, DataCard } from "../../ui/layout/Frame";
 
 import { useAuthentication } from "../../hooks/auth";
 import Placeholder, { Loader } from "../../ui/elements/Placeholder";
-import { getToken, getUser } from "../../store/jwt";
+import { getToken, getUser } from "../Auth/reducers/jwt";
 
 const useStyles = makeStyles((theme) => ({
     body: {

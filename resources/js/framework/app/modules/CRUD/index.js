@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Frame } from "../../ui/layout/Frame";
 import { useAuthentication } from "../../hooks/auth";
-import Body from "./Body";
+import Body from "./components/Body";
 
 const CRUD = (props) => {
     const [data, setData] = React.useState({});
