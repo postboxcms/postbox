@@ -28,6 +28,7 @@ const Body = (props) => {
     const [cellFocus, setCellFocus] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
     const notify = useNotifier();
+    const pageIcon = "fa-layer-group";
 
     const columns = [
         {
@@ -213,12 +214,12 @@ const Body = (props) => {
             notify(response.data.message)
         );
     };
-    console.log('rows',rows);
+
     return (
         <React.Fragment>
             <div className={classes.header}>
                 <Title className={classes.title}>
-                    <FontAwesomeIcon size="lg" icon={props["icon"]} />{" "}
+                    <FontAwesomeIcon size="lg" icon={pageIcon} />{" "}
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <FormControl className="dropdown" sx={{ m: 1, minWidth: 120 }}>
@@ -252,7 +253,7 @@ const Body = (props) => {
                                         <Loader lines={10} height={30} />
                                     </Placeholder>
                                     <NoRowsOverlay
-                                        icon={props["icon"]}
+                                        icon={pageIcon}
                                         message="No content type selected"
                                     />
                                 </>

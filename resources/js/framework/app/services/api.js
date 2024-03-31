@@ -4,4 +4,8 @@ export const api = () => {
     const post = (url) => {
         axios.post(url)
     }
+
+    return {
+        post
+    }
 }
