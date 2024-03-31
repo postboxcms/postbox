@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\OAuth;
-use App\Http\Controllers\ContentTypeController;
-use App\Http\Controllers\CRUDController;
+
+use App\Http\Modules\Auth\Controller as OAuth;
+use App\Http\Modules\ContentType\Controller as ContentType;
+use App\Http\Modules\CRUD\Controller as CRUD;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,20 +17,26 @@ use App\Http\Controllers\CRUDController;
 |
 */
 
-// authorization routes
-Route::get('/Login',function() {
-    return response()->json(['message' => trans('auth.unauthorised',['app'=>env('APP_NAME')])]);
+/* authorization routes
+* Auth type: OAuth
+* Service: Laravel Passport
+*/
+Route::get('/Login', function () {
+    return response()->json(['message' => trans('auth.unauthorised', ['app' => env('APP_NAME')])]);
 })->name('login');
-Route::get('/VerifyToken', function() {
+Route::get('/VerifyToken', function () {
     return auth()->guard('api')->check();
 })->middleware('auth:api');
 
-// authentication routes
-Route::post('/Login', [OAuth::class,'login']);
-Route::post('/Logout', [OAuth::class,'logout'])->middleware('auth:api');
-Route::post('/Register', [OAuth::class,'register']);
+/* authentication routes
+* Auth type: OAuth
+* Service: Laravel Passport
+*/
+Route::post('/Login', [OAuth::class, 'login']);
+Route::post('/Logout', [OAuth::class, 'logout'])->middleware('auth:api');
+Route::post('/Register', [OAuth::class, 'register']);
 
 // api routes
-Route::apiResource('/ContentType',ContentTypeController::class)->middleware('auth:api');
-Route::apiResource('/CRUD',CRUDController::class)->middleware('auth:api');
+Route::apiResource('/ContentType', ContentType::class)->middleware('auth:api');
+Route::apiResource('/CRUD', CRUD::class)->middleware('auth:api');
 

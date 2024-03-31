@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\CRUD;
 
-class ContentTypeResource extends JsonResource
+class ContentType extends JsonResource
 {
     private $collection;
     private $model;

@@ -13,18 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return view('react');
+    return view('app');
 });
 
 // admin routes
 Route::group(['prefix' => env('MIX_ADMIN_PREFIX','/admin')], function () {
     Route::get('/', function() {
-        return view('react');
+        return view('app');
     });
     Route::get('{module}', function() {
-        return view('react');
+        return view('app');
     });
     Route::get('{module}/{action}', function() {
-        return view('react');
+        return view('app');
     });
 });

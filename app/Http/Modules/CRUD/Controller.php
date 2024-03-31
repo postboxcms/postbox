@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Modules\CRUD;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Modules\Framework;
+use App\Http\Resources\ContentType as ContentTypeResource;
+
 use App\Models\ContentType;
 use App\Models\CRUD;
-use App\Http\Resources\ContentTypeResource;
 
-class CRUDController extends Controller
+class Controller extends Framework
 {
     protected $contentType;
+    protected $contentTypeCollection;
     protected $fields;
     protected $columns;
     protected $data;
@@ -29,11 +32,11 @@ class CRUDController extends Controller
     public function index()
     {
         // display content type tables
-        $this->contentTypes = ContentType::where('status',1)->get();
+        $this->contentTypeCollection = ContentType::where('status', 1)->get();
         return response([
-            'content_types' => ContentTypeResource::collection($this->contentTypes),
-            'message'       => trans('app.success')
-        ],200);
+            'content_types' => ContentTypeResource::collection($this->contentTypeCollection),
+            'message' => trans('app.success')
+        ], 200);
     }
 
     /**
@@ -47,21 +50,21 @@ class CRUDController extends Controller
         // store CRUD data
         $this->data = $request->all();
         $this->validator = Validator::make($this->data, [
-            'alias'          => 'required|max:20'
+            'alias' => 'required|max:20'
         ]);
 
-        if($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(),trans('crud.validationerror')]);
+        if ($this->validator->fails()) {
+            return response(['message' => $this->validator->errors(), trans('crud.validationerror')]);
         }
 
         $this->crud = CRUD::updateOrCreate([
             'field' => $this->data['field'],
             'table' => $this->data['table']
-        ],$this->data);
+        ], $this->data);
 
         return response([
             'message' => trans('app.success')
-        ],200);
+        ], 200);
     }
 
     /**
@@ -70,6 +73,29 @@ class CRUDController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function show(ContentType $contentType)
+    // {
+    //     try {
+    //         // render CRUD fields
+    //         $this->table = \Request::segment(count(\Request::segments()));
+    //         $this->fields = $contentType->getTableColumns($this->table);
+    //         $this->columns = [
+    //             'field' => 'table',
+    //             'headerClassName' => 'table-header-light',
+    //             'headerName' => str_replace('_', ' ', 'alias'),
+    //             'flex' => 1
+    //         ];
+    //         return response([
+    //             'fields' => $this->fields,
+    //             'columns' => $this->columns,
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response([
+    //             'message' => trans('app.crud_error'),
+    //         ], 500);
+    //     }
+    // }
+
     public function show(ContentType $ContentType)
     {
         // display CRUD fields

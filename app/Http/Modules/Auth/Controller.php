@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Modules\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class OAuth extends Controller
+use App\Http\Modules\Framework;
+
+use App\Models\User as UserModel;
+
+class Controller extends Framework
 {
     protected $data;
     protected $user;
@@ -21,7 +23,7 @@ class OAuth extends Controller
                 'password'  => 'required|confirmed'
             ]);
             $this->data['password'] = bcrypt($request->password);
-            $this->user = User::create($this->data);
+            $this->user = UserModel::create($this->data);
             $this->token = $this->user->createToken(env('APP_NAME').' Token')->accessToken;
     
             return response(['user' => $this->user, 'token' => $this->token], 200);    

@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Modules\ContentType;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\ContentType;
-use App\Http\Resources\ContentTypeResource;
+use App\Http\Modules\Framework;
 
-class ContentTypeController extends Controller
+use App\Http\Resources\ContentType as ContentTypeResource;
+use App\Models\ContentType as ContentType;
+
+class Controller extends Framework
 {
     protected $data;
     protected $tableFields;

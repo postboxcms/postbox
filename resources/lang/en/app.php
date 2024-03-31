@@ -12,6 +12,7 @@ return [
     |
     */
     'success'           => 'Successful',
-    'validationerror'   => 'Validation failed',
-    'delete'            => 'Data has been deleted'
+    'validationerror'   => 'Validation failed!',
+    'delete'            => 'Data has been deleted!',
+    'crud_error'        => 'CRUD operation failed!',
 ];
