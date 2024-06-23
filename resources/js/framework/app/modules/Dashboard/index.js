@@ -7,11 +7,9 @@ import { Card, Frame, Body, DataCard } from "../../ui/layout/Frame";
 import { useAuthentication } from "../../hooks/auth";
 import Placeholder, { Loader } from "../../ui/elements/Placeholder";
 import { getToken, getUser } from "../Auth/reducers/jwt";
+import { useCSS } from "../../hooks/css";
 
 const useStyles = makeStyles((theme) => ({
-    body: {
-        paddingTop: theme.spacing(4),
-    },
     icon: {
         float: "right",
         fontSize: 80,
@@ -21,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = (props) => {
-    const classes = useStyles();
+    const classes = useCSS();
     const auth = useAuthentication();
     const token = useSelector(getToken);
     const user = useSelector(getUser);
@@ -40,7 +38,7 @@ const Dashboard = (props) => {
             {/* LOOP OVER CARDS */}
             <Placeholder repeat={3} map={contentTypes}>
                 <Card xs={12} md={4} lg={4}>
-                    <Body height="fixed" className="coaster">
+                    <Body height="fixed">
                         <Loader lines={4} />
                     </Body>
                 </Card>
@@ -51,7 +49,7 @@ const Dashboard = (props) => {
                         <Body
                             key={data["id"]}
                             height="fixed"
-                            className="coaster"
+                            className={classes.coaster}
                         >
                             <DataCard
                                 {...props}

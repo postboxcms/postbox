@@ -12,7 +12,8 @@ export const useCSS = makeStyles((theme) => ({
         fontSize: "14px"
     },
     body: {
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingTop: theme.spacing(4),
     },
     avatar: {
         color: '#fff',
@@ -56,9 +57,9 @@ export const useCSS = makeStyles((theme) => ({
     breadcrumb: {
         display: 'inline-block',
         fontSize: theme.spacing(1.8),
-        backgroundColor: '#281850',
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
+        backgroundColor: theme.palette.primary.main,
+        paddingLeft: theme.spacing(0),
+        paddingRight: theme.spacing(0),
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
         borderRadius: theme.spacing(5),
@@ -72,5 +73,9 @@ export const useCSS = makeStyles((theme) => ({
     },
     breadcrumbText: {
         fontSize: theme.spacing(1.8),
+    },
+    coaster: {
+        borderLeft: 'solid 4px',
+        borderLeftColor: theme.palette.primary.main
     }
 }));

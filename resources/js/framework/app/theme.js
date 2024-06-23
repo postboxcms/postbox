@@ -24,10 +24,13 @@ export const theme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#472791'
+            main: '#004477',
         },
         plain: {
             main: '#fff'
-        }
+        },
+        breadcrumb: {
+            main: '#281850'
+        },
     }
 });

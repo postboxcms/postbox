@@ -13,6 +13,7 @@ import { useAuthentication } from "../../../hooks/auth";
 import NoRowsOverlay from "../../../ui/elements/NoRowsOverlay";
 import Placeholder, { Loader } from "../../../ui/elements/Placeholder";
 import ActionsButton from "./ActionsButton";
+import { navigate } from "../../../utils";
 
 const List = (props) => {
     const auth = useAuthentication();
@@ -27,8 +28,8 @@ const List = (props) => {
     const Icon =
         typeof data["icon"] !== typeof undefined ? data["icon"] : "square";
 
-    const AddContent = (props) => {
-        props.setViewState(false);
+    const addContent = (props) => {
+        navigate(`${props['title']?.toLowerCase()}/add`);
         console.log("add new content");
     };
 
@@ -83,7 +84,7 @@ const List = (props) => {
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <Button
-                    onClick={() => AddContent(props)}
+                    onClick={() => addContent(props)}
                     variant="contained"
                     color="primary"
                     size="medium"

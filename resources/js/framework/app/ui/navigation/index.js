@@ -66,7 +66,7 @@ export const MainItems = (props) => {
                         {contentTypes["content_types"].map((data) => {
                             return (
                                 <Link
-                                    to={api["adminPrefix"] + "/" + data["slug"]}
+                                    to={api["adminPrefix"] + "/" + data["slug"] + "/list"}
                                     key={data["id"]}
                                 >
                                     <ListItem>

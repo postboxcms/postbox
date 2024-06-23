@@ -1,7 +1,7 @@
 import React from "react";
 
-const AddEdit = (props) => {
-    return <>Add and edit components</>
+const AddEditContent = (props) => {
+    return <>Add or edit components</>
 }
 
-export default AddEdit;
+export default AddEditContent;

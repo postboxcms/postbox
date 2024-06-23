@@ -12181,7 +12181,8 @@ input[type=text] {
   overflow: auto;
 }
 .app-root .toolbar {
-  padding-right: 24px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 .app-root .toolbar .title {
   flex-grow: 1;
@@ -12273,10 +12274,6 @@ input[type=text] {
 }
 .navbar-dark svg[data-prefix=fas] {
   margin-left: 4px;
-}
-
-.coaster {
-  border-left: solid 5px #472791;
 }
 
 .table-header-light {

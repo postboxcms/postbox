@@ -3,12 +3,7 @@ import List from "./List";
 import AddEdit from "./AddEdit";
 
 const Body = (props) => {
-    const [viewState, setViewState] = React.useState(true);
-    if (viewState) {
-        return <List {...props} setViewState={setViewState} />;
-    } else {
-        return <AddEdit {...props} setViewState={setViewState} />;
-    }
+    return <List {...props} />;
 };
 
 export default Body;

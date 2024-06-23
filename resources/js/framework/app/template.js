@@ -8,11 +8,12 @@ import Website from "./ui/layout/Website";
 // core modules
 import Auth from "./modules/Auth";
 import ContentType from "./modules/ContentType";
+import AddEditContent from "./modules/ContentType/components/AddEdit";
 import Theme from "../website";
 // routes
 import { PrivateRoute, ProtectedRoute, PublicRoute } from './routes';
 // variables
-import { api, history } from "./utils";
+import { api } from "./utils";
 // route manager
 import { adminRoutes, authRoutes, contentTypeRoutes } from "./routes/data";
 // store
@@ -70,21 +71,21 @@ const Template = () => {
                             });
                         })}
                         {/* content_type routes */}
-                        {contentTypeRoutes.map((route) => {
-                            return Object.keys(route).map((type, key) => {
-                                const routename = route[type];
+                        {contentTypeRoutes.map((routes) => {
+                            return Object.keys(routes).map((type, key) => {
+                                const route = routes[type];
                                 return (
                                     <Switch key={key}>
                                         <PrivateRoute
                                             path={
                                                 api.adminPrefix +
                                                 "/" +
-                                                routename.plural
+                                                route.name + "/list"
                                             }
                                         >
                                             <Frameset
-                                                title={routename.title}
-                                                path={"/" + routename.plural}
+                                                title={route.title}
+                                                path={"/" + route.name}
                                                 controller={ContentType}
                                             />
                                         </PrivateRoute>
@@ -92,36 +93,37 @@ const Template = () => {
                                             path={
                                                 api.adminPrefix +
                                                 "/" +
-                                                routename.singular +
+                                                route.name +
                                                 "/add"
                                             }
                                         >
                                             <Frameset
-                                                title={routename.title}
+                                                title={route.title}
                                                 path={
                                                     "/" +
-                                                    routename.singular +
+                                                    route.name +
                                                     "/add"
                                                 }
-                                                controller={ContentType}
+                                                controller={AddEditContent}
                                             />
                                         </PrivateRoute>
                                         <PrivateRoute
                                             path={
                                                 api.adminPrefix +
                                                 "/" +
-                                                routename.singular +
+                                                route.name +
                                                 "/edit"
                                             }
                                         >
                                             <Frameset
-                                                title={routename.title}
+                                                title={route.title}
                                                 path={
+                                                    api.adminPrefix +
                                                     "/" +
-                                                    routename.singular +
+                                                    route.name +
                                                     "/edit"
                                                 }
-                                                controller={ContentType}
+                                                controller={AddEditContent}
                                             />
                                         </PrivateRoute>
                                     </Switch>

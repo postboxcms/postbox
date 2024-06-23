@@ -56,7 +56,6 @@ export default function Frameset(props) {
             <GridComponent {...props} />
         );
     };
-    // const user = JSON.parse(jwt.getToken(api.userToken));
 
     return (
         <div className="app-root">

@@ -322,7 +322,8 @@ input[type="text"] {
     }
 
     .toolbar {
-        padding-right: 24px;
+        padding-right: 10px;
+        padding-left: 10px;
 
         .title {
             flex-grow: 1;
@@ -435,10 +436,6 @@ input[type="text"] {
     svg[data-prefix="fas"] {
         margin-left: 4px;
     }
-}
-
-.coaster {
-    border-left: solid 5px $brand-color;
 }
 
 .table-header-light {

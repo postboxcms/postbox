@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LayoutCSS } from './layout.css';
 import { useCSS } from '../../hooks/css';
 import Title from '../elements/Title';
-import iconList from '../../utils/icons';
 
 import {api} from '../../utils/constants';
 
@@ -57,7 +56,7 @@ export const DataCard = (props) => {
                             <Moment fromNow>{props.updated_at}</Moment>
                         ):''}
                     </Typography>
-                    <Link color="primary" to={api.adminPrefix + '/' +props.slug}>
+                    <Link color="primary" to={api.adminPrefix + '/' +props.slug + '/list'}>
                         View more
                     </Link>
                 </Grid>

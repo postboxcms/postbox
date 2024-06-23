@@ -3,18 +3,15 @@ const routes = [
     {
         posts: {
             title: "Posts",
-            singular: "post",
-            plural: "posts",
+            name: "posts",
         },
         pages: {
             title: "Pages",
-            singular: "page",
-            plural: "pages",
+            name: "pages",
         },
         users: {
             title: "Users",
-            singular: "user",
-            plural: "users",
+            name: "users",
         },
     },
 ];

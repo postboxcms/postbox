@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
 
-import { api, history } from "../../utils";
+import { api, history, navigate } from "../../utils";
 import { useAuthentication } from "../../hooks/auth";
 import { useNotifier } from "../../hooks/notifications";
 import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "./reducers/jwt";
@@ -44,7 +44,7 @@ const Auth = (props) => {
                 const user = response.data.user;
                 dispatch(setToken(token));
                 dispatch(setUser(user));
-                history.push(api.adminPrefix);
+                navigate('/');
                 notify("Login successful");
             })
             .catch((error) => {
@@ -61,7 +61,7 @@ const Auth = (props) => {
             auth.post("/Logout", {}).then(() => {
                 dispatch(unsetToken(token));
                 dispatch(unsetUser(user));
-                history.push(api.adminPrefix + api.loginUrl);
+                navigate(api.loginUrl);
             });
         }
     }, [props.mode]);
