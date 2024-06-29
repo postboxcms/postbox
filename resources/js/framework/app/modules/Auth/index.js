@@ -18,12 +18,13 @@ import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
 
-import { api, history, navigate } from "../../utils";
+import { api } from "../../utils";
 import { useAuthentication } from "../../hooks/auth";
 import { useNotifier } from "../../hooks/notifications";
 import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "./reducers/jwt";
 
 import Copyright from "../../ui/elements/Copyright";
+import { useNavigation } from "../../hooks/navigation";
 
 const Auth = (props) => {
     // const history = useHistory();
@@ -32,6 +33,7 @@ const Auth = (props) => {
     const user = useSelector(getUser);
     const notify = useNotifier();
     const dispatch = useDispatch();
+    const navigate = useNavigation();
 
     const doLogin = (event) => {
         event.preventDefault();
