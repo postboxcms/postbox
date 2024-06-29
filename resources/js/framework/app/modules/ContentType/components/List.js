@@ -30,7 +30,7 @@ const List = (props) => {
         typeof data["icon"] !== typeof undefined ? data["icon"] : "square";
 
     const addContent = (props) => {
-        navigate(`${props['title']?.toLowerCase()}/add`);
+        navigate(`/${props['title']?.toLowerCase()}/add`);
         console.log("add new content");
     };
 
