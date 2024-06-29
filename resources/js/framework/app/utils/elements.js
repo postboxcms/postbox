@@ -18,7 +18,7 @@ padding: 0,
     transform: 'translateX(16px)',
     color: '#fff',
     '& + .MuiSwitch-track': {
-        backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#472791',
+        backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : theme.palette.primary.main,
         opacity: 1,
         border: 0,
     },

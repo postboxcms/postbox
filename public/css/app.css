@@ -12022,7 +12022,7 @@ input[type=text] {
 }
 #app .app-loader .cube-folding span::before {
   content: "";
-  background-color: #472791;
+  background-color: #004477;
   position: absolute;
   left: 0;
   top: 0;
@@ -12037,21 +12037,21 @@ input[type=text] {
 }
 #app .app-loader .cube-folding .leaf2::before {
   animation-delay: 0.3s;
-  background-color: #3d227d;
+  background-color: #00355e;
 }
 #app .app-loader .cube-folding .leaf3 {
   transform: rotateZ(270deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf3::before {
   animation-delay: 0.9s;
-  background-color: #3d227d;
+  background-color: #00355e;
 }
 #app .app-loader .cube-folding .leaf4 {
   transform: rotateZ(180deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf4::before {
   animation-delay: 0.6s;
-  background-color: #331c69;
+  background-color: #002744;
 }
 @keyframes folding {
   0%, 10% {
@@ -12102,7 +12102,7 @@ input[type=text] {
 #app .app-loader .cube-wrapper .loading {
   font-size: 16px;
   display: block;
-  color: #472791;
+  color: #004477;
   position: relative;
   top: 25px;
   z-index: 2;
