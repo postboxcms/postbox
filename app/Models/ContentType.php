@@ -18,6 +18,10 @@ class ContentType extends Model
     }
 
     public function getTableColumns($table) {
-        return $this->getConnection()->getSchemaBuilder()->getColumnListing($table);
+        return array_column($this->getConnection()->select(
+            (new \Illuminate\Database\Schema\Grammars\MySqlGrammar)->compileColumnListing()
+                .' order by ordinal_position',
+            [$this->getConnection()->getDatabaseName(), $table]
+        ),'column_name');
     }
 }

@@ -101,42 +101,42 @@ class Controller extends Framework
         // display CRUD fields
         $this->table = \Request::segment(count(\Request::segments()));
         $this->fields = $ContentType->getTableColumns($this->table);
-        $this->fields = collect($this->fields)->map(function($field) {
+        $this->fields = collect($this->fields)->map(function ($field) {
             $this->counter += 1;
+            $dbRow = CRUD::where('table', \Request::segment(count(\Request::segments())))
+                         ->where('field',$field)->first();
             return [
-                'id'        => $this->counter,
-                'table'     => $this->table,
-                'field'     => $field,
-                'alias'     => strtoupper($field),
-                'type'      => 'text',
-                'position'  => 'none',
-                'list'      => true,
-                'actions'   => null
+                'id' => $this->counter,
+                'table' => $this->table,
+                'field' => $field,
+                'alias' => strtoupper($field),
+                'type' => 'text',
+                'position' => 'none',
+                'list' => !empty($dbRow) ? $dbRow->list : true,
+                'actions' => null
             ];
         });
-        $this->data = CRUD::where('table',\Request::segment(count(\Request::segments())))->get()->toArray();
-        $this->missingFields = array_diff(array_column($this->fields->toArray(),'field'),array_column($this->data,'field'));
-        $this->fields = collect($this->fields)->map(function($field) {
-            if(in_array($field['field'],$this->missingFields)) {
-                return $field;
-            }
-        });
-        $this->fields = count($this->data) > 0?array_merge($this->data,array_filter($this->fields->toArray())):$this->fields;
-        $this->columns = collect($this->fields)->map(function($field){
-            if($field['list'] == 1) {
+        $this->data = CRUD::where('table', \Request::segment(count(\Request::segments())))->get()->toArray();
+        
+        $this->columns = collect($this->fields)->map(function ($field) {
+            $hiddenFields = CRUD::where('table', \Request::segment(count(\Request::segments())))
+                ->where('field', $field['field'])
+                ->where('list', 0)->get()->pluck('field');
+                
+            if (!$hiddenFields->contains($field['field'])) {
                 return [
-                    'field'             => $field['field'],
-                    'headerClassName'   => 'table-header-light',
-                    'headerName'        => str_replace('_',' ',$field['alias']),
-                    'flex'              => 1
+                    'field' => $field['field'],
+                    'headerClassName' => 'table-header-light',
+                    'headerName' => str_replace('_', ' ', $field['alias']),
+                    'flex' => 1
                 ];
             }
         })->filter()->values();
 
         return response([
-            'fields'    => $this->fields,
-            'columns'   => $this->columns
-        ],200);
+            'fields' => $this->fields,
+            'columns' => $this->columns
+        ], 200);
     }
 
     /**
