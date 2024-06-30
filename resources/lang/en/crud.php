@@ -11,6 +11,6 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'success'           => 'Successful',
+    'success'           => 'Field updated successfully!',
     'validationerror'   => 'Validation failed'
 ];

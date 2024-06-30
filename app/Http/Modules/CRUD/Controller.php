@@ -24,6 +24,14 @@ class Controller extends Framework
     protected $counter = 1;
     protected $validator;
 
+
+    private function _getField($name, $column, $default)
+    {
+        $dbRow = CRUD::where('table', \Request::segment(count(\Request::segments())))
+            ->where('field', $name)->first();
+        return !empty($dbRow) ? $dbRow->{$column} : $default;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -63,7 +71,7 @@ class Controller extends Framework
         ], $this->data);
 
         return response([
-            'message' => trans('app.success')
+            'message' => trans('crud.success')
         ], 200);
     }
 
@@ -73,28 +81,6 @@ class Controller extends Framework
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show(ContentType $contentType)
-    // {
-    //     try {
-    //         // render CRUD fields
-    //         $this->table = \Request::segment(count(\Request::segments()));
-    //         $this->fields = $contentType->getTableColumns($this->table);
-    //         $this->columns = [
-    //             'field' => 'table',
-    //             'headerClassName' => 'table-header-light',
-    //             'headerName' => str_replace('_', ' ', 'alias'),
-    //             'flex' => 1
-    //         ];
-    //         return response([
-    //             'fields' => $this->fields,
-    //             'columns' => $this->columns,
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response([
-    //             'message' => trans('app.crud_error'),
-    //         ], 500);
-    //     }
-    // }
 
     public function show(ContentType $ContentType)
     {
@@ -103,26 +89,24 @@ class Controller extends Framework
         $this->fields = $ContentType->getTableColumns($this->table);
         $this->fields = collect($this->fields)->map(function ($field) {
             $this->counter += 1;
-            $dbRow = CRUD::where('table', \Request::segment(count(\Request::segments())))
-                         ->where('field',$field)->first();
             return [
                 'id' => $this->counter,
                 'table' => $this->table,
                 'field' => $field,
-                'alias' => strtoupper($field),
-                'type' => 'text',
-                'position' => 'none',
-                'list' => !empty($dbRow) ? $dbRow->list : true,
+                'alias' => $this->_getField($field, 'alias', strtoupper($field)),
+                'type'  => $this->_getField($field, 'type', 'text'),
+                'position' => $this->_getField($field, 'position', 'none'),
+                'list'    => $this->_getField($field, 'list', true),
                 'actions' => null
             ];
         });
         $this->data = CRUD::where('table', \Request::segment(count(\Request::segments())))->get()->toArray();
-        
+
         $this->columns = collect($this->fields)->map(function ($field) {
             $hiddenFields = CRUD::where('table', \Request::segment(count(\Request::segments())))
                 ->where('field', $field['field'])
                 ->where('list', 0)->get()->pluck('field');
-                
+
             if (!$hiddenFields->contains($field['field'])) {
                 return [
                     'field' => $field['field'],

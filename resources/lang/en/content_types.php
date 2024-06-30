@@ -11,7 +11,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'success'           => 'Successful',
+    'success'           => 'Content type updated successfully!',
     'validationerror'   => 'Validation failed',
-    'delete'            => 'Content type deleted'
+    'delete'            => 'Content type deleted successfully!'
 ];

@@ -29,7 +29,7 @@ class Controller extends Framework
         $this->contentTypes = ContentType::where('status',1)->get();
         return response([
             'content_types' => ContentTypeResource::collection($this->contentTypes),
-            'message'       => trans('app.success')
+            'message'       => trans('content_type.success')
         ],200);
     }
 
@@ -56,7 +56,7 @@ class Controller extends Framework
         $this->contentType = ContentType::create($this->data);
         return response([
             'content_type'  => new ContentTypeResource($this->contentType),
-            'message'       => trans('app.success')
+            'message'       => trans('content_type.success')
         ],200);
     }
 
@@ -71,7 +71,7 @@ class Controller extends Framework
         // show content type info
         return response([
             'content_type'  => new ContentTypeResource($ContentType),
-            'message'       => trans('app.success')
+            'message'       => trans('content_type.success')
         ],200);
     }
 
@@ -89,7 +89,7 @@ class Controller extends Framework
 
         return response([
             'content_type'  => new ContentTypeResource($ContentType),
-            'message'       => trans('app.success')
+            'message'       => trans('content_type.success')
         ],200);
     }
 
@@ -104,6 +104,6 @@ class Controller extends Framework
         // destroy a content type
         $ContentType->delete();
 
-        return response(['message' => trans('app.delete')],200);
+        return response(['message' => trans('content_type.delete')],200);
     }
 }
