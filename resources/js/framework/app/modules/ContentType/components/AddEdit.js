@@ -1,13 +1,20 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { api } from "../../../utils";
+import Text from "../../../ui/components/Text";
 
-const AddEditContent = (props) => {
+const AddEditContent = () => {
     const location = useLocation();
     const relativePath = location.pathname.replace(api.adminPrefix,'');
-    const contentType = relativePath.replace('/edit','').replace('/add','');
+    const contentType = relativePath.replace('/edit','').replace('/add','').replace('/','');
+    const contentTypeName = contentType.charAt(0).toUpperCase().concat(contentType.slice(1,contentType.length));
 
-    return (<>Add or edit <b>{contentType.replace('/','')}</b></>)
+    return (
+        <React.Fragment>
+            <Text title={contentTypeName}></Text>
+        </React.Fragment>
+    )
+    // return (<>Add or edit <b>{contentTypeName}</b></>)
 }
 
 export default AddEditContent;
