@@ -34,6 +34,7 @@ const Auth = (props) => {
     const notify = useNotifier();
     const dispatch = useDispatch();
     const navigate = useNavigation();
+    const randomWord = (Math.random() + 1).toString(36).substring(7);
 
     const doLogin = (event) => {
         event.preventDefault();
@@ -79,7 +80,7 @@ const Auth = (props) => {
                     md={7}
                     sx={{
                         backgroundImage:
-                            "url(https://source.unsplash.com/random)",
+                            "url(https://picsum.photos/seed/" + randomWord + "/1920/1080)",
                         // backgroundImage: 'url('+process.env.MIX_APP_URL+'/background.jpg)',
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
@@ -109,7 +110,7 @@ const Auth = (props) => {
                             alignItems: "center",
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
