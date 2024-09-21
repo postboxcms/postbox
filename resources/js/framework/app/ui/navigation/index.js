@@ -101,12 +101,14 @@ export const SubItems = (props) => {
                         <ListItemText primary="CRUD" />
                     </ListItem>
                 </Link>
-                <ListItem>
-                    <ListItemIcon>
-                        <BarChartIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Reports" />
-                </ListItem>
+                <Link to={api.adminPrefix + "/settings"} key="1">
+                    <ListItem>
+                        <ListItemIcon>
+                            <FontAwesomeIcon size="lg" icon="gear" />
+                        </ListItemIcon>
+                        <ListItemText primary="Settings" />
+                    </ListItem>
+                </Link>
             </div>
         </React.Fragment>
     );
