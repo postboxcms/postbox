@@ -8,15 +8,21 @@
 @import '~bootstrap/scss/bootstrap';
 
 // app styles
-$navbar-dark-color: #ddd;
-$navbar-dark-bar-color: #131313;
-$navbar-dark-bg-color: #18202c;
-$navbar-dark-subheading-color: #888;
-$brand-color: #004477;
+$brand-color: rgba(0, 45, 99, 0.8);
+$brand-color-light: rgba(0, 82, 117, 0.7);
+$brand-color-watermark: rgba(0, 82, 117, 0.3);
+
+$navbar-dark-color: #eee;
+$navbar-dark-bar-color: $brand-color;
+$navbar-dark-bg-color: $brand-color;
+$navbar-dark-subheading-color: #bbb;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
 $element-font-size: 14px;
 $font-color: #555;
+html {
+    font-size: $element-font-size;
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: $font-color;
@@ -31,6 +37,7 @@ fieldset {
 a,
 a:hover {
     text-decoration: none;
+    color: $brand-color;
 }
 
 a.menu-link {
@@ -43,7 +50,7 @@ a.menu-link {
 
 svg[data-prefix="fas"].fa-xl {
     font-size: 3em;
-    color: $element-border-color;
+    color: $brand-color-light
 }
 
 input[type="text"] {
@@ -366,7 +373,7 @@ input[type="text"] {
         align-items: center;
         justify-content: center;
         font-size: 15px;
-        color: $navbar-dark-color;
+        color: $brand-color-watermark;
 
         .icon {
             margin-right: 10px;
@@ -400,7 +407,8 @@ input[type="text"] {
     }
 
     header.MuiPaper-root {
-        box-shadow: none;
+        box-shadow: 1px 0 4px $element-border-color;
+        background-color: $white;
     }
 }
 

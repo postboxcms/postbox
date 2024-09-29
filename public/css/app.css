@@ -11972,6 +11972,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+html {
+  font-size: 14px;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #555;
@@ -11984,6 +11988,7 @@ fieldset legend {
 a,
 a:hover {
   text-decoration: none;
+  color: rgba(0, 45, 99, 0.8);
 }
 
 a.menu-link {
@@ -11996,7 +12001,7 @@ a.menu-link div {
 
 svg[data-prefix=fas].fa-xl {
   font-size: 3em;
-  color: #ccc;
+  color: rgba(0, 82, 117, 0.7);
 }
 
 input[type=text] {
@@ -12022,7 +12027,7 @@ input[type=text] {
 }
 #app .app-loader .cube-folding span::before {
   content: "";
-  background-color: #004477;
+  background-color: rgba(0, 45, 99, 0.8);
   position: absolute;
   left: 0;
   top: 0;
@@ -12037,21 +12042,21 @@ input[type=text] {
 }
 #app .app-loader .cube-folding .leaf2::before {
   animation-delay: 0.3s;
-  background-color: #00355e;
+  background-color: rgba(0, 33, 74, 0.8);
 }
 #app .app-loader .cube-folding .leaf3 {
   transform: rotateZ(270deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf3::before {
   animation-delay: 0.9s;
-  background-color: #00355e;
+  background-color: rgba(0, 33, 74, 0.8);
 }
 #app .app-loader .cube-folding .leaf4 {
   transform: rotateZ(180deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf4::before {
   animation-delay: 0.6s;
-  background-color: #002744;
+  background-color: rgba(0, 22, 48, 0.8);
 }
 @keyframes folding {
   0%, 10% {
@@ -12102,7 +12107,7 @@ input[type=text] {
 #app .app-loader .cube-wrapper .loading {
   font-size: 16px;
   display: block;
-  color: #004477;
+  color: rgba(0, 45, 99, 0.8);
   position: relative;
   top: 25px;
   z-index: 2;
@@ -12218,7 +12223,7 @@ input[type=text] {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  color: #ddd;
+  color: rgba(0, 82, 117, 0.3);
 }
 .app-root .no-rows-overlay .icon {
   margin-right: 10px;
@@ -12246,31 +12251,32 @@ input[type=text] {
   margin-bottom: 0;
 }
 .app-root header.MuiPaper-root {
-  box-shadow: none;
+  box-shadow: 1px 0 4px #ccc;
+  background-color: #fff;
 }
 
 .navbar-dark {
-  color: #ddd;
-  background-color: #18202c !important;
+  color: #eee;
+  background-color: rgba(0, 45, 99, 0.8) !important;
 }
 .navbar-dark a {
-  color: #ddd !important;
+  color: #eee !important;
 }
 .navbar-dark div {
-  color: #ddd !important;
+  color: #eee !important;
 }
 .navbar-dark hr {
-  background-color: #131313 !important;
+  background-color: rgba(0, 45, 99, 0.8) !important;
 }
 .navbar-dark button {
-  color: #ddd;
+  color: #eee;
 }
 .navbar-dark ul > div > li {
-  color: #888 !important;
+  color: #bbb !important;
   background-color: transparent !important;
 }
 .navbar-dark ul li {
-  color: #ddd !important;
+  color: #eee !important;
 }
 .navbar-dark svg[data-prefix=fas] {
   margin-left: 4px;

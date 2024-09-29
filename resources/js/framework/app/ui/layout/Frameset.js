@@ -22,14 +22,15 @@ import { MainItems, SubItems } from '../navigation';
 import Breadcrumb from '../elements/Breadcrumb';
 import Copyright from '../elements/Copyright';
 // styles and css
-import { LayoutCSS } from './layout.css';
+import { useLayoutCSS } from '../../hooks/layout';
 // libs
 import { getUser } from '../../modules/Auth/reducers/jwt';
 // menu
 import TopMenu from './TopMenu';
+import { theme } from '../../theme';
 
 export default function Frameset(props) {
-    const classes = LayoutCSS();
+    const classes = useLayoutCSS();
     const user = useSelector(getUser);
     const [anchor, setAnchor] = React.useState(null);
     const [open, setOpen] = React.useState(true);
@@ -75,7 +76,7 @@ export default function Frameset(props) {
                         <Breadcrumb title={props.title} />
                     </Typography>
                     <IconButton color="inherit" size="large" onClick={switchTopMenu}>
-                        <Avatar sx={{ bgcolor: deepOrange[500] }}>{user?.name.charAt(0)}</Avatar>
+                        <Avatar sx={{ bgcolor: theme.palette.primary.main }}>{user?.name.charAt(0)}</Avatar>
                     </IconButton>
                     <TopMenu anchor={anchor} state={updateState}/>
                 </Toolbar>

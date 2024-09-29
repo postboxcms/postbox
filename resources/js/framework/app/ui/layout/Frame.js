@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { LayoutCSS } from './layout.css';
+import { useLayoutCSS } from '../../hooks/layout';
 import { useCSS } from '../../hooks/css';
 import Title from '../elements/Title';
 
@@ -31,7 +31,7 @@ export const Card = (props) => {
 }
 
 export const Body = (props) => {
-    const classes = LayoutCSS();
+    const classes = useLayoutCSS();
     const paperClass = props.height == "fixed" ? (clsx(classes.paper, classes.fixedHeight)) + ' ' + props.className : classes.paper + ' ' + props.className;
     return (
         <Paper elevation={3} className={paperClass}>

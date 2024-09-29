@@ -10,7 +10,6 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Collapse from "@mui/material/Collapse";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";

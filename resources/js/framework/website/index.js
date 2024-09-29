@@ -6,10 +6,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { LayoutCSS } from '../app/ui/layout/layout.css';
+import { useLayoutCSS } from '../app/hooks/layout';
 
 const Theme = (props) => {
-    const classes = LayoutCSS();
+    const classes = useLayoutCSS();
     return (
         <div className="content">
             <AppBar position="absolute" className={clsx(classes.appBar, open)}>
