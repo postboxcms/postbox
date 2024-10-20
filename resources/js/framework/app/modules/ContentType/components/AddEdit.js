@@ -1,20 +1,33 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { api } from "../../../utils";
-import Text from "../../../ui/components/Text";
+import Title from "../../../ui/components/Title";
+import Form from "../../../ui/components/Form";
 
-const AddEditContent = () => {
-    const location = useLocation();
-    const relativePath = location.pathname.replace(api.adminPrefix,'');
-    const contentType = relativePath.replace('/edit','').replace('/add','').replace('/','');
-    const contentTypeName = contentType.charAt(0).toUpperCase().concat(contentType.slice(1,contentType.length));
+const AddEditContent = ({ query, type }) => {
+    const [pageTitle, setPageTitle] = React.useState('...');
+
+    React.useEffect(() => {
+        switch (query) {
+            case 'add':
+                setPageTitle(`Add a ${type.toLowerCase()}`);
+                return;
+            case 'edit':
+                setPageTitle(`Edit ${type.toLowerCase()}`);
+                return;
+            default:
+                setPageTitle('Error rendering the title');
+                return;
+        }
+    }, []);
 
     return (
         <React.Fragment>
-            <Text title={`Add a ${contentTypeName.toLowerCase()}`}></Text>
+            <Title title={pageTitle}></Title>
+            <Form width={'70%'}>
+            </Form>
+            <Form width={'70%'}>
+            </Form>
         </React.Fragment>
     )
-    // return (<>Add or edit <b>{contentTypeName}</b></>)
 }
 
 export default AddEditContent;

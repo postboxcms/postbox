@@ -20,7 +20,7 @@ import { adminRoutes, authRoutes, contentTypeRoutes } from "./routes/data";
 import { store, persistor } from "./store";
 
 /** React router to setup UI routes */
-const Template = () => {
+const Engine = () => {
     return (
         <React.StrictMode>
             <Provider store={store}>
@@ -99,11 +99,13 @@ const Template = () => {
                                         >
                                             <Frameset
                                                 title={route.title}
+                                                type={route.cType}
                                                 path={
                                                     "/" +
                                                     route.name +
                                                     "/add"
                                                 }
+                                                query="add"
                                                 controller={AddEditContent}
                                             />
                                         </PrivateRoute>
@@ -117,12 +119,14 @@ const Template = () => {
                                         >
                                             <Frameset
                                                 title={route.title}
+                                                type={route.cType}
                                                 path={
                                                     api.adminPrefix +
                                                     "/" +
                                                     route.name +
                                                     "/edit"
                                                 }
+                                                query="edit"
                                                 controller={AddEditContent}
                                             />
                                         </PrivateRoute>
@@ -146,4 +150,4 @@ const Template = () => {
     );
 };
 
-export default Template;
+export default Engine;
