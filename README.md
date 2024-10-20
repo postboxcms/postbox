@@ -11,8 +11,10 @@
 ### Start the server
 * `sail up -d`
 
-### Run database migrations
+### Perform database operations
 * `sail artisan migrate`
+* `sail artisan passport:install`
+* `sail artisan db:seed`
 
 ### Generate javascript scaffolding
 * `sail npm run dev`
