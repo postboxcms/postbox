@@ -11,7 +11,7 @@ const AddEditContent = () => {
 
     return (
         <React.Fragment>
-            <Text title={contentTypeName}></Text>
+            <Text title={`Add a ${contentTypeName.toLowerCase()}`}></Text>
         </React.Fragment>
     )
     // return (<>Add or edit <b>{contentTypeName}</b></>)
