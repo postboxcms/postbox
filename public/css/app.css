@@ -11988,7 +11988,7 @@ fieldset legend {
 a,
 a:hover {
   text-decoration: none;
-  color: rgba(0, 45, 99, 0.8);
+  color: rgba(31, 0, 67, 0.8);
 }
 
 a.menu-link {
@@ -12001,7 +12001,7 @@ a.menu-link div {
 
 svg[data-prefix=fas].fa-xl {
   font-size: 3em;
-  color: rgba(0, 82, 117, 0.7);
+  color: rgba(31, 0, 67, 0.7);
 }
 
 input[type=text] {
@@ -12027,7 +12027,7 @@ input[type=text] {
 }
 #app .app-loader .cube-folding span::before {
   content: "";
-  background-color: rgba(0, 45, 99, 0.8);
+  background-color: rgba(31, 0, 67, 0.8);
   position: absolute;
   left: 0;
   top: 0;
@@ -12042,21 +12042,21 @@ input[type=text] {
 }
 #app .app-loader .cube-folding .leaf2::before {
   animation-delay: 0.3s;
-  background-color: rgba(0, 33, 74, 0.8);
+  background-color: rgba(19, 0, 42, 0.8);
 }
 #app .app-loader .cube-folding .leaf3 {
   transform: rotateZ(270deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf3::before {
   animation-delay: 0.9s;
-  background-color: rgba(0, 33, 74, 0.8);
+  background-color: rgba(19, 0, 42, 0.8);
 }
 #app .app-loader .cube-folding .leaf4 {
   transform: rotateZ(180deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf4::before {
   animation-delay: 0.6s;
-  background-color: rgba(0, 22, 48, 0.8);
+  background-color: rgba(7, 0, 16, 0.8);
 }
 @keyframes folding {
   0%, 10% {
@@ -12107,7 +12107,7 @@ input[type=text] {
 #app .app-loader .cube-wrapper .loading {
   font-size: 16px;
   display: block;
-  color: rgba(0, 45, 99, 0.8);
+  color: rgba(31, 0, 67, 0.8);
   position: relative;
   top: 25px;
   z-index: 2;
@@ -12223,7 +12223,7 @@ input[type=text] {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  color: rgba(0, 82, 117, 0.3);
+  color: rgba(31, 0, 67, 0.3);
 }
 .app-root .no-rows-overlay .icon {
   margin-right: 10px;
@@ -12257,7 +12257,7 @@ input[type=text] {
 
 .navbar-dark {
   color: #eee;
-  background-color: rgba(0, 45, 99, 0.8) !important;
+  background-color: rgba(31, 0, 67, 0.8) !important;
 }
 .navbar-dark a {
   color: #eee !important;
@@ -12266,7 +12266,7 @@ input[type=text] {
   color: #eee !important;
 }
 .navbar-dark hr {
-  background-color: rgba(0, 45, 99, 0.8) !important;
+  background-color: rgba(31, 0, 67, 0.8) !important;
 }
 .navbar-dark button {
   color: #eee;

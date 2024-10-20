@@ -8,9 +8,9 @@
 @import '~bootstrap/scss/bootstrap';
 
 // app styles
-$brand-color: rgba(0, 45, 99, 0.8);
-$brand-color-light: rgba(0, 82, 117, 0.7);
-$brand-color-watermark: rgba(0, 82, 117, 0.3);
+$brand-color: rgba(31, 0, 67, 0.8);
+$brand-color-light: rgba(31, 0, 67, 0.7);
+$brand-color-watermark: rgba(31, 0, 67, 0.3);
 
 $navbar-dark-color: #eee;
 $navbar-dark-bar-color: $brand-color;
@@ -20,6 +20,7 @@ $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
 $element-font-size: 14px;
 $font-color: #555;
+
 html {
     font-size: $element-font-size;
 }
