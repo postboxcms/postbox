@@ -14,7 +14,6 @@ export const useCSS = makeStyles((theme) => ({
         flex: 1,
     },
     body: {
-        backgroundColor: '#fff',
         paddingTop: theme.spacing(4),
     },
     avatar: {
