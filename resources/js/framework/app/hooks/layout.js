@@ -1,8 +1,8 @@
 import makeStyles from '@mui/styles/makeStyles';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
-export const LayoutCSS = makeStyles((theme) => ({
+export const useLayoutCSS = makeStyles((theme) => ({
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
@@ -53,5 +53,5 @@ export const LayoutCSS = makeStyles((theme) => ({
     },
     fixedHeight: {
         height: 200,
-    }
+    },
 }));

@@ -2,6 +2,9 @@ import makeStyles from '@mui/styles/makeStyles';
 import { green, grey } from '@mui/material/colors';
 
 export const useCSS = makeStyles((theme) => ({
+    panel: {
+        boxShadow: '0px 1px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
+    },
     grid: {
         height: 450,
         width: '100%',
@@ -9,7 +12,6 @@ export const useCSS = makeStyles((theme) => ({
     },
     cardText: {
         flex: 1,
-        fontSize: "14px"
     },
     body: {
         backgroundColor: '#fff',
@@ -39,6 +41,9 @@ export const useCSS = makeStyles((theme) => ({
         overflow: 'hidden',
         clear: 'both'
     },
+    heading: {
+        marginBottom: '8px'
+    },
     headerIcon: {
         marginBottom: theme.spacing(0.6),
         fontSize: theme.spacing(3.2)
@@ -46,7 +51,7 @@ export const useCSS = makeStyles((theme) => ({
     title: {
         float: 'left',
         marginBottom: 0,
-        fontSize: theme.spacing(3.2),
+        fontSize: theme.spacing(2.8),
     },
     iconClass: {
         float: "right",
@@ -56,10 +61,10 @@ export const useCSS = makeStyles((theme) => ({
     },
     breadcrumb: {
         display: 'inline-block',
-        fontSize: theme.spacing(1.8),
+        fontSize: theme.spacing(1.6),
         backgroundColor: theme.palette.primary.main,
-        paddingLeft: theme.spacing(0),
-        paddingRight: theme.spacing(0),
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(2),
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
         borderRadius: theme.spacing(5),
@@ -72,7 +77,7 @@ export const useCSS = makeStyles((theme) => ({
         height: 20
     },
     breadcrumbText: {
-        fontSize: theme.spacing(1.8),
+        fontSize: theme.spacing(1.6),
     },
     coaster: {
         borderLeft: 'solid 4px',

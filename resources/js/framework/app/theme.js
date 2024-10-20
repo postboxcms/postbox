@@ -24,7 +24,7 @@ export const theme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#004477',
+            main: 'rgba(0, 45, 99, 0.8)',
         },
         plain: {
             main: '#fff'
