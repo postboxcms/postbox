@@ -62,6 +62,10 @@ export const useLayoutCSS = makeStyles((theme) => ({
         },
         '& a.active': {
             backgroundColor: theme.palette.primary.dark
+        },
+        '& a.submenu': {
+            marginLeft: '30px',
+            marginTop: '0'
         }
     }
 }));

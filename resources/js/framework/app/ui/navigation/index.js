@@ -69,6 +69,7 @@ export const MainItems = React.memo((props) => {
                                 <NavLink
                                     to={api["adminPrefix"] + "/" + data["slug"] + "/list"}
                                     key={data["id"]}
+                                    submenu={true}
                                 >
                                     <ListItem>
                                         <ListItemIcon>
