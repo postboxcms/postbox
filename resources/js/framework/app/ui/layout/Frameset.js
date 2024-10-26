@@ -94,9 +94,9 @@ export default function Frameset(props) {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{MainItems(classes)}</List>
+                <List>{<MainItems {...classes} />}</List>
                 <Divider />
-                <List>{SubItems(classes)}</List>
+                <List>{<SubItems {...classes} />}</List>
             </Drawer>
             <main className="content">
                 <div className="appbar-spacer" />

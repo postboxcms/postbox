@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -14,57 +14,62 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
+import NavLink from "./NavLink";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { api } from "../../utils/constants";
 import { useAuthentication } from "../../hooks/auth";
+import { getContentTypes, setContentTypes } from "../../modules/ContentType/reducers/contentTypes";
 
-export const MainItems = (props) => {
-    const [contentTypes, setContentTypes] = useState({ content_types: [] });
+export const MainItems = React.memo((props) => {
+    // const [contentTypes, setContentTypes] = useState({ content_types: [] });
     const [open, setOpen] = useState(false);
     const auth = useAuthentication();
     const location = useLocation();
+    const dispatch = useDispatch();
+    const contentTypes = useSelector(getContentTypes);
+    const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings']
     const collapsePanel = () => {
         setOpen(!open);
     };
 
     React.useEffect(() => {
-        auth.get('/ContentType').then((response) => {
-            setContentTypes(response.data);
-            response.data?.content_types.map((type) => {
-                console.log('route', location.pathname);
-                if (location.pathname.includes(type.slug)) {
-                    setOpen(true);
-                }
-            })
-        });
+        if (contentTypes.length <= 0) {
+            auth.get('/ContentType').then((response) => {
+                dispatch(setContentTypes(response.data));
+            });
+        }
+        if (!reservedRoutes.includes(location.pathname.split('/').pop())) {
+            setOpen(true);
+        }
     }, []);
 
     return (
         <React.Fragment>
             <div className={props.navbar}>
-                <Link to={api.adminPrefix}>
+                <NavLink to={api.adminPrefix}>
                     <ListItem>
                         <ListItemIcon>
                             <DashboardIcon />
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
                     </ListItem>
-                </Link>
-                <Link to="#">
-                    <ListItem button onClick={collapsePanel}>
+                </NavLink>
+                <NavLink to="#">
+                    <ListItem onClick={collapsePanel}>
                         <ListItemIcon>
                             <InventoryIcon />
                         </ListItemIcon>
                         <ListItemText primary="Content" />
                         {open ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
-                </Link>
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                </NavLink>
+                <Collapse in={open} timeout="auto">
                     <List component="div" disablePadding>
-                        {contentTypes["content_types"].map((data) => {
+                        {contentTypes?.content_types?.map((data) => {
                             return (
-                                <Link
+                                <NavLink
                                     to={api["adminPrefix"] + "/" + data["slug"] + "/list"}
                                     key={data["id"]}
                                 >
@@ -77,7 +82,7 @@ export const MainItems = (props) => {
                                         </ListItemIcon>
                                         <ListItemText primary={data["name"]} />
                                     </ListItem>
-                                </Link>
+                                </NavLink>
                             );
                         })}
                     </List>
@@ -85,29 +90,29 @@ export const MainItems = (props) => {
             </div>
         </React.Fragment>
     );
-};
+});
 
 export const SubItems = (props) => {
     return (
         <React.Fragment>
             <div className={props.navbar}>
                 <ListSubheader inset>Preferences</ListSubheader>
-                <Link to={api.adminPrefix + "/crud"} key="0">
+                <NavLink to={api.adminPrefix + "/crud"} key="0">
                     <ListItem>
                         <ListItemIcon>
                             <FontAwesomeIcon size="lg" icon="layer-group" />
                         </ListItemIcon>
                         <ListItemText primary="CRUD" />
                     </ListItem>
-                </Link>
-                <Link to={api.adminPrefix + "/settings"} key="1">
+                </NavLink>
+                <NavLink to={api.adminPrefix + "/settings"} key="1">
                     <ListItem>
                         <ListItemIcon>
                             <FontAwesomeIcon size="lg" icon="gear" />
                         </ListItemIcon>
                         <ListItemText primary="Settings" />
                     </ListItem>
-                </Link>
+                </NavLink>
             </div>
         </React.Fragment>
     );

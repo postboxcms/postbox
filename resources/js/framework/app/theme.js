@@ -25,6 +25,7 @@ export const theme = createTheme({
         mode: 'light',
         primary: {
             main: 'rgba(31, 0, 67, 0.8)',
+            dark: 'rgba(31, 0, 67, 1)'
         },
         plain: {
             main: '#fff'
