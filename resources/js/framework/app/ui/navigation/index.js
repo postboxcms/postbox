@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -19,13 +19,10 @@ import NavLink from "./NavLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { api } from "../../utils/constants";
-import { useAuthentication } from "../../hooks/auth";
-import { getContentTypes, setContentTypes } from "../../modules/ContentType/reducers/contentTypes";
+import { getContentTypes } from "../../modules/ContentType/reducers/contentTypes";
 
 export const MainItems = React.memo((props) => {
-    const auth = useAuthentication();
     const location = useLocation();
-    const dispatch = useDispatch();
     const contentTypes = useSelector(getContentTypes);
     const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings']
     const isOpen = !reservedRoutes.includes(location.pathname.split('/').pop());
@@ -33,14 +30,6 @@ export const MainItems = React.memo((props) => {
     const collapsePanel = () => {
         setOpen(!open);
     };
-
-    React.useEffect(() => {
-        if (contentTypes.length <= 0) {
-            auth.get('/ContentType').then((response) => {
-                dispatch(setContentTypes(response.data));
-            });
-        }
-    }, []);
 
     return (
         <React.Fragment>
