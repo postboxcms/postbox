@@ -16,22 +16,24 @@ const Body = (props) => {
 
     const saveSettings = (event) => {
         event.preventDefault();
-        const data = [{
-            property: 'name',
-            value: websiteName
-        },
-        {
-            property: 'title',
-            value: websiteTitle
-        },
-        {
-            property: 'isProductionReady',
-            value: isProductionReady
-        }];
+        const data = [
+            {
+                property: 'name',
+                value: websiteName
+            },
+            {
+                property: 'title',
+                value: websiteTitle
+            },
+            {
+                property: 'isProductionReady',
+                value: isProductionReady
+            }
+        ];
         // Handle form submission
         auth.post("/Settings", data).then((response) =>
             notify(response.data.message)
-        );
+        ).catch((error) => notify(error, 'error'));
     };
 
     const classes = useCSS();

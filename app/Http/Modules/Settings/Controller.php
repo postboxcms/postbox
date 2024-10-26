@@ -42,15 +42,21 @@ class Controller extends Framework
         // store settings data
         $this->data = $request->all();
         $this->validator = Validator::make($this->data, [
-            'website_name'          => 'required|max:50',
-            'website_title'         => 'max:100',
+            'property.*'          => 'required|max:50',
+            'value.*'             => 'max:100',
         ]);
 
         if($this->validator->fails()) {
             return response(['message' => $this->validator->errors(),trans('settings.validationerror')], 400);
         }
 
-        $this->settings = Settings::create($this->data);
+        foreach($this->data as $data):
+            Settings::updateOrCreate([
+                'property' => $data['property'],
+                'value' => $data['value']
+            ]);
+        endforeach;
+
         return response([
             'message'       => trans('settings.success')
         ],200);
