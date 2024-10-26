@@ -23,13 +23,13 @@ import { useAuthentication } from "../../hooks/auth";
 import { getContentTypes, setContentTypes } from "../../modules/ContentType/reducers/contentTypes";
 
 export const MainItems = React.memo((props) => {
-    // const [contentTypes, setContentTypes] = useState({ content_types: [] });
-    const [open, setOpen] = useState(false);
     const auth = useAuthentication();
     const location = useLocation();
     const dispatch = useDispatch();
     const contentTypes = useSelector(getContentTypes);
     const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings']
+    const isOpen = !reservedRoutes.includes(location.pathname.split('/').pop());
+    const [open, setOpen] = useState(isOpen);
     const collapsePanel = () => {
         setOpen(!open);
     };
@@ -39,9 +39,6 @@ export const MainItems = React.memo((props) => {
             auth.get('/ContentType').then((response) => {
                 dispatch(setContentTypes(response.data));
             });
-        }
-        if (!reservedRoutes.includes(location.pathname.split('/').pop())) {
-            setOpen(true);
         }
     }, []);
 
