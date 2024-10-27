@@ -15,12 +15,12 @@ const Dashboard = (props) => {
 
     React.useState(() => {
         setContentTypes(contentTypeList);
-    },[]);
+    },[contentTypes]);
 
     return (
         <Frame className={classes.body} spacing={3}>
             {/* LOOP OVER CARDS */}
-            <Placeholder repeat={3} map={contentTypes?.content_types}>
+            <Placeholder repeat={3} map={contentTypes}>
                 <Card xs={12} md={4} lg={4}>
                     <Body height="fixed">
                         <Loader lines={4} />
