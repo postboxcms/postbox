@@ -58,7 +58,7 @@ export const useLayoutCSS = makeStyles((theme) => ({
         '& a': {
             display: 'block',
             margin: '10px',
-            borderRadius: '8px'
+            borderRadius: '5px'
         },
         '& a.active': {
             backgroundColor: theme.palette.primary.dark
