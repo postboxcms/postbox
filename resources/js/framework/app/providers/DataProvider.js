@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setContentTypes } from "../modules/ContentType/reducers/contentTypes";
 import { useAuthentication } from "../hooks/auth";
 import { getToken } from "../modules/Auth/reducers/jwt";
+import { setWebsiteName, setWebsiteStatus, setWebsiteTitle } from "../modules/Settings/reducers/site";
 
 const DataProvider = ({ children }) => {
     const auth = useAuthentication();
@@ -14,6 +15,25 @@ const DataProvider = ({ children }) => {
             // set content type data
             auth.get("/ContentType").then((response) => {
                 dispatch(setContentTypes(response.data));
+            });
+            // set website data
+            auth.get("/Settings").then((res) => {
+                const settings = res?.data?.data;
+                settings.map((item) => {
+                    switch (item.property) {
+                        case "name":
+                            dispatch(setWebsiteName(item.value));
+                            return;
+                        case "title":
+                            dispatch(setWebsiteTitle(item.value));
+                            return;
+                        case "isProductionReady":
+                            dispatch(setWebsiteStatus(Boolean(Number(item.value))));
+                            return;
+                        default:
+                            return;
+                    }
+                });
             });
         }
     }, [token]);

@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCSS } from "../../../hooks/css";
 import Title from "../../../ui/elements/Title";
@@ -14,13 +16,25 @@ import {
 import { useAuthentication } from "../../../hooks/auth";
 import { useNotifier } from "../../../hooks/notifications";
 import { IOSSwitch } from "../../../utils/elements";
+import {
+    getWebsiteName,
+    getWebsiteStatus,
+    getWebsiteTitle,
+    setWebsiteName,
+    setWebsiteStatus,
+    setWebsiteTitle,
+} from "../reducers/site";
 
 const Body = (props) => {
     const [title, setTitle] = React.useState("");
     const [name, setName] = React.useState("");
     const [isProductionReady, setIsProductionReady] = React.useState(false);
+    const websiteName = useSelector(getWebsiteName);
+    const websiteTitle = useSelector(getWebsiteTitle);
+    const websiteStatus = useSelector(getWebsiteStatus);
     const auth = useAuthentication();
     const notify = useNotifier();
+    const dispatch = useDispatch();
     const classes = useCSS();
     const pageIcon = "gear";
 
@@ -42,29 +56,19 @@ const Body = (props) => {
         ];
         // Handle form submission
         auth.post("/Settings", data)
-            .then((response) => notify(response.data.message))
+            .then((response) => {
+                dispatch(setWebsiteName(name));
+                dispatch(setWebsiteTitle(title));
+                dispatch(setWebsiteStatus(isProductionReady));
+                notify(response.data.message);
+            })
             .catch((error) => notify(error, "error"));
     };
 
     React.useEffect(() => {
-        auth.get("/Settings").then((res) => {
-            const settings = res?.data?.data;
-            settings.map((item) => {
-                switch (item.property) {
-                    case "name":
-                        setName(item.value);
-                        return;
-                    case "title":
-                        setTitle(item.value);
-                        return;
-                    case "isProductionReady":
-                        setIsProductionReady(Boolean(Number(item.value)));
-                        return;
-                    default:
-                        return;
-                }
-            });
-        });
+        setName(websiteName);
+        setTitle(websiteTitle);
+        setIsProductionReady(websiteStatus);
     }, []);
 
     return (
