@@ -2,42 +2,70 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCSS } from "../../../hooks/css";
 import Title from "../../../ui/elements/Title";
-import { Button, Checkbox, FormControlLabel, Grid, Paper, TextField, Typography } from "@mui/material";
+import {
+    Button,
+    Checkbox,
+    FormControlLabel,
+    Grid,
+    Paper,
+    TextField,
+    Typography,
+} from "@mui/material";
 import { useAuthentication } from "../../../hooks/auth";
 import { useNotifier } from "../../../hooks/notifications";
 import { IOSSwitch } from "../../../utils/elements";
 
 const Body = (props) => {
-    const [websiteTitle, setWebsiteTitle] = React.useState('');
-    const [websiteName, setWebsiteName] = React.useState('');
+    const [title, setTitle] = React.useState("");
+    const [name, setName] = React.useState("");
     const [isProductionReady, setIsProductionReady] = React.useState(false);
     const auth = useAuthentication();
     const notify = useNotifier();
+    const classes = useCSS();
+    const pageIcon = "gear";
 
     const saveSettings = (event) => {
         event.preventDefault();
         const data = [
             {
-                property: 'name',
-                value: websiteName
+                property: "name",
+                value: name,
             },
             {
-                property: 'title',
-                value: websiteTitle
+                property: "title",
+                value: title,
             },
             {
-                property: 'isProductionReady',
-                value: isProductionReady
-            }
+                property: "isProductionReady",
+                value: isProductionReady,
+            },
         ];
         // Handle form submission
-        auth.post("/Settings", data).then((response) =>
-            notify(response.data.message)
-        ).catch((error) => notify(error, 'error'));
+        auth.post("/Settings", data)
+            .then((response) => notify(response.data.message))
+            .catch((error) => notify(error, "error"));
     };
 
-    const classes = useCSS();
-    const pageIcon = 'gear';
+    React.useEffect(() => {
+        auth.get("/Settings").then((res) => {
+            const settings = res?.data?.data;
+            settings.map((item) => {
+                switch (item.property) {
+                    case "name":
+                        setName(item.value);
+                        return;
+                    case "title":
+                        setTitle(item.value);
+                        return;
+                    case "isProductionReady":
+                        setIsProductionReady(Boolean(Number(item.value)));
+                        return;
+                    default:
+                        return;
+                }
+            });
+        });
+    }, []);
 
     return (
         <React.Fragment>
@@ -47,47 +75,98 @@ const Body = (props) => {
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
             </div>
-            <Paper style={{ padding: '16px', margin: 'auto' }} className={classes.panel}>
+            <Paper
+                style={{ padding: "16px", margin: "auto" }}
+                className={classes.panel}
+            >
                 <form onSubmit={saveSettings}>
                     <Grid container spacing={2} maxWidth="600px">
                         {/* Column for labels */}
-                        <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-                            <Typography variant="body1" align="right">Website Name</Typography>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            container
+                            justifyContent="flex-end"
+                            alignItems="center"
+                        >
+                            <Typography variant="body1" align="right">
+                                Website Name
+                            </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                name="website_name"
+                                name="name"
                                 variant="outlined"
                                 fullWidth
-                                value={websiteName}
-                                onChange={(e) => setWebsiteName(e.target.value)}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-                            <Typography variant="body1" align="right">Website Title</Typography>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            container
+                            justifyContent="flex-end"
+                            alignItems="center"
+                        >
+                            <Typography variant="body1" align="right">
+                                Website Title
+                            </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
+                                name="title"
                                 variant="outlined"
                                 fullWidth
-                                value={websiteTitle}
-                                onChange={(e) => setWebsiteTitle(e.target.value)}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-                            <Typography variant="body1" align="right">Is Production Ready</Typography>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            container
+                            justifyContent="flex-end"
+                            alignItems="center"
+                        >
+                            <Typography variant="body1" align="right">
+                                Is Production Ready
+                            </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <IOSSwitch checked={isProductionReady} onChange={(e) => setIsProductionReady(e.target.checked)} />
+                            <IOSSwitch
+                                checked={isProductionReady}
+                                onChange={(e) =>
+                                    setIsProductionReady(e.target.checked)
+                                }
+                            />
                         </Grid>
                     </Grid>
-                    <Grid container spacing={2} style={{ marginTop: '1px' }} maxWidth="600px">
-                        <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-                        </Grid>
+                    <Grid
+                        container
+                        spacing={2}
+                        style={{ marginTop: "1px" }}
+                        maxWidth="600px"
+                    >
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            container
+                            justifyContent="flex-end"
+                            alignItems="center"
+                        ></Grid>
                         <Grid item xs={12} sm={6}>
-                            <Button type="submit" variant="contained" color="primary">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                            >
                                 Submit
                             </Button>
                         </Grid>
@@ -96,6 +175,6 @@ const Body = (props) => {
             </Paper>
         </React.Fragment>
     );
-}
+};
 
 export default Body;

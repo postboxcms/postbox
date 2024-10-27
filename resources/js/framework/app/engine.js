@@ -15,7 +15,7 @@ import Theme from "../website";
 import DataProvider from "./providers/DataProvider";
 
 // routes
-import { PrivateRoute, ProtectedRoute, PublicRoute } from './routes';
+import { PrivateRoute, ProtectedRoute, PublicRoute } from "./routes";
 
 // variables
 import { api } from "./utils";
@@ -31,8 +31,8 @@ const Engine = () => {
     return (
         <React.StrictMode>
             <Provider store={store}>
-                <DataProvider>
-                    <PersistGate loading={null} persistor={persistor}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <DataProvider>
                         <Router history={history}>
                             {/* public routes */}
                             {authRoutes.map((route) => {
@@ -40,26 +40,29 @@ const Engine = () => {
                                     const routename = route[type];
                                     return (
                                         <Switch key={key}>
-                                            {routename.type == "protected" &&
+                                            {routename.type == "protected" && (
                                                 <ProtectedRoute
                                                     restricted={true}
                                                     exact
                                                     path={routename.path}
                                                 >
-                                                    <Auth mode={routename.mode} />
+                                                    <Auth
+                                                        mode={routename.mode}
+                                                    />
                                                 </ProtectedRoute>
-                                            }
-                                            {routename.type == "public" &&
+                                            )}
+                                            {routename.type == "public" && (
                                                 <PublicRoute
                                                     exact
                                                     path={routename.path}
                                                 >
-                                                    <Auth mode={routename.mode} />
+                                                    <Auth
+                                                        mode={routename.mode}
+                                                    />
                                                 </PublicRoute>
-                                            }
-
+                                            )}
                                         </Switch>
-                                    )
+                                    );
                                 });
                             })}
                             {/* admin private routes */}
@@ -68,11 +71,17 @@ const Engine = () => {
                                     const routename = route[type];
                                     return (
                                         <Switch key={key}>
-                                            <PrivateRoute exact path={routename.path}>
+                                            <PrivateRoute
+                                                exact
+                                                path={routename.path}
+                                            >
                                                 <Frameset
                                                     title={routename.title}
                                                     path={routename.path}
-                                                    controller={routename.controller} />
+                                                    controller={
+                                                        routename.controller
+                                                    }
+                                                />
                                             </PrivateRoute>
                                         </Switch>
                                     );
@@ -88,7 +97,8 @@ const Engine = () => {
                                                 path={
                                                     api.adminPrefix +
                                                     "/" +
-                                                    route.name + "/list"
+                                                    route.name +
+                                                    "/list"
                                                 }
                                             >
                                                 <Frameset
@@ -152,8 +162,8 @@ const Engine = () => {
                                 </PublicRoute>
                             </Switch>
                         </Router>
-                    </PersistGate>
-                </DataProvider>
+                    </DataProvider>
+                </PersistGate>
             </Provider>
         </React.StrictMode>
     );

@@ -23,13 +23,18 @@ import { getContentTypes } from "../../modules/ContentType/reducers/contentTypes
 
 export const MainItems = React.memo((props) => {
     const location = useLocation();
-    const contentTypes = useSelector(getContentTypes);
+    const [contentTypes, setContentTypes] = useState([]);
+    const contentTypeList = useSelector(getContentTypes);
     const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings']
     const isOpen = !reservedRoutes.includes(location.pathname.split('/').pop());
     const [open, setOpen] = useState(isOpen);
     const collapsePanel = () => {
         setOpen(!open);
     };
+
+    React.useState(() => {
+        setContentTypes(contentTypeList);
+    },[]);
 
     return (
         <React.Fragment>

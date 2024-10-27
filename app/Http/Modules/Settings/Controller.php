@@ -21,8 +21,8 @@ class Controller extends Framework
         // display settings
         $this->settings = Settings::all();
         return response([
-            'data'      => $this->settings,
-            'message'   => 'settings data loaded successfully'
+            'data' => $this->settings,
+            'message' => 'settings data loaded successfully'
         ]);
     }
 
@@ -42,24 +42,24 @@ class Controller extends Framework
         // store settings data
         $this->data = $request->all();
         $this->validator = Validator::make($this->data, [
-            'property.*'          => 'required|max:50',
-            'value.*'             => 'max:100',
+            'property.*' => 'required|max:50',
+            'value.*' => 'max:100',
         ]);
 
-        if($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(),trans('settings.validationerror')], 400);
+        if ($this->validator->fails()) {
+            return response(['message' => $this->validator->errors(), trans('settings.validationerror')], 400);
         }
 
-        foreach($this->data as $data):
-            Settings::updateOrCreate([
+        foreach ($this->data as $data):
+            Settings::updateOrCreate(['property' => $data['property']], [
                 'property' => $data['property'],
                 'value' => $data['value']
             ]);
         endforeach;
 
         return response([
-            'message'       => trans('settings.success')
-        ],200);
+            'message' => trans('settings.success')
+        ], 200);
     }
 
     /**
