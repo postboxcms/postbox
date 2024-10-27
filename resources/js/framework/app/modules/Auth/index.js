@@ -159,7 +159,7 @@ const Auth = (props) => {
                             >
                                 Sign In
                             </Button>
-                            <Grid container>
+                            {/* <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
                                         Forgot password?
@@ -170,7 +170,7 @@ const Auth = (props) => {
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
-                            </Grid>
+                            </Grid> */}
                             <Box pt={4}>
                                 <Copyright sx={{ mt: 5 }} />
                             </Box>
