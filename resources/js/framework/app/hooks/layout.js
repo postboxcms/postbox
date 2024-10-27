@@ -54,4 +54,18 @@ export const useLayoutCSS = makeStyles((theme) => ({
     fixedHeight: {
         height: 200,
     },
+    navbar: {
+        '& a': {
+            display: 'block',
+            margin: '10px',
+            borderRadius: '8px'
+        },
+        '& a.active': {
+            backgroundColor: theme.palette.primary.dark
+        },
+        '& a.submenu': {
+            marginLeft: '30px',
+            marginTop: '0'
+        }
+    }
 }));
