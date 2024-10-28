@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCSS } from "../../../hooks/css";
-import Title from "../../../ui/elements/Title";
 import {
     Button,
     Checkbox,
@@ -24,6 +23,8 @@ import {
     setWebsiteStatus,
     setWebsiteTitle,
 } from "../reducers/site";
+import ImageUploader from "../../../ui/elements/ImageUploader";
+import Title from "../../../ui/elements/Title";
 
 const Body = (props) => {
     const [title, setTitle] = React.useState("");
@@ -149,6 +150,22 @@ const Body = (props) => {
                                     setIsProductionReady(e.target.checked)
                                 }
                             />
+                        </Grid>
+
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            container
+                            justifyContent="flex-end"
+                            alignItems="center"
+                        >
+                            <Typography variant="body1" align="right">
+                                Site logo
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <ImageUploader />
                         </Grid>
                     </Grid>
                     <Grid
