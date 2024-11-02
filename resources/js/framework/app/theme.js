@@ -33,5 +33,8 @@ export const theme = createTheme({
         breadcrumb: {
             main: '#281850'
         },
+        element: {
+            border: '#ccc' 
+        }
     }
 });

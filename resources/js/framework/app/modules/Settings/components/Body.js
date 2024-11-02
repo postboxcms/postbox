@@ -16,9 +16,11 @@ import { useAuthentication } from "../../../hooks/auth";
 import { useNotifier } from "../../../hooks/notifications";
 import { IOSSwitch } from "../../../utils/elements";
 import {
+    getWebsiteLogo,
     getWebsiteName,
     getWebsiteStatus,
     getWebsiteTitle,
+    setWebsiteLogo,
     setWebsiteName,
     setWebsiteStatus,
     setWebsiteTitle,
@@ -30,6 +32,9 @@ const Body = (props) => {
     const [title, setTitle] = React.useState("");
     const [name, setName] = React.useState("");
     const [isProductionReady, setIsProductionReady] = React.useState(false);
+    const [image, setImage] = React.useState([]);
+
+    const websiteLogo = useSelector(getWebsiteLogo);
     const websiteName = useSelector(getWebsiteName);
     const websiteTitle = useSelector(getWebsiteTitle);
     const websiteStatus = useSelector(getWebsiteStatus);
@@ -41,26 +46,44 @@ const Body = (props) => {
 
     const saveSettings = (event) => {
         event.preventDefault();
-        const data = [
+        const data = new FormData();
+        const settings = [
             {
                 property: "name",
                 value: name,
+                type: "string",
             },
             {
                 property: "title",
                 value: title,
+                type: "string",
             },
             {
                 property: "isProductionReady",
-                value: isProductionReady,
+                value: Number(isProductionReady),
+                type: "string",
+            },
+            {
+                property: "siteLogo",
+                value: image,
+                type: "file",
             },
         ];
+        settings.forEach((item) => {
+            if (item.type === "file" && item.value.length > 0) {
+                data.append(item.property, item.value, item.value.name);
+            } else {
+                data.append(item.property, item.value);
+            }
+        });
         // Handle form submission
         auth.post("/Settings", data)
             .then((response) => {
                 dispatch(setWebsiteName(name));
                 dispatch(setWebsiteTitle(title));
                 dispatch(setWebsiteStatus(isProductionReady));
+                dispatch(setWebsiteStatus(isProductionReady));
+                dispatch(setWebsiteLogo(response?.data?.file));
                 notify(response.data.message);
             })
             .catch((error) => notify(error, "error"));
@@ -165,7 +188,10 @@ const Body = (props) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <ImageUploader />
+                            <ImageUploader
+                                placeholder={websiteLogo}
+                                uploadImage={(file) => setImage(file)}
+                            />
                         </Grid>
                     </Grid>
                     <Grid

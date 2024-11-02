@@ -1,21 +1,43 @@
 import React from "react";
-import Dropzone from "react-dropzone";
+import { useDropzone } from "react-dropzone";
+import { useCSS } from "../../hooks/css";
+import { useNotifier } from "../../hooks/notifications";
+import { site } from "../../utils/constants";
 
-const ImageUploader = () => {
+const ImageUploader = ({ uploadImage, placeholder }) => {
+    console.log(placeholder);
+    const classes = useCSS();
+    const [placeholderText, setPlaceholderText] = React.useState(
+        placeholder ? <img width="200px" src={`${site.url}/images/${placeholder}`} /> : "Drag 'n' drop any image here, or click to select one"
+    );
+    const notify = useNotifier();
+    const {
+        getRootProps,
+        getInputProps,
+        isFocused,
+        isDragAccept,
+        isDragReject,
+    } = useDropzone({
+        accept: {
+            "image/*": [],
+        },
+        multiple: false,
+        onDrop: (files) => {
+            if (files.length <= 0) {
+                return notify("File is not a valid image", "error");
+            }
+            console.log(files);
+            uploadImage(files[0]);
+            setPlaceholderText(files[0].name);
+        },
+    });
     return (
-        <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-            {({ getRootProps, getInputProps }) => (
-                <section>
-                    <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <p>
-                            Drag 'n' drop some files here, or click to select
-                            files
-                        </p>
-                    </div>
-                </section>
-            )}
-        </Dropzone>
+        <section className={classes.draggable}>
+            <div {...getRootProps({ isFocused, isDragAccept, isDragReject })}>
+                <input {...getInputProps()} />
+                <p>{placeholderText}</p>
+            </div>
+        </section>
     );
 };
 

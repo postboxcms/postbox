@@ -11,3 +11,6 @@ export const nav = {
     menuToken: process.env.MIX_MENU_TOKEN,
     userToken: process.env.MIX_USER_TOKEN,
 }
+export const site = {
+    url: process.env.MIX_APP_URL
+}

@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setContentTypes } from "../modules/ContentType/reducers/contentTypes";
 import { useAuthentication } from "../hooks/auth";
 import { getToken } from "../modules/Auth/reducers/jwt";
-import { setWebsiteName, setWebsiteStatus, setWebsiteTitle } from "../modules/Settings/reducers/site";
+import {
+    setWebsiteLogo,
+    setWebsiteName,
+    setWebsiteStatus,
+    setWebsiteTitle,
+} from "../modules/Settings/reducers/site";
 
 const DataProvider = ({ children }) => {
     const auth = useAuthentication();
@@ -28,7 +33,14 @@ const DataProvider = ({ children }) => {
                             dispatch(setWebsiteTitle(item.value));
                             return;
                         case "isProductionReady":
-                            dispatch(setWebsiteStatus(Boolean(Number(item.value))));
+                            dispatch(
+                                setWebsiteStatus(Boolean(Number(item.value)))
+                            );
+                            return;
+                        case "siteLogo":
+                            dispatch(
+                                setWebsiteLogo(item.value)
+                            );
                             return;
                         default:
                             return;

@@ -6,6 +6,7 @@ const siteSlice = createSlice({
         name: "postbox",
         title: "",
         isProductionReady: 0,
+        logo: null
     },
     reducers: {
         setWebsiteName: (state, action) => {
@@ -17,14 +18,19 @@ const siteSlice = createSlice({
         setWebsiteStatus: (state, action) => {
             state.isProductionReady = action.payload;
         },
+        setWebsiteLogo: (state, action) => {
+            state.logo = action.payload;
+        }
     },
 });
 
 export const getWebsiteName = (state) => state.site.name;
 export const getWebsiteTitle = (state) => state.site.title;
 export const getWebsiteStatus = (state) => state.site.isProductionReady;
+export const getWebsiteLogo = (state) => state.site.logo;
 
-export const { setWebsiteName, setWebsiteTitle, setWebsiteStatus } =
+
+export const { setWebsiteName, setWebsiteTitle, setWebsiteStatus, setWebsiteLogo } =
     siteSlice.actions;
 
 export default siteSlice.reducer;

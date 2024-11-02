@@ -13,6 +13,7 @@ class Controller extends Framework
     protected $data;
     protected $validator;
     protected $settings;
+    protected $filename;
     /**
      * Display a listing of the resource.
      */
@@ -43,22 +44,29 @@ class Controller extends Framework
         $this->data = $request->all();
         $this->validator = Validator::make($this->data, [
             'property.*' => 'required|max:50',
-            'value.*' => 'max:100',
+            'value.*' => 'max:1000',
         ]);
 
         if ($this->validator->fails()) {
             return response(['message' => $this->validator->errors(), trans('settings.validationerror')], 400);
         }
 
-        foreach ($this->data as $data):
-            Settings::updateOrCreate(['property' => $data['property']], [
-                'property' => $data['property'],
-                'value' => $data['value']
+
+        foreach ($this->data as $key => $value):
+            if($request->hasFile($key)) {
+                $this->filename = time().'.'.$request->$key->getClientOriginalExtension();
+                $request->$key->move(public_path('images'),$this->filename);
+                $value = $this->filename;
+            }
+            Settings::updateOrCreate(['property' => $key], [
+                'property' => $key,
+                'value' => $value
             ]);
         endforeach;
 
         return response([
-            'message' => trans('settings.success')
+            'message' => trans('settings.success'),
+            'data' => $this->filename ? ['file' => $this->filename] : false 
         ], 200);
     }
 
