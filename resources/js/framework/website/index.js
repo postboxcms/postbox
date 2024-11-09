@@ -8,18 +8,20 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import { useLayoutCSS } from '../app/hooks/layout';
-import { getWebsiteName } from '../app/modules/Settings/reducers/site';
+import { getWebsiteLogo, getWebsiteName, getWebsiteStatus } from '../app/modules/Settings/reducers/site';
 
 const Theme = (props) => {
     const classes = useLayoutCSS();
     const websiteName = useSelector(getWebsiteName);
+    const websiteLogo = useSelector(getWebsiteLogo);
+    const websiteStatus = useSelector(getWebsiteStatus);
 
     return (
         <div className="content">
             <AppBar position="absolute" className={clsx(classes.appBar, open)}>
                 <Toolbar className="toolbar">
                     <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
-                        {websiteName}
+                        {websiteLogo ? (<img src={`images/${websiteLogo}`}/>) : websiteName}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -27,7 +29,7 @@ const Theme = (props) => {
                 <div className="appbar-spacer" />
                 <Container maxWidth="lg" className="container">
                     {/* shift the above code to Theme and render the theme as a module through Website layout */}
-                    Theme content goes here...
+                    {websiteStatus ? 'Theme content goes here ...' : 'Launching soon ...'}
                 </Container>
             </main>
         </div>

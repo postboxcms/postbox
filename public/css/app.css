@@ -12255,6 +12255,11 @@ input[type=text] {
   background-color: #fff;
 }
 
+.theme-root .toolbar {
+  padding-left: 120px !important;
+  padding-right: 120px !important;
+}
+
 .navbar-dark {
   color: #eee;
   background-color: rgba(31, 0, 67, 0.9) !important;

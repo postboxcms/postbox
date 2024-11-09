@@ -413,7 +413,12 @@ input[type="text"] {
         background-color: $white;
     }
 }
-
+.theme-root {
+    .toolbar {
+        padding-left: 120px !important;
+        padding-right: 120px !important;
+    }
+}
 .navbar-dark {
     color: $navbar-dark-color;
     background-color: $navbar-dark-bg-color  !important;

@@ -26,7 +26,6 @@ const ImageUploader = ({ uploadImage, placeholder }) => {
             if (files.length <= 0) {
                 return notify("File is not a valid image", "error");
             }
-            console.log(files);
             uploadImage(files[0]);
             setPlaceholderText(files[0].name);
         },

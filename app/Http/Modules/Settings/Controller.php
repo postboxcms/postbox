@@ -4,6 +4,7 @@ namespace App\Http\Modules\Settings;
 
 use App\Models\Settings;
 use Illuminate\Http\Request;
+use Intervention\Image\Laravel\Facades\Image;
 
 use App\Http\Modules\Framework;
 use Validator;
@@ -14,6 +15,9 @@ class Controller extends Framework
     protected $validator;
     protected $settings;
     protected $filename;
+    protected $originalImage;
+    protected $resizedImage;
+
     /**
      * Display a listing of the resource.
      */
@@ -55,7 +59,10 @@ class Controller extends Framework
         foreach ($this->data as $key => $value):
             if($request->hasFile($key)) {
                 $this->filename = time().'.'.$request->$key->getClientOriginalExtension();
-                $request->$key->move(public_path('images'),$this->filename);
+                $this->originalImage = $request->file($key);
+                $this->resizedImage = Image::read($this->originalImage->getRealPath());
+                $this->resizedImage->scale(width:150);
+                $this->resizedImage->save(public_path('images/').$this->filename);
                 $value = $this->filename;
             }
             Settings::updateOrCreate(['property' => $key], [
@@ -65,8 +72,8 @@ class Controller extends Framework
         endforeach;
 
         return response([
-            'message' => trans('settings.success'),
-            'data' => $this->filename ? ['file' => $this->filename] : false 
+            'message'   => trans('settings.success'),
+            'data'      => $this->filename ? ['file' => $this->filename] : false 
         ], 200);
     }
 
