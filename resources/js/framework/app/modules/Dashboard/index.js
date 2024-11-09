@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import { Card, Frame, Body, DataCard } from "../../ui/layout/Frame";
@@ -10,17 +10,12 @@ import { getContentTypes } from "../ContentType/reducers/contentTypes";
 
 const Dashboard = (props) => {
     const classes = useCSS();
-    const [contentTypes, setContentTypes] = useState([]);
-    const contentTypeList = useSelector(getContentTypes);
-
-    React.useState(() => {
-        setContentTypes(contentTypeList);
-    },[]);
+    const contentTypes = useSelector(getContentTypes);
 
     return (
         <Frame className={classes.body} spacing={3}>
             {/* LOOP OVER CARDS */}
-            <Placeholder repeat={3} map={contentTypes?.content_types}>
+            <Placeholder repeat={3} map={contentTypes}>
                 <Card xs={12} md={4} lg={4}>
                     <Body height="fixed">
                         <Loader lines={4} />

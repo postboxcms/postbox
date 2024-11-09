@@ -4,10 +4,12 @@ import { persistReducer, persistStore } from "redux-persist";
 
 import jwtReducer from "../modules/Auth/reducers/jwt";
 import contentTypesReducer from "../modules/ContentType/reducers/contentTypes";
+import siteReducer from "../modules/Settings/reducers/site";
 
 const rootReducer = combineReducers({
     jwt: jwtReducer,
-    contentTypes: contentTypesReducer
+    contentTypes: contentTypesReducer,
+    site: siteReducer
 });
 const persistConfig = {
     key: "root",

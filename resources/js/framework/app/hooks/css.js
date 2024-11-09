@@ -81,5 +81,13 @@ export const useCSS = makeStyles((theme) => ({
     coaster: {
         borderLeft: 'solid 4px',
         borderLeftColor: theme.palette.primary.main
+    },
+    draggable: {
+        border: 'dashed 2px',
+        borderColor: theme.palette.element.border,
+        padding: '10px',
+        '& p': {
+            margin: 0
+        }
     }
 }));
