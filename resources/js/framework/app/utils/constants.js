@@ -10,7 +10,9 @@ export const api = {
 export const nav = {
     menuToken: process.env.MIX_MENU_TOKEN,
     userToken: process.env.MIX_USER_TOKEN,
-}
+};
 export const site = {
-    url: process.env.MIX_APP_URL
-}
+    url: process.env.MIX_APP_URL,
+    themeMessage: 'Theme content goes here ...',
+    comingSoonMessage: 'Coming soon ...'
+};
