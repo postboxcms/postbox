@@ -14,5 +14,5 @@ export const nav = {
 export const site = {
     url: process.env.MIX_APP_URL,
     themeMessage: 'Theme content goes here ...',
-    comingSoonMessage: 'Coming soon ...'
+    comingSoonMessage: 'Digitalbit will be launching soon ...'
 };
