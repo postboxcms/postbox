@@ -1,12 +1,12 @@
 services:
     app:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.2
+            context: './vendor/postboxcms/desk/runtimes/8.3'
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: sail-8.2/app
-        container_name: Postbox 
+        image: 'desk-8.3/app'
+        container_name: Postbox
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -14,19 +14,19 @@ services:
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
-            LARAVEL_SAIL: 1
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            POSTBOXCMS_DESK: 1
+            XDEBUG_MODE: '${DESK_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${DESK_XDEBUG_CONFIG:-client_host=host.docker.internal}'
             IGNITION_LOCAL_SITES_PATH: '${PWD}'
         volumes:
             - '.:/var/www/html'
         networks:
-            - postbox
+            - desk
         depends_on:
             - mysql
     mysql:
         image: 'mysql/mysql-server:8.0'
-        container_name: 'PostboxDB'
+        container_name: MySQL
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
@@ -37,10 +37,10 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'postbox-mysql:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+            - 'desk-mysql:/var/lib/mysql'
+            - './vendor/postboxcms/desk/database/mysql/create-postbox-database.sh:/docker-entrypoint-initdb.d/10-create-postbox-database.sh'
         networks:
-            - postbox
+            - desk
         healthcheck:
             test:
                 - CMD
@@ -50,10 +50,8 @@ services:
             retries: 3
             timeout: 5s
 networks:
-    postbox:
+    desk:
         driver: bridge
-        name: postbox
 volumes:
-    postbox-mysql:
+    desk-mysql:
         driver: local
-        name: MySQLStorage
