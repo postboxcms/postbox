@@ -46,7 +46,7 @@ const Theme = (props) => {
                     {/* shift the above code to Theme and render the theme as a module through Website layout */}
                     <Typography
                         component="h1"
-                        variant="h3"
+                        variant="p"
                         color="inherit"
                         noWrap
                         align="center"
