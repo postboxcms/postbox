@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const siteSlice = createSlice({
     name: "site",
     initialState: {
-        name: "postbox",
+        name: "Postbox",
         title: "",
         isProductionReady: 0,
         logo: null

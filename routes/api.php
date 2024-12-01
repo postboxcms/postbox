@@ -6,6 +6,7 @@ use App\Http\Modules\Auth\Controller as OAuth;
 use App\Http\Modules\ContentType\Controller as ContentType;
 use App\Http\Modules\CRUD\Controller as CRUD;
 use App\Http\Modules\Settings\Controller as Settings;
+use App\Http\Modules\Website\Controller as Website;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,6 @@ Route::post('/Register', [OAuth::class, 'register']);
 Route::apiResource('/ContentType', ContentType::class)->middleware('auth:api');
 Route::apiResource('/CRUD', CRUD::class)->middleware('auth:api');
 Route::apiResource('/Settings', Settings::class)->middleware('auth:api');
+
+// website routes
+Route::apiResource('/Website', Website::class);
