@@ -1,11 +1,11 @@
 services:
     app:
         build:
-            context: ./vendor/postboxcms/desk/runtimes/8.3
+            context: './vendor/postboxcms/desk/runtimes/8.3'
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: desk-8.3/app
+        image: 'desk-8.3/app'
         container_name: Postbox
         extra_hosts:
             - 'host.docker.internal:host-gateway'
