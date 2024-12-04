@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "postboxcms/postbox",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "PostboxCMS. A simple CMS to make web beautiful.",
     "keywords": [
         "framework",
         "laravel"
