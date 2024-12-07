@@ -61,7 +61,7 @@ class Controller extends Framework
                 $this->filename = time().'.'.$request->$key->getClientOriginalExtension();
                 $this->originalImage = $request->file($key);
                 $this->resizedImage = Image::read($this->originalImage->getRealPath());
-                $this->resizedImage->scale(width:150);
+                // $this->resizedImage->scale(width:150);
                 $this->resizedImage->save(public_path('images/').$this->filename);
                 $value = $this->filename;
             }
