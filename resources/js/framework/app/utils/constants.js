@@ -1,7 +1,7 @@
 import { parseURL } from "./app";
 
 const generateURL = (url, port) => {
-    return port != 80 ? parseURL(`${url}:${port}`) : parseURL(url);
+    return port != 80 && process.env.APP_ENV === 'local' ? parseURL(`${url}:${port}`) : parseURL(url);
 }
 
 export const api = {
