@@ -33,7 +33,7 @@ const Theme = (props) => {
                         className="title"
                     >
                         {websiteLogo ? (
-                            <img src={`images/${websiteLogo}`} />
+                            <img src={`images/${websiteLogo}`} style={{maxHeight: '36px'}} />
                         ) : (
                             websiteName
                         )}
