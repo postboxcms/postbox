@@ -1,7 +1,6 @@
 {
     "name": "postboxcms/postbox",
-    "type": "project",
-    "description": "PostboxCMS. A simple CMS to make web beautiful.",
+    "description": "PostboxCMS. A simple CMS to make the web beautiful.",
     "keywords": [
         "framework",
         "laravel"
@@ -38,7 +37,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "PostboxCMS\\Postbox\\": "src/"
         }
     },
     "autoload-dev": {
@@ -46,7 +46,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
