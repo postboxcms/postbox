@@ -2,7 +2,7 @@ import React from "react";
 import Title from "../../../ui/components/Title";
 import Form from "../../../ui/components/Form";
 
-const AddEditContent = ({ query, type }) => {
+export const AddEditContent = ({ query, type }) => {
     const [pageTitle, setPageTitle] = React.useState('...');
 
     React.useEffect(() => {
