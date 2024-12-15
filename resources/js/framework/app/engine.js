@@ -5,26 +5,20 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { ContentType, AddEditContent } from "@modules/ContentType";
 import { Theme } from "@website";
-
+// routes
+import { PrivateRoute, ProtectedRoute, PublicRoute } from "@app/routes";
+// variables
+import { api } from "@app/utils";
+// route manager
+import { adminRoutes, authRoutes, contentTypeRoutes } from "@app/routes/data";
+// store
+import { store, persistor } from "@app/store";
 // layout
 import Frameset from "@ui/layout/Frameset";
 import Website from "@ui/layout/Website";
-
 // core modules
 import Auth from "@modules/Auth";
-import DataProvider from "./providers/DataProvider";
-
-// routes
-import { PrivateRoute, ProtectedRoute, PublicRoute } from "./routes";
-
-// variables
-import { api } from "./utils";
-
-// route manager
-import { adminRoutes, authRoutes, contentTypeRoutes } from "./routes/data";
-
-// store
-import { store, persistor } from "./store";
+import DataProvider from "@providers/DataProvider";
 
 /** React router to setup UI routes */
 const Engine = () => {
