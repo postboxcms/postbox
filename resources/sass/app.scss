@@ -119,8 +119,8 @@ input[type="text"] {
 
             span {
                 position: relative;
-                width: calc($size/2);
-                height: calc($size/2);
+                width: $size/2;
+                height: $size/2;
                 @include transform(scale(1.1));
                 display: inline-block;
 
@@ -131,8 +131,8 @@ input[type="text"] {
                     left: 0;
                     top: 0;
                     display: block;
-                    width: calc($size/2);
-                    height: calc($size/2);
+                    width: $size/2;
+                    height: $size/2;
                     -moz-transform-origin: 100% 100%;
                     -ms-transform-origin: 100% 100%;
                     -webkit-transform-origin: 100% 100%;

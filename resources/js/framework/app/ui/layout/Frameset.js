@@ -27,7 +27,7 @@ import { useLayoutCSS } from '../../hooks/layout';
 import { getUser } from '../../modules/Auth/reducers/jwt';
 // menu
 import TopMenu from './TopMenu';
-import { theme } from '../../theme';
+import { theme } from '../../init/theme';
 
 export default function Frameset(props) {
     const classes = useLayoutCSS();

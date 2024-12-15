@@ -6,7 +6,7 @@ import { Container, Grid, Typography } from "@mui/material";
 import { getWebsiteStatus } from "../../app/modules/Settings/reducers/site";
 import { site } from "../../app/utils/constants";
 
-const Body = () => {
+export const Body = () => {
     const websiteStatus = useSelector(getWebsiteStatus);
 
     return (

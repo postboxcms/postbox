@@ -1,14 +1,12 @@
 import React from "react";
 
 import { Box } from "@mui/material";
+import { Header, Body } from "@website/components";
 
-import Navbar from "./components/Navbar";
-import Body from "./components/Body";
-
-const Theme = () => {
+export const Theme = () => {
     return (
         <Box>
-            <Navbar />
+            <Header />
             <Body />
         </Box>
     );

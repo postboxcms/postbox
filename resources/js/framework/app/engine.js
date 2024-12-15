@@ -3,15 +3,15 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
+import { ContentType, AddEditContent } from "@modules/ContentType";
+import { Theme } from "@website";
+
 // layout
-import Frameset from "./ui/layout/Frameset";
-import Website from "./ui/layout/Website";
+import Frameset from "@ui/layout/Frameset";
+import Website from "@ui/layout/Website";
 
 // core modules
-import Auth from "./modules/Auth";
-import ContentType from "./modules/ContentType";
-import AddEditContent from "./modules/ContentType/components/AddEdit";
-import Theme from "../website";
+import Auth from "@modules/Auth";
 import DataProvider from "./providers/DataProvider";
 
 // routes

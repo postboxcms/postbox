@@ -7,7 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 // layout
 import { useCSS } from "../../../hooks/css";
 
-const ActionsButton = () => {
+export const ActionsButton = () => {
     const classes = useCSS();
     return (
         <div>

@@ -1,9 +1,8 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
-import { theme } from "./theme";
-import Engine from "./engine";
-import { setup } from "./setup";
+import { setup, theme } from "@app/init";
+import Engine from "@app/engine";
 
 if (document.getElementById("app")) {
     setup();

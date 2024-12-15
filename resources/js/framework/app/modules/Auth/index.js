@@ -16,7 +16,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "../../theme";
+import { theme } from "../../init/theme";
 
 import { api } from "../../utils";
 import { useAuthentication } from "../../hooks/auth";

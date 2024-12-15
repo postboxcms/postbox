@@ -10,7 +10,7 @@ import {
     getWebsiteName,
 } from "../../app/modules/Settings/reducers/site";
 
-const Navbar = () => {
+export const Header = () => {
     const classes = useLayoutCSS();
     const websiteName = useSelector(getWebsiteName);
     const websiteLogo = useSelector(getWebsiteLogo);
@@ -41,4 +41,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default Header;
