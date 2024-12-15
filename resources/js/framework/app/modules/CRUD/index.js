@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Frame } from "../../ui/layout/Frame";
-import { useAuthentication } from "../../hooks/auth";
+import { Card, Frame } from "@ui/layout/Frame";
+import { useAuthentication } from "@app/hooks/auth";
 import Body from "./components/Body";
 
 const CRUD = (props) => {

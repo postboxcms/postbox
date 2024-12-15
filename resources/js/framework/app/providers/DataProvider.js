@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setContentTypes } from "../modules/ContentType/reducers/contentTypes";
-import { useAuthentication } from "../hooks/auth";
-import { getToken } from "../modules/Auth/reducers/jwt";
+import { setContentTypes } from "@modules/ContentType/reducers/contentTypes";
+import { useAuthentication } from "@app/hooks";
+import { getToken } from "@modules/Auth/reducers/jwt";
 import {
     setWebsiteLogo,
     setWebsiteName,
     setWebsiteStatus,
     setWebsiteTitle,
-} from "../modules/Settings/reducers/site";
+} from "@modules/Settings/reducers/site";
 
 const DataProvider = ({ children }) => {
     const auth = useAuthentication();

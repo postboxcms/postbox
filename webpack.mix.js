@@ -16,8 +16,9 @@ mix.webpackConfig({
    resolve: {
       alias: {
          '@app': path.resolve(__dirname, 'resources/js/framework/app'),
-         '@ui': path.resolve(__dirname, 'resources/js/framework/app/ui'),
          '@modules': path.resolve(__dirname, 'resources/js/framework/app/modules'),
+         '@providers': path.resolve(__dirname, 'resources/js/framework/app/providers'),
+         '@ui': path.resolve(__dirname, 'resources/js/framework/app/ui'),
          '@website': path.resolve(__dirname, 'resources/js/framework/website'),
       }
    }

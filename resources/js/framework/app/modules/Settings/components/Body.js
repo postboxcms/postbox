@@ -1,8 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCSS } from "../../../hooks/css";
 import {
     Button,
     Checkbox,
@@ -12,9 +9,10 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { useAuthentication } from "../../../hooks/auth";
-import { useNotifier } from "../../../hooks/notifications";
-import { IOSSwitch } from "../../../utils/elements";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCSS, useAuthentication, useNotifier } from "@app/hooks";
+import { IOSSwitch } from "@app/utils";
 import {
     getWebsiteLogo,
     getWebsiteName,
@@ -24,9 +22,9 @@ import {
     setWebsiteName,
     setWebsiteStatus,
     setWebsiteTitle,
-} from "../reducers/site";
-import ImageUploader from "../../../ui/elements/ImageUploader";
-import Title from "../../../ui/elements/Title";
+} from "@modules/Settings/reducers/site";
+import ImageUploader from "@ui/elements/ImageUploader";
+import Title from "@ui/elements/Title";
 
 const Body = (props) => {
     const [title, setTitle] = React.useState("");
