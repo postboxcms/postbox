@@ -1,30 +1,26 @@
 import * as React from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import axios from "axios";
+
+import { ThemeProvider } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "../../init/theme";
 
-import { api } from "../../utils";
-import { useAuthentication } from "../../hooks/auth";
-import { useNotifier } from "../../hooks/notifications";
+import { theme } from "@app/init/theme";
+import { api } from "@app/utils";
+import { useAuthentication, useNotifier, useNavigation } from "@app/hooks";
+import Copyright from "@ui/elements/Copyright";
+
 import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "./reducers/jwt";
-
-import Copyright from "../../ui/elements/Copyright";
-import { useNavigation } from "../../hooks/navigation";
 
 const Auth = (props) => {
     // const history = useHistory();
