@@ -37,7 +37,7 @@ const Auth = (props) => {
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
         axios
-            .post(api.url + "/Login", data)
+            .post(api.url + "/login", data)
             .then((response) => {
                 const token = response.data.token;
                 const user = response.data.user;
