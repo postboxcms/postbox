@@ -181,7 +181,7 @@ const Body = (props) => {
         setLoader(true);
         if (e.target.value !== "") {
             setRows([]);
-            auth.get("/CRUD/" + e.target.value).then((response) => {
+            auth.get("/crud/" + e.target.value).then((response) => {
                 console.log(response.data.fields)
                 setRows(response.data.fields);
                 setLoader(false);
@@ -211,7 +211,7 @@ const Body = (props) => {
     };
 
     const saveField = (data) => {
-        auth.post("/CRUD", data).then((response) =>
+        auth.post("/crud", data).then((response) =>
             notify(response.data.message)
         );
     };

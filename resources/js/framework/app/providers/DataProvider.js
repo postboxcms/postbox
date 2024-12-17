@@ -18,12 +18,12 @@ const DataProvider = ({ children }) => {
     React.useEffect(() => {
         if (token) {
             // set content type data
-            auth.get("/ContentType").then((response) => {
+            auth.get("/ctype").then((response) => {
                 dispatch(setContentTypes(response.data));
             });
         }
         // set website data
-        auth.get("/Website").then((res) => {
+        auth.get("/website").then((res) => {
             const settings = res?.data?.data;
             settings.map((item) => {
                 switch (item.property) {

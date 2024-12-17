@@ -23,10 +23,10 @@ use App\Http\Modules\Website\Controller as Website;
 * Auth type: OAuth
 * Service: Laravel Passport
 */
-Route::get('/Login', function () {
+Route::get('/login', function () {
     return response()->json(['message' => trans('auth.unauthorised', ['app' => env('APP_NAME')])]);
 })->name('login');
-Route::get('/VerifyToken', function () {
+Route::get('/token', function () {
     return auth()->guard('api')->check();
 })->middleware('auth:api');
 
@@ -34,14 +34,14 @@ Route::get('/VerifyToken', function () {
 * Auth type: OAuth
 * Service: Laravel Passport
 */
-Route::post('/Login', [OAuth::class, 'login']);
-Route::post('/Logout', [OAuth::class, 'logout'])->middleware('auth:api');
-Route::post('/Register', [OAuth::class, 'register']);
+Route::post('/login', [OAuth::class, 'login']);
+Route::post('/logout', [OAuth::class, 'logout'])->middleware('auth:api');
+Route::post('/register', [OAuth::class, 'register']);
 
 // api routes
-Route::apiResource('/ContentType', ContentType::class)->middleware('auth:api');
-Route::apiResource('/CRUD', CRUD::class)->middleware('auth:api');
-Route::apiResource('/Settings', Settings::class)->middleware('auth:api');
+Route::apiResource('/ctype', ContentType::class)->middleware('auth:api');
+Route::apiResource('/crud', CRUD::class)->middleware('auth:api');
+Route::apiResource('/settings', Settings::class)->middleware('auth:api');
 
 // website routes
-Route::apiResource('/Website', Website::class);
+Route::apiResource('/website', Website::class);

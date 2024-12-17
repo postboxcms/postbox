@@ -35,7 +35,7 @@ const List = (props) => {
     };
 
     React.useEffect(() => {
-        auth.get('/CRUD' + props['path'])
+        auth.get('/crud' + props['path'])
             .then((response) => {
                 const columnData = response.data.columns;
                 columnData.push({
@@ -46,7 +46,7 @@ const List = (props) => {
                     renderCell: () => <ActionsButton />
                 });
 
-                auth.get('/ContentType' + props['path'])
+                auth.get('/ctype' + props['path'])
                     .then(response => {
                         const dataset = [];
                         setData(response.data.content_type);

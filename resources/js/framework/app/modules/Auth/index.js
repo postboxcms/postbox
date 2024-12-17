@@ -57,7 +57,7 @@ const Auth = (props) => {
 
     React.useEffect(() => {
         if (props.mode == "logout") {
-            auth.post("/Logout", {}).then(() => {
+            auth.post("/logout", {}).then(() => {
                 dispatch(unsetToken(token));
                 dispatch(unsetUser(user));
                 navigate(api.loginUrl);

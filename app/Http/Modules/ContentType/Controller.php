@@ -66,11 +66,11 @@ class Controller extends Framework
      * @param  \App\Models\ContentType  $contentType
      * @return \Illuminate\Http\Response
      */
-    public function show(ContentType $ContentType)
+    public function show(ContentType $ctype)
     {
         // show content type info
         return response([
-            'content_type'  => new ContentTypeResource($ContentType),
+            'content_type'  => new ContentTypeResource($ctype),
             'message'       => trans('content_type.success')
         ],200);
     }
