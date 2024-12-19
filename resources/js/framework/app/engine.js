@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { ContentType, AddEditContent } from "@modules/ContentType";
+import { Entity, AddEditContent } from "@modules/Entity";
 import { Theme } from "@website";
 // routes
 import { PrivateRoute, ProtectedRoute, PublicRoute } from "@app/routes";
@@ -98,7 +98,7 @@ const Engine = () => {
                                                 <Frameset
                                                     title={route.title}
                                                     path={"/" + route.name}
-                                                    controller={ContentType}
+                                                    controller={Entity}
                                                 />
                                             </PrivateRoute>
                                             <PrivateRoute

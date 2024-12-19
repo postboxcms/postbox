@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setContentTypes } from "@modules/ContentType/reducers/contentTypes";
+import { setContentTypes } from "@modules/Entity/reducers/contentTypes";
 import { useAuthentication } from "@app/hooks";
 import { getToken } from "@modules/Auth/reducers/jwt";
 import {
@@ -18,7 +18,7 @@ const DataProvider = ({ children }) => {
     React.useEffect(() => {
         if (token) {
             // set content type data
-            auth.get("/ctype").then((response) => {
+            auth.get("/entity").then((response) => {
                 dispatch(setContentTypes(response.data));
             });
         }

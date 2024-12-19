@@ -5,7 +5,7 @@ import { Card, Frame, Body, DataCard } from "../../ui/layout/Frame";
 
 import Placeholder, { Loader } from "../../ui/elements/Placeholder";
 import { useCSS } from "../../hooks/css";
-import { getContentTypes } from "../ContentType/reducers/contentTypes";
+import { getContentTypes } from "../Entity/reducers/contentTypes";
 
 
 const Dashboard = (props) => {

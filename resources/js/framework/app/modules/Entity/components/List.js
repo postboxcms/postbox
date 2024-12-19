@@ -46,7 +46,7 @@ const List = (props) => {
                     renderCell: () => <ActionsButton />
                 });
 
-                auth.get('/ctype' + props['path'])
+                auth.get('/entity' + props['path'])
                     .then(response => {
                         const dataset = [];
                         setData(response.data.content_type);

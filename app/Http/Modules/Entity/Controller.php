@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Modules\ContentType;
+namespace App\Http\Modules\Entity;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Modules\Framework;
 
-use App\Http\Resources\ContentType as ContentTypeResource;
-use App\Models\ContentType as ContentType;
+use App\Http\Resources\Entity as ContentTypeResource;
+use App\Models\Entity as Entity;
 
 class Controller extends Framework
 {
     protected $data;
     protected $tableFields;
-    protected $contentType;
+    protected $entity;
     protected $contentTypes;
     protected $validator;
 
@@ -26,7 +26,7 @@ class Controller extends Framework
     public function index()
     {
         // show all content types
-        $this->contentTypes = ContentType::where('status',1)->get();
+        $this->contentTypes = Entity::where('status',1)->get();
         return response([
             'content_types' => ContentTypeResource::collection($this->contentTypes),
             'message'       => trans('content_type.success')
@@ -39,7 +39,7 @@ class Controller extends Framework
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Entity $entity, Request $request)
     {
         // store a content type
         $this->data = $request->all();
@@ -53,9 +53,9 @@ class Controller extends Framework
             return response(['message' => $this->validator->errors(),trans('content_types.validationerror')]);
         }
 
-        $this->contentType = ContentType::create($this->data);
+        $this->entity = Entity::create($this->data);
         return response([
-            'content_type'  => new ContentTypeResource($this->contentType),
+            'content_type'  => new ContentTypeResource($this->entity),
             'message'       => trans('content_type.success')
         ],200);
     }
@@ -63,14 +63,14 @@ class Controller extends Framework
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ContentType  $contentType
+     * @param  \App\Models\Entity  $entity
      * @return \Illuminate\Http\Response
      */
-    public function show(ContentType $ctype)
+    public function show(Entity $entity)
     {
         // show content type info
         return response([
-            'content_type'  => new ContentTypeResource($ctype),
+            'content_type'  => new ContentTypeResource($entity),
             'message'       => trans('content_type.success')
         ],200);
     }
@@ -79,16 +79,16 @@ class Controller extends Framework
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ContentType  $contentType
+     * @param  \App\Models\Entity  $entity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ContentType $ContentType)
+    public function update(Request $request, Entity $entity)
     {
         // update content type info
-        $ContentType->update($request->all());
+        $entity->update($request->all());
 
         return response([
-            'content_type'  => new ContentTypeResource($ContentType),
+            'content_type'  => new ContentTypeResource($entity),
             'message'       => trans('content_type.success')
         ],200);
     }
@@ -96,13 +96,13 @@ class Controller extends Framework
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ContentType  $contentType
+     * @param  \App\Models\Entity  $entity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContentType $ContentType)
+    public function destroy(Entity $entity)
     {
         // destroy a content type
-        $ContentType->delete();
+        $entity->delete();
 
         return response(['message' => trans('content_type.delete')],200);
     }

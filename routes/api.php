@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Modules\Auth\Controller as OAuth;
-use App\Http\Modules\ContentType\Controller as ContentType;
+use App\Http\Modules\Entity\Controller as Entity;
 use App\Http\Modules\CRUD\Controller as CRUD;
 use App\Http\Modules\Settings\Controller as Settings;
 use App\Http\Modules\Website\Controller as Website;
@@ -39,7 +39,7 @@ Route::post('/logout', [OAuth::class, 'logout'])->middleware('auth:api');
 Route::post('/register', [OAuth::class, 'register']);
 
 // api routes
-Route::apiResource('/ctype', ContentType::class)->middleware('auth:api');
+Route::apiResource('/entity', Entity::class)->middleware('auth:api');
 Route::apiResource('/crud', CRUD::class)->middleware('auth:api');
 Route::apiResource('/settings', Settings::class)->middleware('auth:api');
 

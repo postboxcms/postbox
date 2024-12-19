@@ -19,7 +19,7 @@ import NavLink from "./NavLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { api } from "../../utils/constants";
-import { getContentTypes } from "../../modules/ContentType/reducers/contentTypes";
+import { getContentTypes } from "../../modules/Entity/reducers/contentTypes";
 
 export const MainItems = React.memo((props) => {
     const location = useLocation();

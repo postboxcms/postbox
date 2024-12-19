@@ -3,7 +3,7 @@ import React from "react";
 import { Card, Frame } from "@ui/layout/Frame";
 import Body from "./components/Body";
 
-export const ContentType = (props) => {
+export const Entity = (props) => {
     return (
         <Frame>
             <Card xs={12}>
@@ -13,4 +13,4 @@ export const ContentType = (props) => {
     );
 }
 
-export default ContentType;
+export default Entity;

@@ -231,9 +231,9 @@ const Body = (props) => {
                     >
                         <MenuItem value="">Content Type</MenuItem>
                         {props["content_types"]
-                            ? props["content_types"].map((ctype, i) => (
-                                <MenuItem key={ctype.id} value={ctype.slug}>
-                                    {ctype.name}
+                            ? props["content_types"].map((entity, i) => (
+                                <MenuItem key={entity.id} value={entity.slug}>
+                                    {entity.name}
                                 </MenuItem>
                             ))
                             : ""}
