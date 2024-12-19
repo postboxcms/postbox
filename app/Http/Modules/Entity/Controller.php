@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Http\Modules\Framework;
 
-use App\Http\Resources\Entity as ContentTypeResource;
+use App\Http\Resources\Entity as EntityResource;
 use App\Models\Entity as Entity;
 
 class Controller extends Framework
@@ -15,7 +15,7 @@ class Controller extends Framework
     protected $data;
     protected $tableFields;
     protected $entity;
-    protected $contentTypes;
+    protected $entities;
     protected $validator;
 
     /**
@@ -26,10 +26,10 @@ class Controller extends Framework
     public function index()
     {
         // show all content types
-        $this->contentTypes = Entity::where('status',1)->get();
+        $this->entities = Entity::where('status',1)->get();
         return response([
-            'content_types' => ContentTypeResource::collection($this->contentTypes),
-            'message'       => trans('content_type.success')
+            'entities' => EntityResource::collection($this->entities),
+            'message'       => trans('entity.success')
         ],200);
     }
 
@@ -50,13 +50,13 @@ class Controller extends Framework
         ]);
 
         if($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(),trans('content_types.validationerror')]);
+            return response(['message' => $this->validator->errors(),trans('entities.validationerror')]);
         }
 
         $this->entity = Entity::create($this->data);
         return response([
-            'content_type'  => new ContentTypeResource($this->entity),
-            'message'       => trans('content_type.success')
+            'entity'  => new EntityResource($this->entity),
+            'message'       => trans('entity.success')
         ],200);
     }
 
@@ -70,8 +70,8 @@ class Controller extends Framework
     {
         // show content type info
         return response([
-            'content_type'  => new ContentTypeResource($entity),
-            'message'       => trans('content_type.success')
+            'entity'  => new EntityResource($entity),
+            'message'       => trans('entity.success')
         ],200);
     }
 
@@ -88,8 +88,8 @@ class Controller extends Framework
         $entity->update($request->all());
 
         return response([
-            'content_type'  => new ContentTypeResource($entity),
-            'message'       => trans('content_type.success')
+            'entity'  => new EntityResource($entity),
+            'message'       => trans('entity.success')
         ],200);
     }
 
@@ -104,6 +104,6 @@ class Controller extends Framework
         // destroy a content type
         $entity->delete();
 
-        return response(['message' => trans('content_type.delete')],200);
+        return response(['message' => trans('entity.delete')],200);
     }
 }

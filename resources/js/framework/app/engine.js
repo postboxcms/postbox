@@ -10,7 +10,7 @@ import { PrivateRoute, ProtectedRoute, PublicRoute } from "@app/routes";
 // variables
 import { api } from "@app/utils";
 // route manager
-import { adminRoutes, authRoutes, contentTypeRoutes } from "@app/routes/data";
+import { adminRoutes, authRoutes, entityRoutes } from "@app/routes/data";
 // store
 import { store, persistor } from "@app/store";
 // layout
@@ -81,8 +81,8 @@ const Engine = () => {
                                     );
                                 });
                             })}
-                            {/* content_type routes */}
-                            {contentTypeRoutes.map((routes) => {
+                            {/* entity routes */}
+                            {entityRoutes.map((routes) => {
                                 return Object.keys(routes).map((type, key) => {
                                     const route = routes[type];
                                     return (

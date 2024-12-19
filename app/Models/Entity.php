@@ -11,7 +11,7 @@ class Entity extends Model
 
     protected $fillable = ['name','description','icon','slug'];
 
-    protected $table = 'content_types';
+    protected $table = 'entities';
 
     public function getRouteKeyName() {
         return 'slug';

@@ -177,7 +177,7 @@ const Body = (props) => {
         },
     ];
 
-    const setContentType = (e) => {
+    const setEntity = (e) => {
         setLoader(true);
         if (e.target.value !== "") {
             setRows([]);
@@ -225,13 +225,13 @@ const Body = (props) => {
                 </Title>
                 <FormControl className="dropdown" sx={{ m: 1, minWidth: 120 }}>
                     <Select
-                        onChange={setContentType}
+                        onChange={setEntity}
                         defaultValue=""
                         displayEmpty
                     >
                         <MenuItem value="">Content Type</MenuItem>
-                        {props["content_types"]
-                            ? props["content_types"].map((entity, i) => (
+                        {props["entities"]
+                            ? props["entities"].map((entity, i) => (
                                 <MenuItem key={entity.id} value={entity.slug}>
                                     {entity.name}
                                 </MenuItem>

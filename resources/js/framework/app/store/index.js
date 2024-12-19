@@ -3,12 +3,12 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 
 import jwtReducer from "../modules/Auth/reducers/jwt";
-import contentTypesReducer from "../modules/Entity/reducers/contentTypes";
+import entitiesReducer from "../modules/Entity/reducers/entities";
 import siteReducer from "../modules/Settings/reducers/site";
 
 const rootReducer = combineReducers({
     jwt: jwtReducer,
-    contentTypes: contentTypesReducer,
+    entities: entitiesReducer,
     site: siteReducer
 });
 const persistConfig = {

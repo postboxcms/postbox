@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setContentTypes } from "@modules/Entity/reducers/contentTypes";
+import { setEntitys } from "@modules/Entity/reducers/entities";
 import { useAuthentication } from "@app/hooks";
 import { getToken } from "@modules/Auth/reducers/jwt";
 import {
@@ -19,7 +19,7 @@ const DataProvider = ({ children }) => {
         if (token) {
             // set content type data
             auth.get("/entity").then((response) => {
-                dispatch(setContentTypes(response.data));
+                dispatch(setEntitys(response.data));
             });
         }
         // set website data

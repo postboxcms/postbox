@@ -49,8 +49,8 @@ const List = (props) => {
                 auth.get('/entity' + props['path'])
                     .then(response => {
                         const dataset = [];
-                        setData(response.data.content_type);
-                        response.data.content_type.data.map((data) => {
+                        setData(response.data.entity);
+                        response.data.entity.data.map((data) => {
                             const rowdata = {};
                             const dataKeys = Object.keys(data);
                             const dataValues = Object.values(data);
