@@ -4,6 +4,8 @@ namespace App\Http\Modules\Entity;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Modules\Framework;
 
@@ -43,6 +45,14 @@ class Controller extends Framework
     {
         // store a content type
         $this->data = $request->all();
+        if(Schema::hasTable($this->data['name'])) {
+            try {
+                DB::table($this->data['name'])->insert($this->data);
+                return response(['message' => 'Entity '.$this->data['name'].' exists']);    
+            } catch(\Exception $e) {
+                return response(['error' => 'DB Error: '. $e->getMessage()]);
+            }
+        }
         $this->validator = Validator::make($this->data, [
             'name'          => 'required|max:50',
             'description'   => 'max:191',
