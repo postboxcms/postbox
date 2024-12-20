@@ -13,5 +13,8 @@ return [
     */
     'success'           => 'Content type updated successfully!',
     'validationerror'   => 'Validation failed',
+    'entityexception'   => 'Entity Exception',
+    'entitysuccess'     => 'Entity data :name added successfully',
+    'entityexists'      => 'Entity :name exists',
     'delete'            => 'Content type deleted successfully!'
 ];
