@@ -4,6 +4,8 @@ namespace App\Http\Modules\Entity;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Modules\Framework;
 
@@ -13,6 +15,7 @@ use App\Models\Entity as Entity;
 class Controller extends Framework
 {
     protected $data;
+    protected $table;
     protected $tableFields;
     protected $entity;
     protected $entities;
@@ -26,11 +29,11 @@ class Controller extends Framework
     public function index()
     {
         // show all content types
-        $this->entities = Entity::where('status',1)->get();
+        $this->entities = Entity::where('status', 1)->get();
         return response([
             'entities' => EntityResource::collection($this->entities),
-            'message'       => trans('entity.success')
-        ],200);
+            'message' => trans('entity.success')
+        ], 200);
     }
 
     /**
@@ -43,21 +46,31 @@ class Controller extends Framework
     {
         // store a content type
         $this->data = $request->all();
+        $this->table = $this->data['name'];
+        if (Schema::hasTable($this->data['name'])) {
+            try {
+                unset($this->data['name']);
+                DB::table($this->table)->insert($this->data);
+                return response(['message' => trans('entity.entitysuccess', ['name' => $this->table])]);
+            } catch (\Exception $e) {
+                return response(['error' => trans('entity.entityexception') . ': ' . $e->getMessage()]);
+            }
+        }
         $this->validator = Validator::make($this->data, [
-            'name'          => 'required|max:50',
-            'description'   => 'max:191',
-            'icon'          => 'required'
+            'name' => 'required|max:50',
+            'description' => 'max:191',
+            'icon' => 'required'
         ]);
 
-        if($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(),trans('entities.validationerror')]);
+        if ($this->validator->fails()) {
+            return response(['message' => $this->validator->errors(), trans('entity.validationerror')]);
         }
 
         $this->entity = Entity::create($this->data);
         return response([
-            'entity'  => new EntityResource($this->entity),
-            'message'       => trans('entity.success')
-        ],200);
+            'entity' => new EntityResource($this->entity),
+            'message' => trans('entity.success')
+        ], 200);
     }
 
     /**
@@ -70,9 +83,9 @@ class Controller extends Framework
     {
         // show content type info
         return response([
-            'entity'  => new EntityResource($entity),
-            'message'       => trans('entity.success')
-        ],200);
+            'entity' => new EntityResource($entity),
+            'message' => trans('entity.success')
+        ], 200);
     }
 
     /**
@@ -88,9 +101,9 @@ class Controller extends Framework
         $entity->update($request->all());
 
         return response([
-            'entity'  => new EntityResource($entity),
-            'message'       => trans('entity.success')
-        ],200);
+            'entity' => new EntityResource($entity),
+            'message' => trans('entity.success')
+        ], 200);
     }
 
     /**
@@ -104,6 +117,6 @@ class Controller extends Framework
         // destroy a content type
         $entity->delete();
 
-        return response(['message' => trans('entity.delete')],200);
+        return response(['message' => trans('entity.delete')], 200);
     }
 }
