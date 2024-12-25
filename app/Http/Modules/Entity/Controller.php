@@ -5,8 +5,6 @@ namespace App\Http\Modules\Entity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
-
 use App\Http\Modules\Framework;
 
 use App\Http\Resources\Entity as EntityResource;
@@ -42,7 +40,7 @@ class Controller extends Framework
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Entity $entity, Request $request)
+    public function store(Request $request)
     {
         // store a content type
         try {
@@ -51,7 +49,7 @@ class Controller extends Framework
             if (Schema::hasTable($this->data['name'])) {
                 try {
                     unset($this->data['name']);
-                    DB::table($this->table)->insert($this->data);
+                    $this->performDBOperations($this->table, 'insert', $this->data);
                     return response(['message' => trans('entity.added', ['name' => $this->table])]);
                 } catch (\Exception $e) {
                     return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])]);
