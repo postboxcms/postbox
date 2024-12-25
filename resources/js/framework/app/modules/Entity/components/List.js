@@ -1,10 +1,14 @@
 import React from "react";
-// elements
+
 import { DataGrid } from "@mui/x-data-grid";
-import Button from "@mui/material/Button";
-// icons
+import { FormControlLabel } from "@mui/material";
+
 import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { IOSSwitch } from "@app/utils/elements";
 // layout
 import Title from "../../../ui/elements/Title";
 import { useCSS } from "../../../hooks/css";
@@ -30,52 +34,95 @@ const List = (props) => {
         typeof data["icon"] !== typeof undefined ? data["icon"] : "square";
 
     const addContent = (props) => {
-        navigate(`/${props['title']?.toLowerCase()}/add`);
+        navigate(`/${props["title"]?.toLowerCase()}/add`);
         console.log("add new content");
     };
 
     React.useEffect(() => {
-        auth.get('/crud' + props['path'])
-            .then((response) => {
-                const columnData = response.data.columns;
-                columnData.push({
-                    field: 'actions',
-                    headerName: 'ACTIONS',
-                    headerClassName: 'table-header-light',
-                    flex: 1,
-                    renderCell: () => <ActionsButton />
-                });
+        auth.get("/crud" + props["path"]).then((response) => {
+            const columnData = response.data.columns;
+            columnData.push({
+                field: "actions",
+                headerName: "ACTIONS",
+                headerClassName: "table-header-light",
+                flex: 1,
+                renderCell: () => <ActionsButton />,
+            });
 
-                auth.get('/entity' + props['path'])
-                    .then(response => {
-                        const dataset = [];
-                        setData(response.data.entity);
-                        response.data.entity.data.map((data) => {
-                            const rowdata = {};
-                            const dataKeys = Object.keys(data);
-                            const dataValues = Object.values(data);
-                            dataKeys.forEach((parameter, index) => {
-                                rowdata[parameter] = dataValues[index].value;
-                                if (dataValues[index].type == "image") {
-                                    columnData.forEach((column) => {
-                                        if (column['field'] == parameter) {
-                                            column['cellClassName'] = "grid-image-column";
-                                            if (rowdata[parameter] == null || rowdata[parameter] == "") {
-                                                column['renderCell'] = () => <FontAwesomeIcon icon={"image"} size='lg' />;
-                                            } else {
-                                                column['renderCell'] = () => <img src={dataValues[index].value} className="cell-image" />;
-                                            }
-                                        }
-                                    });
+            auth.get("/entity" + props["path"]).then((response) => {
+                const dataset = [];
+                setData(response.data.entity);
+                response.data.entity.data.map((data) => {
+                    const rowdata = {};
+                    const dataKeys = Object.keys(data);
+                    const dataValues = Object.values(data);
+                    dataKeys.forEach((parameter, index) => {
+                        rowdata[parameter] = dataValues[index].value;
+                        if (dataValues[index].type == "image") {
+                            columnData.forEach((column) => {
+                                if (column["field"] == parameter) {
+                                    column["cellClassName"] =
+                                        "grid-image-column";
+                                    if (
+                                        rowdata[parameter] == null ||
+                                        rowdata[parameter] == ""
+                                    ) {
+                                        column["renderCell"] = () => (
+                                            <FontAwesomeIcon
+                                                icon={"image"}
+                                                size="lg"
+                                            />
+                                        );
+                                    } else {
+                                        column["renderCell"] = () => (
+                                            <img
+                                                src={dataValues[index].value}
+                                                className="cell-image"
+                                            />
+                                        );
+                                    }
                                 }
                             });
-                            dataset.push(rowdata);
-                        });
-                        setRows(dataset);
-                        setColumns(columnData);
+                        }
+                        if (dataValues[index].type == "radio") {
+                            columnData.forEach((column) => {
+                                if (column["field"] == parameter) {
+                                    column["cellClassName"] =
+                                        "grid-image-column";
+                                    column["renderCell"] = () => (
+                                        <>
+                                            <FormControlLabel
+                                                onChange={(event) =>
+                                                    // updateCell(event, params)
+                                                    console.log(event)
+                                                }
+                                                control={
+                                                    <IOSSwitch
+                                                        sx={{ m: 1 }}
+                                                        checked={
+                                                            dataValues[index].value
+                                                                ? Boolean(
+                                                                    dataValues[index].value
+                                                                  )
+                                                                : false
+                                                        }
+                                                    />
+                                                }
+                                                label=""
+                                            />
+                                        </>
+                                    );
+                                }
+                            });
+                        }
                     });
+                    dataset.push(rowdata);
+                });
+                setRows(dataset);
+                setColumns(columnData);
             });
-    }, [props['path']]);
+        });
+    }, [props["path"]]);
 
     return (
         <React.Fragment>
