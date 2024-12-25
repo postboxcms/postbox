@@ -11,10 +11,11 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'success'           => 'Content type updated successfully!',
-    'validationerror'   => 'Validation failed',
-    'entityexception'   => 'Entity Exception',
-    'entitysuccess'     => 'Entity data :name added successfully',
-    'entityexists'      => 'Entity :name exists',
-    'delete'            => 'Content type deleted successfully!'
+    'success'           => 'Entity data updated successfully',
+    'fetched'           => 'Entity data fetched successfully',
+    'validationerror'   => 'Entity validation failed',
+    'exception'         => 'Entity exception: :message',
+    'added'             => 'Entity data :name added successfully',
+    'exists'            => 'Entity :name exists',
+    'delete'            => 'Entity deleted successfully'
 ];
