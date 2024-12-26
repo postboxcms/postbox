@@ -57,6 +57,7 @@ const List = (props) => {
                     const dataKeys = Object.keys(data);
                     const dataValues = Object.values(data);
                     dataKeys.forEach((parameter, index) => {
+                        dataValues[index]['field'] = parameter;
                         rowdata[parameter] = dataValues[index].value;
                         if (dataValues[index].type == "image") {
                             columnData.forEach((column) => {
