@@ -104,6 +104,7 @@ const Body = (props) => {
                                 value={params.value ? params.value : "hidden"}
                                 onChange={(event) => updateCell(event, params)}
                             >
+                                <MenuItem value="index">Index</MenuItem>
                                 <MenuItem value="hidden">Hidden</MenuItem>
                                 <MenuItem value="text">Text</MenuItem>
                                 <MenuItem value="email">Email</MenuItem>
