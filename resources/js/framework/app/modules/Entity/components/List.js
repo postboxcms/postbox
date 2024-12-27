@@ -52,13 +52,16 @@ const List = (props) => {
             auth.get("/entity" + props["path"]).then((response) => {
                 const dataset = [];
                 setData(response.data.entity);
+
                 response.data.entity.data.map((data) => {
                     const rowdata = {};
                     const dataKeys = Object.keys(data);
                     const dataValues = Object.values(data);
+
                     dataKeys.forEach((parameter, index) => {
                         dataValues[index]['field'] = parameter;
                         rowdata[parameter] = dataValues[index].value;
+
                         if (dataValues[index].type == "image") {
                             columnData.forEach((column) => {
                                 if (column["field"] == parameter) {
@@ -75,9 +78,9 @@ const List = (props) => {
                                             />
                                         );
                                     } else {
-                                        column["renderCell"] = () => (
+                                        column["renderCell"] = (params) => (
                                             <img
-                                                src={dataValues[index].value}
+                                                src={params.value}
                                                 className="cell-image"
                                             />
                                         );
@@ -90,22 +93,18 @@ const List = (props) => {
                                 if (column["field"] == parameter) {
                                     column["cellClassName"] =
                                         "grid-image-column";
-                                    column["renderCell"] = () => (
+                                    column["renderCell"] = (params) => (
                                         <>
                                             <FormControlLabel
                                                 onChange={(event) =>
                                                     // updateCell(event, params)
-                                                    console.log(event)
+                                                    console.log(params)
                                                 }
                                                 control={
                                                     <IOSSwitch
                                                         sx={{ m: 1 }}
                                                         checked={
-                                                            dataValues[index].value
-                                                                ? Boolean(
-                                                                    dataValues[index].value
-                                                                  )
-                                                                : false
+                                                            Boolean(params?.value)
                                                         }
                                                     />
                                                 }
@@ -117,8 +116,10 @@ const List = (props) => {
                             });
                         }
                     });
+
                     dataset.push(rowdata);
                 });
+
                 setRows(dataset);
                 setColumns(columnData);
             });
