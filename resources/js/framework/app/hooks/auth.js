@@ -19,8 +19,16 @@ export const useAuthentication = () => {
             }
         });
     }
+    const put = (url, data) => {
+        return axios.put(api.url + url, data, {
+            headers:{
+                Authorization: 'Bearer ' + token
+            }
+        });
+    }
     return {
         get,
-        post
+        post,
+        put
     }
 }

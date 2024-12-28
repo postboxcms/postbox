@@ -45,33 +45,35 @@ class Controller extends Framework
         // store a content type
         try {
             $this->data = $request->all();
-            $this->table = $this->data['name'];
-            if (Schema::hasTable($this->data['name'])) {
+            $this->table = $this->data['module'];
+            if (Schema::hasTable($this->data['module'])) {
                 try {
-                    unset($this->data['name']);
+                    unset($this->data['module']);
                     $this->performDBOperations($this->table, 'insert', $this->data);
-                    return response(['message' => trans('entity.added', ['name' => $this->table])]);
+                    return response(['message' => trans('entity.added', ['name' => $this->table])],200);
                 } catch (\Exception $e) {
-                    return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])]);
+                    return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])],400);
                 }
             }
-            $this->validator = Validator::make($this->data, [
-                'name' => 'required|max:50',
-                'description' => 'max:191',
-                'icon' => 'required'
-            ]);
+            return response(['error' => trans('entity.validationerror')],400);
 
-            if ($this->validator->fails()) {
-                return response(['message' => $this->validator->errors(), trans('entity.validationerror')]);
-            }
+            // $this->validator = Validator::make($this->data, [
+            //     'name' => 'required|max:50',
+            //     'description' => 'max:191',
+            //     'icon' => 'required'
+            // ]);
 
-            $this->entity = Entity::create($this->data);
-            return response([
-                'entity' => new EntityResource($this->entity),
-                'message' => trans('entity.success')
-            ], 200);
-        } catch(\Exception $e) {
-            return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])]);
+            // if ($this->validator->fails()) {
+            //     return response(['message' => $this->validator->errors(), trans('entity.validationerror')]);
+            // }
+
+            // $this->entity = Entity::create($this->data);
+            // return response([
+            //     'entity' => new EntityResource($this->entity),
+            //     'message' => trans('entity.success')
+            // ], 200);
+        } catch (\Exception $e) {
+            return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])],500);
         }
     }
 
@@ -100,12 +102,18 @@ class Controller extends Framework
     public function update(Request $request, Entity $entity)
     {
         // update content type info
-        $entity->update($request->all());
+        try {
+            $entity->update($request->all());
 
-        return response([
-            'entity' => new EntityResource($entity),
-            'message' => trans('entity.success')
-        ], 200);
+            return response([
+                'entity' => new EntityResource($entity),
+                'message' => trans('entity.success')
+            ], 200);
+        } catch (\Exception $e) {
+            return response([
+                'error' => $e->getMessage()
+            ],400);
+        }
     }
 
     /**

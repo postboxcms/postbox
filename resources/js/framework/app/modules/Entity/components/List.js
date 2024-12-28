@@ -8,24 +8,27 @@ import Button from "@mui/material/Button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { useNotifier, useNavigation, useAuthentication, useCSS } from "@app/hooks";
 import { IOSSwitch } from "@app/utils/elements";
 // layout
 import Title from "../../../ui/elements/Title";
-import { useCSS } from "../../../hooks/css";
 // auth manager
-import { useAuthentication } from "../../../hooks/auth";
 import NoRowsOverlay from "../../../ui/elements/NoRowsOverlay";
 import Placeholder, { Loader } from "../../../ui/elements/Placeholder";
 import ActionsButton from "./ActionsButton";
-import { useNavigation } from "../../../hooks/navigation";
 
 const List = (props) => {
     const auth = useAuthentication();
     const classes = useCSS();
     const navigate = useNavigation();
+    const notify = useNotifier();
+    const [cellFocus, setCellFocus] = React.useState(false);
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
+    const entity = props['path'];
+    const module = entity.replace('/','');
+
     const noRowsMessage =
         "No " +
         (props["title"] ? props["title"] : props["name"]) +
@@ -36,6 +39,31 @@ const List = (props) => {
     const addContent = (props) => {
         navigate(`/${props["title"]?.toLowerCase()}/add`);
         console.log("add new content");
+    };
+
+    const updateCell = (event, data) => {
+        data.row[data.field] =
+            typeof event.target.type !== typeof undefined &&
+            event.target.type == "checkbox"
+                ? event.target.checked
+                : event.target.value;
+        // data.row['module'] = module;
+        data.value = data.row[data.field];
+        data.formattedValue = data.row[data.field];
+        if (
+            typeof event.target.type === typeof undefined ||
+            event.target.type == "checkbox"
+        ) {
+            setCellFocus(!cellFocus);
+            data.api.setCellFocus(cellFocus);
+        }
+        saveField(data.row);
+    };
+
+    const saveField = (data) => {
+        auth.put(`/entity/${module}`, data).then((response) =>
+            notify(response.data.message)
+        );
     };
 
     React.useEffect(() => {
@@ -59,7 +87,7 @@ const List = (props) => {
                     const dataValues = Object.values(data);
 
                     dataKeys.forEach((parameter, index) => {
-                        dataValues[index]['field'] = parameter;
+                        dataValues[index]["field"] = parameter;
                         rowdata[parameter] = dataValues[index].value;
 
                         if (dataValues[index].type == "image") {
@@ -96,16 +124,19 @@ const List = (props) => {
                                     column["renderCell"] = (params) => (
                                         <>
                                             <FormControlLabel
-                                                onChange={(event) =>
-                                                    // updateCell(event, params)
-                                                    console.log(params)
+                                                onChange={
+                                                    (event) =>
+                                                        updateCell(
+                                                            event,
+                                                            params
+                                                        )
                                                 }
                                                 control={
                                                     <IOSSwitch
                                                         sx={{ m: 1 }}
-                                                        checked={
-                                                            Boolean(params?.value)
-                                                        }
+                                                        checked={Boolean(
+                                                            params?.value
+                                                        )}
                                                     />
                                                 }
                                                 label=""
