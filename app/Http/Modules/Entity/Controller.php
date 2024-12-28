@@ -48,14 +48,13 @@ class Controller extends Framework
             $this->table = $this->data['module'];
             if (Schema::hasTable($this->data['module'])) {
                 try {
-                    unset($this->data['module']);
                     $this->performDBOperations($this->table, 'insert', $this->data);
-                    return response(['message' => trans('entity.added', ['name' => $this->table])],200);
+                    return response(['message' => trans('entity.added', ['name' => $this->table])], 200);
                 } catch (\Exception $e) {
-                    return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])],400);
+                    return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])], 400);
                 }
             }
-            return response(['error' => trans('entity.validationerror')],400);
+            return response(['error' => trans('entity.validationerror')], 400);
 
             // $this->validator = Validator::make($this->data, [
             //     'name' => 'required|max:50',
@@ -73,7 +72,7 @@ class Controller extends Framework
             //     'message' => trans('entity.success')
             // ], 200);
         } catch (\Exception $e) {
-            return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])],500);
+            return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])], 500);
         }
     }
 
@@ -103,8 +102,10 @@ class Controller extends Framework
     {
         // update content type info
         try {
-            $entity->update($request->all());
+            $this->data = $request->all();
+            $this->table = $this->data['module'];
 
+            $this->performDBOperations($this->table, 'update', $this->data);
             return response([
                 'entity' => new EntityResource($entity),
                 'message' => trans('entity.success')
@@ -112,7 +113,7 @@ class Controller extends Framework
         } catch (\Exception $e) {
             return response([
                 'error' => $e->getMessage()
-            ],400);
+            ], 400);
         }
     }
 

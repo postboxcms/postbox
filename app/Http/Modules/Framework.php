@@ -15,10 +15,10 @@ class Framework extends BaseController
 
     protected function performDBOperations($table, $type, $data = [])
     {
-        $data['created_at'] = Carbon::now();
-        $data['updated_at'] = Carbon::now();
+        $data = $this->formatData($data);
 
         try {
+            unset($data['module']);
             switch ($type) {
                 case 'insert':
                     DB::table($table)->insert($data);
@@ -38,5 +38,12 @@ class Framework extends BaseController
         }
 
         return response(['message' => trans('database.success')]);
+    }
+
+    protected function formatData($data = []) {
+        $data['created_at'] = Carbon::now();
+        $data['updated_at'] = Carbon::now();
+
+        return $data;
     }
 }

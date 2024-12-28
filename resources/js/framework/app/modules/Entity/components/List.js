@@ -8,7 +8,12 @@ import Button from "@mui/material/Button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { useNotifier, useNavigation, useAuthentication, useCSS } from "@app/hooks";
+import {
+    useNotifier,
+    useNavigation,
+    useAuthentication,
+    useCSS,
+} from "@app/hooks";
 import { IOSSwitch } from "@app/utils/elements";
 // layout
 import Title from "../../../ui/elements/Title";
@@ -26,8 +31,8 @@ const List = (props) => {
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
-    const entity = props['path'];
-    const module = entity.replace('/','');
+    const entity = props["path"];
+    const module = entity.replace("/", "");
 
     const noRowsMessage =
         "No " +
@@ -42,22 +47,25 @@ const List = (props) => {
     };
 
     const updateCell = (event, data) => {
-        data.row[data.field] =
-            typeof event.target.type !== typeof undefined &&
-            event.target.type == "checkbox"
+        const field = [];
+        field['id'] = data.id;
+        field["module"] = module;
+        field[data.field] =
+            (typeof event.target.type !== typeof undefined &&
+                event.target.type == "checkbox") ||
+            event.target.type == "radio"
                 ? event.target.checked
                 : event.target.value;
-        // data.row['module'] = module;
-        data.value = data.row[data.field];
-        data.formattedValue = data.row[data.field];
         if (
             typeof event.target.type === typeof undefined ||
-            event.target.type == "checkbox"
+            event.target.type == "checkbox" || event.target.type == "radio"
         ) {
+            data.row[data.field] = field[data.field];
             setCellFocus(!cellFocus);
             data.api.setCellFocus(cellFocus);
         }
-        saveField(data.row);
+
+        saveField(Object.assign({},field));
     };
 
     const saveField = (data) => {
@@ -124,12 +132,8 @@ const List = (props) => {
                                     column["renderCell"] = (params) => (
                                         <>
                                             <FormControlLabel
-                                                onChange={
-                                                    (event) =>
-                                                        updateCell(
-                                                            event,
-                                                            params
-                                                        )
+                                                onChange={(event) =>
+                                                    updateCell(event, params)
                                                 }
                                                 control={
                                                     <IOSSwitch
