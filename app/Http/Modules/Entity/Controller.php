@@ -107,7 +107,7 @@ class Controller extends Framework
 
             $this->performDBOperations($this->table, 'update', $this->data);
             return response([
-                'entity' => new EntityResource($entity),
+                // 'entity' => new EntityResource($entity),
                 'message' => trans('entity.success')
             ], 200);
         } catch (\Exception $e) {
@@ -123,11 +123,22 @@ class Controller extends Framework
      * @param  \App\Models\Entity  $entity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entity $entity)
+    public function destroy(Request $request, Entity $entity)
     {
         // destroy a content type
-        $entity->delete();
+        try {
+            $this->data = $request->all();
+            $this->table = $this->data['module'];
 
-        return response(['message' => trans('entity.delete')], 200);
+            $this->performDBOperations($this->table, 'delete', $this->data);
+            return response([
+                // 'entity' => new EntityResource($entity),
+                'message' => trans('entity.delete')
+            ], 200);
+        } catch (\Exception $e) {
+            return response([
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 }

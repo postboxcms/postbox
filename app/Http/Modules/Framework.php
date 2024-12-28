@@ -27,7 +27,7 @@ class Framework extends BaseController
                     DB::table($table)->where('id', $data['id'])->update($data);
                     break;
                 case 'delete':
-                    DB::table($table)->where('id', $data['id'])->delete($data);
+                    DB::table($table)->where('id', $data['id'])->delete();
                     break;
                 default:
                     DB::table($table)->insert($data);
