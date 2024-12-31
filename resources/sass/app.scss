@@ -10,7 +10,7 @@
 // app styles
 $brand-color: rgba(31, 0, 67, 0.9);
 $brand-color-dark: rgba(31, 0, 67, 1);
-$brand-color-light: rgba(31, 0, 67, 0.7);
+$brand-color-light: rgba(31, 0, 67, 0.1);
 $brand-color-watermark: rgba(31, 0, 67, 0.3);
 
 $navbar-dark-color: #eee;
@@ -449,7 +449,7 @@ input[type="text"] {
     }
 
     svg[data-prefix="fas"] {
-        margin-left: 4px;
+        // margin-left: 4px;
     }
 }
 

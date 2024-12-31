@@ -13161,7 +13161,7 @@ a.menu-link div {
 
 svg[data-prefix=fas].fa-xl {
   font-size: 3em;
-  color: rgba(31, 0, 67, 0.7);
+  color: rgba(31, 0, 67, 0.1);
 }
 
 input[type=text] {
@@ -13443,10 +13443,6 @@ input[type=text] {
 .navbar-dark ul li {
   color: #eee !important;
 }
-.navbar-dark svg[data-prefix=fas] {
-  margin-left: 4px;
-}
-
 .table-header-light {
   text-transform: uppercase;
 }

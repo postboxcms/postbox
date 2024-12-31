@@ -1,19 +1,20 @@
 import React from "react";
 import { Typography, Link } from "@mui/material";
-import { site } from "@app/utils/constants";
+import { platform } from "@app/utils/constants";
 
 export default function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {"Copyright © "}
+            {"Brewing with "} &#10084; {" at "}
             <Link
                 color="inherit"
-                href="https://digitalbit.in"
-                underline="hover"
+                href={platform.companyURL}
+                underline="none"
+                fontWeight={"bold"}
             >
-                {site.name}
-            </Link>{" "}
-            {new Date().getFullYear()}
+                {platform.company}
+            </Link>{" since "}
+            {platform.companyYear}
             {/* {'.'} */}
         </Typography>
     );

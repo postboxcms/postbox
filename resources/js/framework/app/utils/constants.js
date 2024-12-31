@@ -16,6 +16,7 @@ export const api = {
 export const nav = {
     menuToken: process.env.MIX_MENU_TOKEN,
     userToken: process.env.MIX_USER_TOKEN,
+    maxEntityLimit: 5
 };
 export const site = {
     name: process.env.MIX_APP_NAME,
@@ -23,3 +24,8 @@ export const site = {
     themeMessage: 'Theme content goes here ...',
     comingSoonMessage: 'The website will be launching soon ...'
 };
+export const platform = {
+    company: process.env.MIX_COMPANY_NAME,
+    companyURL: process.env.MIX_COMPANY_URL,
+    companyYear: process.env.MIX_COMPANY_YEAR
+}
