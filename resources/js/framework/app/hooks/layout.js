@@ -4,7 +4,7 @@ const drawerWidth = 200;
 
 export const useLayoutCSS = makeStyles((theme) => ({
     appBar: {
-        zIndex: theme.zIndex.drawer + 1,
+        zIndex: theme.zIndex.drawer - 1,
         transition: theme.transitions.create(["width", "margin"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -44,10 +44,23 @@ export const useLayoutCSS = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing(7),
+        width: '60px',
+        minWidth: '60px',
         [theme.breakpoints.up("sm")]: {
-            width: theme.spacing(9),
+            width: '60px',
         },
+        '& ul a': {
+            margin: '10px 5px!important'
+        },
+        '& ul a > li': {
+            padding: '8px 15px!important'
+        },
+        '& ul > div > li': {
+            visibility: 'hidden'
+        },
+        '& ul a > li > div > span': {
+            visibility: 'hidden'
+        }
     },
     paper: {
         padding: theme.spacing(2),

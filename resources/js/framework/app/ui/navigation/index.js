@@ -18,18 +18,29 @@ import NavLink from "./NavLink";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { api } from "../../utils/constants";
-import { getEntitys } from "../../modules/Entity/reducers/entities";
+import { api, nav } from "@app/utils/constants";
+import { getEntitys } from "@modules/Entity/reducers/entities";
 
 export const MainItems = React.memo((props) => {
     const location = useLocation();
     const entities = useSelector(getEntitys);
-    const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings']
+    const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings'];
     const isOpen = !reservedRoutes.includes(location.pathname.split('/').pop());
     const [open, setOpen] = useState(isOpen);
+    const [isHidden, setIsHidden] = useState(false);
+    const [timeout, setTimeout] = useState("auto");
     const collapsePanel = () => {
         setOpen(!open);
     };
+
+    React.useEffect(() => {
+        const totalEntities = entities?.entities?.length;
+        if(totalEntities <= nav.maxEntityLimit) {
+            setOpen(true);
+            setIsHidden(true);
+            setTimeout(0);
+        }
+    },[]);
 
     return (
         <React.Fragment>
@@ -42,7 +53,7 @@ export const MainItems = React.memo((props) => {
                         <ListItemText primary="Dashboard" />
                     </ListItem>
                 </NavLink>
-                <NavLink to="#">
+                <NavLink hidden={isHidden} to="#">
                     <ListItem onClick={collapsePanel}>
                         <ListItemIcon>
                             <InventoryIcon />
@@ -51,7 +62,7 @@ export const MainItems = React.memo((props) => {
                         {open ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
                 </NavLink>
-                <Collapse in={open} timeout="auto">
+                <Collapse in={open} timeout={timeout}>
                     <List component="div" disablePadding>
                         {entities?.entities?.map((data) => {
                             return (
