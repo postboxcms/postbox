@@ -3,7 +3,7 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Content type Language Lines
+    | database operations
     |--------------------------------------------------------------------------
     |
     | The following language lines are used in messages during content type API calls
@@ -11,7 +11,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'success'           => 'Content type updated successfully!',
-    'validationerror'   => 'Validation failed',
-    'delete'            => 'Content type deleted successfully!'
+    'success'           => 'Database operations were successful!',
+    'error'             => 'Database operations failed!',
+    'exception'         => 'Database error: :message'
 ];

@@ -1,9 +1,9 @@
-import contentTypeRoutes from "./contentTypeRoutes";
+import entityRoutes from "./entityRoutes";
 import adminRoutes from "./adminRoutes";
 import authRoutes from "./authRoutes";
 
 export {
-    contentTypeRoutes, 
+    entityRoutes, 
     adminRoutes, 
     authRoutes
 };

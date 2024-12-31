@@ -3,14 +3,14 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { ContentType, AddEditContent } from "@modules/ContentType";
+import { Entity, AddEditContent } from "@modules/Entity";
 import { Theme } from "@website";
 // routes
 import { PrivateRoute, ProtectedRoute, PublicRoute } from "@app/routes";
 // variables
 import { api } from "@app/utils";
 // route manager
-import { adminRoutes, authRoutes, contentTypeRoutes } from "@app/routes/data";
+import { adminRoutes, authRoutes, entityRoutes } from "@app/routes/data";
 // store
 import { store, persistor } from "@app/store";
 // layout
@@ -81,8 +81,8 @@ const Engine = () => {
                                     );
                                 });
                             })}
-                            {/* content_type routes */}
-                            {contentTypeRoutes.map((routes) => {
+                            {/* entity routes */}
+                            {entityRoutes.map((routes) => {
                                 return Object.keys(routes).map((type, key) => {
                                     const route = routes[type];
                                     return (
@@ -98,7 +98,7 @@ const Engine = () => {
                                                 <Frameset
                                                     title={route.title}
                                                     path={"/" + route.name}
-                                                    controller={ContentType}
+                                                    controller={Entity}
                                                 />
                                             </PrivateRoute>
                                             <PrivateRoute

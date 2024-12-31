@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ContentTypeSeeder extends Seeder
+class EntitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class ContentTypeSeeder extends Seeder
     public function run()
     {
         // content types post, pages added
-        DB::table('content_types')->insert([
+        DB::table('entities')->insert([
             'name' => 'Posts',
             'description' => 'Blog posts',
             'slug' => 'posts',
@@ -23,7 +23,7 @@ class ContentTypeSeeder extends Seeder
             'icon' => 'message',
             'status' => 1,
         ]);
-        DB::table('content_types')->insert([
+        DB::table('entities')->insert([
             'name' => 'Pages',
             'description' => 'Website pages',
             'slug' => 'pages',
@@ -31,7 +31,7 @@ class ContentTypeSeeder extends Seeder
             'icon' => 'file-lines',
             'status' => 1,
         ]);
-        DB::table('content_types')->insert([
+        DB::table('entities')->insert([
             'name' => 'Users',
             'description' => 'Website users',
             'slug' => 'users',

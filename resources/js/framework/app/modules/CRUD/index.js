@@ -8,7 +8,7 @@ const CRUD = (props) => {
     const auth = useAuthentication();
 
     React.useEffect(() => {
-        auth.get("/CRUD").then((response) => setData(response.data));
+        auth.get("/crud").then((response) => setData(response.data));
     }, [props.path]);
 
     return (

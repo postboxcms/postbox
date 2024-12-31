@@ -19,11 +19,11 @@ import NavLink from "./NavLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { api } from "../../utils/constants";
-import { getContentTypes } from "../../modules/ContentType/reducers/contentTypes";
+import { getEntitys } from "../../modules/Entity/reducers/entities";
 
 export const MainItems = React.memo((props) => {
     const location = useLocation();
-    const contentTypes = useSelector(getContentTypes);
+    const entities = useSelector(getEntitys);
     const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings']
     const isOpen = !reservedRoutes.includes(location.pathname.split('/').pop());
     const [open, setOpen] = useState(isOpen);
@@ -53,7 +53,7 @@ export const MainItems = React.memo((props) => {
                 </NavLink>
                 <Collapse in={open} timeout="auto">
                     <List component="div" disablePadding>
-                        {contentTypes?.content_types?.map((data) => {
+                        {entities?.entities?.map((data) => {
                             return (
                                 <NavLink
                                     to={api["adminPrefix"] + "/" + data["slug"] + "/list"}

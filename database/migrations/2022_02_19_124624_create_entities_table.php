@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContentTypesTable extends Migration
+class CreateEntitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateContentTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('content_types', function (Blueprint $table) {
+        Schema::create('entities', function (Blueprint $table) {
             $table->id();
             $table->string('name',50);
             $table->string('description',255)->nullable();
@@ -32,6 +32,6 @@ class CreateContentTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_types');
+        Schema::dropIfExists('entities');
     }
 }

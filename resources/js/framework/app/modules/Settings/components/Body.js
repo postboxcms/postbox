@@ -75,7 +75,7 @@ const Body = (props) => {
             }
         });
         // Handle form submission
-        auth.post("/Settings", data)
+        auth.post("/settings", data)
             .then((response) => {
                 dispatch(setWebsiteName(name));
                 dispatch(setWebsiteTitle(title));

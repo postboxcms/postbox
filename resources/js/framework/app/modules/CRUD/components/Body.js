@@ -104,6 +104,7 @@ const Body = (props) => {
                                 value={params.value ? params.value : "hidden"}
                                 onChange={(event) => updateCell(event, params)}
                             >
+                                <MenuItem value="index">Index</MenuItem>
                                 <MenuItem value="hidden">Hidden</MenuItem>
                                 <MenuItem value="text">Text</MenuItem>
                                 <MenuItem value="email">Email</MenuItem>
@@ -177,11 +178,11 @@ const Body = (props) => {
         },
     ];
 
-    const setContentType = (e) => {
+    const setEntity = (e) => {
         setLoader(true);
         if (e.target.value !== "") {
             setRows([]);
-            auth.get("/CRUD/" + e.target.value).then((response) => {
+            auth.get("/crud/" + e.target.value).then((response) => {
                 console.log(response.data.fields)
                 setRows(response.data.fields);
                 setLoader(false);
@@ -211,7 +212,7 @@ const Body = (props) => {
     };
 
     const saveField = (data) => {
-        auth.post("/CRUD", data).then((response) =>
+        auth.post("/crud", data).then((response) =>
             notify(response.data.message)
         );
     };
@@ -225,15 +226,15 @@ const Body = (props) => {
                 </Title>
                 <FormControl className="dropdown" sx={{ m: 1, minWidth: 120 }}>
                     <Select
-                        onChange={setContentType}
+                        onChange={setEntity}
                         defaultValue=""
                         displayEmpty
                     >
                         <MenuItem value="">Content Type</MenuItem>
-                        {props["content_types"]
-                            ? props["content_types"].map((ctype, i) => (
-                                <MenuItem key={ctype.id} value={ctype.slug}>
-                                    {ctype.name}
+                        {props["entities"]
+                            ? props["entities"].map((entity, i) => (
+                                <MenuItem key={entity.id} value={entity.slug}>
+                                    {entity.name}
                                 </MenuItem>
                             ))
                             : ""}

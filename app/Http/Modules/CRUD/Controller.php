@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Modules\Framework;
-use App\Http\Resources\ContentType as ContentTypeResource;
+use App\Http\Resources\Entity as EntityResource;
 
-use App\Models\ContentType;
+use App\Models\Entity;
 use App\Models\CRUD;
 
 class Controller extends Framework
 {
-    protected $contentType;
-    protected $contentTypeCollection;
+    protected $entity;
+    protected $entityCollection;
     protected $fields;
     protected $columns;
     protected $data;
@@ -40,9 +40,9 @@ class Controller extends Framework
     public function index()
     {
         // display content type tables
-        $this->contentTypeCollection = ContentType::where('status', 1)->get();
+        $this->entityCollection = Entity::where('status', 1)->get();
         return response([
-            'content_types' => ContentTypeResource::collection($this->contentTypeCollection),
+            'entities' => EntityResource::collection($this->entityCollection),
             'message' => trans('app.success')
         ], 200);
     }
@@ -82,11 +82,11 @@ class Controller extends Framework
      * @return \Illuminate\Http\Response
      */
 
-    public function show(ContentType $ContentType)
+    public function show(Entity $Entity)
     {
         // display CRUD fields
         $this->table = \Request::segment(count(\Request::segments()));
-        $this->fields = $ContentType->getTableColumns($this->table);
+        $this->fields = $Entity->getTableColumns($this->table);
         $this->fields = collect($this->fields)->map(function ($field) {
             $this->counter += 1;
             return [

@@ -37,7 +37,7 @@ const Auth = (props) => {
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
         axios
-            .post(api.url + "/Login", data)
+            .post(api.url + "/login", data)
             .then((response) => {
                 const token = response.data.token;
                 const user = response.data.user;
@@ -57,7 +57,7 @@ const Auth = (props) => {
 
     React.useEffect(() => {
         if (props.mode == "logout") {
-            auth.post("/Logout", {}).then(() => {
+            auth.post("/logout", {}).then(() => {
                 dispatch(unsetToken(token));
                 dispatch(unsetUser(user));
                 navigate(api.loginUrl);
