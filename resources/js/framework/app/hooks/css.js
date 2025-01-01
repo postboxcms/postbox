@@ -76,6 +76,7 @@ export const useCSS = makeStyles((theme) => ({
         height: 20
     },
     breadcrumbText: {
+        textDecoration: 'none',
         fontSize: theme.spacing(1.6),
     },
     coaster: {
