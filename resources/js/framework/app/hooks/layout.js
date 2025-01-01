@@ -24,7 +24,8 @@ export const useLayoutCSS = makeStyles((theme) => ({
         justifyContent: "center",
     },
     menuButton: {
-        marginRight: 36,
+        marginRight: 18,
+        color: theme.palette.primary.dark
     },
     menuButtonHidden: {
         display: "none",

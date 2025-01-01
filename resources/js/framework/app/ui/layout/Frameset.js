@@ -28,6 +28,7 @@ import { getUser } from '../../modules/Auth/reducers/jwt';
 // menu
 import TopMenu from './TopMenu';
 import { theme } from '../../init/theme';
+import LogoFull from '@root/art/logo-full.svg';
 
 export default function Frameset(props) {
     const classes = useLayoutCSS();
@@ -68,7 +69,8 @@ export default function Frameset(props) {
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        // className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        className={classes.menuButton}
                         size="large">
                         <MenuIcon />
                     </IconButton>
@@ -89,9 +91,10 @@ export default function Frameset(props) {
                 open={open}
             >
                 <div className="toolbar-icon">
-                    <IconButton onClick={handleDrawerClose} size="large">
+                    <img src={LogoFull} width={"150px"} />
+                    {/* <IconButton onClick={handleDrawerClose} size="large">
                         <ChevronLeftIcon />
-                    </IconButton>
+                    </IconButton> */}
                 </div>
                 <Divider />
                 <List>{<MainItems {...classes} />}</List>

@@ -15,6 +15,7 @@ const path = require('path');
 mix.webpackConfig({
    resolve: {
       alias: {
+         '@root': path.resolve(__dirname),
          '@app': path.resolve(__dirname, 'resources/js/framework/app'),
          '@modules': path.resolve(__dirname, 'resources/js/framework/app/modules'),
          '@providers': path.resolve(__dirname, 'resources/js/framework/app/providers'),
