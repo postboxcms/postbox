@@ -20,6 +20,20 @@ export const useLayoutCSS = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
+    appToolbar: {
+        paddingRight: '10px',
+        paddingLeft: '76px',
+        '& .title': {
+            flexGrow: 1
+        }
+    },
+    appToolbarShift: {
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        '& .title': {
+            flexGrow: 1
+        }
+    },
     toolbar: {
         justifyContent: "center",
     },

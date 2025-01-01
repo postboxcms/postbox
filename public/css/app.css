@@ -13345,13 +13345,6 @@ input[type=text] {
   height: 100vh;
   overflow: auto;
 }
-.app-root .toolbar {
-  padding-right: 10px;
-  padding-left: 10px;
-}
-.app-root .toolbar .title {
-  flex-grow: 1;
-}
 .app-root .toolbar-icon {
   display: flex;
   min-height: 64px;
@@ -13459,4 +13452,10 @@ input[type=text] {
 }
 .auth-screen .MuiInputBase-root {
   margin-bottom: 10px;
+}
+
+@media (min-width: 1200px) {
+  .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 1200px;
+  }
 }

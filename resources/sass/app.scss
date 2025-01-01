@@ -330,15 +330,6 @@ input[type="text"] {
         overflow: auto;
     }
 
-    .toolbar {
-        padding-right: 10px;
-        padding-left: 10px;
-
-        .title {
-            flex-grow: 1;
-        }
-    }
-
     .toolbar-icon {
         display: flex;
         min-height: 64px;
@@ -472,5 +463,11 @@ input[type="text"] {
     }
     .MuiInputBase-root {
         margin-bottom: 10px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1200px;
     }
 }
