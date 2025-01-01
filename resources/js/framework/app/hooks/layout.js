@@ -22,7 +22,7 @@ export const useLayoutCSS = makeStyles((theme) => ({
     },
     appToolbar: {
         paddingRight: '10px',
-        paddingLeft: '76px',
+        paddingLeft: '66px',
         '& .title': {
             flexGrow: 1
         }

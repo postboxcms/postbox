@@ -35,7 +35,7 @@ export default function Frameset(props) {
     const classes = useLayoutCSS();
     const user = useSelector(getUser);
     const [anchor, setAnchor] = React.useState(null);
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
         setOpen(!open);
