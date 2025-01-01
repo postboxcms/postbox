@@ -1,4 +1,4 @@
-## Postbox
+<p align="center"><img height="39" src="/art/logo-full.svg" alt="Logo PostboxCMS"></p>
 
 ### Install dependencies
 * `composer install`
