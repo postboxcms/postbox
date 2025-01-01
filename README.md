@@ -4,27 +4,24 @@
 * `composer install`
 * `npm install`
 
-### Build application environment
-* `npm run setup:local`
-* `sail build --no-cache`
+### Install Desk
+* `php artisan desk:install`
 
 ### Start the server
-* `sail up -d`
+* `desk up -d`
 
-### Perform database operations
-* `sail artisan migrate`
-* `sail artisan passport:install`
-* `sail artisan db:seed`
+### Setup the platform
+* `desk artisan cms:setup`
 
-### Generate javascript scaffolding
-* `sail npm run dev`
+### Add user
+* `desk artisan cms:adduser`
 
 ### Optional steps
 If the above steps don't work you may perform the steps mentioned below to get the app up and running.
-* `sail artisan key:generate`
-* `sail artisan storage:link`
+* `desk artisan key:generate`
+* `desk artisan storage:link`
 
 ### Refresh the data
-* `sail artisan migrate:refresh`
-* `sail artisan db:seed`
-* `sail artisan passport:install`
+* `desk artisan migrate:refresh`
+* `desk artisan db:seed`
+* `desk artisan passport:install`
