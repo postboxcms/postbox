@@ -1,25 +1,20 @@
 import React from "react";
 
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { MenuItem, Select, FormControl, FormControlLabel, TextField } from "@mui/material";
 
 import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
-import { useCSS } from "../../../hooks/css";
-import Title from "../../../ui/elements/Title";
+import { useCSS } from "@app/hooks/css";
+import { useNotifier } from "@app/hooks/notifications";
 
-import { IOSSwitch } from "../../../utils/elements";
-import { useNotifier } from "../../../hooks/notifications";
-import { useAuthentication } from "../../../hooks/auth";
+import Title from "@ui/elements/Title";
 
-import NoRowsOverlay from "../../../ui/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../../../ui/elements/Placeholder";
+import { IOSSwitch } from "@app/utils/elements";
+import { useAuthentication } from "@app/hooks/auth";
+
+import NoRowsOverlay from "@ui/elements/NoRowsOverlay";
+import Placeholder, { Loader } from "@ui/elements/Placeholder";
 
 const Body = (props) => {
     const classes = useCSS();
