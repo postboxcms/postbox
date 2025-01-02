@@ -45,7 +45,7 @@ export const MainItems = React.memo((props) => {
     return (
         <React.Fragment>
             <div className={props.navbar}>
-                <NavLink to={api.adminPrefix}>
+                <NavLink title="Dashboard" to={api.adminPrefix}>
                     <ListItem>
                         <ListItemIcon>
                             <DashboardIcon />
@@ -53,7 +53,7 @@ export const MainItems = React.memo((props) => {
                         <ListItemText primary="Dashboard" />
                     </ListItem>
                 </NavLink>
-                <NavLink hidden={isHidden} to="#">
+                <NavLink title="Content" hidden={isHidden} to="#">
                     <ListItem onClick={collapsePanel}>
                         <ListItemIcon>
                             <InventoryIcon />
@@ -67,6 +67,7 @@ export const MainItems = React.memo((props) => {
                         {entities?.entities?.map((data) => {
                             return (
                                 <NavLink
+                                    title={data["name"]}
                                     to={api["adminPrefix"] + "/" + data["slug"] + "/list"}
                                     key={data["id"]}
                                     submenu={true}
@@ -95,7 +96,7 @@ export const SubItems = (props) => {
         <React.Fragment>
             <div className={props.navbar}>
                 <ListSubheader inset>Preferences</ListSubheader>
-                <NavLink to={api.adminPrefix + "/crud"} key="0">
+                <NavLink title="CRUD" to={api.adminPrefix + "/crud"} key="0">
                     <ListItem>
                         <ListItemIcon>
                             <FontAwesomeIcon size="lg" icon="layer-group" />
@@ -103,7 +104,7 @@ export const SubItems = (props) => {
                         <ListItemText primary="CRUD" />
                     </ListItem>
                 </NavLink>
-                <NavLink to={api.adminPrefix + "/settings"} key="1">
+                <NavLink title="Settings" to={api.adminPrefix + "/settings"} key="1">
                     <ListItem>
                         <ListItemIcon>
                             <FontAwesomeIcon size="lg" icon="gear" />
