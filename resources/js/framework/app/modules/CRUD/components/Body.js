@@ -19,6 +19,7 @@ import Placeholder, { Loader } from "@ui/elements/Placeholder";
 const Body = (props) => {
     const classes = useCSS();
     const auth = useAuthentication();
+    const [formdata, setFormdata] = React.useState({});
     const [rows, setRows] = React.useState([]);
     const [cellFocus, setCellFocus] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
@@ -203,14 +204,29 @@ const Body = (props) => {
             setCellFocus(!cellFocus);
             data.api.setCellFocus(cellFocus);
         }
-        saveField(data.row);
+
+        if(event.target.type == 'text') {
+            setTimeout(() => {
+                setFormdata(data.row);
+            },4000);    
+        } else {
+            saveField(data.row);
+        }
     };
 
     const saveField = (data) => {
-        auth.post("/crud", data).then((response) =>
-            notify(response.data.message)
-        );
+        auth.post("/crud", data).then((response) => {
+            notify(response.data.message);
+            setFormdata({});
+        });
     };
+
+    React.useEffect(() => {
+        console.log('formdata changed');
+        if(Object.keys(formdata).length > 0) {
+            saveField(formdata);
+        }
+    },[formdata]);
 
     return (
         <React.Fragment>
