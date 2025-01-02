@@ -1,5 +1,7 @@
 <p align="center"><img height="39" src="/art/logo-full.svg" alt="Logo PostboxCMS"></p>
 
+> PostboxCMS is a simple content management system to build beautiful blogs and websites. Built on top of Laravel framework, powered with React and a customised package developed using Laravel Sail to spin up the CMS easily on your system, PostboxCMS tries to provide an easy to use end to end solution for hobbyists and content creators.
+
 ### Install dependencies
 * `composer install`
 * `npm install`
