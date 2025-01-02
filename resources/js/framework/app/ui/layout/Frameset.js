@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 // elements
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,27 +21,34 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { MainItems, SubItems } from '../navigation';
 import Breadcrumb from '../elements/Breadcrumb';
 import Copyright from '../elements/Copyright';
-// styles and css
-import { useLayoutCSS } from '../../hooks/layout';
-// libs
-import { getUser } from '../../modules/Auth/reducers/jwt';
-// menu
 import TopMenu from './TopMenu';
-import { theme } from '../../init/theme';
+
+import { useLayoutCSS } from '@app/hooks/layout';
+import { theme } from '@app/init/theme';
+import { getNavOpen, setNavOpen } from '@modules/Settings/reducers/platform';
+import { getUser } from '@modules/Auth/reducers/jwt';
+
 import LogoFull from '@root/art/logo-full.svg';
 import Logo from '@root/art/logo.svg';
 
 export default function Frameset(props) {
     const classes = useLayoutCSS();
+    const dispatch = useDispatch();
     const user = useSelector(getUser);
+    const isNavOpen = useSelector(getNavOpen);
     const [anchor, setAnchor] = React.useState(null);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(isNavOpen);
 
     const handleDrawerToggle = () => {
         setOpen(!open);
+        dispatch(setNavOpen(!open));
     }
+
     const handleDrawerOpen = () => {
         setOpen(true);
+    };
+    const handleDrawerClose = () => {
+        setOpen(false);
     };
     const updateState = (anchor) => {
         setAnchor(anchor);
@@ -52,9 +59,6 @@ export default function Frameset(props) {
         } else {
             setAnchor(null)
         }
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
     };
     const renderComponent = (props) => {
         const GridComponent = props.controller;
