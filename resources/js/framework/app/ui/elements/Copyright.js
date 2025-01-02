@@ -5,7 +5,7 @@ import { platform } from "@app/utils/constants";
 export default function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {"Brewing with "} &#10084; {" at "}
+            {"Crafting with "} &#10084; {" at "}
             <Link
                 color="inherit"
                 href={platform.companyURL}

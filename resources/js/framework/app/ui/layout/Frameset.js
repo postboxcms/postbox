@@ -28,13 +28,18 @@ import { getUser } from '../../modules/Auth/reducers/jwt';
 // menu
 import TopMenu from './TopMenu';
 import { theme } from '../../init/theme';
+import LogoFull from '@root/art/logo-full.svg';
+import Logo from '@root/art/logo.svg';
 
 export default function Frameset(props) {
     const classes = useLayoutCSS();
     const user = useSelector(getUser);
     const [anchor, setAnchor] = React.useState(null);
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
+    const handleDrawerToggle = () => {
+        setOpen(!open);
+    }
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -62,13 +67,14 @@ export default function Frameset(props) {
         <div className="app-root">
             <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className="toolbar">
+                <Toolbar className={clsx(classes.appToolbar, open && classes.appToolbarShift)}>
                     <IconButton
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        onClick={handleDrawerToggle}
+                        // className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        className={classes.menuButton}
                         size="large">
                         <MenuIcon />
                     </IconButton>
@@ -89,9 +95,12 @@ export default function Frameset(props) {
                 open={open}
             >
                 <div className="toolbar-icon">
-                    <IconButton onClick={handleDrawerClose} size="large">
+                    {open && (<img src={LogoFull} width={"150px"} />)}
+                    {!open && (<img src={Logo} width={"30px"} />)}
+
+                    {/* <IconButton onClick={handleDrawerClose} size="large">
                         <ChevronLeftIcon />
-                    </IconButton>
+                    </IconButton> */}
                 </div>
                 <Divider />
                 <List>{<MainItems {...classes} />}</List>

@@ -14,16 +14,15 @@ export default function Breadcrumb(props) {
             <Link
                 color="inherit"
                 href="/"
-                className={classes.breadcrumbText}
-                underline="hover">
-                <HomeIcon className={classes.icon}/>
+                className={classes.breadcrumbText}>
+                <HomeIcon className={classes.icon} />
                 Dashboard
             </Link>
-            {props.title?(
+            {props.title ? (
                 <Typography className={classes.breadcrumbText}>
                     {props.title}
                 </Typography>
-            ):""
+            ) : ""
             }
         </Breadcrumbs>
     );

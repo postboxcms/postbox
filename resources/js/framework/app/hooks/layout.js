@@ -20,11 +20,26 @@ export const useLayoutCSS = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
+    appToolbar: {
+        paddingRight: '10px',
+        paddingLeft: '66px',
+        '& .title': {
+            flexGrow: 1
+        }
+    },
+    appToolbarShift: {
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        '& .title': {
+            flexGrow: 1
+        }
+    },
     toolbar: {
         justifyContent: "center",
     },
     menuButton: {
-        marginRight: 36,
+        marginRight: 18,
+        color: theme.palette.primary.dark
     },
     menuButtonHidden: {
         display: "none",

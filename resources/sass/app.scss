@@ -39,7 +39,6 @@ fieldset {
 a,
 a:hover {
     text-decoration: none;
-    color: $brand-color;
 }
 
 a.menu-link {
@@ -330,20 +329,11 @@ input[type="text"] {
         overflow: auto;
     }
 
-    .toolbar {
-        padding-right: 10px;
-        padding-left: 10px;
-
-        .title {
-            flex-grow: 1;
-        }
-    }
-
     .toolbar-icon {
         display: flex;
         min-height: 64px;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: center;
         padding: 0 8px;
     }
 
@@ -472,5 +462,16 @@ input[type="text"] {
     }
     .MuiInputBase-root {
         margin-bottom: 10px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 100%;
+    }
+}
+@media (min-width: 768px) {
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 100%;
     }
 }
