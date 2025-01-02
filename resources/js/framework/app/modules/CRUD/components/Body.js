@@ -180,7 +180,17 @@ const Body = (props) => {
             setRows([]);
             auth.get("/crud/" + e.target.value).then((response) => {
                 console.log(response.data.fields)
-                setRows(response.data.fields);
+                // TODO: Remove this comment once the logic is implemented
+                setRows([...response.data.fields, {
+                    "id": "",
+                    "table": "",
+                    "field": "",
+                    "alias": "",
+                    "type": "",
+                    "position": "none",
+                    "list": 1,
+                    "actions": null
+                }]);
                 setLoader(false);
             });
         } else {
