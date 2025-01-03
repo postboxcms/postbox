@@ -67,7 +67,13 @@ export const useCSS = makeStyles((theme) => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
         borderRadius: theme.spacing(5),
-        color: '#fff'
+        color: '#fff',
+        '& .MuiBreadcrumbs-separator': {
+            paddingBottom: '5px'
+        },
+        '& .MuiTypography-root': {
+            paddingBottom: '4px'
+        }
     },
     icon: {
         marginRight: theme.spacing(0.5),
