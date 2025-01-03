@@ -337,6 +337,25 @@ input[type="text"] {
         padding: 0 8px;
     }
 
+    .controls {
+        float: right;
+        margin: 0;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: row;
+        gap: 8px;
+        button {
+            padding: 8px 15px;
+            line-height: 20px;
+        }
+        div.MuiSelect-select {
+            background-color: $white;
+            padding: 8px 35px 8px 25px;
+            line-height: 20px;
+            font-size: 14px;
+        }
+    }
     .dropdown {
         float: right;
         margin: 0;

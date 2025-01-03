@@ -13351,6 +13351,25 @@ input[type=text] {
   justify-content: center;
   padding: 0 8px;
 }
+.app-root .controls {
+  float: right;
+  margin: 0;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  gap: 8px;
+}
+.app-root .controls button {
+  padding: 8px 15px;
+  line-height: 20px;
+}
+.app-root .controls div.MuiSelect-select {
+  background-color: #fff;
+  padding: 8px 35px 8px 25px;
+  line-height: 20px;
+  font-size: 14px;
+}
 .app-root .dropdown {
   float: right;
   margin: 0;

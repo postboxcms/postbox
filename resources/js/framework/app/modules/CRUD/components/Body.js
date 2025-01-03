@@ -1,7 +1,7 @@
 import React from "react";
 
-import { MenuItem, Select, FormControl, FormControlLabel, TextField } from "@mui/material";
-
+import { MenuItem, Select, FormControl, FormControlLabel, TextField, Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -23,6 +23,7 @@ const Body = (props) => {
     const [rows, setRows] = React.useState([]);
     const [cellFocus, setCellFocus] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
+    const [addRows, setAddRows] = React.useState(false);
     const notify = useNotifier();
     const pageIcon = "fa-layer-group";
 
@@ -179,18 +180,8 @@ const Body = (props) => {
         if (e.target.value !== "") {
             setRows([]);
             auth.get("/crud/" + e.target.value).then((response) => {
-                console.log(response.data.fields)
-                // TODO: Remove this comment once the logic is implemented
-                setRows([...response.data.fields, {
-                    "id": "",
-                    "table": "",
-                    "field": "",
-                    "alias": "",
-                    "type": "",
-                    "position": "none",
-                    "list": 1,
-                    "actions": null
-                }]);
+                setRows(response.data.fields);
+                setAddRows(true);
                 setLoader(false);
             });
         } else {
@@ -215,10 +206,10 @@ const Body = (props) => {
             data.api.setCellFocus(cellFocus);
         }
 
-        if(event.target.type == 'text') {
+        if (event.target.type == 'text') {
             setTimeout(() => {
                 setFormdata(data.row);
-            },4000);    
+            }, 4000);
         } else {
             saveField(data.row);
         }
@@ -233,10 +224,10 @@ const Body = (props) => {
 
     React.useEffect(() => {
         console.log('formdata changed');
-        if(Object.keys(formdata).length > 0) {
+        if (Object.keys(formdata).length > 0) {
             saveField(formdata);
         }
-    },[formdata]);
+    }, [formdata]);
 
     return (
         <React.Fragment>
@@ -245,7 +236,12 @@ const Body = (props) => {
                     <FontAwesomeIcon size="lg" icon={pageIcon} />{" "}
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
-                <FormControl className="dropdown" sx={{ m: 1, minWidth: 120 }}>
+                <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
+                    <Button type="button"
+                        variant="contained"
+                        color="primary"
+                        disabled={!addRows}
+                        startIcon={<AddIcon />}>New field</Button>
                     <Select
                         onChange={setEntity}
                         defaultValue=""
