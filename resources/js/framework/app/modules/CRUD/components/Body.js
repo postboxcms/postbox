@@ -5,7 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { useCSS } from "@app/hooks/css";
+import { useCSS, useModal } from "@app/hooks";
 import { useNotifier } from "@app/hooks/notifications";
 
 import Title from "@ui/elements/Title";
@@ -15,9 +15,11 @@ import { useAuthentication } from "@app/hooks/auth";
 
 import NoRowsOverlay from "@ui/elements/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/elements/Placeholder";
+import BoxModal from "@ui/components/BoxModal";
 
 const Body = (props) => {
     const classes = useCSS();
+    const modal = useModal();
     const auth = useAuthentication();
     const [formdata, setFormdata] = React.useState({});
     const [rows, setRows] = React.useState([]);
@@ -223,7 +225,6 @@ const Body = (props) => {
     };
 
     React.useEffect(() => {
-        console.log('formdata changed');
         if (Object.keys(formdata).length > 0) {
             saveField(formdata);
         }
@@ -238,6 +239,7 @@ const Body = (props) => {
                 </Title>
                 <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
                     <Button type="button"
+                        onClick={() => modal.handleOpen("Add new field")}
                         variant="contained"
                         color="primary"
                         disabled={!addRows}
@@ -280,6 +282,9 @@ const Body = (props) => {
                         },
                     }}
                 />
+            </div>
+            <div className={classes.grid}>
+                <BoxModal {...modal} />
             </div>
         </React.Fragment>
     );

@@ -5,7 +5,7 @@
         #logo_orange2 {
             fill: #50C878;
             left: 125px;
-            transform: translate(83px, 97px) rotate(180deg);
+            transform: translate(84px, 102px) rotate(180deg);
         }
         #logo_green {fill: #50C878}
         #logo_blue {fill: #0096FF}
