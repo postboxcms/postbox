@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MenuItem, Select, FormControl, FormControlLabel, TextField, Button } from "@mui/material";
+import { MenuItem, Select, FormControl, FormControlLabel, TextField, Button, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,14 +8,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCSS, useModal } from "@app/hooks";
 import { useNotifier } from "@app/hooks/notifications";
 
-import Title from "@ui/elements/Title";
-
 import { IOSSwitch } from "@app/utils/elements";
 import { useAuthentication } from "@app/hooks/auth";
 
-import NoRowsOverlay from "@ui/elements/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/elements/Placeholder";
+import Title from "@ui/elements/Title";
 import BoxModal from "@ui/components/BoxModal";
+import NoRowsOverlay from "@ui/elements/NoRowsOverlay";
 
 const Body = (props) => {
     const classes = useCSS();
@@ -284,7 +283,7 @@ const Body = (props) => {
                 />
             </div>
             <div className={classes.grid}>
-                <BoxModal {...modal} />
+                <BoxModal title="Add a new field" {...modal} />
             </div>
         </React.Fragment>
     );
