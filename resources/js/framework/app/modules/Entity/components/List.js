@@ -16,7 +16,7 @@ import {
 } from "@app/hooks";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
-import Title from "@ui/components/Title";
+import Title from "@ui/elements/Title";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 

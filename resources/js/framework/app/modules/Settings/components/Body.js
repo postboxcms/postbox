@@ -24,8 +24,8 @@ import {
 } from "@modules/Settings/reducers/site";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
+import Title from "@ui/elements/Title";
 import ImageUploader from "@ui/components/ImageUploader";
-import Title from "@ui/components/Title";
 
 const Body = (props) => {
     const [title, setTitle] = React.useState("");

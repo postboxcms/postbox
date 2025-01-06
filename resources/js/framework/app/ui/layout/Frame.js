@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useLayoutCSS } from '../../hooks/layout';
 import { useCSS } from '../../hooks/css';
-import Title from '../components/Title';
+import Title from '@ui/elements/Title';
 
 import {api} from '../../utils/constants';
 

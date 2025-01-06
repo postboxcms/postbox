@@ -9,7 +9,7 @@ import { useNotifier } from "@app/hooks/notifications";
 import { useAuthentication } from "@app/hooks/auth";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
-import Title from "@ui/components/Title";
+import Title from "@ui/elements/Title";
 import Dialog from "@ui/components/Dialog";
 import DataTable from "@ui/components/DataTable";
 

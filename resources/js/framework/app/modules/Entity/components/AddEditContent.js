@@ -1,6 +1,6 @@
 import React from "react";
-import Title from "@ui/components/Title";
 import Form from "@ui/components/Form";
+import Title from "@ui/elements/Title";
 import { useCSS } from "@app/hooks";
 
 export const AddEditContent = ({ query, type }) => {
