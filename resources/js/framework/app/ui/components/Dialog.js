@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "@mui/material";
 import { useCSS } from "@app/hooks";
+import Title from "@ui/elements/Title";
 
 export const Dialog = ({ open, content, handleClose, title }) => {
     const classes = useCSS();
@@ -12,10 +13,8 @@ export const Dialog = ({ open, content, handleClose, title }) => {
             aria-describedby="modal-modal-description"
         >
             <div className={classes.modal}>
-                <h2 id="modal-modal-title">{title}</h2>
-                <div id="modal-modal-description" className={classes.body}>
+                <Title icon="fa-notes-medical">{title}</Title>
                     {content}
-                </div>
             </div>
         </Modal>
     );

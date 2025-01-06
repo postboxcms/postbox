@@ -12,6 +12,7 @@ export const useCSS = makeStyles((theme) => ({
     },
     modal: {
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'left',
         borderRadius: '5px',
@@ -26,6 +27,14 @@ export const useCSS = makeStyles((theme) => ({
         pt: 2,
         px: 4,
         pb: 3,
+
+        '& h2': {
+            flex: 1,
+            padding: '5px 10px',
+            marginBottom: '10px',
+            borderBottom: '1px solid #ccc',
+            clear: 'both'
+        }
     },
     cardText: {
         flex: 1,
