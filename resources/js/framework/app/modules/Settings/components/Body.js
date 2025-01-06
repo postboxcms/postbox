@@ -12,7 +12,6 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCSS, useAuthentication, useNotifier } from "@app/hooks";
-import { IOSSwitch } from "@app/utils";
 import {
     getWebsiteLogo,
     getWebsiteName,
@@ -23,8 +22,10 @@ import {
     setWebsiteStatus,
     setWebsiteTitle,
 } from "@modules/Settings/reducers/site";
-import ImageUploader from "@ui/elements/ImageUploader";
-import Title from "@ui/elements/Title";
+
+import IOSSwitch from "@ui/elements/IOSSwitch";
+import ImageUploader from "@ui/components/ImageUploader";
+import Title from "@ui/components/Title";
 
 const Body = (props) => {
     const [title, setTitle] = React.useState("");
@@ -96,8 +97,7 @@ const Body = (props) => {
     return (
         <React.Fragment>
             <div className={`${classes.heading} ${classes.header}`}>
-                <Title className={classes.title}>
-                    <FontAwesomeIcon size="lg" icon={pageIcon} />{" "}
+                <Title icon={pageIcon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
             </div>

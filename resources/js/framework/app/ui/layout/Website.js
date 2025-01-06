@@ -3,7 +3,7 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 // footer
-import WebsiteFooter from '../elements/WebsiteFooter';
+import Footer from '@ui/components/Footer';
 
 export default function Website(props) {
     const renderTheme = (props) => {
@@ -18,7 +18,7 @@ export default function Website(props) {
             <CssBaseline />
             {renderTheme(props)}
             <Box pt={4}>
-                <WebsiteFooter />
+                <Footer prefix="Powered by" suffix={' © ' + new Date().getFullYear()} linkText="Postbox" linkURL="https://digitalbit.in" />
             </Box>
         </div>
     );

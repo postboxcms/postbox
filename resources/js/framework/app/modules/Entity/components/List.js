@@ -14,12 +14,12 @@ import {
     useAuthentication,
     useCSS,
 } from "@app/hooks";
-import { IOSSwitch } from "@app/utils/elements";
-// layout
-import Title from "../../../ui/elements/Title";
-// auth manager
-import NoRowsOverlay from "../../../ui/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../../../ui/elements/Placeholder";
+
+import IOSSwitch from "@ui/elements/IOSSwitch";
+import Title from "@ui/components/Title";
+import NoRowsOverlay from "@ui/components/NoRowsOverlay";
+import Placeholder, { Loader } from "@ui/components/Placeholder";
+
 import ActionsButton from "./ActionsButton";
 
 const List = (props) => {
@@ -164,8 +164,7 @@ const List = (props) => {
     return (
         <React.Fragment>
             <div className={classes.header}>
-                <Title className={classes.title}>
-                    <FontAwesomeIcon size="lg" icon={Icon} />{" "}
+                <Title icon={Icon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <Button

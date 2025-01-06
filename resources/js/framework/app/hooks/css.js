@@ -64,7 +64,7 @@ export const useCSS = makeStyles((theme) => ({
         marginBottom: theme.spacing(0.6),
         fontSize: theme.spacing(3.2)
     },
-    title: {
+    pageTitle: {
         float: 'left',
         marginBottom: 0,
         fontSize: theme.spacing(2.8),

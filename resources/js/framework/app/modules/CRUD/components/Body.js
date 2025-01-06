@@ -2,30 +2,26 @@ import React from "react";
 
 import { MenuItem, Select, FormControl, FormControlLabel, TextField, Button, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { DataGrid } from "@mui/x-data-grid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useCSS, useModal } from "@app/hooks";
 import { useNotifier } from "@app/hooks/notifications";
 
-import { IOSSwitch } from "@app/utils/elements";
 import { useAuthentication } from "@app/hooks/auth";
 
-import Placeholder, { Loader } from "@ui/elements/Placeholder";
-import Title from "@ui/elements/Title";
-import BoxModal from "@ui/components/BoxModal";
-import NoRowsOverlay from "@ui/elements/NoRowsOverlay";
+import IOSSwitch from "@ui/elements/IOSSwitch";
+import Title from "@ui/components/Title";
+import Dialog from "@ui/components/Dialog";
+import DataTable from "@ui/components/DataTable";
 
 const Body = (props) => {
     const classes = useCSS();
     const modal = useModal();
     const auth = useAuthentication();
-    const [formdata, setFormdata] = React.useState({});
-    const [rows, setRows] = React.useState([]);
-    const [cellFocus, setCellFocus] = React.useState(false);
-    const [loader, setLoader] = React.useState(false);
-    const [addRows, setAddRows] = React.useState(false);
     const notify = useNotifier();
+    const [addRows, setAddRows] = React.useState(false);
+    const [formdata, setFormdata] = React.useState({});
+    const [cellFocus, setCellFocus] = React.useState(false);
+    const [endpoint, setEndpoint] = React.useState(null);
     const pageIcon = "fa-layer-group";
 
     const columns = [
@@ -176,21 +172,6 @@ const Body = (props) => {
         },
     ];
 
-    const setEntity = (e) => {
-        setLoader(true);
-        if (e.target.value !== "") {
-            setRows([]);
-            auth.get("/crud/" + e.target.value).then((response) => {
-                setRows(response.data.fields);
-                setAddRows(true);
-                setLoader(false);
-            });
-        } else {
-            setRows([]);
-            setLoader(false);
-        }
-    };
-
     const updateCell = (event, data) => {
         data.row[data.field] =
             typeof event.target.type !== typeof undefined &&
@@ -232,8 +213,7 @@ const Body = (props) => {
     return (
         <React.Fragment>
             <div className={classes.header}>
-                <Title className={classes.title}>
-                    <FontAwesomeIcon size="lg" icon={pageIcon} />{" "}
+                <Title icon={pageIcon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
@@ -244,7 +224,7 @@ const Body = (props) => {
                         disabled={!addRows}
                         startIcon={<AddIcon />}>New field</Button>
                     <Select
-                        onChange={setEntity}
+                        onChange={(e) => e.target.value ? setEndpoint("/crud/" + e.target.value) : setEndpoint("")}
                         defaultValue=""
                         displayEmpty
                     >
@@ -260,30 +240,15 @@ const Body = (props) => {
                 </FormControl>
             </div>
             <div className={classes.grid}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={rows.length}
-                    disableSelectionOnClick
-                    components={{
-                        NoRowsOverlay: function () {
-                            return (
-                                <>
-                                    <Placeholder check={loader}>
-                                        <Loader lines={10} height={30} />
-                                    </Placeholder>
-                                    <NoRowsOverlay
-                                        icon={pageIcon}
-                                        message="No content type selected"
-                                    />
-                                </>
-                            );
-                        },
-                    }}
+                <DataTable
+                    headers={columns}
+                    api={endpoint}
+                    onUpdate={() => setAddRows(true)}
+                    onReset={() => setAddRows(false)}
                 />
             </div>
-            <div className={classes.grid}>
-                <BoxModal title="Add a new field" {...modal} />
+            <div>
+                <Dialog title="Add a new field" {...modal} />
             </div>
         </React.Fragment>
     );

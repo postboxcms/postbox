@@ -1,8 +1,10 @@
 import React from "react";
-import Title from "../../../ui/components/Title";
-import Form from "../../../ui/components/Form";
+import Title from "@ui/components/Title";
+import Form from "@ui/components/Form";
+import { useCSS } from "@app/hooks";
 
 export const AddEditContent = ({ query, type }) => {
+    const classes = useCSS();
     const [pageTitle, setPageTitle] = React.useState('...');
 
     React.useEffect(() => {
@@ -21,7 +23,9 @@ export const AddEditContent = ({ query, type }) => {
 
     return (
         <React.Fragment>
-            <Title title={pageTitle}></Title>
+            <div className={classes.header}>
+                <Title>{pageTitle}</Title>
+            </div>
             <Form width={'70%'}>
             </Form>
             <Form width={'70%'}>

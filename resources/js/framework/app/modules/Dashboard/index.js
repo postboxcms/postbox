@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 
 import { Card, Frame, Body, DataCard } from "../../ui/layout/Frame";
 
-import Placeholder, { Loader } from "../../ui/elements/Placeholder";
-import { useCSS } from "../../hooks/css";
+import Placeholder, { Loader } from "@ui/components/Placeholder";
+import { useCSS } from "@app/hooks/css";
 import { getEntitys } from "@modules/Entity/reducers/entities";
 
 

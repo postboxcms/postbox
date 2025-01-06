@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "@mui/material";
 import { useCSS } from "@app/hooks";
 
-export const BoxModal = ({ open, content, handleClose, title }) => {
+export const Dialog = ({ open, content, handleClose, title }) => {
     const classes = useCSS();
     return (
         <Modal
@@ -21,4 +21,4 @@ export const BoxModal = ({ open, content, handleClose, title }) => {
     );
 }
 
-export default BoxModal;
+export default Dialog;

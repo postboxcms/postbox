@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useLayoutCSS } from '../../hooks/layout';
 import { useCSS } from '../../hooks/css';
-import Title from '../elements/Title';
+import Title from '../components/Title';
 
 import {api} from '../../utils/constants';
 
@@ -46,7 +46,7 @@ export const DataCard = (props) => {
         <React.Fragment>
             <Grid container>
                 <Grid item xs={10} md={9} lg={10}>
-                    <Title>{props.title}</Title>
+                    <Title variant="normal">{props.title}</Title>
                     <Typography component="p" variant="h4">
                         {props.records}
                     </Typography>
