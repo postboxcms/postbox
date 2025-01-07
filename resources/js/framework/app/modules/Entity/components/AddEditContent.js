@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "@ui/components/Form";
+import Panel from "@ui/components/Panel";
 import Title from "@ui/elements/Title";
 import { useCSS } from "@app/hooks";
 
@@ -26,10 +26,10 @@ export const AddEditContent = ({ query, type }) => {
             <div className={classes.header}>
                 <Title>{pageTitle}</Title>
             </div>
-            <Form width={'70%'}>
-            </Form>
-            <Form width={'70%'}>
-            </Form>
+            <Panel width={'70%'}>
+            </Panel>
+            <Panel width={'70%'}>
+            </Panel>
         </React.Fragment>
     )
 }

@@ -30,6 +30,10 @@ export const useCSS = makeStyles((theme) => ({
             marginBottom: '10px',
             borderBottom: '1px solid #ccc',
             clear: 'both'
+        },
+
+        '& .MuiContainer-root': {
+            marginTop: '5px'
         }
     },
     cardText: {
@@ -54,9 +58,12 @@ export const useCSS = makeStyles((theme) => ({
     button: {
         marginRight: theme.spacing(1)
     },
-    largebutton: {
-        marginBottom: theme.spacing(1),
-        float: 'right'
+    primaryButton: {
+        '& .MuiButton-iconSizeMedium': {
+            '& svg': {
+                fontSize: '1rem'
+            }
+        },
     },
     header: {
         overflow: 'hidden',

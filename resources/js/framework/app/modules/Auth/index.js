@@ -18,8 +18,10 @@ import Typography from "@mui/material/Typography";
 import { theme } from "@app/init/theme";
 import { api } from "@app/utils";
 import { useAuthentication, useNotifier, useNavigation } from "@app/hooks";
-import Footer from "@ui/components/Footer";
 import { platform } from '@app/utils/constants';
+
+import Footer from "@ui/components/Footer";
+import PrimaryButton from "@ui/elements/PrimaryButton";
 
 import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "./reducers/jwt";
 
@@ -148,14 +150,13 @@ const Auth = (props) => {
                                 }
                                 label="Remember me"
                             />
-                            <Button
+                            <PrimaryButton
                                 type="submit"
                                 fullWidth
-                                variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign In
-                            </Button>
+                            </PrimaryButton>
                             {/* <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">

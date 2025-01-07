@@ -4,11 +4,18 @@ import { Skeleton } from "@mui/material";
 import { useAuthentication } from "@app/hooks";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 
-export const DataTable = ({ headers, api, onUpdate, onReset }) => {
+export const DataTable = ({ 
+    headers, 
+    api, 
+    onUpdate, 
+    onReset, 
+    overlayMessage, 
+    overlayIcon,
+    triggerRefresh
+}) => {
     const [rows, setRows] = React.useState([]);
     const [columns, setColumns] = React.useState(headers);
     const auth = useAuthentication();
-    const pageIcon = "fa-layer-group";
     const Loader = () => (
         <Skeleton variant="rounded" width="50%" height="35%" />
     );
@@ -38,7 +45,7 @@ export const DataTable = ({ headers, api, onUpdate, onReset }) => {
                 onReset();
             }
         }
-    }, [api]);
+    }, [api, triggerRefresh]);
 
     return (
         <DataGrid
@@ -50,12 +57,9 @@ export const DataTable = ({ headers, api, onUpdate, onReset }) => {
                 NoRowsOverlay: function () {
                     return (
                         <>
-                            {/* <Placeholder check={loader}>
-                                <Loader lines={10} height={30} />
-                            </Placeholder> */}
                             <NoRowsOverlay
-                                icon={pageIcon}
-                                message="No content type selected"
+                                icon={overlayIcon}
+                                message={overlayMessage}
                             />
                         </>
                     );

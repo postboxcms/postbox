@@ -4,7 +4,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FormControlLabel } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,6 +16,7 @@ import {
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
+import PrimaryButton from "@ui/elements/PrimaryButton";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 
@@ -167,16 +167,13 @@ const List = (props) => {
                 <Title icon={Icon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
-                <Button
+                <PrimaryButton
                     onClick={() => addContent(props)}
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    className={classes.largebutton}
-                    startIcon={<AddIcon />}
+                    icon="fa-plus"
+                    sx={{ float: 'right', marginBottom: 1 }}
                 >
                     Add {props["title"] ? props["title"] : props["name"]}
-                </Button>
+                </PrimaryButton>
             </div>
             <div className={classes.grid}>
                 <DataGrid

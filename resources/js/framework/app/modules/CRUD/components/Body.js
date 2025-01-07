@@ -1,7 +1,6 @@
 import React from "react";
 
-import { MenuItem, Select, FormControl, FormControlLabel, TextField, Button, Skeleton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { MenuItem, Select, FormControl, FormControlLabel, TextField } from "@mui/material";
 
 import { useCSS, useModal } from "@app/hooks";
 import { useNotifier } from "@app/hooks/notifications";
@@ -10,8 +9,11 @@ import { useAuthentication } from "@app/hooks/auth";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
+import Input from "@ui/elements/Input";
+import PrimaryButton from "@ui/elements/PrimaryButton";
 import Dialog from "@ui/components/Dialog";
 import DataTable from "@ui/components/DataTable";
+import AddField from "./AddField";
 
 const Body = (props) => {
     const classes = useCSS();
@@ -23,6 +25,28 @@ const Body = (props) => {
     const [cellFocus, setCellFocus] = React.useState(false);
     const [endpoint, setEndpoint] = React.useState(null);
     const pageIcon = "fa-layer-group";
+
+    const fieldTypes = [
+        { value: "index", label: "Index" },
+        { value: "hidden", label: "Hidden" },
+        { value: "text", label: "Text" },
+        { value: "email", label: "Email" },
+        { value: "password", label: "Password" },
+        { value: "dropdown", label: "Dropdown" },
+        { value: "radio", label: "Radio" },
+        { value: "editor", label: "Editor" },
+        { value: "textarea", label: "Textarea" },
+        { value: "ckeditor", label: "CKEditor" },
+        { value: "image", label: "Image" },
+        { value: "timestamp", label: "Timestamp" },
+        { value: "user", label: "User" }
+    ];
+
+    const editPagePositions = [
+        { value: "none", label: "None" },
+        { value: "left", label: "Left" },
+        { value: "right", label: "Right" },
+    ];
 
     const columns = [
         {
@@ -47,13 +71,11 @@ const Body = (props) => {
             renderCell: (params) => {
                 return (
                     <div>
-                        <TextField
+                        <Input
                             disabled
                             value={params.value}
                             id="outlined-basic"
                             label=""
-                            size="small"
-                            variant="outlined"
                         />
                     </div>
                 );
@@ -67,12 +89,11 @@ const Body = (props) => {
             renderCell: (params) => {
                 return (
                     <div>
-                        <TextField
+                        <Input
                             onChange={(event) => updateCell(event, params)}
                             defaultValue={params.value}
                             label=""
                             size="small"
-                            variant="outlined"
                             onKeyDown={(event) => {
                                 event.stopPropagation();
                             }}
@@ -98,19 +119,11 @@ const Body = (props) => {
                                 value={params.value ? params.value : "hidden"}
                                 onChange={(event) => updateCell(event, params)}
                             >
-                                <MenuItem value="index">Index</MenuItem>
-                                <MenuItem value="hidden">Hidden</MenuItem>
-                                <MenuItem value="text">Text</MenuItem>
-                                <MenuItem value="email">Email</MenuItem>
-                                <MenuItem value="password">Password</MenuItem>
-                                <MenuItem value="dropdown">Dropdown</MenuItem>
-                                <MenuItem value="radio">Radio</MenuItem>
-                                <MenuItem value="editor">Editor</MenuItem>
-                                <MenuItem value="textarea">Textarea</MenuItem>
-                                <MenuItem value="ckeditor">CKEditor</MenuItem>
-                                <MenuItem value="image">Image</MenuItem>
-                                <MenuItem value="timestamp">Timestamp</MenuItem>
-                                <MenuItem value="user">User</MenuItem>
+                                {fieldTypes.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </>
@@ -161,9 +174,14 @@ const Body = (props) => {
                                 defaultValue={"none"}
                                 value={params.value ? params.value : "none"}
                             >
-                                <MenuItem value="none">None</MenuItem>
-                                <MenuItem value="left">Left</MenuItem>
-                                <MenuItem value="right">Right</MenuItem>
+                                {editPagePositions.map((option) => (
+                                    <MenuItem
+                                        key={option.value}
+                                        value={option.value}
+                                    >
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </>
@@ -217,18 +235,22 @@ const Body = (props) => {
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
-                    <Button type="button"
-                        onClick={() => modal.handleOpen(<p>New fields will show here ...</p>)}
-                        variant="contained"
-                        color="primary"
+                    <PrimaryButton type="button"
+                        onClick={() => modal.handleOpen(<AddField 
+                                                            typeList={fieldTypes} 
+                                                            positionList={editPagePositions} 
+                                                            onClose={() => {
+                                                                setCellFocus(!cellFocus);
+                                                                modal.handleClose();
+                                                            }} />)}
                         disabled={!addRows}
-                        startIcon={<AddIcon />}>New field</Button>
+                        icon="fa-plus">New field</PrimaryButton>
                     <Select
                         onChange={(e) => e.target.value ? setEndpoint("/crud/" + e.target.value) : setEndpoint("")}
                         defaultValue=""
                         displayEmpty
                     >
-                        <MenuItem value="">Content Type</MenuItem>
+                        <MenuItem value="">Entity</MenuItem>
                         {props["entities"]
                             ? props["entities"].map((entity, i) => (
                                 <MenuItem key={entity.id} value={entity.slug}>
@@ -243,12 +265,18 @@ const Body = (props) => {
                 <DataTable
                     headers={columns}
                     api={endpoint}
+                    triggerRefresh={cellFocus}
+                    overlayIcon={pageIcon}
+                    overlayMessage="No entity selected"
                     onUpdate={() => setAddRows(true)}
                     onReset={() => setAddRows(false)}
                 />
             </div>
             <div>
-                <Dialog title="Add a new field" {...modal} />
+                <Dialog
+                    title="Add a new field"
+                    {...modal}
+                />
             </div>
         </React.Fragment>
     );
