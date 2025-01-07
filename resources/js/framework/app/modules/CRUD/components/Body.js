@@ -218,7 +218,7 @@ const Body = (props) => {
                 </Title>
                 <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
                     <Button type="button"
-                        onClick={() => modal.handleOpen("Add new field")}
+                        onClick={() => modal.handleOpen(<p>New fields will show here ...</p>)}
                         variant="contained"
                         color="primary"
                         disabled={!addRows}

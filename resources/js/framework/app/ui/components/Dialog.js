@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "@mui/material";
+import { Container, Grid, Modal } from "@mui/material";
 import { useCSS } from "@app/hooks";
 import Title from "@ui/elements/Title";
 
@@ -14,7 +14,15 @@ export const Dialog = ({ open, content, handleClose, title }) => {
         >
             <div className={classes.modal}>
                 <Title icon="fa-notes-medical">{title}</Title>
-                    {content}
+                <Container>
+                    <Grid
+                        alignContent={"center"}
+                        alignSelf={"center"}
+                        alignItems={"center"}
+                        textAlign={"center"}
+                    >{content}
+                    </Grid>
+                </Container>
             </div>
         </Modal>
     );

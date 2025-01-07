@@ -12,7 +12,7 @@ export const useCSS = makeStyles((theme) => ({
     },
     modal: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'left',
         borderRadius: '5px',
@@ -23,13 +23,9 @@ export const useCSS = makeStyles((theme) => ({
         width: 400,
         backgroundColor: '#fff',
         border: '1px solid #aaa',
-        boxShadow: 24,
-        pt: 2,
-        px: 4,
-        pb: 3,
 
         '& h2': {
-            flex: 1,
+            width: '100%',
             padding: '5px 10px',
             marginBottom: '10px',
             borderBottom: '1px solid #ccc',

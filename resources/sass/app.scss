@@ -8,10 +8,10 @@
 @import '~bootstrap/scss/bootstrap';
 
 // app styles
-$brand-color: rgba(0, 16, 46, 0.9);
-$brand-color-dark: rgba(0, 16, 46, 1);
-$brand-color-light: rgba(0, 16, 46, 0.1);
-$brand-color-watermark: rgba(0, 16, 46, 0.3);
+$brand-color: rgb(21, 54, 118);
+$brand-color-dark: rgb(14, 36, 78);
+$brand-color-light: rgba(21, 54, 118, 0.1);
+$brand-color-watermark: rgba(21, 54, 118, 0.2);
 
 $navbar-dark-color: #eee;
 $navbar-dark-bar-color: $brand-color;
