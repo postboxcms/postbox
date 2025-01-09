@@ -4,22 +4,24 @@ export const theme = createTheme({
     typography: {
         // Use the system font instead of the default Roboto font.
         fontFamily: [
-          '-apple-system',
-          'Ubuntu',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
+            'Open Sans',
+            '-apple-system',
+            'Ubuntu',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
         ].join(','),
-        fontSize: 13,
+        fontSize: 12,
         fontWeightLight: 300,
-        fontWeightRegular: 400,
-        fontWeightMedium: 500
+        fontWeightRegular: 500,
+        fontWeightMedium: 600,
+        fontWeightBold: 700
     },
     palette: {
         mode: 'light',
@@ -34,7 +36,7 @@ export const theme = createTheme({
             main: '#281850'
         },
         element: {
-            border: '#ccc' 
+            border: '#ccc'
         }
     }
 });

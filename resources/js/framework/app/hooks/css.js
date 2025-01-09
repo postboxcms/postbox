@@ -98,10 +98,10 @@ export const useCSS = makeStyles((theme) => ({
         borderRadius: theme.spacing(5),
         color: '#fff',
         '& .MuiBreadcrumbs-separator': {
-            paddingBottom: '5px'
+            paddingBottom: '2px'
         },
         '& .MuiTypography-root': {
-            paddingBottom: '4px'
+            paddingBottom: '2px'
         }
     },
     icon: {
