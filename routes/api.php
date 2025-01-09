@@ -45,3 +45,8 @@ Route::apiResource('/settings', Settings::class)->middleware('auth:api');
 
 // website routes
 Route::apiResource('/website', Website::class);
+
+// // Inspire API
+// Route::get('/inspire', function (PostboxCMS\Inspire\Inspire $inspire) {
+//     return response()->json(['quote' => $inspire->getQuote()]);
+// });

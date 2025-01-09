@@ -1,34 +1,52 @@
 import React from "react";
 
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { MenuItem, Select, FormControl, FormControlLabel, TextField } from "@mui/material";
 
-import { DataGrid } from "@mui/x-data-grid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import { useCSS, useModal } from "@app/hooks";
+import { useNotifier } from "@app/hooks/notifications";
 
-import { useCSS } from "../../../hooks/css";
-import Title from "../../../ui/elements/Title";
+import { useAuthentication } from "@app/hooks/auth";
 
-import { IOSSwitch } from "../../../utils/elements";
-import { useNotifier } from "../../../hooks/notifications";
-import { useAuthentication } from "../../../hooks/auth";
-
-import NoRowsOverlay from "../../../ui/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../../../ui/elements/Placeholder";
+import IOSSwitch from "@ui/elements/IOSSwitch";
+import Title from "@ui/elements/Title";
+import Input from "@ui/elements/Input";
+import PrimaryButton from "@ui/elements/PrimaryButton";
+import Dialog from "@ui/components/Dialog";
+import DataTable from "@ui/components/DataTable";
+import AddField from "./AddField";
 
 const Body = (props) => {
     const classes = useCSS();
+    const modal = useModal();
     const auth = useAuthentication();
-    const [rows, setRows] = React.useState([]);
-    const [cellFocus, setCellFocus] = React.useState(false);
-    const [loader, setLoader] = React.useState(false);
     const notify = useNotifier();
+    const [addRows, setAddRows] = React.useState(false);
+    const [formdata, setFormdata] = React.useState({});
+    const [cellFocus, setCellFocus] = React.useState(false);
+    const [endpoint, setEndpoint] = React.useState(null);
     const pageIcon = "fa-layer-group";
+
+    const fieldTypes = [
+        { value: "index", label: "Index" },
+        { value: "hidden", label: "Hidden" },
+        { value: "text", label: "Text" },
+        { value: "email", label: "Email" },
+        { value: "password", label: "Password" },
+        { value: "dropdown", label: "Dropdown" },
+        { value: "radio", label: "Radio" },
+        { value: "editor", label: "Editor" },
+        { value: "textarea", label: "Textarea" },
+        { value: "ckeditor", label: "CKEditor" },
+        { value: "image", label: "Image" },
+        { value: "timestamp", label: "Timestamp" },
+        { value: "user", label: "User" }
+    ];
+
+    const editPagePositions = [
+        { value: "none", label: "None" },
+        { value: "left", label: "Left" },
+        { value: "right", label: "Right" },
+    ];
 
     const columns = [
         {
@@ -53,13 +71,11 @@ const Body = (props) => {
             renderCell: (params) => {
                 return (
                     <div>
-                        <TextField
+                        <Input
                             disabled
                             value={params.value}
                             id="outlined-basic"
                             label=""
-                            size="small"
-                            variant="outlined"
                         />
                     </div>
                 );
@@ -73,12 +89,11 @@ const Body = (props) => {
             renderCell: (params) => {
                 return (
                     <div>
-                        <TextField
+                        <Input
                             onChange={(event) => updateCell(event, params)}
                             defaultValue={params.value}
                             label=""
                             size="small"
-                            variant="outlined"
                             onKeyDown={(event) => {
                                 event.stopPropagation();
                             }}
@@ -104,19 +119,11 @@ const Body = (props) => {
                                 value={params.value ? params.value : "hidden"}
                                 onChange={(event) => updateCell(event, params)}
                             >
-                                <MenuItem value="index">Index</MenuItem>
-                                <MenuItem value="hidden">Hidden</MenuItem>
-                                <MenuItem value="text">Text</MenuItem>
-                                <MenuItem value="email">Email</MenuItem>
-                                <MenuItem value="password">Password</MenuItem>
-                                <MenuItem value="dropdown">Dropdown</MenuItem>
-                                <MenuItem value="radio">Radio</MenuItem>
-                                <MenuItem value="editor">Editor</MenuItem>
-                                <MenuItem value="textarea">Textarea</MenuItem>
-                                <MenuItem value="ckeditor">CKEditor</MenuItem>
-                                <MenuItem value="image">Image</MenuItem>
-                                <MenuItem value="timestamp">Timestamp</MenuItem>
-                                <MenuItem value="user">User</MenuItem>
+                                {fieldTypes.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </>
@@ -167,9 +174,14 @@ const Body = (props) => {
                                 defaultValue={"none"}
                                 value={params.value ? params.value : "none"}
                             >
-                                <MenuItem value="none">None</MenuItem>
-                                <MenuItem value="left">Left</MenuItem>
-                                <MenuItem value="right">Right</MenuItem>
+                                {editPagePositions.map((option) => (
+                                    <MenuItem
+                                        key={option.value}
+                                        value={option.value}
+                                    >
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </>
@@ -177,21 +189,6 @@ const Body = (props) => {
             },
         },
     ];
-
-    const setEntity = (e) => {
-        setLoader(true);
-        if (e.target.value !== "") {
-            setRows([]);
-            auth.get("/crud/" + e.target.value).then((response) => {
-                console.log(response.data.fields)
-                setRows(response.data.fields);
-                setLoader(false);
-            });
-        } else {
-            setRows([]);
-            setLoader(false);
-        }
-    };
 
     const updateCell = (event, data) => {
         data.row[data.field] =
@@ -208,29 +205,52 @@ const Body = (props) => {
             setCellFocus(!cellFocus);
             data.api.setCellFocus(cellFocus);
         }
-        saveField(data.row);
+
+        if (event.target.type == 'text') {
+            setTimeout(() => {
+                setFormdata(data.row);
+            }, 4000);
+        } else {
+            saveField(data.row);
+        }
     };
 
     const saveField = (data) => {
-        auth.post("/crud", data).then((response) =>
-            notify(response.data.message)
-        );
+        auth.post("/crud", data).then((response) => {
+            notify(response.data.message);
+            setFormdata({});
+        });
     };
+
+    React.useEffect(() => {
+        if (Object.keys(formdata).length > 0) {
+            saveField(formdata);
+        }
+    }, [formdata]);
 
     return (
         <React.Fragment>
             <div className={classes.header}>
-                <Title className={classes.title}>
-                    <FontAwesomeIcon size="lg" icon={pageIcon} />{" "}
+                <Title icon={pageIcon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
-                <FormControl className="dropdown" sx={{ m: 1, minWidth: 120 }}>
+                <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
+                    <PrimaryButton type="button"
+                        onClick={() => modal.handleOpen(<AddField 
+                                                            typeList={fieldTypes} 
+                                                            positionList={editPagePositions} 
+                                                            onClose={() => {
+                                                                setCellFocus(!cellFocus);
+                                                                modal.handleClose();
+                                                            }} />)}
+                        disabled={!addRows}
+                        icon="fa-plus">New field</PrimaryButton>
                     <Select
-                        onChange={setEntity}
+                        onChange={(e) => e.target.value ? setEndpoint("/crud/" + e.target.value) : setEndpoint("")}
                         defaultValue=""
                         displayEmpty
                     >
-                        <MenuItem value="">Content Type</MenuItem>
+                        <MenuItem value="">Entity</MenuItem>
                         {props["entities"]
                             ? props["entities"].map((entity, i) => (
                                 <MenuItem key={entity.id} value={entity.slug}>
@@ -242,26 +262,20 @@ const Body = (props) => {
                 </FormControl>
             </div>
             <div className={classes.grid}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={rows.length}
-                    disableSelectionOnClick
-                    components={{
-                        NoRowsOverlay: function () {
-                            return (
-                                <>
-                                    <Placeholder check={loader}>
-                                        <Loader lines={10} height={30} />
-                                    </Placeholder>
-                                    <NoRowsOverlay
-                                        icon={pageIcon}
-                                        message="No content type selected"
-                                    />
-                                </>
-                            );
-                        },
-                    }}
+                <DataTable
+                    headers={columns}
+                    api={endpoint}
+                    triggerRefresh={cellFocus}
+                    overlayIcon={pageIcon}
+                    overlayMessage="No entity selected"
+                    onUpdate={() => setAddRows(true)}
+                    onReset={() => setAddRows(false)}
+                />
+            </div>
+            <div>
+                <Dialog
+                    title="Add a new field"
+                    {...modal}
                 />
             </div>
         </React.Fragment>

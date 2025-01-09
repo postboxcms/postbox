@@ -19,8 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 // app elements
 import { MainItems, SubItems } from '../navigation';
-import Breadcrumb from '../elements/Breadcrumb';
-import Copyright from '../elements/Copyright';
+import Breadcrumb from '../components/Breadcrumb';
 import TopMenu from './TopMenu';
 
 import { useLayoutCSS } from '@app/hooks/layout';
@@ -30,6 +29,8 @@ import { getUser } from '@modules/Auth/reducers/jwt';
 
 import LogoFull from '@root/art/logo-full.svg';
 import Logo from '@root/art/logo.svg';
+import Footer from '@ui/components/Footer';
+import { platform } from '@app/utils/constants';
 
 export default function Frameset(props) {
     const classes = useLayoutCSS();
@@ -116,7 +117,11 @@ export default function Frameset(props) {
                 <Container maxWidth="lg" className="container">
                     {renderComponent(props)}
                     <Box pt={2}>
-                        <Copyright />
+                        <Footer 
+                            prefix={"Crafting with \u2764 at "} 
+                            suffix={" since " + platform.companyYear} 
+                            linkText={platform.company}
+                            linkURL={platform.companyURL}/>
                     </Box>
                 </Container>
             </main>

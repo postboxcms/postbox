@@ -4,7 +4,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FormControlLabel } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,12 +13,13 @@ import {
     useAuthentication,
     useCSS,
 } from "@app/hooks";
-import { IOSSwitch } from "@app/utils/elements";
-// layout
-import Title from "../../../ui/elements/Title";
-// auth manager
-import NoRowsOverlay from "../../../ui/elements/NoRowsOverlay";
-import Placeholder, { Loader } from "../../../ui/elements/Placeholder";
+
+import IOSSwitch from "@ui/elements/IOSSwitch";
+import Title from "@ui/elements/Title";
+import PrimaryButton from "@ui/elements/PrimaryButton";
+import NoRowsOverlay from "@ui/components/NoRowsOverlay";
+import Placeholder, { Loader } from "@ui/components/Placeholder";
+
 import ActionsButton from "./ActionsButton";
 
 const List = (props) => {
@@ -164,20 +164,16 @@ const List = (props) => {
     return (
         <React.Fragment>
             <div className={classes.header}>
-                <Title className={classes.title}>
-                    <FontAwesomeIcon size="lg" icon={Icon} />{" "}
+                <Title icon={Icon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
-                <Button
+                <PrimaryButton
                     onClick={() => addContent(props)}
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    className={classes.largebutton}
-                    startIcon={<AddIcon />}
+                    icon="fa-plus"
+                    sx={{ float: 'right', marginBottom: 1 }}
                 >
                     Add {props["title"] ? props["title"] : props["name"]}
-                </Button>
+                </PrimaryButton>
             </div>
             <div className={classes.grid}>
                 <DataGrid

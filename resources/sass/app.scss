@@ -1,17 +1,16 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
 // app styles
-$brand-color: rgba(31, 0, 67, 0.9);
-$brand-color-dark: rgba(31, 0, 67, 1);
-$brand-color-light: rgba(31, 0, 67, 0.1);
-$brand-color-watermark: rgba(31, 0, 67, 0.3);
+$brand-color: rgb(21, 54, 118);
+$brand-color-dark: rgb(14, 36, 78);
+$brand-color-light: rgba(21, 54, 118, 0.1);
+$brand-color-watermark: rgba(21, 54, 118, 0.2);
 
 $navbar-dark-color: #eee;
 $navbar-dark-bar-color: $brand-color;
@@ -19,15 +18,39 @@ $navbar-dark-bg-color: $brand-color;
 $navbar-dark-subheading-color: #bbb;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
-$element-font-size: 14px;
+$element-font-size: 13px;
 $font-color: #555;
+$scrollbar-color: $element-border-color;
+$scrollbar-color-hover: #aaa;
+$transparent: transparent;
 
 html {
     font-size: $element-font-size;
 }
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Open Sans', 'Segoe UI', '-apple-system', 'Ubuntu', Tahoma, Geneva, Verdana, sans-serif;
     color: $font-color;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px $transparent; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-color; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $scrollbar-color-hover; 
 }
 
 fieldset {
@@ -60,7 +83,6 @@ input[type="text"] {
 
 #app {
     .app-loader {
-
         //custom mixins
         @mixin transform($transform) {
             -webkit-transform: $transform;
@@ -337,6 +359,25 @@ input[type="text"] {
         padding: 0 8px;
     }
 
+    .controls {
+        float: right;
+        margin: 0;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: row;
+        gap: 8px;
+        button {
+            padding: 8px 15px;
+            line-height: 20px;
+        }
+        div.MuiSelect-select {
+            background-color: $white;
+            padding: 8px 35px 8px 25px;
+            line-height: 20px;
+            font-size: $element-font-size;
+        }
+    }
     .dropdown {
         float: right;
         margin: 0;
@@ -350,7 +391,7 @@ input[type="text"] {
             background-color: $white;
             padding: 8px 35px 8px 25px;
             line-height: 20px;
-            font-size: 14px;
+            font-size: $element-font-size;
         }
     }
 

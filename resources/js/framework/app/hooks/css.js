@@ -10,6 +10,32 @@ export const useCSS = makeStyles((theme) => ({
         width: '100%',
         backgroundColor: '#fff'
     },
+    modal: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'left',
+        borderRadius: '5px',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        backgroundColor: '#fff',
+        border: '1px solid #aaa',
+
+        '& h2': {
+            width: '100%',
+            padding: '5px 10px',
+            marginBottom: '10px',
+            borderBottom: '1px solid #ccc',
+            clear: 'both'
+        },
+
+        '& .MuiContainer-root': {
+            marginTop: '5px'
+        }
+    },
     cardText: {
         flex: 1,
     },
@@ -32,9 +58,12 @@ export const useCSS = makeStyles((theme) => ({
     button: {
         marginRight: theme.spacing(1)
     },
-    largebutton: {
-        marginBottom: theme.spacing(1),
-        float: 'right'
+    primaryButton: {
+        '& .MuiButton-iconSizeMedium': {
+            '& svg': {
+                fontSize: '1rem'
+            }
+        },
     },
     header: {
         overflow: 'hidden',
@@ -47,7 +76,7 @@ export const useCSS = makeStyles((theme) => ({
         marginBottom: theme.spacing(0.6),
         fontSize: theme.spacing(3.2)
     },
-    title: {
+    pageTitle: {
         float: 'left',
         marginBottom: 0,
         fontSize: theme.spacing(2.8),
@@ -67,7 +96,13 @@ export const useCSS = makeStyles((theme) => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
         borderRadius: theme.spacing(5),
-        color: '#fff'
+        color: '#fff',
+        '& .MuiBreadcrumbs-separator': {
+            paddingBottom: '2px'
+        },
+        '& .MuiTypography-root': {
+            paddingBottom: '2px'
+        }
     },
     icon: {
         marginRight: theme.spacing(0.5),

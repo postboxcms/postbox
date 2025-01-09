@@ -1,18 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    Button,
-    Checkbox,
-    FormControlLabel,
     Grid,
-    Paper,
     TextField,
     Typography,
 } from "@mui/material";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCSS, useAuthentication, useNotifier } from "@app/hooks";
-import { IOSSwitch } from "@app/utils";
 import {
     getWebsiteLogo,
     getWebsiteName,
@@ -23,8 +17,14 @@ import {
     setWebsiteStatus,
     setWebsiteTitle,
 } from "@modules/Settings/reducers/site";
-import ImageUploader from "@ui/elements/ImageUploader";
+
+import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
+import Input from "@ui/elements/Input";
+import SaveButton from "@ui/elements/SaveButton";
+import ImageUploader from "@ui/components/ImageUploader";
+import Panel from "@ui/components/Panel";
+import Form from "@ui/components/Form";
 
 const Body = (props) => {
     const [title, setTitle] = React.useState("");
@@ -96,16 +96,15 @@ const Body = (props) => {
     return (
         <React.Fragment>
             <div className={`${classes.heading} ${classes.header}`}>
-                <Title className={classes.title}>
-                    <FontAwesomeIcon size="lg" icon={pageIcon} />{" "}
+                <Title icon={pageIcon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
             </div>
-            <Paper
+            <Panel
                 style={{ padding: "16px", margin: "auto" }}
                 className={classes.panel}
             >
-                <form onSubmit={saveSettings}>
+                <Form onSubmit={saveSettings}>
                     <Grid container spacing={2} maxWidth="600px">
                         {/* Column for labels */}
                         <Grid
@@ -121,9 +120,8 @@ const Body = (props) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField
+                            <Input
                                 name="name"
-                                variant="outlined"
                                 fullWidth
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -143,9 +141,8 @@ const Body = (props) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField
+                            <Input
                                 name="title"
-                                variant="outlined"
                                 fullWidth
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
@@ -207,17 +204,11 @@ const Body = (props) => {
                             alignItems="center"
                         ></Grid>
                         <Grid item xs={12} sm={6}>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                            >
-                                Submit
-                            </Button>
+                            <SaveButton />
                         </Grid>
                     </Grid>
-                </form>
-            </Paper>
+                </Form>
+            </Panel>
         </React.Fragment>
     );
 };

@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 @charset "UTF-8";
 /*!
  * Bootstrap  v5.3.1 (https://getbootstrap.com/)
@@ -13133,12 +13133,33 @@ textarea.form-control-lg {
   }
 }
 html {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Open Sans", "Segoe UI", "-apple-system", "Ubuntu", Tahoma, Geneva, Verdana, sans-serif;
   color: #555;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
 }
 
 fieldset legend {
@@ -13160,11 +13181,11 @@ a.menu-link div {
 
 svg[data-prefix=fas].fa-xl {
   font-size: 3em;
-  color: rgba(31, 0, 67, 0.1);
+  color: rgba(21, 54, 118, 0.1);
 }
 
 input[type=text] {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 #app .app-loader {
@@ -13186,7 +13207,7 @@ input[type=text] {
 }
 #app .app-loader .cube-folding span::before {
   content: "";
-  background-color: rgba(31, 0, 67, 0.9);
+  background-color: #153676;
   position: absolute;
   left: 0;
   top: 0;
@@ -13201,21 +13222,21 @@ input[type=text] {
 }
 #app .app-loader .cube-folding .leaf2::before {
   animation-delay: 0.3s;
-  background-color: rgba(19, 0, 42, 0.9);
+  background-color: #112c60;
 }
 #app .app-loader .cube-folding .leaf3 {
   transform: rotateZ(270deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf3::before {
   animation-delay: 0.9s;
-  background-color: rgba(19, 0, 42, 0.9);
+  background-color: #112c60;
 }
 #app .app-loader .cube-folding .leaf4 {
   transform: rotateZ(180deg) scale(1.1);
 }
 #app .app-loader .cube-folding .leaf4::before {
   animation-delay: 0.6s;
-  background-color: rgba(7, 0, 16, 0.9);
+  background-color: #0d224b;
 }
 @keyframes folding {
   0%, 10% {
@@ -13266,7 +13287,7 @@ input[type=text] {
 #app .app-loader .cube-wrapper .loading {
   font-size: 16px;
   display: block;
-  color: rgba(31, 0, 67, 0.9);
+  color: #153676;
   position: relative;
   top: calc($size/2);
   z-index: 2;
@@ -13318,7 +13339,7 @@ input[type=text] {
 #app .app-loader .made-with-love i {
   font-style: normal;
   color: #f50057;
-  font-size: 14px;
+  font-size: 13px;
   position: relative;
   top: 2px;
 }
@@ -13351,6 +13372,25 @@ input[type=text] {
   justify-content: center;
   padding: 0 8px;
 }
+.app-root .controls {
+  float: right;
+  margin: 0;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  gap: 8px;
+}
+.app-root .controls button {
+  padding: 8px 15px;
+  line-height: 20px;
+}
+.app-root .controls div.MuiSelect-select {
+  background-color: #fff;
+  padding: 8px 35px 8px 25px;
+  line-height: 20px;
+  font-size: 13px;
+}
 .app-root .dropdown {
   float: right;
   margin: 0;
@@ -13363,7 +13403,7 @@ input[type=text] {
   background-color: #fff;
   padding: 8px 35px 8px 25px;
   line-height: 20px;
-  font-size: 14px;
+  font-size: 13px;
 }
 .app-root .dropdown.data-dropdown {
   margin-bottom: 0;
@@ -13375,7 +13415,7 @@ input[type=text] {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  color: rgba(31, 0, 67, 0.3);
+  color: rgba(21, 54, 118, 0.2);
 }
 .app-root .no-rows-overlay .icon {
   margin-right: 10px;
@@ -13414,7 +13454,7 @@ input[type=text] {
 
 .navbar-dark {
   color: #eee;
-  background-color: rgba(31, 0, 67, 0.9) !important;
+  background-color: #153676 !important;
 }
 .navbar-dark a {
   color: #eee !important;
@@ -13423,7 +13463,7 @@ input[type=text] {
   color: #eee !important;
 }
 .navbar-dark hr {
-  background-color: rgba(31, 0, 67, 0.9) !important;
+  background-color: #153676 !important;
 }
 .navbar-dark button {
   color: #eee;
