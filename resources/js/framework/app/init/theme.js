@@ -4,7 +4,7 @@ export const theme = createTheme({
     typography: {
         // Use the system font instead of the default Roboto font.
         fontFamily: [
-            'Open Sans',
+            'Inter',
             '-apple-system',
             'Ubuntu',
             'BlinkMacSystemFont',
@@ -17,7 +17,7 @@ export const theme = createTheme({
             '"Segoe UI Emoji"',
             '"Segoe UI Symbol"',
         ].join(','),
-        fontSize: 14,
+        fontSize: 13,
         fontWeightLight: 300,
         fontWeightRegular: 400,
         fontWeightMedium: 500,

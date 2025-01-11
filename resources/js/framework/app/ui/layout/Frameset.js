@@ -27,10 +27,9 @@ import { theme } from '@app/init/theme';
 import { getNavOpen, setNavOpen } from '@modules/Settings/reducers/platform';
 import { getUser } from '@modules/Auth/reducers/jwt';
 
-import LogoFull from '@root/art/logo-full.svg';
-import Logo from '@root/art/logo.svg';
-import Footer from '@ui/components/Footer';
 import { platform } from '@app/utils/constants';
+import Footer from '@ui/components/Footer';
+import Logo from '@ui/elements/Logo';
 
 export default function Frameset(props) {
     const classes = useLayoutCSS();
@@ -100,8 +99,8 @@ export default function Frameset(props) {
                 open={open}
             >
                 <div className="toolbar-icon">
-                    {open && (<img src={LogoFull} width={"150px"} />)}
-                    {!open && (<img src={Logo} width={"30px"} />)}
+                    {open && (<Logo mode="dark" variant="full" />)}
+                    {!open && (<Logo />)}
 
                     {/* <IconButton onClick={handleDrawerClose} size="large">
                         <ChevronLeftIcon />
