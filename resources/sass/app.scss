@@ -9,8 +9,8 @@
 // app styles
 $brand-color: rgb(21, 54, 118);
 $brand-color-dark: rgb(14, 36, 78);
-$brand-color-light: rgba(21, 54, 118, 0.1);
-$brand-color-watermark: rgba(21, 54, 118, 0.2);
+$brand-color-light: rgba(14, 36, 78, 0.1);
+$brand-color-watermark: rgba(14, 36, 78, 0.2);
 
 $navbar-dark-color: #eee;
 $navbar-dark-bar-color: $brand-color;
@@ -18,7 +18,7 @@ $navbar-dark-bg-color: $brand-color;
 $navbar-dark-subheading-color: #bbb;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
-$element-font-size: 13px;
+$element-font-size: 0.9rem;
 $font-color: #555;
 $scrollbar-color: $element-border-color;
 $scrollbar-color-hover: #aaa;
@@ -486,6 +486,7 @@ input[type="text"] {
 
 .table-header-light {
     text-transform: uppercase;
+    color: $black;
 }
 
 .MuiDataGrid-cell {
@@ -495,9 +496,9 @@ input[type="text"] {
 }
 
 .auth-screen {
-    a, button, h1, input, span {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    // a, button, h1, input, span {
+    //     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    // }
     a {
         text-decoration: none;
     }
