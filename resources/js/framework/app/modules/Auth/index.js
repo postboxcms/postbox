@@ -162,6 +162,7 @@ const Auth = (props) => {
                                 label="Remember me"
                             />
                             <PrimaryButton
+                                icon="fa-sign-in-alt"
                                 type="submit"
                                 fullWidth
                                 sx={{ mt: 3, mb: 2 }}
