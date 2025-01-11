@@ -99,7 +99,7 @@ export default function Frameset(props) {
                 open={open}
             >
                 <div className="toolbar-icon">
-                    {open && (<Logo variant={"full"} />)}
+                    {open && (<Logo mode="dark" variant="full" />)}
                     {!open && (<Logo />)}
 
                     {/* <IconButton onClick={handleDrawerClose} size="large">
