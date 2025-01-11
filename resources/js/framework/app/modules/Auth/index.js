@@ -31,6 +31,7 @@ import {
     unsetUser,
     getUser,
 } from "./reducers/jwt";
+import { Icon } from "@mui/material";
 
 const Auth = (props) => {
     // const history = useHistory();
@@ -121,7 +122,7 @@ const Auth = (props) => {
                         {/* <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                             <LockOutlinedIcon />
                         </Avatar> */}
-                        <Logo style={{marginBottom: 1}} />
+                        <Logo width="80" style={{marginBottom: 10}} />
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
@@ -181,8 +182,8 @@ const Auth = (props) => {
                             </Grid> */}
                             <Box pt={4}>
                                 <Footer
-                                    prefix={"Crafting with \u2764 at "}
-                                    suffix={" since " + platform.companyYear}
+                                    prefix={"Copyright \xA9"}
+                                    suffix={" " + platform.companyYear}
                                     linkText={platform.company}
                                     linkURL={platform.companyURL}
                                     sx={{ mt: 5 }}
