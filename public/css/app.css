@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Inter);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 @charset "UTF-8";
 /*!
@@ -13137,7 +13138,7 @@ html {
 }
 
 body {
-  font-family: "Open Sans", "Segoe UI", "-apple-system", "Ubuntu", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Open Sans", "Inter", "Segoe UI", "-apple-system", "Ubuntu", Tahoma, Geneva, Verdana, sans-serif;
   color: #555;
 }
 
