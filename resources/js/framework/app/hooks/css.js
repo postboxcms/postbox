@@ -129,4 +129,8 @@ export const useCSS = makeStyles((theme) => ({
             margin: 0,
         },
     },
+    tooltip: {
+        paddingTop: theme.spacing(1),
+        fontSize: theme.spacing(1.6),
+    }
 }));
