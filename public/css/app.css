@@ -13133,7 +13133,7 @@ textarea.form-control-lg {
   }
 }
 html {
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 
 body {
@@ -13185,7 +13185,7 @@ svg[data-prefix=fas].fa-xl {
 }
 
 input[type=text] {
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 
 #app .app-loader {
@@ -13339,7 +13339,7 @@ input[type=text] {
 #app .app-loader .made-with-love i {
   font-style: normal;
   color: #f50057;
-  font-size: 13px;
+  font-size: 0.9rem;
   position: relative;
   top: 2px;
 }
@@ -13389,7 +13389,7 @@ input[type=text] {
   background-color: #fff;
   padding: 8px 35px 8px 25px;
   line-height: 20px;
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 .app-root .dropdown {
   float: right;
@@ -13403,7 +13403,7 @@ input[type=text] {
   background-color: #fff;
   padding: 8px 35px 8px 25px;
   line-height: 20px;
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 .app-root .dropdown.data-dropdown {
   margin-bottom: 0;
