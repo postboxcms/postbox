@@ -4,7 +4,6 @@ import axios from "axios";
 
 import { ThemeProvider } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControlLabel from "@mui/material/FormControlLabel";

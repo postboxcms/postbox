@@ -13484,9 +13484,6 @@ input[type=text] {
   margin: 0 50%;
 }
 
-.auth-screen a, .auth-screen button, .auth-screen h1, .auth-screen .h1, .auth-screen input, .auth-screen span {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
 .auth-screen a {
   text-decoration: none;
 }
