@@ -22,8 +22,8 @@ import { MainItems, SubItems } from '../navigation';
 import Breadcrumb from '../components/Breadcrumb';
 import TopMenu from './TopMenu';
 
-import { useLayoutCSS } from '@app/hooks/layout';
-import { theme } from '@app/init/theme';
+import {  useAdminCSS } from '@app/hooks/admin';
+import { admin } from '@app/init/theme';
 import { getNavOpen, setNavOpen } from '@modules/Settings/reducers/platform';
 import { getUser } from '@modules/Auth/reducers/jwt';
 
@@ -32,7 +32,7 @@ import Footer from '@ui/components/Footer';
 import Logo from '@ui/elements/Logo';
 
 export default function Frameset(props) {
-    const classes = useLayoutCSS();
+    const classes = useAdminCSS();
     const dispatch = useDispatch();
     const user = useSelector(getUser);
     const isNavOpen = useSelector(getNavOpen);
@@ -86,7 +86,7 @@ export default function Frameset(props) {
                         <Breadcrumb title={props.title} />
                     </Typography>
                     <IconButton color="inherit" size="large" onClick={switchTopMenu}>
-                        <Avatar sx={{ bgcolor: theme.palette.primary.main }}>{user?.name.charAt(0)}</Avatar>
+                        <Avatar sx={{ bgcolor: admin.palette.primary.main }}>{user?.name.charAt(0)}</Avatar>
                     </IconButton>
                     <TopMenu anchor={anchor} state={updateState}/>
                 </Toolbar>

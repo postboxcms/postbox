@@ -104,7 +104,7 @@ export const useCSS = makeStyles((theme) => ({
             paddingBottom: "2px",
         },
         "& .MuiTypography-root": {
-            paddingBottom: "0px",
+            paddingBottom: "2px",
             fontWeight: theme.typography.fontWeight,
         },
     },
@@ -133,5 +133,5 @@ export const useCSS = makeStyles((theme) => ({
     tooltip: {
         paddingTop: theme.spacing(1),
         fontSize: theme.spacing(1.6),
-    }
+    },
 }));

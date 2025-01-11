@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 
-import { theme } from "@app/init/theme";
+import { admin } from "@app/init/theme";
 import { api } from "@app/utils";
 import { useAuthentication, useNotifier, useNavigation } from "@app/hooks";
 import { platform } from "@app/utils/constants";
@@ -77,7 +77,7 @@ const Auth = (props) => {
     }, [props.mode]);
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={admin}>
             <Grid container component="main" sx={{ height: "100vh" }}>
                 <CssBaseline />
                 <Grid
@@ -184,7 +184,7 @@ const Auth = (props) => {
                             <Box pt={4}>
                                 <Footer
                                     prefix={"Copyright \xA9"}
-                                    suffix={" " + platform.companyYear}
+                                    suffix={" " + new Date().getFullYear()}
                                     linkText={platform.company}
                                     linkURL={platform.companyURL}
                                     sx={{ mt: 5 }}

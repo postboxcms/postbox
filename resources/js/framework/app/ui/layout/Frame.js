@@ -9,11 +9,10 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useLayoutCSS } from '../../hooks/layout';
-import { useCSS } from '../../hooks/css';
+import { useAdminCSS, useCSS } from '@app/hooks';
+import {api} from '@app/utils/constants';
 import Title from '@ui/elements/Title';
 
-import {api} from '../../utils/constants';
 
 export const Frame = (props) => {
     return (
@@ -31,7 +30,7 @@ export const Card = (props) => {
 }
 
 export const Body = (props) => {
-    const classes = useLayoutCSS();
+    const classes = useAdminCSS();
     const paperClass = props.height == "fixed" ? (clsx(classes.paper, classes.fixedHeight)) + ' ' + props.className : classes.paper + ' ' + props.className;
     return (
         <Paper elevation={3} className={paperClass}>
