@@ -13134,6 +13134,7 @@ textarea.form-control-lg {
 }
 html {
   font-size: 0.9rem;
+  letter-spacing: 0.02rem;
 }
 
 body {
@@ -13181,7 +13182,7 @@ a.menu-link div {
 
 svg[data-prefix=fas].fa-xl {
   font-size: 3em;
-  color: rgba(21, 54, 118, 0.1);
+  color: rgba(14, 36, 78, 0.1);
 }
 
 input[type=text] {
@@ -13415,7 +13416,7 @@ input[type=text] {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  color: rgba(21, 54, 118, 0.2);
+  color: rgba(14, 36, 78, 0.2);
 }
 .app-root .no-rows-overlay .icon {
   margin-right: 10px;
@@ -13477,6 +13478,7 @@ input[type=text] {
 }
 .table-header-light {
   text-transform: uppercase;
+  color: #000;
 }
 
 .MuiDataGrid-cell .MuiSwitch-root {

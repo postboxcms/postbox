@@ -9,8 +9,8 @@
 // app styles
 $brand-color: rgb(21, 54, 118);
 $brand-color-dark: rgb(14, 36, 78);
-$brand-color-light: rgba(21, 54, 118, 0.1);
-$brand-color-watermark: rgba(21, 54, 118, 0.2);
+$brand-color-light: rgba(14, 36, 78, 0.1);
+$brand-color-watermark: rgba(14, 36, 78, 0.2);
 
 $navbar-dark-color: #eee;
 $navbar-dark-bar-color: $brand-color;
@@ -26,6 +26,7 @@ $transparent: transparent;
 
 html {
     font-size: $element-font-size;
+    letter-spacing: 0.02rem;
 }
 body {
     font-family: 'Open Sans', 'Segoe UI', '-apple-system', 'Ubuntu', Tahoma, Geneva, Verdana, sans-serif;
@@ -486,6 +487,7 @@ input[type="text"] {
 
 .table-header-light {
     text-transform: uppercase;
+    color: $black;
 }
 
 .MuiDataGrid-cell {
