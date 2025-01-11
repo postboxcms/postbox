@@ -1,5 +1,6 @@
 // Fonts
 // @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Inter');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import 'variables';
 
@@ -28,7 +29,7 @@ html {
     font-size: $element-font-size;
 }
 body {
-    font-family: 'Open Sans', 'Segoe UI', '-apple-system', 'Ubuntu', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Open Sans', 'Inter', 'Segoe UI', '-apple-system', 'Ubuntu', Tahoma, Geneva, Verdana, sans-serif;
     color: $font-color;
 }
 
@@ -496,9 +497,6 @@ input[type="text"] {
 }
 
 .auth-screen {
-    // a, button, h1, input, span {
-    //     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    // }
     a {
         text-decoration: none;
     }
