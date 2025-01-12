@@ -107,6 +107,9 @@ export const useCSS = makeStyles((theme) => ({
             paddingBottom: "2px",
             fontWeight: theme.typography.fontWeight,
         },
+        "& .MuiTypography-root:hover": {
+            color: theme.palette.breadcrumb.hover,
+        },
     },
     icon: {
         marginRight: theme.spacing(0.5),

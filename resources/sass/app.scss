@@ -5,16 +5,11 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
-// app styles
-$brand-color: rgb(73, 38, 166, 1);
-$brand-color-dark: rgb(40, 21, 93);
-$brand-color-light: rgba(40, 21, 93, 0.1);
-$brand-color-watermark: rgba(40, 21, 93, 0.2);
+@import '../../resources/config/colors';
 
 $navbar-dark-color: #eee;
-$navbar-dark-bar-color: $brand-color;
-$navbar-dark-bg-color: $brand-color;
+$navbar-dark-bar-color: $framework-color;
+$navbar-dark-bg-color: $framework-color;
 $navbar-dark-subheading-color: #bbb;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
@@ -59,12 +54,14 @@ fieldset {
     }
 }
 
-a,
-a:hover {
-    text-decoration: none;
-    color: $brand-color;
+a {
+    text-decoration: none !important;
+    color: $framework-color;
 }
-
+a:hover {
+    text-decoration: none !important;
+    color: $framework-color-dark;
+}
 a.menu-link {
     color:$font-color;
     div {
@@ -75,11 +72,72 @@ a.menu-link {
 
 svg[data-prefix="fas"].fa-xl {
     font-size: 3em;
-    color: $brand-color-light
+    color: $framework-color-light
 }
 
 input[type="text"] {
     font-size: $element-font-size;
+}
+
+.navbar-dark {
+    color: $navbar-dark-color;
+    // background-color: $navbar-dark-bg-color  !important;
+
+    a {
+        color: $navbar-dark-color  !important;
+    }
+
+    div {
+        color: $navbar-dark-color  !important;
+    }
+
+    hr {
+        background-color: $navbar-dark-bar-color  !important;
+    }
+
+    button {
+        color: $navbar-dark-color;
+    }
+
+    ul>div>li {
+        color: $navbar-dark-subheading-color  !important;
+        background-color: transparent !important;
+    }
+
+    ul li {
+        color: $navbar-dark-color  !important;
+    }
+
+    svg[data-prefix="fas"] {
+        // margin-left: 4px;
+    }
+}
+
+.table-header-light {
+    text-transform: uppercase;
+    color: $black;
+}
+
+.MuiDataGrid-cell {
+    .MuiSwitch-root {
+        margin: 0 50%;
+    }
+}
+
+.MuiTooltip-tooltip {
+    background-color: $gray-700;
+    .MuiTooltip-arrow {
+        color: $gray-700;
+    }
+}
+
+.auth-screen {
+    a {
+        text-decoration: none;
+    }
+    .MuiInputBase-root {
+        margin-bottom: 10px;
+    }
 }
 
 #app {
@@ -129,7 +187,7 @@ input[type="text"] {
 
         //variables
         $size: 50px;
-        $primary-color: $brand-color;
+        $primary-color: $framework-color;
 
         //cube only
         .cube-folding {
@@ -583,182 +641,129 @@ input[type="text"] {
         }
 
     }
-}
-
-.app-root {
-    display: flex;
-
-    .appbar-spacer {
-        min-height: 64px;
-    }
-
-    .container {
-        padding: 8px;
-    }
-
-    .content {
-        flex-grow: 1;
-        height: 100vh;
-        overflow: auto;
-    }
-
-    .toolbar-icon {
+    .app-root {
         display: flex;
-        min-height: 64px;
-        align-items: center;
-        justify-content: center;
-        padding: 0 8px;
-    }
-
-    .controls {
-        float: right;
-        margin: 0;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: flex-end;
-        flex-direction: row;
-        gap: 8px;
-        button {
-            padding: 8px 15px;
-            line-height: 20px;
+    
+        .appbar-spacer {
+            min-height: 64px;
         }
-        div.MuiSelect-select {
+    
+        .container {
+            padding: 8px;
+        }
+    
+        .content {
+            flex-grow: 1;
+            height: 100vh;
+            overflow: auto;
+        }
+    
+        .toolbar-icon {
+            display: flex;
+            min-height: 64px;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+        }
+    
+        .controls {
+            float: right;
+            margin: 0;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: row;
+            gap: 8px;
+            button {
+                padding: 8px 15px;
+                line-height: 20px;
+            }
+            div.MuiSelect-select {
+                background-color: $white;
+                padding: 8px 35px 8px 25px;
+                line-height: 20px;
+                font-size: $element-font-size;
+            }
+        }
+        .dropdown {
+            float: right;
+            margin: 0;
+            margin-bottom: 8px;
+    
+            legend {
+                width: 0;
+            }
+    
+            div.MuiSelect-select {
+                background-color: $white;
+                padding: 8px 35px 8px 25px;
+                line-height: 20px;
+                font-size: $element-font-size;
+            }
+        }
+    
+        .dropdown.data-dropdown {
+            margin-bottom: 0;
+        }
+    
+        .no-rows-overlay {
+            display: flex;
+            align-self: center;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: $framework-color-watermark;
+    
+            .icon {
+                margin-right: 10px;
+                font-size: 40px;
+            }
+    
+            .message {
+                font-size: 20px;
+            }
+        }
+    
+        .skeleton-loader {
+            padding: 0 10px;
+            .MuiSkeleton-root {
+                border-radius: 10px;
+            }
+        }
+    
+        .grid-image-column {
+            font-size: 2.5rem;
+            color: $element-border-color;
+            .cell-image {
+                width: 50px;
+                border: solid 2px $element-border-color;
+                border-radius: 5px;
+            }
+        }
+    
+        p.MuiTablePagination-displayedRows {
+            margin-bottom: 0;
+        }
+    
+        header.MuiPaper-root {
+            box-shadow: 1px 0 4px $element-border-color;
             background-color: $white;
-            padding: 8px 35px 8px 25px;
-            line-height: 20px;
-            font-size: $element-font-size;
         }
     }
-    .dropdown {
-        float: right;
-        margin: 0;
-        margin-bottom: 8px;
-
-        legend {
-            width: 0;
+    .web-root {
+        .toolbar {
+            padding-left: 120px !important;
+            padding-right: 120px !important;
         }
-
-        div.MuiSelect-select {
-            background-color: $white;
-            padding: 8px 35px 8px 25px;
-            line-height: 20px;
-            font-size: $element-font-size;
+        a {
+            text-decoration: none !important;
+            color: $brand-color;
         }
-    }
-
-    .dropdown.data-dropdown {
-        margin-bottom: 0;
-    }
-
-    .no-rows-overlay {
-        display: flex;
-        align-self: center;
-        height: 100%;
-        align-items: center;
-        justify-content: center;
-        font-size: 15px;
-        color: $brand-color-watermark;
-
-        .icon {
-            margin-right: 10px;
-            font-size: 40px;
+        a:hover {
+            text-decoration: none !important;
+            color: $brand-color-dark;
         }
-
-        .message {
-            font-size: 20px;
-        }
-    }
-
-    .skeleton-loader {
-        padding: 0 10px;
-        .MuiSkeleton-root {
-            border-radius: 10px;
-        }
-    }
-
-    .grid-image-column {
-        font-size: 2.5rem;
-        color: $element-border-color;
-        .cell-image {
-            width: 50px;
-            border: solid 2px $element-border-color;
-            border-radius: 5px;
-        }
-    }
-
-    p.MuiTablePagination-displayedRows {
-        margin-bottom: 0;
-    }
-
-    header.MuiPaper-root {
-        box-shadow: 1px 0 4px $element-border-color;
-        background-color: $white;
-    }
-}
-.theme-root {
-    .toolbar {
-        padding-left: 120px !important;
-        padding-right: 120px !important;
-    }
-}
-.navbar-dark {
-    color: $navbar-dark-color;
-    // background-color: $navbar-dark-bg-color  !important;
-
-    a {
-        color: $navbar-dark-color  !important;
-    }
-
-    div {
-        color: $navbar-dark-color  !important;
-    }
-
-    hr {
-        background-color: $navbar-dark-bar-color  !important;
-    }
-
-    button {
-        color: $navbar-dark-color;
-    }
-
-    ul>div>li {
-        color: $navbar-dark-subheading-color  !important;
-        background-color: transparent !important;
-    }
-
-    ul li {
-        color: $navbar-dark-color  !important;
-    }
-
-    svg[data-prefix="fas"] {
-        // margin-left: 4px;
-    }
-}
-
-.table-header-light {
-    text-transform: uppercase;
-    color: $black;
-}
-
-.MuiDataGrid-cell {
-    .MuiSwitch-root {
-        margin: 0 50%;
-    }
-}
-
-.MuiTooltip-tooltip {
-    background-color: $gray-700;
-    .MuiTooltip-arrow {
-        color: $gray-700;
-    }
-}
-
-.auth-screen {
-    a {
-        text-decoration: none;
-    }
-    .MuiInputBase-root {
-        margin-bottom: 10px;
     }
 }
 
