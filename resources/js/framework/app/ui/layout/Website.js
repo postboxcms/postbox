@@ -14,7 +14,7 @@ export default function Website(props) {
     };
 
     return (
-        <div className="theme-root">
+        <div className="web-root">
             <CssBaseline />
             {renderTheme(props)}
             <Box pt={4}>

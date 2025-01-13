@@ -5,13 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{csrf_token()}}">
 
-        <title>Postbox</title>
+        <title>{{env('APP_NAME','Postbox')}}</title>
         <link href="{{asset('css/app.css')}}" rel="stylesheet"/>
         <link href="{{asset('css/theme.css')}}" rel="stylesheet"/>
     </head>
     <body>
         <div id="app">
-            <div class="app-loader">
+            <div class="web-loader">
                 <div class="cube-wrapper">
                     <div class="cube-folding">
                         <span class="leaf1"></span>
@@ -19,7 +19,7 @@
                         <span class="leaf3"></span>
                         <span class="leaf4"></span>
                     </div>
-                    <span class="loading" data-name="Postbox">Postbox is loading</span>
+                    <span class="loading" data-name="{{env('APP_NAME','Postbox')}}">{{env('APP_NAME','Postbox')}} is loading</span>
                 </div>
             </div>
             {{-- React code UI rendered here --}}

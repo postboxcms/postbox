@@ -14,15 +14,24 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 
-import { theme } from "@app/init/theme";
+import { admin } from "@app/init/theme";
 import { api } from "@app/utils";
 import { useAuthentication, useNotifier, useNavigation } from "@app/hooks";
-import { platform } from '@app/utils/constants';
+import { platform } from "@app/utils/constants";
 
 import Footer from "@ui/components/Footer";
 import PrimaryButton from "@ui/elements/PrimaryButton";
+import Logo from "@ui/elements/Logo";
 
-import { setToken, setUser, unsetToken, getToken, unsetUser, getUser } from "./reducers/jwt";
+import {
+    setToken,
+    setUser,
+    unsetToken,
+    getToken,
+    unsetUser,
+    getUser,
+} from "./reducers/jwt";
+import { Icon } from "@mui/material";
 
 const Auth = (props) => {
     // const history = useHistory();
@@ -45,7 +54,7 @@ const Auth = (props) => {
                 const user = response.data.user;
                 dispatch(setToken(token));
                 dispatch(setUser(user));
-                navigate('/');
+                navigate("/");
                 notify("Login successful");
             })
             .catch((error) => {
@@ -68,7 +77,7 @@ const Auth = (props) => {
     }, [props.mode]);
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={admin}>
             <Grid container component="main" sx={{ height: "100vh" }}>
                 <CssBaseline />
                 <Grid
@@ -78,7 +87,9 @@ const Auth = (props) => {
                     md={7}
                     sx={{
                         backgroundImage:
-                            "url(https://picsum.photos/seed/" + randomWord + "/1920/1080)",
+                            "url(https://picsum.photos/seed/" +
+                            randomWord +
+                            "/1920/1080)",
                         // backgroundImage: 'url('+process.env.MIX_APP_URL+'/background.jpg)',
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
@@ -108,9 +119,10 @@ const Auth = (props) => {
                             alignItems: "center",
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+                        {/* <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                             <LockOutlinedIcon />
-                        </Avatar>
+                        </Avatar> */}
+                        <Logo width="80" style={{marginBottom: 10}} />
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
@@ -150,6 +162,7 @@ const Auth = (props) => {
                                 label="Remember me"
                             />
                             <PrimaryButton
+                                icon="fa-sign-in-alt"
                                 type="submit"
                                 fullWidth
                                 sx={{ mt: 3, mb: 2 }}
@@ -169,12 +182,13 @@ const Auth = (props) => {
                                 </Grid>
                             </Grid> */}
                             <Box pt={4}>
-                                <Footer 
-                                    prefix={"Crafting with \u2764 at "}
-                                    suffix={" since " + platform.companyYear}
+                                <Footer
+                                    prefix={"Copyright \xA9"}
+                                    suffix={" " + new Date().getFullYear()}
                                     linkText={platform.company}
                                     linkURL={platform.companyURL}
-                                    sx={{ mt: 5 }} />
+                                    sx={{ mt: 5 }}
+                                />
                             </Box>
                         </Box>
                     </Box>

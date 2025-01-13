@@ -60,6 +60,7 @@ export const useCSS = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
     },
     primaryButton: {
+        fontWeight: 600,
         "& .MuiButton-iconSizeMedium": {
             "& svg": {
                 fontSize: "1rem",
@@ -100,11 +101,14 @@ export const useCSS = makeStyles((theme) => ({
         borderRadius: theme.spacing(5),
         color: "#fff",
         "& .MuiBreadcrumbs-separator": {
-            paddingBottom: 0,
+            paddingBottom: "2px",
         },
         "& .MuiTypography-root": {
             paddingBottom: "2px",
             fontWeight: theme.typography.fontWeight,
+        },
+        "& .MuiTypography-root:hover": {
+            color: theme.palette.breadcrumb.hover,
         },
     },
     icon: {
@@ -132,5 +136,5 @@ export const useCSS = makeStyles((theme) => ({
     tooltip: {
         paddingTop: theme.spacing(1),
         fontSize: theme.spacing(1.6),
-    }
+    },
 }));

@@ -57,12 +57,18 @@ class Controller extends Framework
 
 
         foreach ($this->data as $key => $value):
-            if($request->hasFile($key)) {
-                $this->filename = time().'.'.$request->$key->getClientOriginalExtension();
+            if ($request->hasFile($key)) {
+                $this->filename = time() . '.' . $request->$key->getClientOriginalExtension();
                 $this->originalImage = $request->file($key);
-                $this->resizedImage = Image::read($this->originalImage->getRealPath());
-                // $this->resizedImage->scale(width:150);
-                $this->resizedImage->save(public_path('images/').$this->filename);
+
+                if ($this->originalImage->getClientOriginalExtension() == 'svg') {
+                    $this->originalImage->move(public_path('images/'), $this->filename);
+                } else {
+                    $this->resizedImage = Image::read($this->originalImage->getRealPath());
+                    // $this->resizedImage->scale(width:150);
+                    $this->resizedImage->save(public_path('images/') . $this->filename);
+                }
+                
                 $value = $this->filename;
             }
             Settings::updateOrCreate(['property' => $key], [
@@ -72,8 +78,8 @@ class Controller extends Framework
         endforeach;
 
         return response([
-            'message'   => trans('settings.success'),
-            'data'      => $this->filename ? ['file' => $this->filename] : false 
+            'message' => trans('settings.success'),
+            'data' => $this->filename ? ['file' => $this->filename] : false
         ], 200);
     }
 

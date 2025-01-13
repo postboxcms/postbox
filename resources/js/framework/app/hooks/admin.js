@@ -2,7 +2,7 @@ import makeStyles from "@mui/styles/makeStyles";
 
 const drawerWidth = 200;
 
-export const useLayoutCSS = makeStyles((theme) => ({
+export const useAdminCSS = makeStyles((theme) => ({
     appBar: {
         zIndex: theme.zIndex.drawer - 1,
         transition: theme.transitions.create(["width", "margin"], {
@@ -48,6 +48,7 @@ export const useLayoutCSS = makeStyles((theme) => ({
         position: "relative",
         whiteSpace: "nowrap",
         width: drawerWidth,
+        backgroundColor: theme.palette.primary.main,
         transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
