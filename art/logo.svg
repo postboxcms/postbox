@@ -3,7 +3,7 @@
     <style>
         #logo_orange {fill: #ff2065}
         #logo_orange2 {
-            fill: #50C878;
+            fill: #37d392;
             left: 125px;
             transform: translate(84px, 102px) rotate(180deg);
         }
