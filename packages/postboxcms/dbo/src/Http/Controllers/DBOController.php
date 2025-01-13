@@ -20,6 +20,6 @@ class DBOController extends Controller
     public function index()
     {
         // Code to display a listing of the resource
-        return false;
+        return response(['message' => 'DBO Controller initialized'])->json();
     }
 }

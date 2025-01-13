@@ -39,7 +39,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "PostboxCMS\\Postbox\\": "src/"
+            "PostboxCMS\\Postbox\\": "src/",
+            "PostboxCMS\\DBO\\": "packages/postboxcms/dbo/src/"
         }
     },
     "autoload-dev": {
