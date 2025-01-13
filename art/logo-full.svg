@@ -15,9 +15,9 @@
         </style>
     </defs>
     <style>
-        #logo_orange {fill: #FF5733}
-        #logo_green {fill: #50C878;left: 125px;transform: translate(84px, 102px) rotate(180deg);}
-        #logo_blue {fill: #0096FF}
+        #logo_orange {fill: #ff2065}
+        #logo_green {fill: #37d392;left: 125px;transform: translate(84px, 102px) rotate(180deg);}
+        #logo_blue {fill: #ffc43c}
         #logo_txt {fill: #153676;transform: translate(105px, 77px);font-size: 90px;font-family: 'Comfortaa';}
         @media (prefers-color-scheme:dark) { #logo_txt { fill: #fff } }
     </style>
