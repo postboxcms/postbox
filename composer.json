@@ -21,6 +21,7 @@
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
         "postboxcms/desk": "^1.2",
+        "postboxcms/dbo": "@dev",
         "postboxcms/inspire": "^1.0",
         "spatie/laravel-ignition": "^2.0"
     },
@@ -61,5 +62,14 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/postboxcms/dbo",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }
