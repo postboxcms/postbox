@@ -1,14 +1,17 @@
 import React from 'react';
 import {Typography, Link} from '@mui/material';
+import {useCSS} from '@app/hooks/css';
 
-export default function Footer ({prefix, suffix, linkText, linkURL}) {
+const Footer = ({prefix, suffix, linkText, linkURL}) => {
+    const classes = useCSS();
+
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {/* {'Powered by '} */}
             {prefix} {" "}
-            <Link color="inherit" href={linkURL} underline="hover">
+            <Link className={classes.footerLink} href={linkURL} underline="hover">
                 {/* {'Postbox'} */}
-                <b>{linkText}</b>
+                {linkText}
             </Link>{" "}
             {/* {' © '}
             {new Date().getFullYear()} */}
@@ -16,3 +19,5 @@ export default function Footer ({prefix, suffix, linkText, linkURL}) {
         </Typography>
     );
 }
+
+export default Footer;

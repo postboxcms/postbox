@@ -137,4 +137,7 @@ export const useCSS = makeStyles((theme) => ({
         paddingTop: theme.spacing(1),
         fontSize: theme.spacing(1.6),
     },
+    footerLink: {
+        color: theme.palette.primary.main
+    }
 }));
