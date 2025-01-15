@@ -8,6 +8,8 @@
 use Illuminate\Support\Facades\Route;
 use PostboxCMS\DBO\Http\Controllers\DBOController;
 
-Route::prefix('cms')->group(function () {
+Route::group(['prefix'=>'cms', 'middleware' => ['auth:api']], function () {
     Route::get('/dbo', [DBOController::class, 'index']);
+    Route::post('/dbo', [DBOController::class,'store']);
+    Route::patch('/dbo', [DBOController::class,'update']);
 });
