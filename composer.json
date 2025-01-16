@@ -40,8 +40,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "PostboxCMS\\Postbox\\": "src/",
-            "PostboxCMS\\DBO\\": "packages/postboxcms/dbo/src/"
+            "PostboxCMS\\Postbox\\": "src/"
         }
     },
     "autoload-dev": {
@@ -62,14 +61,5 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "packages/postboxcms/dbo",
-            "options": {
-                "symlink": true
-            }
-        }
-    ]
+    }
 }
