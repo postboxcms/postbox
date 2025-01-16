@@ -6,7 +6,7 @@ import {
     Typography,
 } from "@mui/material";
 
-import { useCSS, useAuthentication, useNotifier } from "@app/hooks";
+import { useCSS, useSecureRoute, useNotifier } from "@app/hooks";
 import {
     getWebsiteLogo,
     getWebsiteName,
@@ -36,7 +36,7 @@ const Body = (props) => {
     const websiteName = useSelector(getWebsiteName);
     const websiteTitle = useSelector(getWebsiteTitle);
     const websiteStatus = useSelector(getWebsiteStatus);
-    const auth = useAuthentication();
+    const api = useSecureRoute();
     const notify = useNotifier();
     const dispatch = useDispatch();
     const classes = useCSS();
@@ -75,7 +75,7 @@ const Body = (props) => {
             }
         });
         // Handle form submission
-        auth.post("/settings", data)
+        api.post("/settings", data)
             .then((response) => {
                 dispatch(setWebsiteName(name));
                 dispatch(setWebsiteTitle(title));

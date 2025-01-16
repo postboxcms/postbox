@@ -5,7 +5,7 @@ import { MenuItem, Select, FormControl, FormControlLabel, TextField } from "@mui
 import { useCSS, useModal } from "@app/hooks";
 import { useNotifier } from "@app/hooks/notifications";
 
-import { useAuthentication } from "@app/hooks/auth";
+import { useSecureRoute } from "@app/hooks/route";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
@@ -18,7 +18,7 @@ import AddField from "./AddField";
 const Body = (props) => {
     const classes = useCSS();
     const modal = useModal();
-    const auth = useAuthentication();
+    const api = useSecureRoute();
     const notify = useNotifier();
     const [addRows, setAddRows] = React.useState(false);
     const [formdata, setFormdata] = React.useState({});
@@ -216,7 +216,7 @@ const Body = (props) => {
     };
 
     const saveField = (data) => {
-        auth.post("/crud", data).then((response) => {
+        api.post("/crud", data).then((response) => {
             notify(response.data.message);
             setFormdata({});
         });
@@ -264,7 +264,7 @@ const Body = (props) => {
             <div className={classes.grid}>
                 <DataTable
                     headers={columns}
-                    api={endpoint}
+                    source={endpoint}
                     triggerRefresh={cellFocus}
                     overlayIcon={pageIcon}
                     overlayMessage="No entity selected"

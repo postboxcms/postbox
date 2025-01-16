@@ -1,12 +1,12 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Skeleton } from "@mui/material";
-import { useAuthentication } from "@app/hooks";
+import { useSecureRoute } from "@app/hooks";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 
 export const DataTable = ({ 
     headers, 
-    api, 
+    source, 
     onUpdate, 
     onReset, 
     overlayMessage, 
@@ -15,7 +15,7 @@ export const DataTable = ({
 }) => {
     const [rows, setRows] = React.useState([]);
     const [columns, setColumns] = React.useState(headers);
-    const auth = useAuthentication();
+    const api = useSecureRoute();
     const Loader = () => (
         <Skeleton variant="rounded" width="50%" height="35%" />
     );
@@ -32,8 +32,8 @@ export const DataTable = ({
         setColumns(mappedColumns);
         setRows(mappedRows);
 
-        if (api) {
-            auth.get(api).then((response) => {
+        if (source) {
+            api.get(source).then((response) => {
                 setRows(response.data.fields);
                 if (onUpdate) {
                     onUpdate();
@@ -45,7 +45,7 @@ export const DataTable = ({
                 onReset();
             }
         }
-    }, [api, triggerRefresh]);
+    }, [source, triggerRefresh]);
 
     return (
         <DataGrid

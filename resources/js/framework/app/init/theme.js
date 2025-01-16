@@ -4,6 +4,7 @@ import { darken, lighten } from "@app/utils/colors";
 const baseConfig = require("@resources/config/colors");
 const frameworkColor = baseConfig.css.frameworkColor;
 const brandColor = baseConfig.css.brandColor;
+const adminNavbarColor = baseConfig.css.adminNavbarColor;
 
 export const admin = createTheme({
     typography: {
@@ -34,6 +35,11 @@ export const admin = createTheme({
             main: frameworkColor,
             dark: darken(frameworkColor, 20),
             light: lighten(frameworkColor, 20),
+        },
+        navigation: {
+            main: adminNavbarColor,
+            dark: darken(adminNavbarColor, 20),
+            light: lighten(adminNavbarColor, 20),
         },
         plain: {
             main: "#fff",

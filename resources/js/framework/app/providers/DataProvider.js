@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEntitys } from "@modules/Entity/reducers/entities";
-import { useAuthentication } from "@app/hooks";
+import { useSecureRoute } from "@app/hooks";
 import { getToken } from "@modules/Auth/reducers/jwt";
 import {
     setWebsiteLogo,
@@ -11,19 +11,19 @@ import {
 } from "@modules/Settings/reducers/site";
 
 const DataProvider = ({ children }) => {
-    const auth = useAuthentication();
+    const api = useSecureRoute();
     const token = useSelector(getToken);
     const dispatch = useDispatch();
 
     React.useEffect(() => {
         if (token) {
             // set content type data
-            auth.get("/entity").then((response) => {
+            api.get("/entity").then((response) => {
                 dispatch(setEntitys(response.data));
             });
         }
         // set website data
-        auth.get("/website").then((res) => {
+        api.get("/website").then((res) => {
             const settings = res?.data?.data;
             settings.map((item) => {
                 switch (item.property) {

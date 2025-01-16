@@ -1,14 +1,14 @@
 import React from "react";
 import { Card, Frame } from "@ui/layout/Frame";
-import { useAuthentication } from "@app/hooks/auth";
+import { useSecureRoute } from "@app/hooks/route";
 import Body from "./components/Body";
 
 const CRUD = (props) => {
     const [data, setData] = React.useState({});
-    const auth = useAuthentication();
+    const api = useSecureRoute();
 
     React.useEffect(() => {
-        auth.get("/crud").then((response) => setData(response.data));
+        api.get("/crud").then((response) => setData(response.data));
     }, [props.path]);
 
     return (
