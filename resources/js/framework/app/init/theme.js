@@ -84,6 +84,11 @@ export const website = createTheme({
             dark: darken(brandColor, 20),
             light: lighten(brandColor, 20),
         },
+        navigation: {
+            main: brandColor,
+            dark: darken(brandColor, 20),
+            light: lighten(brandColor, 20),
+        },
         plain: {
             main: "#fff",
         },
