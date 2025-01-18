@@ -20,7 +20,7 @@ import PrimaryButton from "@ui/elements/PrimaryButton";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 
-import ActionsButton from "./ActionsButton";
+import ActionButtons from "./ActionButtons";
 
 const List = (props) => {
     const api = useSecureRoute();
@@ -82,7 +82,7 @@ const List = (props) => {
                 headerName: "ACTIONS",
                 headerClassName: "table-header-light",
                 flex: 1,
-                renderCell: () => <ActionsButton />,
+                renderCell: () => <ActionButtons />,
             });
 
             api.get("/entity" + props["path"]).then((response) => {
