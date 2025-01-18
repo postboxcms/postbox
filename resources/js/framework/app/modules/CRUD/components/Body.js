@@ -1,6 +1,12 @@
 import React from "react";
 
-import { MenuItem, Select, FormControl, FormControlLabel, TextField } from "@mui/material";
+import {
+    MenuItem,
+    Select,
+    FormControl,
+    FormControlLabel,
+    TextField,
+} from "@mui/material";
 
 import { useCSS, useModal } from "@app/hooks";
 import { useNotifier } from "@app/hooks/notifications";
@@ -13,7 +19,9 @@ import Input from "@ui/elements/Input";
 import PrimaryButton from "@ui/elements/PrimaryButton";
 import Dialog from "@ui/components/Dialog";
 import DataTable from "@ui/components/DataTable";
+import IconButton from "@ui/elements/IconButton";
 import AddField from "./AddField";
+import DeleteField from "./DeleteField";
 
 const Body = (props) => {
     const classes = useCSS();
@@ -24,6 +32,8 @@ const Body = (props) => {
     const [formdata, setFormdata] = React.useState({});
     const [cellFocus, setCellFocus] = React.useState(false);
     const [endpoint, setEndpoint] = React.useState(null);
+    const [dialogTitle, setDialogTitle] = React.useState("");
+    const [dialogIcon, setDialogIcon] = React.useState("");
     const pageIcon = "fa-layer-group";
 
     const fieldTypes = [
@@ -39,7 +49,7 @@ const Body = (props) => {
         { value: "ckeditor", label: "CKEditor" },
         { value: "image", label: "Image" },
         { value: "timestamp", label: "Timestamp" },
-        { value: "user", label: "User" }
+        { value: "user", label: "User" },
     ];
 
     const editPagePositions = [
@@ -120,7 +130,10 @@ const Body = (props) => {
                                 onChange={(event) => updateCell(event, params)}
                             >
                                 {fieldTypes.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
+                                    <MenuItem
+                                        key={option.value}
+                                        value={option.value}
+                                    >
                                         {option.label}
                                     </MenuItem>
                                 ))}
@@ -188,12 +201,41 @@ const Body = (props) => {
                 );
             },
         },
+        {
+            field: "actions",
+            headerName: "ACTIONS",
+            headerClassName: "table-header-light",
+            flex: 1,
+            renderCell: (params) => {
+                return (
+                    <FormControl sx={{ m: 1, maxWidth: 50 }}>
+                        <IconButton 
+                            disabled={params?.row?.type == "index" ? true : false} 
+                            name="fa-trash" 
+                            color={params?.row?.type == "index" ? "" : "salmon"} 
+                            onClick={() => {
+                                setDialogTitle("Delete field");
+                                setDialogIcon("fa-folder-minus");
+                                modal.handleOpen(
+                                    <DeleteField
+                                        onClose={() => {
+                                            setCellFocus(!cellFocus);
+                                            modal.handleClose();
+                                        }}
+                                    />
+                                )
+                            }}
+                            />
+                    </FormControl>
+                );
+            },
+        },
     ];
 
     const updateCell = (event, data) => {
         data.row[data.field] =
             typeof event.target.type !== typeof undefined &&
-                event.target.type == "checkbox"
+            event.target.type == "checkbox"
                 ? event.target.checked
                 : event.target.value;
         data.value = data.row[data.field];
@@ -206,7 +248,7 @@ const Body = (props) => {
             data.api.setCellFocus(cellFocus);
         }
 
-        if (event.target.type == 'text') {
+        if (event.target.type == "text") {
             setTimeout(() => {
                 setFormdata(data.row);
             }, 4000);
@@ -235,28 +277,43 @@ const Body = (props) => {
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
-                    <PrimaryButton type="button"
-                        onClick={() => modal.handleOpen(<AddField 
-                                                            typeList={fieldTypes} 
-                                                            positionList={editPagePositions} 
-                                                            onClose={() => {
-                                                                setCellFocus(!cellFocus);
-                                                                modal.handleClose();
-                                                            }} />)}
+                    <PrimaryButton
+                        type="button"
+                        onClick={() => {
+                            setDialogTitle("Add a new field");
+                            setDialogIcon("fa-folder-plus");
+                            modal.handleOpen(
+                                <AddField
+                                    typeList={fieldTypes}
+                                    positionList={editPagePositions}
+                                    onClose={() => {
+                                        setCellFocus(!cellFocus);
+                                        modal.handleClose();
+                                    }}
+                                />
+                            )
+                        }}
                         disabled={!addRows}
-                        icon="fa-plus">New field</PrimaryButton>
+                        icon="fa-plus"
+                    >
+                        New field
+                    </PrimaryButton>
                     <Select
-                        onChange={(e) => e.target.value ? setEndpoint("/crud/" + e.target.value) : setEndpoint("")}
+                        onChange={(e) =>
+                            e.target.value
+                                ? setEndpoint("/crud/" + e.target.value)
+                                : setEndpoint("")
+                        }
                         defaultValue=""
                         displayEmpty
                     >
                         <MenuItem value="">Entity</MenuItem>
                         {props["entities"]
                             ? props["entities"].map((entity, i) => (
-                                <MenuItem key={entity.id} value={entity.slug}>
-                                    {entity.name}
-                                </MenuItem>
-                            ))
+                                  <MenuItem key={entity.id} value={entity.slug}>
+                                      {entity.name}
+                                  </MenuItem>
+                              ))
                             : ""}
                     </Select>
                 </FormControl>
@@ -273,10 +330,7 @@ const Body = (props) => {
                 />
             </div>
             <div>
-                <Dialog
-                    title="Add a new field"
-                    {...modal}
-                />
+                <Dialog icon={dialogIcon} title={dialogTitle} {...modal} />
             </div>
         </React.Fragment>
     );

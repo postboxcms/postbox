@@ -13,6 +13,7 @@ const IconButton = (props) => {
             color={color || "primary"}
             size={size || "medium" }
             className={classes.button}
+            { ...props }
         >
             <Icon {...props} />
         </MuiIconButton>

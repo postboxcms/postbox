@@ -56,9 +56,17 @@ export const useCMSRoute = () => {
             }
         });
     }
+    const remove = (url, data) => {
+        return axios.delete(cms.url + url, data, {
+            headers:{
+                Authorization: 'Bearer ' + token
+            }
+        });
+    }
     return {
         get,
         post,
-        put
+        put,
+        remove
     }
 }
