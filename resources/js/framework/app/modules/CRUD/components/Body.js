@@ -37,19 +37,19 @@ const Body = (props) => {
     const pageIcon = "fa-layer-group";
 
     const fieldTypes = [
-        { value: "index", label: "Index" },
-        { value: "hidden", label: "Hidden" },
-        { value: "text", label: "Text" },
-        { value: "email", label: "Email" },
-        { value: "password", label: "Password" },
-        { value: "dropdown", label: "Dropdown" },
-        { value: "radio", label: "Radio" },
-        { value: "editor", label: "Editor" },
-        { value: "textarea", label: "Textarea" },
-        { value: "ckeditor", label: "CKEditor" },
-        { value: "image", label: "Image" },
-        { value: "timestamp", label: "Timestamp" },
-        { value: "user", label: "User" },
+        { value: "index", label: "Index", dataType: "id" },
+        { value: "hidden", label: "Hidden", dataType: "string" },
+        { value: "text", label: "Text", dataType: "string" },
+        { value: "email", label: "Email", dataType: "string" },
+        { value: "password", label: "Password", dataType: "string" },
+        { value: "dropdown", label: "Dropdown", dataType: "boolean" },
+        { value: "radio", label: "Radio", dataType: "boolean" },
+        { value: "editor", label: "Editor", dataType: "longText" },
+        { value: "textarea", label: "Textarea", dataType: "longText" },
+        { value: "ckeditor", label: "CKEditor", dataType: "longText" },
+        { value: "image", label: "Image", dataType: "string" },
+        { value: "timestamp", label: "Timestamp", dataType: "timestamps" },
+        { value: "user", label: "User", dataType: "integer" }
     ];
 
     const editPagePositions = [
