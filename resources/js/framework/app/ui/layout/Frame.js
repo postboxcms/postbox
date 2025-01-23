@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAdminCSS, useCSS } from '@app/hooks';
 import {api} from '@app/utils/constants';
 import Title from '@ui/elements/Title';
+import Icon from '../elements/Icon';
 
 
 export const Frame = (props) => {
@@ -61,7 +62,8 @@ export const DataCard = (props) => {
                 </Grid>
                 <Grid item xs={2} md={3} lg={2}>
                     <Typography align="right">
-                        <FontAwesomeIcon icon={props.icon} size="xl" />
+                        {/* <FontAwesomeIcon icon={props.icon} size="xl" /> */}
+                        <Icon className={classes.cardIcons} name={props.icon} />
                     </Typography>
                 </Grid>
             </Grid>
