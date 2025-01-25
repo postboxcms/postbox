@@ -5,7 +5,6 @@ import {
     Select,
     FormControl,
     FormControlLabel,
-    TextField,
 } from "@mui/material";
 
 import { useCSS, useModal } from "@app/hooks";
@@ -34,6 +33,9 @@ const Body = (props) => {
     const [endpoint, setEndpoint] = React.useState(null);
     const [dialogTitle, setDialogTitle] = React.useState("");
     const [dialogIcon, setDialogIcon] = React.useState("");
+    const [activeField, setActiveField] = React.useState({
+        icon: "fa-eye", color: "primary"
+    });
     const pageIcon = "fa-layer-group";
 
     const fieldTypes = [
@@ -49,7 +51,7 @@ const Body = (props) => {
         { value: "ckeditor", label: "CKEditor", dataType: "longText" },
         { value: "image", label: "Image", dataType: "string" },
         { value: "timestamp", label: "Timestamp", dataType: "timestamps" },
-        { value: "user", label: "User", dataType: "integer" }
+        { value: "user", label: "User", dataType: "integer" },
     ];
 
     const editPagePositions = [
@@ -208,11 +210,15 @@ const Body = (props) => {
             flex: 1,
             renderCell: (params) => {
                 return (
-                    <FormControl sx={{ m: 1, maxWidth: 50 }}>
-                        <IconButton 
-                            disabled={params?.row?.type == "index" ? true : false} 
-                            name="fa-trash" 
-                            color={params?.row?.type == "index" ? "" : "salmon"} 
+                    <FormControl sx={{ m: 1, maxWidth: 50, display: "flex", flexDirection: "row" }}>
+                        <IconButton
+                            disabled={
+                                params?.row?.type == "index" ? true : false
+                            }
+                            name="fa-trash"
+                            color={
+                                params?.row?.type == "index" ? "" : "primary"
+                            }
                             onClick={() => {
                                 setDialogTitle("Delete field");
                                 setDialogIcon("fa-folder-minus");
@@ -223,9 +229,21 @@ const Body = (props) => {
                                             modal.handleClose();
                                         }}
                                     />
-                                )
+                                );
                             }}
-                            />
+                        />
+                        <IconButton
+                            disabled={
+                                params?.row?.type == "index" ? true : false
+                            }
+                            name={activeField.icon}
+                            color={
+                                params?.row?.type == "index" ? "" : activeField.color
+                            }
+                            onClick={() => {
+                                activeField.icon == "fa-eye" ? setActiveField((field => ({...field, icon: "fa-eye-slash"}))) : setActiveField({icon: "fa-eye", color: "primary"});
+                            }}
+                        />
                     </FormControl>
                 );
             },
@@ -291,7 +309,7 @@ const Body = (props) => {
                                         modal.handleClose();
                                     }}
                                 />
-                            )
+                            );
                         }}
                         disabled={!addRows}
                         icon="fa-plus"
