@@ -33,9 +33,6 @@ const Body = (props) => {
     const [endpoint, setEndpoint] = React.useState(null);
     const [dialogTitle, setDialogTitle] = React.useState("");
     const [dialogIcon, setDialogIcon] = React.useState("");
-    const [activeField, setActiveField] = React.useState({
-        icon: "fa-eye", color: "primary"
-    });
     const pageIcon = "fa-layer-group";
 
     const fieldTypes = [
@@ -230,18 +227,6 @@ const Body = (props) => {
                                         }}
                                     />
                                 );
-                            }}
-                        />
-                        <IconButton
-                            disabled={
-                                params?.row?.type == "index" ? true : false
-                            }
-                            name={activeField.icon}
-                            color={
-                                params?.row?.type == "index" ? "" : activeField.color
-                            }
-                            onClick={() => {
-                                activeField.icon == "fa-eye" ? setActiveField((field => ({...field, icon: "fa-eye-slash"}))) : setActiveField({icon: "fa-eye", color: "primary"});
                             }}
                         />
                     </FormControl>
