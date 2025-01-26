@@ -3,7 +3,7 @@ import CRUD from "../../modules/CRUD";
 import Settings from "../../modules/Settings";
 import { api } from "../../utils/constants";
 
-const routes = [
+export const routes = [
     {
         dashboard: {
             path: api.adminPrefix + "/",

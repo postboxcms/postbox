@@ -1,20 +1,25 @@
 // route manager json
-const routes = [
+export const routes = [
     {
         posts: {
             title: "Posts",
-            cType: "post",
+            entity: "post",
             name: "posts",
         },
         pages: {
             title: "Pages",
-            cType: "page",
+            entity: "page",
             name: "pages",
         },
         users: {
             title: "Users",
-            cType: "user",
+            entity: "user",
             name: "users",
+        },
+        test: {
+            title: "Tests",
+            entity: "test",
+            name: "test",
         },
     },
 ];

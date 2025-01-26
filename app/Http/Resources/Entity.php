@@ -10,6 +10,10 @@ class Entity extends JsonResource
     private $collection;
     private $model;
 
+    private function _parseIcon() {
+        return $this->collection['icon'] == null ? 'fa-square' : $this->collection['icon']; 
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -20,6 +24,7 @@ class Entity extends JsonResource
     {
         $this->collection = parent::toArray($request);
         $this->model = config('postbox.database.models')[$this->collection['slug']];
+        $this->collection['icon'] = $this->_parseIcon();
         $this->collection['records'] = $this->model::count();
         $this->collection['data'] = $this->model::all();
         $this->collection['data'] = collect($this->collection['data']->toArray())->map(function($data) {
