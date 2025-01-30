@@ -40,7 +40,10 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "PostboxCMS\\Postbox\\": "src/"
-        }
+        },
+        "classmap": [
+            "app/Http/Modules"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

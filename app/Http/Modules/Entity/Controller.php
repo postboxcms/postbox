@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Modules\Framework;
 
-use App\Http\Resources\Entity as EntityResource;
-use App\Models\Entity as Entity;
+use App\Http\Modules\Entity\Resource as EntityResource;
+use App\Http\Modules\Entity\Model as Entity;
 
 class Controller extends Framework
 {
@@ -79,7 +79,7 @@ class Controller extends Framework
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Entity  $entity
+     * @param  \App\Http\Modules\Entity\Model  $entity
      * @return \Illuminate\Http\Response
      */
     public function show(Entity $entity)
@@ -95,7 +95,7 @@ class Controller extends Framework
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Entity  $entity
+     * @param  \App\Http\Modules\Entity\Model  $entity
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Entity $entity)
@@ -120,7 +120,7 @@ class Controller extends Framework
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Entity  $entity
+     * @param  \App\Http\Modules\Entity\Model  $entity
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Entity $entity)

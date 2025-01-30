@@ -45,6 +45,7 @@ export const DataTable = ({
                 onReset();
             }
         }
+        console.log("rows", rows.length);
     }, [source, triggerRefresh]);
 
     return (

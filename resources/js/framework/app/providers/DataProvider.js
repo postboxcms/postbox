@@ -34,14 +34,10 @@ const DataProvider = ({ children }) => {
                         dispatch(setWebsiteTitle(item.value));
                         return;
                     case "isProductionReady":
-                        dispatch(
-                            setWebsiteStatus(Boolean(Number(item.value)))
-                        );
+                        dispatch(setWebsiteStatus(Boolean(Number(item.value))));
                         return;
                     case "siteLogo":
-                        dispatch(
-                            setWebsiteLogo(item.value)
-                        );
+                        dispatch(setWebsiteLogo(item.value));
                         return;
                     default:
                         return;

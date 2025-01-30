@@ -6,7 +6,7 @@ return [
         'models' => [
             'posts' => \App\Models\Post::class,
             'pages' => \App\Models\Page::class,
-            'users' => \App\Models\User::class
+            'users' => \App\Models\User::class,
         ]
     ]
 ];

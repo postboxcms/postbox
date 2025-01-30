@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Modules\CRUD;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 
-class CRUD extends Model
+class Model extends BaseModel
 {
     use HasFactory;
 

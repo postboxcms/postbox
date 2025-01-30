@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Modules\Entity;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\CRUD;
+use App\Http\Modules\CRUD\Model as CRUD;
 
-class Entity extends JsonResource
+class Resource extends JsonResource
 {
     private $collection;
     private $model;
-
-    private function _parseIcon() {
-        return $this->collection['icon'] == null ? 'fa-square' : $this->collection['icon']; 
-    }
 
     /**
      * Transform the resource into an array.
@@ -24,7 +20,7 @@ class Entity extends JsonResource
     {
         $this->collection = parent::toArray($request);
         $this->model = config('postbox.database.models')[$this->collection['slug']];
-        $this->collection['icon'] = $this->_parseIcon();
+        $this->collection['icon'] = $this->collection['icon'] !== null ? $this->collection['icon'] : 'fa-square';
         $this->collection['records'] = $this->model::count();
         $this->collection['data'] = $this->model::all();
         $this->collection['data'] = collect($this->collection['data']->toArray())->map(function($data) {

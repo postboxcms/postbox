@@ -15,12 +15,7 @@ export const routes = [
             title: "Users",
             entity: "user",
             name: "users",
-        },
-        test: {
-            title: "Tests",
-            entity: "test",
-            name: "test",
-        },
+        }
     },
 ];
 
