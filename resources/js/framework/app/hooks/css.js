@@ -45,6 +45,9 @@ export const useCSS = makeStyles((theme) => ({
         fontSize: "2.5rem",
         color: lighten(theme.palette.primary.main, 85)
     },
+    noRowsOverlay: {
+        color: lighten(theme.palette.primary.main, 50)
+    },
     body: {
         paddingTop: theme.spacing(4),
     },
