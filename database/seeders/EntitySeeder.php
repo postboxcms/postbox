@@ -19,25 +19,31 @@ class EntitySeeder extends Seeder
             'name' => 'Posts',
             'description' => 'Blog posts',
             'slug' => 'posts',
+            'model' => 'Post',
             'type' => 1,
             'icon' => 'message',
             'status' => 1,
+            'dashboard' => 1,
         ]);
         DB::table('entities')->insert([
             'name' => 'Pages',
             'description' => 'Website pages',
             'slug' => 'pages',
+            'model' => 'Page',
             'type' => 1,
             'icon' => 'file-lines',
             'status' => 1,
+            'dashboard' => 1,
         ]);
         DB::table('entities')->insert([
             'name' => 'Users',
             'description' => 'Website users',
             'slug' => 'users',
+            'model' => 'User',
             'type' => 1,
             'icon' => 'user-group',
             'status' => 1,
+            'dashboard' => 1,
         ]);
     }
 }

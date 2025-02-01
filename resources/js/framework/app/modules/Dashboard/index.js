@@ -5,12 +5,12 @@ import { Card, Frame, Body, DataCard } from "../../ui/layout/Frame";
 
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 import { useCSS } from "@app/hooks/css";
-import { getEntitys } from "@modules/Entity/reducers/entities";
+import { getEntities } from "@modules/Entity/reducers/entities";
 
 
 const Dashboard = (props) => {
     const classes = useCSS();
-    const entities = useSelector(getEntitys);
+    const entities = useSelector(getEntities);
 
     return (
         <Frame className={classes.body} spacing={3}>

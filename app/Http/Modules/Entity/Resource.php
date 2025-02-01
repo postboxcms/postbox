@@ -13,7 +13,7 @@ class Resource extends JsonResource
     /**
      * Transform the resource into route collection
      * 
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $collection
      * @return array
      */
     public static function routes($collection)
@@ -38,7 +38,7 @@ class Resource extends JsonResource
     public function toArray($request)
     {
         $this->collection = parent::toArray($request);
-        $this->model = config('postbox.database.models')[$this->collection['slug']];
+        $this->model = 'App\\Models\\'.$this->collection['model'];
         $this->collection['icon'] = $this->collection['icon'] !== null ? $this->collection['icon'] : 'fa-square';
         $this->collection['records'] = $this->model::count();
         if (isset($request->entity)) {

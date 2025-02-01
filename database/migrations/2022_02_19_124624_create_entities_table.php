@@ -18,8 +18,10 @@ class CreateEntitiesTable extends Migration
             $table->string('name',50);
             $table->string('description',255)->nullable();
             $table->string('slug',100);
+            $table->string('model',100);
             $table->string('icon')->nullable();
             $table->string('type',10)->nullable();
+            $table->tinyInteger('dashboard')->default('0');
             $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
