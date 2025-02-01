@@ -210,7 +210,7 @@ const Body = (props) => {
                     <FormControl sx={{ m: 1, maxWidth: 50, display: "flex", flexDirection: "row" }}>
                         <IconButton
                             disabled={
-                                params?.row?.type == "index" ? true : false
+                                params?.row?.type == "index" || ["created_at","updated_at"].includes(params?.row?.field) ? true : false
                             }
                             name="fa-trash"
                             color={
