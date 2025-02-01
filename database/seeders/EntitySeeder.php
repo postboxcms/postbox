@@ -21,7 +21,7 @@ class EntitySeeder extends Seeder
             'slug' => 'posts',
             'model' => 'Post',
             'type' => 1,
-            'icon' => 'message',
+            'icon' => 'fa-message',
             'status' => 1,
             'dashboard' => 1,
         ]);
@@ -31,7 +31,7 @@ class EntitySeeder extends Seeder
             'slug' => 'pages',
             'model' => 'Page',
             'type' => 1,
-            'icon' => 'file-lines',
+            'icon' => 'fa-file-lines',
             'status' => 1,
             'dashboard' => 1,
         ]);
@@ -41,7 +41,7 @@ class EntitySeeder extends Seeder
             'slug' => 'users',
             'model' => 'User',
             'type' => 1,
-            'icon' => 'user-group',
+            'icon' => 'fa-user-group',
             'status' => 1,
             'dashboard' => 1,
         ]);

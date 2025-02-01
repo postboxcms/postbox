@@ -9,7 +9,7 @@ class Model extends BaseModel
 {
     use HasFactory;
 
-    protected $fillable = ['name','description','icon','slug'];
+    protected $fillable = ['name','description','icon','slug','model'];
 
     protected $table = 'entities';
 
