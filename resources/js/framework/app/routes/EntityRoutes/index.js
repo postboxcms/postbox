@@ -7,10 +7,12 @@ import { api } from "@app/utils";
 import { Entity, AddEditContent } from "@modules/Entity";
 import Frameset from "@ui/layout/Frameset";
 
-import { routes } from "./routes";
+import { useEntityRoutes } from './routes';
 
 const EntityRoutes = () => {
-    return routes.map((routes) => {
+    const routes = useEntityRoutes();
+    
+    return routes?.map((routes) => {
         return Object.keys(routes).map((type, key) => {
             const route = routes[type];
             return (

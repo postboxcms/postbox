@@ -30,6 +30,7 @@ class Controller extends Framework
         $this->entities = Entity::where('status', 1)->get();
         return response([
             'entities' => EntityResource::collection($this->entities),
+            'routes'=> EntityResource::routes($this->entities),
             'message' => trans('entity.fetched')
         ], 200);
     }
