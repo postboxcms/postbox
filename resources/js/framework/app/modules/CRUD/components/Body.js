@@ -31,8 +31,6 @@ const Body = (props) => {
     const [formdata, setFormdata] = React.useState({});
     const [cellFocus, setCellFocus] = React.useState(false);
     const [endpoint, setEndpoint] = React.useState(null);
-    const [dialogTitle, setDialogTitle] = React.useState("");
-    const [dialogIcon, setDialogIcon] = React.useState("");
     const pageIcon = "fa-layer-group";
 
     const fieldTypes = [
@@ -217,15 +215,15 @@ const Body = (props) => {
                                 params?.row?.type == "index" ? "" : "primary"
                             }
                             onClick={() => {
-                                setDialogTitle("Delete field");
-                                setDialogIcon("fa-folder-minus");
                                 modal.handleOpen(
                                     <DeleteField
                                         onClose={() => {
                                             setCellFocus(!cellFocus);
                                             modal.handleClose();
                                         }}
-                                    />
+                                    />,
+                                    "Delete field",
+                                    "fa-folder-minus"
                                 );
                             }}
                         />
@@ -283,8 +281,6 @@ const Body = (props) => {
                     <PrimaryButton
                         type="button"
                         onClick={() => {
-                            setDialogTitle("Add a new field");
-                            setDialogIcon("fa-folder-plus");
                             modal.handleOpen(
                                 <AddField
                                     typeList={fieldTypes}
@@ -293,7 +289,9 @@ const Body = (props) => {
                                         setCellFocus(!cellFocus);
                                         modal.handleClose();
                                     }}
-                                />
+                                />,
+                                "Add a new field",
+                                "fa-folder-plus"
                             );
                         }}
                         disabled={!addRows}
@@ -333,7 +331,7 @@ const Body = (props) => {
                 />
             </div>
             <div>
-                <Dialog icon={dialogIcon} title={dialogTitle} {...modal} />
+                <Dialog {...modal} />
             </div>
         </React.Fragment>
     );
