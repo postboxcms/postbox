@@ -10,10 +10,10 @@ export const AddEditContent = ({ query, type }) => {
     React.useEffect(() => {
         switch (query) {
             case 'add':
-                setPageTitle(`Add a ${type.toLowerCase()}`);
+                setPageTitle(`New ${type}`);
                 return;
             case 'edit':
-                setPageTitle(`Edit ${type.toLowerCase()}`);
+                setPageTitle(`Edit ${type}`);
                 return;
             default:
                 setPageTitle('Error rendering the title');

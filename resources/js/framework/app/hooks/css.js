@@ -1,5 +1,6 @@
 import makeStyles from "@mui/styles/makeStyles";
 import { green, grey } from "@mui/material/colors";
+import { lighten } from "@app/utils/colors";
 
 export const useCSS = makeStyles((theme) => ({
     panel: {
@@ -39,6 +40,13 @@ export const useCSS = makeStyles((theme) => ({
     },
     cardText: {
         flex: 1,
+    },
+    cardIcons: {
+        fontSize: "2.5rem",
+        color: lighten(theme.palette.primary.main, 85)
+    },
+    noRowsOverlay: {
+        color: lighten(theme.palette.primary.main, 50)
     },
     body: {
         paddingTop: theme.spacing(4),

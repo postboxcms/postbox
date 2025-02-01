@@ -2,11 +2,12 @@
 
 namespace App\Http\Modules\Settings;
 
-use App\Models\Settings;
 use Illuminate\Http\Request;
 use Intervention\Image\Laravel\Facades\Image;
 
 use App\Http\Modules\Framework;
+use App\Http\Modules\Settings\Model as Settings;
+
 use Validator;
 
 class Controller extends Framework

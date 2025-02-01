@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Modules\Framework;
-use App\Http\Resources\Entity as EntityResource;
+use App\Http\Modules\Entity\Resource as EntityResource;
 
-use App\Models\Entity;
-use App\Models\CRUD;
+use App\Http\Modules\Entity\Model as Entity;
+use App\Http\Modules\CRUD\Model as CRUD;
 
 class Controller extends Framework
 {

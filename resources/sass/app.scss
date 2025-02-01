@@ -70,10 +70,10 @@ a.menu-link {
     }
 }
 
-svg[data-prefix="fas"].fa-xl {
-    font-size: 3em;
-    color: $framework-color-light
-}
+// svg[data-prefix="fas"].fa-xl {
+//     font-size: 3em;
+//     color: $framework-color-light
+// }
 
 input[type="text"] {
     font-size: $element-font-size;
@@ -713,7 +713,7 @@ input[type="text"] {
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            color: $framework-color-watermark;
+            // color: $framework-color-watermark;
     
             .icon {
                 margin-right: 10px;

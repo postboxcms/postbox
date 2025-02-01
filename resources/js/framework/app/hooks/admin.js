@@ -48,7 +48,7 @@ export const useAdminCSS = makeStyles((theme) => ({
         position: "relative",
         whiteSpace: "nowrap",
         width: drawerWidth,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.navigation.main,
         transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -94,7 +94,7 @@ export const useAdminCSS = makeStyles((theme) => ({
             borderRadius: "5px",
         },
         "& a.active": {
-            backgroundColor: theme.palette.primary.dark,
+            backgroundColor: theme.palette.navigation.dark,
         },
         "& a.submenu": {
             // marginLeft: '30px',

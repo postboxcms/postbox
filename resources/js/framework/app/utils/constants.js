@@ -13,6 +13,16 @@ export const api = {
     url: parseURL(`${generateURL(process.env.MIX_APP_URL, process.env.MIX_APP_PORT)}/${process.env.MIX_API_ROUTE}`),
     token: process.env.MIX_API_TOKEN,
 };
+export const cms = {
+    adminPrefix: api.adminPrefix,
+    csrfToken: api.csrfToken,
+    domain: api.domain,
+    loginUrl: api.loginUrl,
+    logoutUrl: api.logoutUrl,
+    url: parseURL(`${generateURL(process.env.MIX_APP_URL, process.env.MIX_APP_PORT)}/${process.env.MIX_CMS_ROUTE}`),
+    token: api.token,
+};
+
 export const nav = {
     menuToken: process.env.MIX_MENU_TOKEN,
     userToken: process.env.MIX_USER_TOKEN,

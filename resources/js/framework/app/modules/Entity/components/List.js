@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     useNotifier,
     useNavigation,
-    useAuthentication,
+    useSecureRoute,
     useCSS,
 } from "@app/hooks";
 
@@ -20,10 +20,10 @@ import PrimaryButton from "@ui/elements/PrimaryButton";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 
-import ActionsButton from "./ActionsButton";
+import ActionButtons from "./ActionButtons";
 
 const List = (props) => {
-    const auth = useAuthentication();
+    const api = useSecureRoute();
     const classes = useCSS();
     const navigate = useNavigation();
     const notify = useNotifier();
@@ -69,23 +69,23 @@ const List = (props) => {
     };
 
     const saveField = (data) => {
-        auth.put(`/entity/${module}`, data).then((response) =>
+        api.put(`/entity/${module}`, data).then((response) =>
             notify(response.data.message)
         );
     };
 
     React.useEffect(() => {
-        auth.get("/crud" + props["path"]).then((response) => {
+        api.get("/crud" + props["path"]).then((response) => {
             const columnData = response.data.columns;
             columnData.push({
                 field: "actions",
                 headerName: "ACTIONS",
                 headerClassName: "table-header-light",
                 flex: 1,
-                renderCell: () => <ActionsButton />,
+                renderCell: () => <ActionButtons />,
             });
 
-            auth.get("/entity" + props["path"]).then((response) => {
+            api.get("/entity" + props["path"]).then((response) => {
                 const dataset = [];
                 setData(response.data.entity);
 

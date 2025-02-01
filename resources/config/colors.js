@@ -1,6 +1,7 @@
 module.exports = {
     css: {
         brandColor: "#a1183f",
-        frameworkColor: "#4926a6",
+        frameworkColor: "#764abc",
+        adminNavbarColor: "#764abc",
     }
 };

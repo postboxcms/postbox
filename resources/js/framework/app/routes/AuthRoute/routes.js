@@ -1,6 +1,6 @@
-import { api } from "../../utils/constants";
+import { api } from "@app/utils/constants";
 
-const routes = [
+export const routes = [
     {
         login: {
             path: api.adminPrefix + api.loginUrl,

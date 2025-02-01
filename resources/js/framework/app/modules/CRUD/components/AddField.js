@@ -1,12 +1,13 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import { useNotifier } from "@app/hooks";
+import { useNotifier, useCMSRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
 import SaveButton from "@ui/elements/SaveButton";
 import Input from "@ui/elements/Input";
 
 export const AddField = (props) => {
     const notify = useNotifier();
+    const cms = useCMSRoute();
     const [field, setField] = React.useState("");
     const [isFormDisabled, setIsFormDisabled] = React.useState(false);
 
@@ -16,9 +17,15 @@ export const AddField = (props) => {
             const data = new FormData();
             for (const [key, value] of new FormData(event.target)) {
                 data.append(key, value);
+                if(key == 'alias') {
+                    data.append('field', value.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase());
+                }
             }
-            notify("Field added successfully");
-            props.onClose();
+            cms.post('/dbo', data).then((response) => {
+                console.log(response);
+                notify("Field added successfully");
+                props.onClose();    
+            });
         } catch (error) {
             console.error(error);
             notify("Something went wrong!", "error");

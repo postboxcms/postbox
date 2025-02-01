@@ -3,7 +3,7 @@
 namespace App\Http\Modules\Website;
 
 use App\Http\Modules\Framework;
-use App\Models\Settings;
+use App\Http\Modules\Settings\Model as Settings;
 use Illuminate\Http\Request;
 
 class Controller extends Framework

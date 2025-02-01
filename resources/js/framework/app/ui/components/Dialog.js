@@ -3,7 +3,7 @@ import { Container, Grid, Modal } from "@mui/material";
 import { useCSS } from "@app/hooks";
 import Title from "@ui/elements/Title";
 
-export const Dialog = ({ open, content, handleClose, title }) => {
+export const Dialog = ({ open, content, handleClose, title, icon }) => {
     const classes = useCSS();
     return (
         <Modal
@@ -13,7 +13,7 @@ export const Dialog = ({ open, content, handleClose, title }) => {
             aria-describedby="modal-modal-description"
         >
             <div className={classes.modal}>
-                <Title icon="fa-notes-medical">{title}</Title>
+                <Title icon={icon}>{title}</Title>
                 <Container>
                     <Grid
                         alignContent={"center"}
