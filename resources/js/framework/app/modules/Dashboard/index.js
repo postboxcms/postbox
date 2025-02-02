@@ -23,7 +23,7 @@ const Dashboard = (props) => {
                 </Card>
             </Placeholder>
             {entities?.entities?.map((data, i) => {
-                return (
+                return data['dashboard'] && (
                     <Card xs={12} md={4} lg={4} key={data["id"]}>
                         <Body
                             key={data["id"]}

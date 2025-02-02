@@ -13,8 +13,8 @@ class Resource extends JsonResource
     /**
      * Transform the resource into route collection
      * 
-     * @param  \Illuminate\Http\Request  $collection
-     * @return array
+     * @param  \Illuminate\Database\Eloquent\Collection  $collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function routes($collection)
     {
@@ -41,6 +41,7 @@ class Resource extends JsonResource
         $this->model = 'App\\Models\\'.$this->collection['model'];
         $this->collection['icon'] = $this->collection['icon'] !== null ? $this->collection['icon'] : 'fa-square';
         $this->collection['records'] = $this->model::count();
+
         if (isset($request->entity)) {
             $this->collection['data'] = $this->model::all();
             $this->collection['data'] = collect($this->collection['data']->toArray())->map(function ($data) {
@@ -60,6 +61,7 @@ class Resource extends JsonResource
                 return $data;
             });
         }
+
         return $this->collection;
     }
 }
