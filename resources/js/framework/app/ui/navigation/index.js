@@ -19,11 +19,11 @@ import NavLink from "./NavLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { api, nav } from "@app/utils/constants";
-import { getEntitys } from "@modules/Entity/reducers/entities";
+import { getEntities } from "@modules/Entity/reducers/entities";
 
 export const MainItems = React.memo((props) => {
     const location = useLocation();
-    const entities = useSelector(getEntitys);
+    const entities = useSelector(getEntities);
     const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings'];
     const isOpen = !reservedRoutes.includes(location.pathname.split('/').pop());
     const [open, setOpen] = useState(isOpen);

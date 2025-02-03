@@ -6,13 +6,13 @@ const entities = createSlice({
         types: []
     },
     reducers: {
-        setEntitys: (state, action) => {
+        setEntities: (state, action) => {
             state.types = action.payload;
         }
     }
 });
 
-export const getEntitys = (state) => state.entities.types;
-export const { setEntitys } = entities.actions;
+export const getEntities = (state) => state.entities.types;
+export const { setEntities } = entities.actions;
 
 export default entities.reducer;

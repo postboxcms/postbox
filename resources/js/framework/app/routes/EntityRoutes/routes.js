@@ -1,22 +1,11 @@
 import React from 'react';
-import { useSecureRoute } from '@app/hooks/route';
+import { useSelector } from 'react-redux';
+
+import { getEntities } from '@modules/Entity/reducers/entities';
 
 // route manager hook
 export const useEntityRoutes = () => {
-    const api = useSecureRoute();
-    const [routes, setRoutes] = React.useState([]);
+    const entities = useSelector(getEntities);
 
-    React.useEffect(() => {
-        const fetchRoutes = async () => {
-            try {
-                const response = await api.get('/entity');
-                setRoutes(response.data?.routes);
-            } catch (error) {
-                console.error('Failed to fetch routes:', error);
-            }
-        };
-        fetchRoutes();
-    }, []);
-
-    return routes;
+    return entities?.routes || [];
 }

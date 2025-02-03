@@ -19,6 +19,7 @@ class Controller extends Framework
     protected $columns;
     protected $data;
     protected $table;
+    protected $model;
     protected $missingFields;
     protected $crud;
     protected $counter = 1;
@@ -85,7 +86,11 @@ class Controller extends Framework
     public function show(Entity $Entity)
     {
         // display CRUD fields
-        $this->table = \Request::segment(count(\Request::segments()));
+        $this->model = strtolower(Entity::where('slug',\Request::segment(count(\Request::segments())))->first()->model);
+        $this->model = "\\App\\Models\\" .ucfirst($this->model);
+        $this->model = new $this->model();
+        
+        $this->table = $this->model->getTable();
         $this->fields = $Entity->getTableColumns($this->table);
         $this->fields = collect($this->fields)->map(function ($field) {
             $this->counter += 1;
