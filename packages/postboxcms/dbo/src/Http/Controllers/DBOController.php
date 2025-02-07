@@ -37,6 +37,9 @@ class DBOController extends Framework
     public function store(Request $request): JsonResponse|ResponseFactory
     {
         try {
+            // Schema::table($table, function (Blueprint $table) {
+            //     $table->string($column);
+            // });
             $this->validate(request: $request, rules: [
                 'alias' => 'required|min:3',
             ]);
