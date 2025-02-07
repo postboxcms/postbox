@@ -38,8 +38,8 @@ export const admin = createTheme({
         },
         navigation: {
             main: adminNavbarColor,
-            dark: darken(adminNavbarColor, 20),
-            light: lighten(adminNavbarColor, 20),
+            dark: darken(frameworkColor, 30),
+            light: lighten(frameworkColor, 30),
         },
         plain: {
             main: "#fff",
