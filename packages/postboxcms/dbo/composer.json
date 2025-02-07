@@ -1,6 +1,6 @@
 {
     "name": "postboxcms/dbo",
-    "description": "This package performs database operations from UI",
+    "description": "This package provides module to perform database operations from your app",
     "type": "library",
     "license": "ISC",
     "autoload": {
