@@ -10,13 +10,13 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Collapse from "@mui/material/Collapse";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import InventoryIcon from "@mui/icons-material/Inventory";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import NavLink from "./NavLink";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Icon from "@ui/elements/Icon";
 
 import { api, nav } from "@app/utils/constants";
 import { getEntities } from "@modules/Entity/reducers/entities";
@@ -24,8 +24,12 @@ import { getEntities } from "@modules/Entity/reducers/entities";
 export const MainItems = React.memo((props) => {
     const location = useLocation();
     const entities = useSelector(getEntities);
-    const reservedRoutes = [api.adminPrefix.split('/').pop(), 'crud', 'settings'];
-    const isOpen = !reservedRoutes.includes(location.pathname.split('/').pop());
+    const reservedRoutes = [
+        api.adminPrefix.split("/").pop(),
+        "crud",
+        "settings",
+    ];
+    const isOpen = !reservedRoutes.includes(location.pathname.split("/").pop());
     const [open, setOpen] = useState(isOpen);
     const [isHidden, setIsHidden] = useState(false);
     const [timeout, setTimeout] = useState("auto");
@@ -35,12 +39,12 @@ export const MainItems = React.memo((props) => {
 
     React.useEffect(() => {
         const totalEntities = entities?.entities?.length;
-        if(totalEntities <= nav.maxEntityLimit) {
+        if (totalEntities <= nav.maxEntityLimit) {
             setOpen(true);
             setIsHidden(true);
             setTimeout(0);
         }
-    },[]);
+    }, []);
 
     return (
         <React.Fragment>
@@ -56,7 +60,7 @@ export const MainItems = React.memo((props) => {
                 <NavLink title="Content" hidden={isHidden} to="#">
                     <ListItem onClick={collapsePanel}>
                         <ListItemIcon>
-                            <InventoryIcon />
+                            <CollectionsBookmarkIcon />
                         </ListItemIcon>
                         <ListItemText primary="Content" />
                         {open ? <ExpandLess /> : <ExpandMore />}
@@ -68,13 +72,18 @@ export const MainItems = React.memo((props) => {
                             return (
                                 <NavLink
                                     title={data["name"]}
-                                    to={api["adminPrefix"] + "/" + data["slug"] + "/list"}
+                                    to={
+                                        api["adminPrefix"] +
+                                        "/" +
+                                        data["slug"] +
+                                        "/list"
+                                    }
                                     key={data["id"]}
                                     submenu={true}
                                 >
                                     <ListItem>
                                         <ListItemIcon>
-                                            <FontAwesomeIcon
+                                            <Icon
                                                 size="lg"
                                                 icon={data["icon"]}
                                             />
@@ -99,15 +108,19 @@ export const SubItems = (props) => {
                 <NavLink title="CRUD" to={api.adminPrefix + "/crud"} key="0">
                     <ListItem>
                         <ListItemIcon>
-                            <FontAwesomeIcon size="lg" icon="layer-group" />
+                            <Icon size="lg" icon="fa-layer-group" />
                         </ListItemIcon>
                         <ListItemText primary="CRUD" />
                     </ListItem>
                 </NavLink>
-                <NavLink title="Settings" to={api.adminPrefix + "/settings"} key="1">
+                <NavLink
+                    title="Settings"
+                    to={api.adminPrefix + "/settings"}
+                    key="1"
+                >
                     <ListItem>
                         <ListItemIcon>
-                            <FontAwesomeIcon size="lg" icon="gear" />
+                            <Icon size="lg" icon="fa-gear" />
                         </ListItemIcon>
                         <ListItemText primary="Settings" />
                     </ListItem>

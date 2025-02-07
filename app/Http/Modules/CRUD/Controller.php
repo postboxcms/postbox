@@ -86,8 +86,8 @@ class Controller extends Framework
     public function show(Entity $Entity)
     {
         // display CRUD fields
-        $this->model = strtolower(Entity::where('slug',\Request::segment(count(\Request::segments())))->first()->model);
-        $this->model = "\\App\\Models\\" .ucfirst($this->model);
+        $this->model = Entity::where('slug',\Request::segment(count(\Request::segments())))->first()->model;
+        $this->model = "\\App\\Models\\" .$this->model;
         $this->model = new $this->model();
         
         $this->table = $this->model->getTable();
