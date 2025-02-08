@@ -102,6 +102,7 @@ class Controller extends Framework
                 'type'  => $this->_getField($field, 'type', 'text'),
                 'position' => $this->_getField($field, 'position', 'none'),
                 'list'    => $this->_getField($field, 'list', true),
+                'mandatory'    => $this->_getField($field, 'mandatory', false),
                 'actions' => null
             ];
         });
