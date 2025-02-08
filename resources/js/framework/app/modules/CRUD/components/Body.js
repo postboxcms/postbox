@@ -168,6 +168,33 @@ const Body = (props) => {
             },
         },
         {
+            field: "mandatory",
+            alignItems: "center",
+            headerName: "MANDATORY",
+            headerClassName: "table-header-light",
+            flex: 1,
+            renderCell: (params) => {
+                return (
+                    <>
+                        <FormControlLabel
+                            onChange={(event) => updateCell(event, params)}
+                            control={
+                                <IOSSwitch
+                                    sx={{ m: 1 }}
+                                    checked={
+                                        params.value
+                                            ? Boolean(params.value)
+                                            : false
+                                    }
+                                />
+                            }
+                            label=""
+                        />
+                    </>
+                );
+            },
+        },
+        {
             field: "position",
             headerName: "EDIT PAGE POSITION",
             headerClassName: "table-header-light",
