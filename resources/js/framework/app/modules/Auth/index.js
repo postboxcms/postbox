@@ -20,6 +20,7 @@ import { platform } from "@app/utils/constants";
 import Footer from "@ui/components/Footer";
 import PrimaryButton from "@ui/elements/PrimaryButton";
 import Logo from "@ui/elements/Logo";
+import Icon from "@ui/elements/Icon";
 
 import {
     setToken,
@@ -29,7 +30,6 @@ import {
     unsetUser,
     getUser,
 } from "./reducers/jwt";
-import { Icon } from "@mui/material";
 
 const Auth = (props) => {
     // const history = useHistory();
@@ -181,8 +181,8 @@ const Auth = (props) => {
                             </Grid> */}
                             <Box pt={4}>
                                 <Footer
-                                    prefix={"Copyright \xA9"}
-                                    suffix={" " + new Date().getFullYear()}
+                                    prefix={() => <>Copyright <Icon name="fa-copyright" /> </>}
+                                    suffix={() => " " + new Date().getFullYear()}
                                     linkText={platform.company}
                                     linkURL={platform.companyURL}
                                     sx={{ mt: 5 }}
