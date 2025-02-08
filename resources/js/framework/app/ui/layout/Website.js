@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 // footer
 import Footer from '@ui/components/Footer';
+import Icon from "@ui/elements/Icon";
 
 export default function Website(props) {
     const renderTheme = (props) => {
@@ -18,7 +19,7 @@ export default function Website(props) {
             <CssBaseline />
             {renderTheme(props)}
             <Box pt={4}>
-                <Footer prefix="Powered by" suffix={' © ' + new Date().getFullYear()} linkText="Postbox" linkURL="https://digitalbit.in" />
+                <Footer prefix={() => <>Powered by</>} suffix={() => <><Icon name="fa-copyright" /> {new Date().getFullYear()}</>} linkText="Postbox" linkURL="https://digitalbit.in" />
             </Box>
         </div>
     );

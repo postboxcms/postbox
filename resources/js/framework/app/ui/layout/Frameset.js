@@ -30,6 +30,7 @@ import { getUser } from '@modules/Auth/reducers/jwt';
 import { platform } from '@app/utils/constants';
 import Footer from '@ui/components/Footer';
 import Logo from '@ui/elements/Logo';
+import Icon from '@ui/elements/Icon';
 
 export default function Frameset(props) {
     const classes = useAdminCSS();
@@ -117,8 +118,8 @@ export default function Frameset(props) {
                     {renderComponent(props)}
                     <Box pt={2}>
                         <Footer 
-                            prefix={"Crafting with \u2764 at "} 
-                            suffix={" since " + platform.companyYear} 
+                            prefix={() => <>Crafting with <Icon name="fa-heart" size="sm" color={admin.palette.primary.main} /> at </>} 
+                            suffix={() => " since " + platform.companyYear} 
                             linkText={platform.company}
                             linkURL={platform.companyURL}/>
                     </Box>
