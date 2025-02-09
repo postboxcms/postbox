@@ -42,7 +42,7 @@ class DBOController extends Framework
                 $table->{$this->data->dataType}($this->data->field)->after('id');
             });
             $this->validate(request: $request, rules: [
-                'alias' => 'required|min:3',
+                'field' => 'required|min:3',
             ]);
 
             return response()->json(data: ['message' => 'DB column added successfully', 'data' => $this->data],status: 200);
