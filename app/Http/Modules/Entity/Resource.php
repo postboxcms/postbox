@@ -62,6 +62,8 @@ class Resource extends JsonResource
                     return $data;
                 });
             }
+        } else {
+            return [];
         }
         return $this->collection;
     }
