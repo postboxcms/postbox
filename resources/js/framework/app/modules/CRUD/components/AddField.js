@@ -21,7 +21,7 @@ export const AddField = (props) => {
                     data.append('field', value.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase());
                 }
             }
-            cms.post('/dbo', data).then((response) => {
+            cms.post('/dbo/'+props.endpoint, data).then((response) => {
                 console.log(response);
                 notify("Field added successfully");
                 props.onClose();    

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 use App\Http\Modules\Framework;
 
@@ -37,9 +38,9 @@ class DBOController extends Framework
     public function store(Request $request): JsonResponse|ResponseFactory
     {
         try {
-            // Schema::table($table, function (Blueprint $table) {
-            //     $table->string($column);
-            // });
+            Schema::table($this->table, function (Blueprint $table) {
+                $table->{$this->data->dataType}($this->data->field)->after('id');
+            });
             $this->validate(request: $request, rules: [
                 'alias' => 'required|min:3',
             ]);
