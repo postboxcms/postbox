@@ -244,6 +244,7 @@ const Body = (props) => {
                             onClick={() => {
                                 modal.handleOpen(
                                     <DeleteField
+                                        data={{table: params?.row?.table, column: params?.row.field}}
                                         onClose={() => {
                                             setCellFocus(!cellFocus);
                                             modal.handleClose();

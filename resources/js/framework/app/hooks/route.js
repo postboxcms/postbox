@@ -26,10 +26,19 @@ export const useSecureRoute = () => {
             }
         });
     }
+    const remove = (url, data) => {
+        return axios.delete(api.url + url, {
+            headers:{
+                Authorization: 'Bearer ' + token
+            },
+            data
+        });
+    }
     return {
         get,
         post,
-        put
+        put,
+        remove
     }
 }
 
@@ -57,10 +66,11 @@ export const useCMSRoute = () => {
         });
     }
     const remove = (url, data) => {
-        return axios.delete(cms.url + url, data, {
+        return axios.delete(cms.url + url, {
             headers:{
                 Authorization: 'Bearer ' + token
-            }
+            },
+            data
         });
     }
     return {
