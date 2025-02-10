@@ -1,15 +1,26 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import { useNotifier, useCMSRoute } from "@app/hooks";
+import { useNotifier, useCMSRoute, useSecureRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
 import SaveButton from "@ui/elements/SaveButton";
 import Input from "@ui/elements/Input";
+import { fetchEntries, pushToObject } from "@app/utils";
 
 export const AddField = (props) => {
     const notify = useNotifier();
     const cms = useCMSRoute();
+    const api = useSecureRoute();
     const [field, setField] = React.useState("");
     const [isFormDisabled, setIsFormDisabled] = React.useState(false);
+
+    const updatePayload = (data, replaceKeys, newEntries) => {
+        for (const [key, newKey] of fetchEntries(replaceKeys)) {
+            data[newKey] = data[key];
+            delete data[key];
+        }
+        pushToObject(data, newEntries);
+        return data;
+    };
 
     const saveField = (event) => {
         try {
@@ -17,20 +28,43 @@ export const AddField = (props) => {
             const data = new FormData();
             for (const [key, value] of new FormData(event.target)) {
                 data.append(key, value);
-                if(key == 'alias') {
-                    data.append('field', value.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase());
+                if (key == "alias") {
+                    data.append(
+                        "field",
+                        value.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase()
+                    );
+                }
+                if (key == "type") {
+                    const list = props.typeList.find(
+                        (item) => item.value == value
+                    );
+                    data.append("dataType", list.dataType);
                 }
             }
-            cms.post('/dbo/'+props.endpoint, data).then((response) => {
-                console.log(response);
-                notify("Field added successfully");
-                props.onClose();    
+
+            cms.post("/dbo/" + props.table, data).then((response) => {
+                // insert into CRUD table as well
+                const crudPayload = updatePayload(
+                    response?.data?.data,
+                    {
+                        editPosition: "position",
+                        view: "list",
+                    },
+                    { 
+                        table: props.table 
+                    }
+                );
+
+                api.post("/crud", crudPayload).then((response) => {
+                    notify("Field added successfully");
+                    props.onClose();
+                });
             });
         } catch (error) {
             console.error(error);
             notify("Something went wrong!", "error");
         }
-    }
+    };
 
     return (
         <Form onSubmit={saveField}>
@@ -51,19 +85,21 @@ export const AddField = (props) => {
                         fullWidth
                         defaultValue={""}
                         label="Alias"
-                        onChange={
-                            (e) =>  {
-                                setField(e.target.value.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase());
-                                setIsFormDisabled(e.target.value.length > 2);
-                            }
-                        }
+                        onChange={(e) => {
+                            setField(
+                                e.target.value
+                                    .replace(/[^a-zA-Z0-9]/g, "_")
+                                    .toLowerCase()
+                            );
+                            setIsFormDisabled(e.target.value.length > 2);
+                        }}
                     />
                 </Grid>
             </Grid>
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
                     <Input
-                        defaultValue="hidden"
+                        defaultValue="text"
                         type="dropdown"
                         name="type"
                         fullWidth
@@ -75,14 +111,14 @@ export const AddField = (props) => {
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
                     <Input
-                        defaultValue="yes"
+                        defaultValue={1}
                         type="dropdown"
                         name="view"
                         fullWidth
                         label="View In List"
                         options={[
-                            { value: "yes", label: "Yes" },
-                            { value: "no", label: "No" },
+                            { value: 1, label: "Yes" },
+                            { value: 0, label: "No" },
                         ]}
                     />
                 </Grid>
@@ -107,6 +143,6 @@ export const AddField = (props) => {
             </Grid>
         </Form>
     );
-}
+};
 
 export default AddField;
