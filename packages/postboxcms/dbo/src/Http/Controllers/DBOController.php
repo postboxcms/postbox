@@ -67,9 +67,9 @@ class DBOController extends Framework
         $column = $this->data->column;
 
         try {
-            // Schema::table($table, function ($table) use ($column) {
-            //     $table->dropColumn($column);
-            // });
+            Schema::table($table, function ($table) use ($column) {
+                $table->dropColumn($column);
+            });
             return response()->json(data: ['message' => 'DB column deleted successfully', 'data' => ['table' => $table, 'column' => $column]], status: 200);
         } catch (\Exception $e) {
             return response()->json(data: ['error' => 'Something went wrong'], status: 400);
