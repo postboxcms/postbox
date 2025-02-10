@@ -311,6 +311,7 @@ const Body = (props) => {
                             modal.handleOpen(
                                 <AddField
                                     typeList={fieldTypes}
+                                    table={endpoint.replace("/crud/","")}
                                     positionList={editPagePositions}
                                     onClose={() => {
                                         setCellFocus(!cellFocus);
