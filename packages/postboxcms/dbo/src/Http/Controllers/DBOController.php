@@ -21,7 +21,8 @@ class DBOController extends Framework
     protected $table;
     protected $data;
 
-    public function __construct(Request $request) {
+    public function __construct(Request $request)
+    {
         $this->table = $request->route()->parameter(name: 'table');
         $this->data = (object) $request->all();
     }
@@ -45,7 +46,7 @@ class DBOController extends Framework
                 'field' => 'required|min:3',
             ]);
 
-            return response()->json(data: ['message' => 'DB column added successfully', 'data' => $this->data],status: 200);
+            return response()->json(data: ['message' => 'DB column added successfully', 'data' => $this->data], status: 200);
         } catch (\Exception $e) {
             return response()->json(data: ['message' => 'Something went wrong', 'error' => $e->getMessage()], status: 400);
         }
@@ -55,24 +56,24 @@ class DBOController extends Framework
     {
         try {
             return response()->json(data: ['message' => 'DB column updated successfully'], status: 200);
-        } catch(\Exception $e) {
-            return response()->json(data: ['error'=> 'Something went wrong'], status: 400);
+        } catch (\Exception $e) {
+            return response()->json(data: ['error' => 'Something went wrong'], status: 400);
         }
     }
 
     public function destroy(Request $request): JsonResponse|ResponseFactory
     {
-        $table = $this->table;      
+        $table = $this->table;
         $column = $this->data->column;
 
         try {
             // Schema::table($table, function ($table) use ($column) {
             //     $table->dropColumn($column);
             // });
-            return response()->json(data: ['message' => 'DB column deleted successfully', 'data'=>['table' => $table, 'column' => $column]], status: 200);
+            return response()->json(data: ['message' => 'DB column deleted successfully', 'data' => ['table' => $table, 'column' => $column]], status: 200);
         } catch (\Exception $e) {
             return response()->json(data: ['error' => 'Something went wrong'], status: 400);
         }
     }
-            
+
 }
