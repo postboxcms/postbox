@@ -298,9 +298,12 @@ const Body = (props) => {
         const params = { field: data.row.field, replaceType: dataType };
         const table = data.row.table;
         
-        return cms.patch("/dbo/" + table, params).then(() => {
-            saveField(data, event);
-        });
+        if(params.replaceType !== "id") {
+            return cms.patch("/dbo/" + table, params).then(() => {
+                saveField(data, event);
+            });
+        }
+        return saveField(data, event);
     };
 
     const saveField = (data, event) => {
