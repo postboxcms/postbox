@@ -55,9 +55,12 @@ class DBOController extends Framework
     public function update(Request $request, $id): JsonResponse|ResponseFactory
     {
         try {
+            Schema::table(table: $this->table, callback: function (Blueprint $table) {
+                $table->{$this->data->replaceType}($this->data->field)->change();
+            });
             return response()->json(data: ['message' => 'DB column updated successfully'], status: 200);
         } catch (\Exception $e) {
-            return response()->json(data: ['error' => 'Something went wrong'], status: 400);
+            return response()->json(data: ['message' => 'Something went wrong', 'error' => $e->getMessage()], status: 400);
         }
     }
 
