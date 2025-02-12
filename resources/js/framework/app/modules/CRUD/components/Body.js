@@ -1,16 +1,9 @@
 import React from "react";
 
-import {
-    MenuItem,
-    Select,
-    FormControl,
-    FormControlLabel,
-} from "@mui/material";
+import { MenuItem, Select, FormControl, FormControlLabel } from "@mui/material";
 
 import { useCSS, useModal } from "@app/hooks";
-import { useNotifier } from "@app/hooks/notifications";
-
-import { useSecureRoute } from "@app/hooks/route";
+import { useNotifier, useSecureRoute, useCMSRoute } from "@app/hooks";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
@@ -26,6 +19,7 @@ const Body = (props) => {
     const classes = useCSS();
     const modal = useModal();
     const api = useSecureRoute();
+    const cms = useCMSRoute();
     const notify = useNotifier();
     const [addRows, setAddRows] = React.useState(false);
     const [formdata, setFormdata] = React.useState({});
@@ -100,6 +94,7 @@ const Body = (props) => {
                             onChange={(event) => updateCell(event, params)}
                             defaultValue={params.value}
                             label=""
+                            name="alias"
                             size="small"
                             onKeyDown={(event) => {
                                 event.stopPropagation();
@@ -123,6 +118,7 @@ const Body = (props) => {
                         >
                             <Select
                                 defaultValue={"hidden"}
+                                name="type"
                                 value={params.value ? params.value : "hidden"}
                                 onChange={(event) => updateCell(event, params)}
                             >
@@ -232,10 +228,22 @@ const Body = (props) => {
             flex: 1,
             renderCell: (params) => {
                 return (
-                    <FormControl sx={{ m: 1, maxWidth: 50, display: "flex", flexDirection: "row" }}>
+                    <FormControl
+                        sx={{
+                            m: 1,
+                            maxWidth: 50,
+                            display: "flex",
+                            flexDirection: "row",
+                        }}
+                    >
                         <IconButton
                             disabled={
-                                params?.row?.type == "index" || ["created_at","updated_at"].includes(params?.row?.field) ? true : false
+                                params?.row?.type == "index" ||
+                                ["created_at", "updated_at"].includes(
+                                    params?.row?.field
+                                )
+                                    ? true
+                                    : false
                             }
                             name="fa-trash"
                             color={
@@ -269,25 +277,41 @@ const Body = (props) => {
                 : event.target.value;
         data.value = data.row[data.field];
         data.formattedValue = data.row[data.field];
-        if (
-            typeof event.target.type === typeof undefined ||
-            event.target.type == "checkbox"
-        ) {
-            setCellFocus(!cellFocus);
-            data.api.setCellFocus(cellFocus);
-        }
 
         if (event.target.type == "text") {
-            setTimeout(() => {
+            return setTimeout(() => {
                 setFormdata(data.row);
             }, 4000);
-        } else {
-            saveField(data.row);
         }
+
+        if (event.target.name == "type") {
+            return updateSchema(data, event);
+        }
+
+        return saveField(data, event);
     };
 
-    const saveField = (data) => {
-        api.post("/crud", data).then((response) => {
+    const updateSchema = (data, event) => {
+        const replaceType = event.target.value;
+        const fieldType = fieldTypes.find((type) => type.value === replaceType);
+        const dataType = fieldType ? fieldType.dataType : null;
+        const params = { field: data.row.field, replaceType: dataType };
+        const table = data.row.table;
+        
+        return cms.patch("/dbo/" + table, params).then(() => {
+            saveField(data, event);
+        });
+    };
+
+    const saveField = (data, event) => {
+        return api.post("/crud", data.row).then((response) => {
+            if (
+                typeof event.target.type === typeof undefined ||
+                event.target.type == "checkbox"
+            ) {
+                setCellFocus(!cellFocus);
+                data.api.setCellFocus(cellFocus);
+            }
             notify(response.data.message);
             setFormdata({});
         });
@@ -312,7 +336,7 @@ const Body = (props) => {
                             modal.handleOpen(
                                 <AddField
                                     typeList={fieldTypes}
-                                    table={endpoint.replace("/crud/","")}
+                                    table={endpoint.replace("/crud/", "")}
                                     positionList={editPagePositions}
                                     onClose={() => {
                                         setCellFocus(!cellFocus);

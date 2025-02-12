@@ -63,7 +63,7 @@ class Controller extends Framework
         ]);
 
         if ($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(), trans('crud.validationerror')]);
+            return response(['message' => $this->validator->errors(), trans('crud.validationerror')], 400);
         }
 
         $this->crud = CRUD::updateOrCreate([
