@@ -19,7 +19,7 @@ export default function Website(props) {
             <CssBaseline />
             {renderTheme(props)}
             <Box pt={4}>
-                <Footer prefix={() => <>Powered by</>} suffix={() => <><Icon name="fa-copyright" /> {new Date().getFullYear()}</>} linkText="Postbox" linkURL="https://digitalbit.in" />
+                <Footer prefix={() => <>Powered by</>} suffix={() => <>&copy; {new Date().getFullYear()}</>} linkText="Postbox" linkURL="https://digitalbit.in" />
             </Box>
         </div>
     );

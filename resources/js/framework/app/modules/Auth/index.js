@@ -181,7 +181,7 @@ const Auth = (props) => {
                             </Grid> */}
                             <Box pt={4}>
                                 <Footer
-                                    prefix={() => <>Copyright <Icon name="fa-copyright" /> </>}
+                                    prefix={() => <>Copyright &copy; </>}
                                     suffix={() => " " + new Date().getFullYear()}
                                     linkText={platform.company}
                                     linkURL={platform.companyURL}
