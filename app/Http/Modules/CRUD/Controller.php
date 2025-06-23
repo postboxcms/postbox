@@ -43,7 +43,7 @@ class Controller extends Framework
         // display content type tables
         $this->entityCollection = Entity::where('status', 1)->get();
         return response([
-            'entities' => EntityResource::collection($this->entityCollection),
+            'entities' => array_filter(EntityResource::collection($this->entityCollection)->resolve()),
             'message' => trans('app.success')
         ], 200);
     }
@@ -86,46 +86,51 @@ class Controller extends Framework
     public function show(Entity $Entity)
     {
         // display CRUD fields
-        $this->model = strtolower(Entity::where('slug',\Request::segment(count(\Request::segments())))->first()->model);
-        $this->model = "\\App\\Models\\" .ucfirst($this->model);
-        $this->model = new $this->model();
-        
-        $this->table = $this->model->getTable();
-        $this->fields = $Entity->getTableColumns($this->table);
-        $this->fields = collect($this->fields)->map(function ($field) {
-            $this->counter += 1;
-            return [
-                'id' => $this->counter,
-                'table' => $this->table,
-                'field' => $field,
-                'alias' => $this->_getField($field, 'alias', strtoupper($field)),
-                'type'  => $this->_getField($field, 'type', 'text'),
-                'position' => $this->_getField($field, 'position', 'none'),
-                'list'    => $this->_getField($field, 'list', true),
-                'actions' => null
-            ];
-        });
-        $this->data = CRUD::where('table', \Request::segment(count(\Request::segments())))->get()->toArray();
+        $this->model = Entity::where('slug', \Request::segment(count(\Request::segments())))->first()->model;
+        $this->model = "\\App\\Models\\" . $this->model;
 
-        $this->columns = collect($this->fields)->map(function ($field) {
-            $hiddenFields = CRUD::where('table', \Request::segment(count(\Request::segments())))
-                ->where('field', $field['field'])
-                ->where('list', 0)->get()->pluck('field');
-
-            if (!$hiddenFields->contains($field['field'])) {
+        if (class_exists($this->model)) {
+            $this->model = new $this->model();
+            $this->table = $this->model->getTable();
+            $this->fields = $Entity->getTableColumns($this->table);
+            $this->fields = collect($this->fields)->map(function ($field) {
+                $this->counter += 1;
                 return [
-                    'field' => $field['field'],
-                    'headerClassName' => 'table-header-light',
-                    'headerName' => str_replace('_', ' ', $field['alias']),
-                    'flex' => 1
+                    'id' => $this->counter,
+                    'table' => $this->table,
+                    'field' => $field,
+                    'alias' => $this->_getField($field, 'alias', strtoupper($field)),
+                    'type' => $this->_getField($field, 'type', 'text'),
+                    'position' => $this->_getField($field, 'position', 'none'),
+                    'list' => $this->_getField($field, 'list', true),
+                    'mandatory' => $this->_getField($field, 'mandatory', false),
+                    'actions' => null
                 ];
-            }
-        })->filter()->values();
+            });
+            $this->data = CRUD::where('table', \Request::segment(count(\Request::segments())))->get()->toArray();
 
-        return response([
-            'fields' => $this->fields,
-            'columns' => $this->columns
-        ], 200);
+            $this->columns = collect($this->fields)->map(function ($field) {
+                $hiddenFields = CRUD::where('table', \Request::segment(count(\Request::segments())))
+                    ->where('field', $field['field'])
+                    ->where('list', 0)->get()->pluck('field');
+
+                if (!$hiddenFields->contains($field['field'])) {
+                    return [
+                        'field' => $field['field'],
+                        'headerClassName' => 'table-header-light',
+                        'headerName' => str_replace('_', ' ', $field['alias']),
+                        'flex' => 1
+                    ];
+                }
+            })->filter()->values();
+
+            return response([
+                'fields' => $this->fields,
+                'columns' => $this->columns
+            ], 200);
+        } else {
+            return response(['error' => 'Model not found'], 400);
+        }
     }
 
     /**

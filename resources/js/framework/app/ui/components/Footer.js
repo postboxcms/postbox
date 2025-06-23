@@ -4,18 +4,20 @@ import {useCSS} from '@app/hooks/css';
 
 const Footer = ({prefix, suffix, linkText, linkURL}) => {
     const classes = useCSS();
-
+    const Prefix = prefix;
+    const Suffix = suffix;
+    
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {/* {'Powered by '} */}
-            {prefix} {" "}
+            <Prefix /> {" "}
             <Link className={classes.footerLink} href={linkURL} underline="hover">
                 {/* {'Postbox'} */}
                 {linkText}
             </Link>{" "}
             {/* {' © '}
             {new Date().getFullYear()} */}
-            {suffix}
+            <Suffix />
         </Typography>
     );
 }
