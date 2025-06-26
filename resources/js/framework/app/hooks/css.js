@@ -141,6 +141,16 @@ export const useCSS = makeStyles((theme) => ({
             margin: 0,
         },
     },
+    component: {
+        display: "flex",
+        gap: theme.spacing(2),
+    },
+    leftPanel: {
+        flex:7,
+    },
+    rightPanel: {
+        flex: 3,
+    },
     tooltip: {
         paddingTop: theme.spacing(1),
         fontSize: theme.spacing(1.6),
