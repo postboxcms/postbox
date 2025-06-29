@@ -147,9 +147,25 @@ export const useCSS = makeStyles((theme) => ({
     },
     leftPanel: {
         flex:7,
+        '& .MuiCardContent-root': {
+            padding: 0,
+            '& h2': {
+                padding: theme.spacing(1, 2),
+                margin: 0,
+                borderBottom: `1px solid ${theme.palette.divider}`,
+            },
+        }
     },
     rightPanel: {
         flex: 3,
+        '& .MuiCardContent-root': {
+            padding: 0,
+            '& h2': {
+                padding: theme.spacing(1, 2),
+                margin: 0,
+                borderBottom: `1px solid ${theme.palette.divider}`,
+            },
+        }
     },
     tooltip: {
         paddingTop: theme.spacing(1),
@@ -157,5 +173,12 @@ export const useCSS = makeStyles((theme) => ({
     },
     footerLink: {
         color: theme.palette.primary.main
-    }
+    },
+    formInput: {
+        width: "100%",
+        marginBottom: theme.spacing(2),
+        "& fieldset": {
+            border: "none",
+        }
+    },
 }));

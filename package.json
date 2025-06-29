@@ -38,6 +38,7 @@
         "@mui/styles": "^5.2.3",
         "@mui/x-data-grid": "^5.2.1",
         "@reduxjs/toolkit": "^1.9.5",
+        "@tinymce/tinymce-react": "^6.2.1",
         "babel-plugin-macros": "^3.1.0",
         "core-js": "^3.21.1",
         "dotenv": "^16.0.0",
