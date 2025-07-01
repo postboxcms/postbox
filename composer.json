@@ -22,7 +22,7 @@
         "phpunit/phpunit": "^10.0",
         "postboxcms/dbo": "^1.0",
         "postboxcms/desk": "^1.2",
-        "postboxcms/dbo": "@dev",
+        "postboxcms/dbo": "^1.0",
         "postboxcms/inspire": "^1.0",
         "spatie/laravel-ignition": "^2.0"
     },
@@ -41,8 +41,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "PostboxCMS\\Postbox\\": "src/",
-            "PostboxCMS\\DBO\\": "packages/postboxcms/dbo/src/"
+            "PostboxCMS\\Postbox\\": "src/"
         },
         "classmap": [
             "app/Http/Modules"

@@ -7,10 +7,10 @@
 @import '~bootstrap/scss/bootstrap';
 @import '../../resources/config/colors';
 
-$navbar-dark-color: #ece0ff;
+$navbar-dark-color: lighten($framework-color, 50);
 $navbar-dark-bar-color: $framework-color;
 $navbar-dark-bg-color: $framework-color;
-$navbar-dark-subheading-color: #bbb;
+$navbar-dark-subheading-color: #ccc;
 $table-header-color: $navbar-dark-color;
 $element-border-color: #ccc;
 $element-font-size: 0.9rem;
@@ -194,7 +194,7 @@ input[type="text"] {
             width: $size;
             height: $size;
             display: inline-block;
-            @include transform(rotate(45deg));
+            // @include transform(rotate(45deg));
             font-size: 0;
 
             span {
