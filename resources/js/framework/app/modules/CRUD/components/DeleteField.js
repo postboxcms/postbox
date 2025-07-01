@@ -1,21 +1,23 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import { useNotifier, useCMSRoute } from "@app/hooks";
+import { useNotifier, useCMSRoute, useSecureRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
 import SaveButton from "@ui/elements/SaveButton";
 
 export const DeleteField = (props) => {
     const notify = useNotifier();
     const cms = useCMSRoute();
+    const api = useSecureRoute();
 
     const deleteField = (e) => {
         try {
             e.preventDefault();
-            const data = {};
-            cms.remove('/dbo', data).then((response) => {
-                console.log(response);
-                notify("Field deleted successfully");
-                props.onClose();    
+            const { data } = props;
+            cms.remove("/dbo/" + data.table, data).then(() => {
+                api.remove("/crud/" + data.table, data).then((response) => {
+                    notify(response.data.message);
+                    props.onClose();
+                });
             });
         } catch (error) {
             console.error(error);
@@ -34,8 +36,7 @@ export const DeleteField = (props) => {
             </Grid>
 
             <Grid container spacing={2} marginBottom={2}>
-                <Grid item xs={8} sm={8}>
-                </Grid>
+                <Grid item xs={8} sm={8}></Grid>
                 <Grid item xs={4} sm={4}>
                     <SaveButton fullWidth />
                 </Grid>

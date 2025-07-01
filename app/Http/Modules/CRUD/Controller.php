@@ -63,7 +63,7 @@ class Controller extends Framework
         ]);
 
         if ($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(), trans('crud.validationerror')]);
+            return response(['message' => $this->validator->errors(), trans('crud.validationerror')], 400);
         }
 
         $this->crud = CRUD::updateOrCreate([
@@ -148,11 +148,20 @@ class Controller extends Framework
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $this->table = $request->table;
+        $this->data = $request->all();
+        // Remove data from CRUD table
+        try {
+            CRUD::where('table', $this->table)->where('field', $this->data['column'])->delete();
+            return response()->json(['message' => trans('crud.delete')], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => trans('crud.error'), 'error' => $e->getMessage()], 400);
+        }
+
     }
 }
