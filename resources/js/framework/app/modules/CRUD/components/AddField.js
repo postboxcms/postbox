@@ -56,7 +56,7 @@ export const AddField = (props) => {
                 );
 
                 api.post("/crud", crudPayload).then((response) => {
-                    notify("Field added successfully");
+                    notify(response.data.message);
                     props.onClose();
                 });
             });
