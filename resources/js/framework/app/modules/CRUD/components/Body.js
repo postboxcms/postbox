@@ -43,7 +43,7 @@ const Body = (props) => {
         { value: "radio", label: "Radio", dataType: "boolean" },
         { value: "editor", label: "Editor", dataType: "longText" },
         { value: "textarea", label: "Textarea", dataType: "longText" },
-        { value: "ckeditor", label: "CKEditor", dataType: "longText" },
+        { value: "editor", label: "Editor", dataType: "longText" },
         { value: "image", label: "Image", dataType: "string" },
         { value: "timestamp", label: "Timestamp", dataType: "timestamps" },
         { value: "user", label: "User", dataType: "integer" },

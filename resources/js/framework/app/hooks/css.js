@@ -46,7 +46,7 @@ export const useCSS = makeStyles((theme) => ({
         color: lighten(theme.palette.primary.main, 85)
     },
     noRowsOverlay: {
-        color: lighten(theme.palette.primary.main, 50)
+        color: lighten(theme.palette.primary.main, 70)
     },
     body: {
         paddingTop: theme.spacing(4),
@@ -144,28 +144,20 @@ export const useCSS = makeStyles((theme) => ({
     component: {
         display: "flex",
         gap: theme.spacing(2),
+        '& .MuiCardContent-root': {
+            padding: 0,
+            '& h2': {
+                padding: theme.spacing(1, 2),
+                margin: 0,
+                borderBottom: `1px solid ${theme.palette.divider}`,
+            },
+        }
     },
     leftPanel: {
         flex:7,
-        '& .MuiCardContent-root': {
-            padding: 0,
-            '& h2': {
-                padding: theme.spacing(1, 2),
-                margin: 0,
-                borderBottom: `1px solid ${theme.palette.divider}`,
-            },
-        }
     },
     rightPanel: {
         flex: 3,
-        '& .MuiCardContent-root': {
-            padding: 0,
-            '& h2': {
-                padding: theme.spacing(1, 2),
-                margin: 0,
-                borderBottom: `1px solid ${theme.palette.divider}`,
-            },
-        }
     },
     tooltip: {
         paddingTop: theme.spacing(1),
@@ -179,6 +171,9 @@ export const useCSS = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         "& fieldset": {
             border: "none",
-        }
+        },
+    },
+    radioSwitch: {
+        margin: theme.spacing(1, 0, 1, 2),
     },
 }));

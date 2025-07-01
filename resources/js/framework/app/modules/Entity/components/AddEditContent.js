@@ -1,8 +1,8 @@
 import React from "react";
-import { Editor } from "@tinymce/tinymce-react";
 import Panel from "@ui/components/Panel";
-import FormInput from "@ui/components/FormInput";
+import FormInput from "@ui/elements/FormInput";
 import Title from "@ui/elements/Title";
+import BoxEditor from "@ui/elements/BoxEditor";
 import { useCSS, useSecureRoute, ucfirst, singularize } from "@app/hooks";
 
 export const AddEditContent = ({ query, type }) => {
@@ -48,19 +48,61 @@ export const AddEditContent = ({ query, type }) => {
         }
     }, [query, type]);
 
+    const generatePlaceholder = (element) => {
+        // Generate a placeholder based on the field type and name
+        if (element.type === 'text' || element.type === 'textarea') {
+            return `Provide a ${element.field}`;
+        }
+        if (element.type === 'number') {
+            return `Enter a number for ${element.field}`;
+        }
+        if (element.type === 'date') {
+            return `Select a date for ${element.field}`;
+        }
+        if (element.type === 'select') {
+            return `Select an option for ${element.field}`;
+        }
+        if (element.type === 'editor') {
+            return `Enter content for ${element.field}`;
+        }
+        if (element.type === 'file' || element.type === 'image') {
+            return `Upload a ${element.field}`;
+        }
+        if (element.type === 'checkbox' || element.type === 'radio') {
+            return `Select ${element.field}`;
+        }
+        if (element.type === 'password') {
+            return `Enter your ${element.field}`;
+        }
+        if (element.type === 'email') {
+            return `Enter your ${element.field}`;
+        }
+        if (element.type === 'url') {
+            return `Enter a valid ${element.field}`;
+        }
+        if (element.type === 'tel') {
+            return `Enter your ${element.field}`;
+        }
+        if (element.type === 'color') {
+            return `Select a color for ${element.field}`;
+        }
+    }
+
     const renderField = (field) => {
         // This function should return the appropriate component based on the field type
         switch (field.type) {
             case 'text':
-                return <FormInput variant="outlined" fullWidth />;
+                return <FormInput placeholder={generatePlaceholder(field)} variant="outlined" fullWidth />;
             case 'number':
-                return <FormInput type="number" variant="outlined" fullWidth />;
+                return <FormInput placeholder={generatePlaceholder(field)} type="number" variant="outlined" fullWidth />;
             case 'date':
-                return <FormInput type="date" variant="outlined" fullWidth />;
+                return <FormInput placeholder={generatePlaceholder(field)} type="date" variant="outlined" fullWidth />;
             case 'select':
                 return (
                     <FormInput
                         select
+                        type="select"
+                        placeholder={generatePlaceholder(field)}
                         variant="outlined"
                         fullWidth
                         SelectProps={{
@@ -74,31 +116,17 @@ export const AddEditContent = ({ query, type }) => {
                         ))}
                     </FormInput>
                 );
-            case 'ckeditor':
-                // Assuming you have a CKEditor component
+            case 'editor':
+                // Assuming you have a Editor component
                 return (
-                    <Editor
-                        apiKey="t3j8g1sr4fn45538j9zvgsx2rx182gztzud61l8y8inwgt7g"
-                        init={{
-                            height: 300,
-                            menubar: false,
-                            plugins: [
-                                'advlist autolink lists link image charmap print preview anchor',
-                                'searchreplace visualblocks code fullscreen',
-                                'insertdatetime media table paste code help wordcount',
-                            ],
-                            toolbar:
-                                'undo redo | formatselect | bold italic backcolor | \
-                                alignleft aligncenter alignright alignjustify | \
-                                bullist numlist outdent indent | removeformat | help',
-                        }}
+                    <BoxEditor
                         onEditorChange={(content) => {
                             console.log("Editor content:", content);
                         }}
                     />
                 );
             case 'textarea':
-                return <FormInput variant="outlined" fullWidth multiline rows={4} />;
+                return <FormInput type="textarea" placeholder={generatePlaceholder(field)} variant="outlined" fullWidth multiline rows={5} />;
             case 'checkbox':
                 return (
                     <FormInput
@@ -115,10 +143,10 @@ export const AddEditContent = ({ query, type }) => {
                     <FormInput
                         type="radio"
                         variant="outlined"
-                        fullWidth
                         InputProps={{
                             inputProps: { 'aria-label': field.label },
                         }}
+                        placeholder={field.field}
                     />
                 );
             case 'file':
@@ -135,7 +163,7 @@ export const AddEditContent = ({ query, type }) => {
             case 'image':
                 return (
                     <FormInput
-                        type="file"
+                        type="image"
                         variant="outlined"
                         fullWidth
                         InputProps={{
