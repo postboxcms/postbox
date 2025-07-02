@@ -9,6 +9,7 @@ export const DataTable = ({
     source, 
     onUpdate, 
     onReset, 
+    onLoad,
     overlayMessage, 
     overlayIcon,
     triggerRefresh
@@ -37,6 +38,9 @@ export const DataTable = ({
                 setRows(response.data.fields);
                 if (onUpdate) {
                     onUpdate();
+                }
+                if(onLoad) {
+                    onLoad(response.data.fields);
                 }
             });
         } else {

@@ -1,4 +1,5 @@
 import React from "react";
+import { first } from "lodash";
 
 import { MenuItem, Select, FormControl, FormControlLabel } from "@mui/material";
 
@@ -22,6 +23,7 @@ const Body = (props) => {
     const cms = useCMSRoute();
     const notify = useNotifier();
     const [addRows, setAddRows] = React.useState(false);
+    const [gridResponse, setGridResponse] = React.useState([]);
     const [formdata, setFormdata] = React.useState({});
     const [cellFocus, setCellFocus] = React.useState(false);
     const [endpoint, setEndpoint] = React.useState(null);
@@ -239,9 +241,9 @@ const Body = (props) => {
                         <IconButton
                             disabled={
                                 params?.row?.type == "index" ||
-                                ["created_at", "updated_at"].includes(
-                                    params?.row?.field
-                                )
+                                    ["created_at", "updated_at"].includes(
+                                        params?.row?.field
+                                    )
                                     ? true
                                     : false
                             }
@@ -252,9 +254,9 @@ const Body = (props) => {
                             onClick={() => {
                                 modal.handleOpen(
                                     <DeleteField
-                                        data={{table: params?.row?.table, column: params?.row.field}}
+                                        data={{ table: params?.row?.table, column: params?.row.field }}
                                         onClose={() => {
-                                            setCellFocus(!cellFocus);
+                                            refreshTable();
                                             modal.handleClose();
                                         }}
                                     />,
@@ -269,10 +271,15 @@ const Body = (props) => {
         },
     ];
 
+    const refreshTable = () => {
+        setCellFocus(Math.random());
+        return;
+    };
+
     const updateCell = (event, data) => {
         data.row[data.field] =
             typeof event.target.type !== typeof undefined &&
-            event.target.type == "checkbox"
+                event.target.type == "checkbox"
                 ? event.target.checked
                 : event.target.value;
         data.value = data.row[data.field];
@@ -297,8 +304,8 @@ const Body = (props) => {
         const dataType = fieldType ? fieldType.dataType : null;
         const params = { field: data.row.field, replaceType: dataType };
         const table = data.row.table;
-        
-        if(params.replaceType !== "id") {
+
+        if (params.replaceType !== "id") {
             return cms.patch("/dbo/" + table, params).then(() => {
                 saveField(data, event);
             });
@@ -336,10 +343,11 @@ const Body = (props) => {
                     <PrimaryButton
                         type="button"
                         onClick={() => {
+                            console.log(gridResponse)
                             modal.handleOpen(
                                 <AddField
                                     typeList={fieldTypes}
-                                    table={endpoint.replace("/crud/", "")}
+                                    table={first(gridResponse)?.table}
                                     positionList={editPagePositions}
                                     onClose={() => {
                                         setCellFocus(!cellFocus);
@@ -367,10 +375,10 @@ const Body = (props) => {
                         <MenuItem value="">Entity</MenuItem>
                         {props["entities"]
                             ? props["entities"].map((entity, i) => (
-                                  <MenuItem key={entity.id} value={entity.slug}>
-                                      {entity.name}
-                                  </MenuItem>
-                              ))
+                                <MenuItem key={entity.id} value={entity.slug}>
+                                    {entity.name}
+                                </MenuItem>
+                            ))
                             : ""}
                     </Select>
                 </FormControl>
@@ -384,6 +392,7 @@ const Body = (props) => {
                     overlayMessage="No entity selected"
                     onUpdate={() => setAddRows(true)}
                     onReset={() => setAddRows(false)}
+                    onLoad={(response) => setGridResponse(response)}
                 />
             </div>
             <div>
