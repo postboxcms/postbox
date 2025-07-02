@@ -1,11 +1,12 @@
 import React from 'react';
 import { Editor } from "@tinymce/tinymce-react";
+import { api } from '@app/utils/constants';
 
 export default function BoxEditor(props) {
     return (
         <Editor
             {...props}
-            apiKey="t3j8g1sr4fn45538j9zvgsx2rx182gztzud61l8y8inwgt7g"
+            apiKey={api.editorToken}
             init={{
                 skin: "borderless",
                 height: 300,
