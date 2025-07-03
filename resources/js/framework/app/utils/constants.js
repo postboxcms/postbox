@@ -12,6 +12,7 @@ export const api = {
     logoutUrl: process.env.MIX_LOGOUT_URL,
     url: parseURL(`${generateURL(process.env.MIX_APP_URL, process.env.MIX_APP_PORT)}/${process.env.MIX_API_ROUTE}`),
     token: process.env.MIX_API_TOKEN,
+    editorToken: process.env.MIX_EDITOR_TOKEN,
 };
 export const cms = {
     adminPrefix: api.adminPrefix,
