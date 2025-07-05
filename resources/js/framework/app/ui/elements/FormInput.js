@@ -5,8 +5,9 @@ import IOSSwitch from '@ui/elements/IOSSwitch';
 import ImageUploader from '@ui/components/ImageUploader';
 import { useCSS } from '@app/hooks';
 
-export default function FormInput({ type, value, onChange, placeholder, rows = 4, fullWidth = true }) {
+export default function FormInput(props) {
     const classes = useCSS();
+    const { type, value, onChange, placeholder, rows = 4, name, fullWidth = true } = props;
 
     const generateHelperText = (text) => {
         return `Toggle the ${text}`;
@@ -17,6 +18,7 @@ export default function FormInput({ type, value, onChange, placeholder, rows = 4
             case 'text':
                 return (
                     <TextField
+                        name={name}
                         variant="outlined"
                         value={value}
                         onChange={onChange}
@@ -28,6 +30,7 @@ export default function FormInput({ type, value, onChange, placeholder, rows = 4
             case 'number':
                 return (
                     <TextField
+                        name={name}
                         type="number"
                         variant="outlined"
                         value={value}
@@ -40,6 +43,7 @@ export default function FormInput({ type, value, onChange, placeholder, rows = 4
             case 'date':
                 return (
                     <TextField
+                        name={name}
                         type="date"
                         variant="outlined"
                         value={value}
@@ -51,6 +55,7 @@ export default function FormInput({ type, value, onChange, placeholder, rows = 4
             case 'textarea':
                 return (
                     <TextField
+                        name={name}
                         variant="outlined"
                         value={value}
                         onChange={onChange}
@@ -65,6 +70,7 @@ export default function FormInput({ type, value, onChange, placeholder, rows = 4
                 return (
                     <>
                     <IOSSwitch
+                        name={name}
                         checked={value}
                         onChange={onChange}
                         inputProps={{ 'aria-label': placeholder }}
@@ -76,12 +82,14 @@ export default function FormInput({ type, value, onChange, placeholder, rows = 4
             case 'image':
                 return (
                     <ImageUploader
+                        name={name}
                         placeholder={placeholder}
                         />
                 );
             default:
                 return (
                     <TextField
+                        name={name}
                         variant="outlined"
                         value={value}
                         onChange={onChange}

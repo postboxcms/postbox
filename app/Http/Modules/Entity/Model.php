@@ -24,4 +24,12 @@ class Model extends BaseModel
             [$this->getConnection()->getDatabaseName(), $table]
         ),'column_name');
     }
+
+    public function getTableIcon($table) {
+        $icon = $this->getConnection()->select(
+            'SELECT icon FROM entities WHERE slug = ?',
+            [$table]
+        );
+        return !empty($icon) ? $icon[0]->icon : '';
+    }
 }

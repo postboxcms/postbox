@@ -82,7 +82,6 @@ export const useCSS = makeStyles((theme) => ({
         alignItems: "center",
         flexDirection: "row",
         "& button": {
-            marginBottom: theme.spacing(1),
             alignSelf: "right",
         }
     },
@@ -151,6 +150,7 @@ export const useCSS = makeStyles((theme) => ({
     component: {
         display: "flex",
         gap: theme.spacing(2),
+        marginTop: theme.spacing(1),
         '& .MuiCardContent-root': {
             padding: 0,
             '& h2': {

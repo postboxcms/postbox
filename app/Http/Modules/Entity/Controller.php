@@ -52,7 +52,7 @@ class Controller extends Framework
                     $this->performDBOperations($this->table, 'insert', $this->data);
                     return response(['message' => trans('entity.added', ['name' => $this->table])], 200);
                 } catch (\Exception $e) {
-                    return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])], 400);
+                    throw new \Exception(trans('entity.failed', ['name'=> $this->table, 'message' => $e->getMessage()]));
                 }
             }
             return response(['error' => trans('entity.validationerror')], 400);
@@ -73,7 +73,7 @@ class Controller extends Framework
             //     'message' => trans('entity.success')
             // ], 200);
         } catch (\Exception $e) {
-            return response(['error' => trans('entity.exception', ['message' => $e->getMessage()])], 500);
+            throw new \Exception( trans('entity.exception', ['message' => $e->getMessage()]));
         }
     }
 
