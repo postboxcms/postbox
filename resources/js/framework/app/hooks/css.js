@@ -76,8 +76,15 @@ export const useCSS = makeStyles((theme) => ({
         },
     },
     header: {
-        overflow: "hidden",
-        clear: "both",
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexDirection: "row",
+        "& button": {
+            marginBottom: theme.spacing(1),
+            alignSelf: "right",
+        }
     },
     heading: {
         marginBottom: "8px",

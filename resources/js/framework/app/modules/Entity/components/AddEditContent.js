@@ -1,4 +1,5 @@
 import React from "react";
+import SaveButton from "@ui/elements/SaveButton";
 import Panel from "@ui/components/Panel";
 import FormInput from "@ui/elements/FormInput";
 import Title from "@ui/elements/Title";
@@ -92,11 +93,31 @@ export const AddEditContent = ({ query, type }) => {
         // This function should return the appropriate component based on the field type
         switch (field.type) {
             case 'text':
-                return <FormInput placeholder={generatePlaceholder(field)} variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        placeholder={generatePlaceholder(field)}
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'number':
-                return <FormInput placeholder={generatePlaceholder(field)} type="number" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        placeholder={generatePlaceholder(field)}
+                        type="number"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'date':
-                return <FormInput placeholder={generatePlaceholder(field)} type="date" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        placeholder={generatePlaceholder(field)}
+                        type="date"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'select':
                 return (
                     <FormInput
@@ -117,7 +138,6 @@ export const AddEditContent = ({ query, type }) => {
                     </FormInput>
                 );
             case 'editor':
-                // Assuming you have a Editor component
                 return (
                     <BoxEditor
                         onEditorChange={(content) => {
@@ -198,6 +218,16 @@ export const AddEditContent = ({ query, type }) => {
         <React.Fragment>
             <div className={classes.header}>
                 <Title>{singularize(pageTitle)}</Title>
+                <SaveButton
+                    variant="contained"
+                    color="primary"
+                    // className={classes.primaryButton}
+                    onClick={() => {
+                        console.log("Save button clicked");
+                        // Handle save logic here
+                    }}
+                />
+
             </div>
             <div className={classes.component}>
                 <div className={classes.leftPanel}>
