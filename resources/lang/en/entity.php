@@ -18,5 +18,5 @@ return [
     'added'             => 'Entity data :name added successfully',
     'exists'            => 'Entity :name exists',
     'delete'            => 'Entity deleted successfully',
-    'failed'            => 'Failed to save :name. Details: :message',
+    'failed'            => 'Failed to save :name',
 ];

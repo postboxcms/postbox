@@ -52,7 +52,7 @@ class Controller extends Framework
                     $this->performDBOperations($this->table, 'insert', $this->data);
                     return response(['message' => trans('entity.added', ['name' => $this->table])], 200);
                 } catch (\Exception $e) {
-                    throw new \Exception(trans('entity.failed', ['name'=> $this->table, 'message' => $e->getMessage()]));
+                    return response(['message' => trans('entity.failed',['name'=>$this->table]),'error'=> $e->getMessage()],400);
                 }
             }
             return response(['error' => trans('entity.validationerror')], 400);
