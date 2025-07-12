@@ -19,7 +19,6 @@ class Framework extends BaseController
         $data = $this->formatData($data);
 
         try {
-            unset($data['module']);
             switch ($type) {
                 case 'insert':
                     DB::table($table)->insert($data);
@@ -34,16 +33,18 @@ class Framework extends BaseController
                     DB::table($table)->insert($data);
                     break;
             }
-        } catch(Exception $e) {
-            throw new Exception(trans('database.exception'). $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception(trans('database.exception') . $e->getMessage());
         }
         return response(['error' => trans('database.success')]);
     }
 
-    protected function formatData($data = []) {
+    protected function formatData($data = [])
+    {
+        unset($data['module']);
         $data['created_at'] = Carbon::now();
         $data['updated_at'] = Carbon::now();
-
+        $data = array_filter($data, fn($value) => $value !== null && $value !== '');
         return $data;
     }
 }

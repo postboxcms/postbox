@@ -1,22 +1,29 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
+import { useCSS, useSecureRoute, useNotifier, ucfirst, singularize } from "@app/hooks";
+
+import { getUser } from "@modules/Auth/reducers/jwt";
+
 import SaveButton from "@ui/elements/SaveButton";
 import Panel from "@ui/components/Panel";
 import Form from "@ui/components/Form";
 import FormInput from "@ui/elements/FormInput";
 import Title from "@ui/elements/Title";
 import BoxEditor from "@ui/elements/BoxEditor";
-import { useCSS, useSecureRoute, useNotifier, ucfirst, singularize } from "@app/hooks";
 
 export const AddEditContent = ({ query, type }) => {
     const classes = useCSS();
     const api = useSecureRoute();
+    const notify = useNotifier();
+    const user = useSelector(getUser);
     const [icon, setIcon] = React.useState('');
     const [pageTitle, setPageTitle] = React.useState('...');
     const [editorContent, setEditorContent] = React.useState({});
     const [multiline, setMultiline] = React.useState({});
+    const [hiddenFields, setHiddenFields] = React.useState([]);
     const [leftCards, setLeftCards] = React.useState([]);
     const [rightCards, setRightCards] = React.useState([]);
-    const notify = useNotifier();
 
     const processFields = React.useCallback(() => {
         api.get(`/crud/${type}`).then((response) => {
@@ -30,6 +37,13 @@ export const AddEditContent = ({ query, type }) => {
                     if (field.position !== 'hidden' && field.position == 'right') {
                         setRightCards((prevFields) => [...prevFields, field]);
                         return true;
+                    }
+                    if (field.type === 'hidden' || field.type === 'user') {
+                        if (field.type === 'user' && user) {
+                            field.value = user.id; // Set user ID if available
+                        }
+                        setHiddenFields((prevFields) => [...prevFields, field]);
+                        return false;
                     }
                 });
                 setIcon(response.data?.icon || '');
@@ -286,6 +300,10 @@ export const AddEditContent = ({ query, type }) => {
 
     const processFormData = (e) => {
         const formData = new FormData(e.target);
+        // Append hidden fields to formData
+        for (const field of hiddenFields) {
+            formData.append(field.field, field.value || '');
+        }
         // You can also process the form data here if needed
         console.log("Form data to be saved:", formData); // Replace 'fieldName' with actual field names
         // Process form data here, e.g., send it to the server
@@ -294,7 +312,7 @@ export const AddEditContent = ({ query, type }) => {
             const rightField = rightCards.find(f => f.field === key);
             const field = leftField || rightField;
             if (field && field.type === 'textarea') {
-                formData.set(key, multiline[key] || '');
+                formData.set(key, multiline[key] || String(value));
             }
             if (field && (field.type === 'file' || field.type === 'image')) {
                 const fileInput = e.target.querySelector(`input[name="${key}"]`);
@@ -302,7 +320,29 @@ export const AddEditContent = ({ query, type }) => {
                     formData.set(key, fileInput.files[0]);
                 }
             }
+            if (field && field.type === 'checkbox') {
+                formData.set(key, value ? '1' : '0'); // Convert checkbox value to 1 or 0
+            }
+            if (field && field.type === 'radio') {
+                const radioInput = e.target.querySelector(`input[name="${key}"]:checked`);
+                if (radioInput) {
+                    formData.set(key, radioInput.value);
+                } else {
+                    formData.set(key, ''); // Set empty if no radio is checked
+                }
+            }
+            if (field && field.type === 'editor') {
+                formData.set(key, editorContent[key] || '');
+            }
+            if (field && field.type === 'user') {
+                if (user) {
+                    formData.set(key, user.id); // Assuming user ID is stored as a string
+                } else {
+                    formData.delete(key); // Remove if no user ID is selected
+                }
+            }
         }
+        
         // Add editor content to formData
         for (const [key, value] of Object.entries(editorContent)) {
             formData.set(key, value);

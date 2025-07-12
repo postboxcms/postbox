@@ -15,12 +15,13 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index()->default(DB::raw('(uuid())'))->index();
             $table->string('title',100)->nullable()->default(null);
             $table->string('summary',255)->nullable()->default(null);
             $table->string('image',500)->nullable()->default(null);
             $table->longText('content')->nullable()->default(null);
-            $table->integer('author')->default('1');
-            $table->tinyInteger('status')->default('1');
+            $table->integer('author')->default(null);
+            $table->tinyInteger('status')->default(null);
             $table->timestamps();
         });
     }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index()->default(DB::raw('(uuid())'))->index();
             $table->string('property');
             $table->string('value')->nullable();
             $table->timestamps();
