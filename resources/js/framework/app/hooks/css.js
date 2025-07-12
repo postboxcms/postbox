@@ -76,8 +76,14 @@ export const useCSS = makeStyles((theme) => ({
         },
     },
     header: {
-        overflow: "hidden",
-        clear: "both",
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexDirection: "row",
+        "& button": {
+            alignSelf: "right",
+        }
     },
     heading: {
         marginBottom: "8px",
@@ -144,6 +150,7 @@ export const useCSS = makeStyles((theme) => ({
     component: {
         display: "flex",
         gap: theme.spacing(2),
+        marginTop: theme.spacing(1),
         '& .MuiCardContent-root': {
             padding: 0,
             '& h2': {

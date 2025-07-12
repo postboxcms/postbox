@@ -3,6 +3,7 @@
 namespace App\Http\Modules;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -33,11 +34,10 @@ class Framework extends BaseController
                     DB::table($table)->insert($data);
                     break;
             }
-        } catch(\Exception $e) {
-            return response(['error'=>trans('database.exception', ['message'=>$e->getMessage()])]);
+        } catch(Exception $e) {
+            throw new Exception(trans('database.exception'). $e->getMessage());
         }
-
-        return response(['message' => trans('database.success')]);
+        return response(['error' => trans('database.success')]);
     }
 
     protected function formatData($data = []) {

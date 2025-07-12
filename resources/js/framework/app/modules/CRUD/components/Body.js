@@ -41,7 +41,7 @@ const Body = (props) => {
         { value: "textarea", label: "Textarea", dataType: "longText" },
         { value: "editor", label: "Editor", dataType: "longText" },
         { value: "image", label: "Image", dataType: "string" },
-        { value: "timestamp", label: "Timestamp", dataType: "timestamps" },
+        { value: "timestamp", label: "Timestamp", dataType: "timestamp" },
         { value: "user", label: "User", dataType: "integer" },
     ];
 
@@ -307,7 +307,11 @@ const Body = (props) => {
 
         if (params.replaceType !== "id") {
             return cms.patch("/dbo/" + table, params).then(() => {
+                console.log("Schema updated successfully", data);
                 saveField(data, event);
+            }).catch((error) => {
+                console.error("Error updating schema:", error);
+                notify(error.response.data.message, "error");
             });
         }
         return saveField(data, event);

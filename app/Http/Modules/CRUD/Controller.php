@@ -19,6 +19,7 @@ class Controller extends Framework
     protected $columns;
     protected $data;
     protected $table;
+    protected $icon;
     protected $model;
     protected $missingFields;
     protected $crud;
@@ -93,6 +94,7 @@ class Controller extends Framework
             $this->model = new $this->model();
             $this->table = $this->model->getTable();
             $this->fields = $Entity->getTableColumns($this->table);
+            $this->icon = $Entity->getTableIcon($this->table);
             $this->fields = collect($this->fields)->map(function ($field) {
                 $this->counter += 1;
                 return [
@@ -126,7 +128,8 @@ class Controller extends Framework
 
             return response([
                 'fields' => $this->fields,
-                'columns' => $this->columns
+                'columns' => $this->columns,
+                'icon' => $this->icon,
             ], 200);
         } else {
             return response(['error' => 'Model not found'], 400);

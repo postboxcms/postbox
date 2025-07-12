@@ -1,16 +1,22 @@
 import React from "react";
+import SaveButton from "@ui/elements/SaveButton";
 import Panel from "@ui/components/Panel";
+import Form from "@ui/components/Form";
 import FormInput from "@ui/elements/FormInput";
 import Title from "@ui/elements/Title";
 import BoxEditor from "@ui/elements/BoxEditor";
-import { useCSS, useSecureRoute, ucfirst, singularize } from "@app/hooks";
+import { useCSS, useSecureRoute, useNotifier, ucfirst, singularize } from "@app/hooks";
 
 export const AddEditContent = ({ query, type }) => {
     const classes = useCSS();
     const api = useSecureRoute();
+    const [icon, setIcon] = React.useState('');
     const [pageTitle, setPageTitle] = React.useState('...');
+    const [editorContent, setEditorContent] = React.useState({});
+    const [multiline, setMultiline] = React.useState({});
     const [leftCards, setLeftCards] = React.useState([]);
     const [rightCards, setRightCards] = React.useState([]);
+    const notify = useNotifier();
 
     const processFields = React.useCallback(() => {
         api.get(`/crud/${type}`).then((response) => {
@@ -26,6 +32,7 @@ export const AddEditContent = ({ query, type }) => {
                         return true;
                     }
                 });
+                setIcon(response.data?.icon || '');
             }
             return [];
         }).catch((error) => {
@@ -92,16 +99,40 @@ export const AddEditContent = ({ query, type }) => {
         // This function should return the appropriate component based on the field type
         switch (field.type) {
             case 'text':
-                return <FormInput placeholder={generatePlaceholder(field)} variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        placeholder={generatePlaceholder(field)}
+                        name={field.field}
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'number':
-                return <FormInput placeholder={generatePlaceholder(field)} type="number" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        placeholder={generatePlaceholder(field)}
+                        name={field.field}
+                        type="number"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'date':
-                return <FormInput placeholder={generatePlaceholder(field)} type="date" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        placeholder={generatePlaceholder(field)}
+                        name={field.field}
+                        type="date"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'select':
                 return (
                     <FormInput
                         select
                         type="select"
+                        name={field.field}
                         placeholder={generatePlaceholder(field)}
                         variant="outlined"
                         fullWidth
@@ -117,21 +148,34 @@ export const AddEditContent = ({ query, type }) => {
                     </FormInput>
                 );
             case 'editor':
-                // Assuming you have a Editor component
                 return (
                     <BoxEditor
+                        name={field.field}
                         onEditorChange={(content) => {
                             console.log("Editor content:", content);
+                            setEditorContent({ ...editorContent, [field.field]: content });
                         }}
                     />
                 );
             case 'textarea':
-                return <FormInput type="textarea" placeholder={generatePlaceholder(field)} variant="outlined" fullWidth multiline rows={5} />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        type="textarea"
+                        onChange={(e) => setMultiline({ ...multiline, [field.field]: e.target.value })}
+                        placeholder={generatePlaceholder(field)}
+                        variant="outlined"
+                        fullWidth
+                        multiline
+                        rows={5}
+                    />
+                );
             case 'checkbox':
                 return (
                     <FormInput
                         type="checkbox"
                         variant="outlined"
+                        name={field.field}
                         fullWidth
                         InputProps={{
                             inputProps: { 'aria-label': field.label },
@@ -142,6 +186,7 @@ export const AddEditContent = ({ query, type }) => {
                 return (
                     <FormInput
                         type="radio"
+                        name={field.field}
                         variant="outlined"
                         InputProps={{
                             inputProps: { 'aria-label': field.label },
@@ -153,6 +198,7 @@ export const AddEditContent = ({ query, type }) => {
                 return (
                     <FormInput
                         type="file"
+                        name={field.field}
                         variant="outlined"
                         fullWidth
                         InputProps={{
@@ -164,6 +210,7 @@ export const AddEditContent = ({ query, type }) => {
                 return (
                     <FormInput
                         type="image"
+                        name={field.field}
                         variant="outlined"
                         fullWidth
                         InputProps={{
@@ -172,21 +219,114 @@ export const AddEditContent = ({ query, type }) => {
                     />
                 );
             case 'password':
-                return <FormInput type="password" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'email':
-                return <FormInput type="email" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        type="email"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'url':
-                return <FormInput type="url" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        type="url"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'tel':
-                return <FormInput type="tel" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        type="tel"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'color':
-                return <FormInput type="color" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        type="color"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             case 'hidden':
-                return <FormInput type="hidden" variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        type="hidden"
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
             // Add more cases for other field types as needed
             default:
-                return <FormInput variant="outlined" fullWidth />;
+                return (
+                    <FormInput
+                        name={field.field}
+                        variant="outlined"
+                        fullWidth
+                    />
+                );
         }
+    };
+
+    const processFormData = (e) => {
+        const formData = new FormData(e.target);
+        // You can also process the form data here if needed
+        console.log("Form data to be saved:", formData); // Replace 'fieldName' with actual field names
+        // Process form data here, e.g., send it to the server
+        for (let [key, value] of formData.entries()) {
+            const leftField = leftCards.find(f => f.field === key);
+            const rightField = rightCards.find(f => f.field === key);
+            const field = leftField || rightField;
+            if (field && field.type === 'textarea') {
+                formData.set(key, multiline[key] || '');
+            }
+            if (field && (field.type === 'file' || field.type === 'image')) {
+                const fileInput = e.target.querySelector(`input[name="${key}"]`);
+                if (fileInput && fileInput.files.length > 0) {
+                    formData.set(key, fileInput.files[0]);
+                }
+            }
+        }
+        // Add editor content to formData
+        for (const [key, value] of Object.entries(editorContent)) {
+            formData.set(key, value);
+        }
+        formData.append('module', type);
+        return formData;
+    }
+
+    const saveContent = () => {
+        return (e) => {
+            e.preventDefault();
+            const formData = processFormData(e);
+            api.post(`/entity`, formData)
+                .then((response) => {
+                    // Handle success, e.g., redirect or show a success message
+                    console.log("Content saved successfully:", response);
+                    notify(response.data.message || "Content saved successfully!");
+                })
+                .catch((error) => {
+                    // Handle error, e.g., show an error message
+                    console.error("Error saving content:", error);
+                    notify(error.response?.data?.message || "Error while saving content", "error");
+                });
+        };
     };
 
     React.useEffect(() => {
@@ -196,33 +336,36 @@ export const AddEditContent = ({ query, type }) => {
 
     return (
         <React.Fragment>
-            <div className={classes.header}>
-                <Title>{singularize(pageTitle)}</Title>
-            </div>
-            <div className={classes.component}>
-                <div className={classes.leftPanel}>
-                    {leftCards.map((card, idx) => (
-                        <Panel key={idx}>
-                            {/* Render field content here, e.g.: */}
-                            <Title style={{
-                                padding: "5px 10px",
-                                borderBotton: "",
-                                margin: 0,
-                            }} variant="normal">{ucfirst(card.field)}</Title>
-                            {renderField(card)}
-                        </Panel>
-                    ))}
+            <Form method="post" onSubmit={saveContent()}>
+                <div className={classes.header}>
+                    <Title icon={icon}>{singularize(pageTitle)}</Title>
+                    <SaveButton />
                 </div>
-                <div className={classes.rightPanel}>
-                    {rightCards.map((card, idx) => (
-                        <Panel key={idx}>
-                            {/* Render field content here, e.g.: */}
-                            <Title variant="normal">{ucfirst(card.field)}</Title>
-                            {renderField(card)}
-                        </Panel>
-                    ))}
+                <div className={classes.component}>
+                    <div className={classes.leftPanel}>
+                        {leftCards.map((card, idx) => (
+                            <Panel key={idx}>
+                                {/* Render field content here, e.g.: */}
+                                <Title style={{
+                                    padding: "5px 10px",
+                                    borderBotton: "",
+                                    margin: 0,
+                                }} variant="normal">{ucfirst(card.field)}</Title>
+                                {renderField(card)}
+                            </Panel>
+                        ))}
+                    </div>
+                    <div className={classes.rightPanel}>
+                        {rightCards.map((card, idx) => (
+                            <Panel key={idx}>
+                                {/* Render field content here, e.g.: */}
+                                <Title variant="normal">{ucfirst(card.field)}</Title>
+                                {renderField(card)}
+                            </Panel>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </Form>
         </React.Fragment>
     )
 }
