@@ -15,6 +15,7 @@ class CreateCrudTable extends Migration
     {
         Schema::create('crud', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index()->default(DB::raw('(uuid())'))->index();
             $table->string('table');
             $table->string('field');
             $table->string('alias')->nullable();

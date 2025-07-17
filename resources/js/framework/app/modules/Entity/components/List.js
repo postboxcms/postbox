@@ -53,7 +53,7 @@ const List = (props) => {
         field[data.field] =
             (typeof event.target.type !== typeof undefined &&
                 event.target.type == "checkbox") ||
-            event.target.type == "radio"
+                event.target.type == "radio"
                 ? event.target.checked
                 : event.target.value;
         if (
@@ -65,7 +65,7 @@ const List = (props) => {
             data.api.setCellFocus(cellFocus);
         }
 
-        saveField(Object.assign({},field));
+        saveField(Object.assign({}, field));
     };
 
     const saveField = (data) => {
@@ -73,6 +73,21 @@ const List = (props) => {
             notify(response.data.message)
         );
     };
+
+    const ImageCell = (params) => {
+        const { value } = params;
+        return !value && (
+            <FontAwesomeIcon
+                icon={"image"}
+                size="lg"
+            />
+        ) || (
+                <img
+                    src={`/uploads/${module}/${value}`}
+                    className="cell-image"
+                />
+            );
+    }
 
     React.useEffect(() => {
         api.get("/crud" + props["path"]).then((response) => {
@@ -97,30 +112,16 @@ const List = (props) => {
                     dataKeys.forEach((parameter, index) => {
                         dataValues[index]["field"] = parameter;
                         rowdata[parameter] = dataValues[index].value;
+                        console.log("parameter", rowdata[parameter]);
 
                         if (dataValues[index].type == "image") {
                             columnData.forEach((column) => {
                                 if (column["field"] == parameter) {
                                     column["cellClassName"] =
                                         "grid-image-column";
-                                    if (
-                                        rowdata[parameter] == null ||
-                                        rowdata[parameter] == ""
-                                    ) {
-                                        column["renderCell"] = () => (
-                                            <FontAwesomeIcon
-                                                icon={"image"}
-                                                size="lg"
-                                            />
-                                        );
-                                    } else {
-                                        column["renderCell"] = (params) => (
-                                            <img
-                                                src={params.value}
-                                                className="cell-image"
-                                            />
-                                        );
-                                    }
+                                    column["renderCell"] = (params) => (
+                                        <ImageCell {...params} />
+                                    );
                                 }
                             });
                         }

@@ -1,10 +1,9 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { useCSS } from "../../hooks/css";
-import { useNotifier } from "../../hooks/notifications";
-import { site } from "../../utils/constants";
+import { useCSS, useNotifier } from "@app/hooks";
+import { site } from "@app/utils";
 
-const ImageUploader = ({ uploadImage, placeholder }) => {
+const ImageUploader = ({ uploadImage, placeholder, name }) => {
     console.log(placeholder);
     const classes = useCSS();
     const [placeholderText, setPlaceholderText] = React.useState(
@@ -33,7 +32,7 @@ const ImageUploader = ({ uploadImage, placeholder }) => {
     return (
         <section className={classes.draggable}>
             <div {...getRootProps({ isFocused, isDragAccept, isDragReject })}>
-                <input {...getInputProps()} />
+                <input name={name} {...getInputProps()} />
                 <p>{placeholderText}</p>
             </div>
         </section>

@@ -7,7 +7,7 @@ import { useCSS } from '@app/hooks';
 
 export default function FormInput(props) {
     const classes = useCSS();
-    const { type, value, onChange, placeholder, rows = 4, name, fullWidth = true } = props;
+    const { type, required, value, onChange, placeholder, inputProps, rows = 4, name, fullWidth = true } = props;
 
     const generateHelperText = (text) => {
         return `Toggle the ${text}`;
@@ -25,6 +25,7 @@ export default function FormInput(props) {
                         placeholder={placeholder}
                         fullWidth={fullWidth}
                         className={classes.formInput}
+                        required={required}
                     />
                 );
             case 'number':
@@ -38,6 +39,7 @@ export default function FormInput(props) {
                         placeholder={placeholder}
                         fullWidth={fullWidth}
                         className={classes.formInput}
+                        required={required}
                     />
                 );
             case 'date':
@@ -50,6 +52,7 @@ export default function FormInput(props) {
                         onChange={onChange}
                         fullWidth={fullWidth}
                         className={classes.formInput}
+                        required={required}
                     />
                 );
             case 'textarea':
@@ -64,6 +67,7 @@ export default function FormInput(props) {
                         multiline
                         rows={rows}
                         className={classes.formInput}
+                        required={required}
                     />
                 );
             case 'radio':
@@ -73,7 +77,7 @@ export default function FormInput(props) {
                         name={name}
                         checked={value}
                         onChange={onChange}
-                        inputProps={{ 'aria-label': placeholder }}
+                        inputProps={{ 'aria-label': placeholder, required }}
                         className={classes.radioSwitch}
                     />{' '}
                     <span>{generateHelperText(placeholder)}</span>
@@ -84,7 +88,9 @@ export default function FormInput(props) {
                     <ImageUploader
                         name={name}
                         placeholder={placeholder}
-                        />
+                        uploadImage={onChange}
+                        inputProps={{ ...inputProps, required }}
+                    />
                 );
             default:
                 return (
@@ -96,6 +102,7 @@ export default function FormInput(props) {
                         placeholder={placeholder}
                         fullWidth={fullWidth}
                         className={classes.formInput}
+                        required={required}
                     />
                 );
         }
@@ -110,4 +117,5 @@ FormInput.propTypes = {
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     fullWidth: PropTypes.bool,
+    required: PropTypes.bool,
 };
