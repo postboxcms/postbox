@@ -46,9 +46,11 @@ class Controller extends Framework
         // store a content type
         try {
             $this->data = $request->all();
+            $this->data['state'] = $this->state;
             $this->table = $this->data['module'];
             if (Schema::hasTable($this->data['module'])) {
                 try {
+                    $this->performFileOperations($request, 'upload', $this->data);
                     $this->performDBOperations($this->table, 'insert', $this->data);
                     return response(['message' => trans('entity.added', ['name' => $this->table])], 200);
                 } catch (\Exception $e) {
@@ -106,6 +108,7 @@ class Controller extends Framework
             $this->data = $request->all();
             $this->table = $this->data['module'];
 
+            $this->performFileOperations($request, 'update', $this->data);
             $this->performDBOperations($this->table, 'update', $this->data);
             return response([
                 // 'entity' => new EntityResource($entity),
@@ -131,6 +134,7 @@ class Controller extends Framework
             $this->data = $request->all();
             $this->table = $this->data['module'];
 
+            $this->performFileOperations($request, 'delete', $this->data);
             $this->performDBOperations($this->table, 'delete', $this->data);
             return response([
                 // 'entity' => new EntityResource($entity),

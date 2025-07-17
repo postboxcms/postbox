@@ -20,10 +20,12 @@ export const AddEditContent = ({ query, type }) => {
     const [icon, setIcon] = React.useState('');
     const [pageTitle, setPageTitle] = React.useState('...');
     const [editorContent, setEditorContent] = React.useState({});
+    const [image, setImage] = React.useState([]);
     const [multiline, setMultiline] = React.useState({});
     const [hiddenFields, setHiddenFields] = React.useState([]);
     const [leftCards, setLeftCards] = React.useState([]);
     const [rightCards, setRightCards] = React.useState([]);
+    const [error, setError] = React.useState(false);
 
     const processFields = React.useCallback(() => {
         api.get(`/crud/${type}`).then((response) => {
@@ -115,6 +117,7 @@ export const AddEditContent = ({ query, type }) => {
             case 'text':
                 return (
                     <FormInput
+                        required={field.mandatory}
                         placeholder={generatePlaceholder(field)}
                         name={field.field}
                         variant="outlined"
@@ -124,6 +127,7 @@ export const AddEditContent = ({ query, type }) => {
             case 'number':
                 return (
                     <FormInput
+                        required={field.mandatory}
                         placeholder={generatePlaceholder(field)}
                         name={field.field}
                         type="number"
@@ -134,6 +138,7 @@ export const AddEditContent = ({ query, type }) => {
             case 'date':
                 return (
                     <FormInput
+                        required={field.mandatory}
                         placeholder={generatePlaceholder(field)}
                         name={field.field}
                         type="date"
@@ -145,6 +150,7 @@ export const AddEditContent = ({ query, type }) => {
                 return (
                     <FormInput
                         select
+                        required={field.mandatory}
                         type="select"
                         name={field.field}
                         placeholder={generatePlaceholder(field)}
@@ -227,8 +233,15 @@ export const AddEditContent = ({ query, type }) => {
                         name={field.field}
                         variant="outlined"
                         fullWidth
-                        InputProps={{
-                            inputProps: { 'aria-label': field.label, accept: 'image/*' },
+                        inputProps={{
+                            inputProps: { 'aria-label': field.field, accept: 'image/*' },
+                        }}
+                        placeholder={null}
+                        onChange={(file) => {
+                            if (file) {
+                                // Show the file name as placeholder
+                                setImage([...image, file.name]);
+                            }
                         }}
                     />
                 );
@@ -305,19 +318,25 @@ export const AddEditContent = ({ query, type }) => {
             formData.append(field.field, field.value || '');
         }
         // You can also process the form data here if needed
-        console.log("Form data to be saved:", formData); // Replace 'fieldName' with actual field names
+        console.log("Form data to be saved:", formData.entries()); // Replace 'fieldName' with actual field names
         // Process form data here, e.g., send it to the server
         for (let [key, value] of formData.entries()) {
             const leftField = leftCards.find(f => f.field === key);
             const rightField = rightCards.find(f => f.field === key);
             const field = leftField || rightField;
+            console.log(`Processing field: ${key}, value: ${value}`);
+
+            if(field && field.mandatory && !(value || '').trim()) {
+                setError(true);
+                return;
+            }
             if (field && field.type === 'textarea') {
                 formData.set(key, multiline[key] || String(value));
             }
             if (field && (field.type === 'file' || field.type === 'image')) {
                 const fileInput = e.target.querySelector(`input[name="${key}"]`);
                 if (fileInput && fileInput.files.length > 0) {
-                    formData.set(key, fileInput.files[0]);
+                    formData.set(key, fileInput.files[0]); // Set the first file selected
                 }
             }
             if (field && field.type === 'checkbox') {
@@ -325,8 +344,9 @@ export const AddEditContent = ({ query, type }) => {
             }
             if (field && field.type === 'radio') {
                 const radioInput = e.target.querySelector(`input[name="${key}"]:checked`);
+                const radioValue = radioInput && radioInput.value == 'on' ? true : false;
                 if (radioInput) {
-                    formData.set(key, radioInput.value);
+                    formData.set(key, Number(radioValue)); // Set the value of the checked radio button
                 } else {
                     formData.set(key, ''); // Set empty if no radio is checked
                 }
@@ -355,6 +375,13 @@ export const AddEditContent = ({ query, type }) => {
         return (e) => {
             e.preventDefault();
             const formData = processFormData(e);
+            
+            if (error || !formData) {
+                notify("Please fill all mandatory fields", "error");
+                setError(false);
+                return;
+            }
+
             api.post(`/entity`, formData)
                 .then((response) => {
                     // Handle success, e.g., redirect or show a success message
