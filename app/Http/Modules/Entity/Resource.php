@@ -44,7 +44,12 @@ class Resource extends JsonResource
             $this->collection['records'] = $this->model::count();
 
             if (isset($request->entity)) {
-                $this->collection['data'] = $this->model::all();
+                if(isset($request->eid)) {
+                    $this->collection['data'] = $this->model::where('uuid', $request->eid)->get();
+                } else {
+                    $this->collection['data'] = $this->model::all();
+                }
+                // $this->collection['data'] = $this->model::all();
                 $this->collection['data'] = collect($this->collection['data']->toArray())->map(function ($data) {
                     foreach ($data as $field => $parameter) {
                         $data[$field] = [

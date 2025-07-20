@@ -4,10 +4,16 @@ import TextField from '@mui/material/TextField';
 import IOSSwitch from '@ui/elements/IOSSwitch';
 import ImageUploader from '@ui/components/ImageUploader';
 import { useCSS } from '@app/hooks';
+import { event } from 'jquery';
 
 export default function FormInput(props) {
-    const classes = useCSS();
     const { type, required, value, onChange, placeholder, inputProps, rows = 4, name, fullWidth = true } = props;
+    const classes = useCSS();
+
+    const updateField = (event) => {
+        console.log("Updating field:", event.target.name, event.target.value);
+        onChange(event);
+    };
 
     const generateHelperText = (text) => {
         return `Toggle the ${text}`;
@@ -21,8 +27,8 @@ export default function FormInput(props) {
                         name={name}
                         variant="outlined"
                         value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
+                        onChange={updateField}
+                        placeholder={placeholder}   
                         fullWidth={fullWidth}
                         className={classes.formInput}
                         required={required}
@@ -73,14 +79,14 @@ export default function FormInput(props) {
             case 'radio':
                 return (
                     <>
-                    <IOSSwitch
-                        name={name}
-                        checked={value}
-                        onChange={onChange}
-                        inputProps={{ 'aria-label': placeholder, required }}
-                        className={classes.radioSwitch}
-                    />{' '}
-                    <span>{generateHelperText(placeholder)}</span>
+                        <IOSSwitch
+                            name={name}
+                            checked={value}
+                            onChange={onChange}
+                            inputProps={{ 'aria-label': placeholder, required }}
+                            className={classes.radioSwitch}
+                        />{' '}
+                        <span>{generateHelperText(placeholder)}</span>
                     </>
                 );
             case 'image':

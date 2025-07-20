@@ -26,10 +26,10 @@ class Framework extends BaseController
                     DB::table($table)->insert($data);
                     break;
                 case 'update':
-                    DB::table($table)->where('id', $data['id'])->update($data);
+                    DB::table($table)->where('uuid', $data['uuid'])->update($data);
                     break;
                 case 'delete':
-                    DB::table($table)->where('id', $data['id'])->delete();
+                    DB::table($table)->where('uuid', $data['uuid'])->delete();
                     break;
                 default:
                     DB::table($table)->insert($data);
@@ -74,9 +74,12 @@ class Framework extends BaseController
 
     protected function formatData($data = [])
     {
-        $data = !empty($this->state) ? array_merge($data,$this->state) : $data;
+        $data = !empty($this->state) ? array_merge($data, $this->state) : $data;
+        $data['uuid'] = $data['eid'] ?? $data['uuid'] ?? null;
+        unset($data['eid']);
         unset($data['module']);
         unset($data['state']);
+        unset($data['_method']);
         $data['created_at'] = Carbon::now();
         $data['updated_at'] = Carbon::now();
         $data = array_filter($data, fn($value) => $value !== null && $value !== '');
