@@ -49,6 +49,7 @@ const List = (props) => {
     const updateCell = (event, data) => {
         const field = [];
         field['id'] = data.id;
+        field['uuid'] = data.row?.uuid
         field["module"] = module;
         field[data.field] =
             (typeof event.target.type !== typeof undefined &&
@@ -97,7 +98,7 @@ const List = (props) => {
                 headerName: "ACTIONS",
                 headerClassName: "table-header-light",
                 flex: 1,
-                renderCell: () => <ActionButtons />,
+                renderCell: (params) => <ActionButtons entity={params} module={module} />,
             });
 
             api.get("/entity" + props["path"]).then((response) => {

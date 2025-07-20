@@ -26,10 +26,10 @@ class Framework extends BaseController
                     DB::table($table)->insert($data);
                     break;
                 case 'update':
-                    DB::table($table)->where('uuid', $data['uuid'])->update($data);
+                    DB::table($table)->where('uuid', $data['uuid'])->orWhere('id',$data['id'])->update($data);
                     break;
                 case 'delete':
-                    DB::table($table)->where('uuid', $data['uuid'])->delete();
+                    DB::table($table)->where('uuid', $data['uuid'])->orWhere('id',$data['id'])->delete();
                     break;
                 default:
                     DB::table($table)->insert($data);
