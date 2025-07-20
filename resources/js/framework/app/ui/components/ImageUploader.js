@@ -31,8 +31,10 @@ const ImageUploader = ({ uploadImage, placeholder, name }) => {
 
     React.useEffect(() => {
         console.log("updated");
-        setPlaceholderText(<img width="200px" src={`${site.url}${placeholder}`} />);
-    },[placeholder]);
+        if (placeholder) {
+            setPlaceholderText(<img width="200px" src={`${site.url}${placeholder}`} />);
+        }
+    }, [placeholder]);
 
     return (
         <section className={classes.draggable}>
