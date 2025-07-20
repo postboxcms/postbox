@@ -4,7 +4,6 @@ import { useCSS, useNotifier } from "@app/hooks";
 import { site } from "@app/utils";
 
 const ImageUploader = ({ uploadImage, placeholder, name }) => {
-    console.log(placeholder);
     const classes = useCSS();
     const [placeholderText, setPlaceholderText] = React.useState(
         placeholder ? <img width="200px" src={`${site.url}/images/${placeholder}`} /> : "Drag 'n' drop any image here, or click to select one"
@@ -29,6 +28,12 @@ const ImageUploader = ({ uploadImage, placeholder, name }) => {
             setPlaceholderText(files[0].name);
         },
     });
+
+    React.useEffect(() => {
+        console.log("updated");
+        setPlaceholderText(<img width="200px" src={`${site.url}${placeholder}`} />);
+    },[placeholder]);
+
     return (
         <section className={classes.draggable}>
             <div {...getRootProps({ isFocused, isDragAccept, isDragReject })}>
