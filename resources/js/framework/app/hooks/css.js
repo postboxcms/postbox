@@ -183,4 +183,11 @@ export const useCSS = makeStyles((theme) => ({
     radioSwitch: {
         margin: theme.spacing(1, 0, 1, 2),
     },
+    addEditWrapper: {
+        '& section': {
+            border: "none",
+            textAlign: "center",
+            padding: "2rem"
+        }
+    }
 }));

@@ -72,7 +72,7 @@ export const AddEditContent = ({ query, type }) => {
 
     const generateFilePath = (element) => {
         const image = generateFieldValue(element.type);
-        return image ?`/uploads/${type}/${image}` : null;
+        return image ? `/uploads/${type}/${image}` : null;
     }
 
     const generateFieldValue = React.useCallback((field) => {
@@ -523,36 +523,38 @@ export const AddEditContent = ({ query, type }) => {
 
     return (
         <React.Fragment>
-            <Form method="post" onSubmit={saveContent()}>
-                <div className={classes.header}>
-                    <Title icon={icon}>{singularize(pageTitle)}</Title>
-                    <SaveButton />
-                </div>
-                <div className={classes.component}>
-                    <div className={classes.leftPanel}>
-                        {leftCards.map((card, idx) => (
-                            <Panel key={idx}>
-                                {/* Render field content here, e.g.: */}
-                                <Title style={{
-                                    padding: "5px 10px",
-                                    borderBotton: "",
-                                    margin: 0,
-                                }} variant="normal">{ucfirst(card.field)}</Title>
-                                {renderField(card)}
-                            </Panel>
-                        ))}
+            <div className={classes.addEditWrapper}>
+                <Form method="post" onSubmit={saveContent()}>
+                    <div className={classes.header}>
+                        <Title icon={icon}>{singularize(pageTitle)}</Title>
+                        <SaveButton />
                     </div>
-                    <div className={classes.rightPanel}>
-                        {rightCards.map((card, idx) => (
-                            <Panel key={idx}>
-                                {/* Render field content here, e.g.: */}
-                                <Title variant="normal">{ucfirst(card.field)}</Title>
-                                {renderField(card)}
-                            </Panel>
-                        ))}
+                    <div className={classes.component}>
+                        <div className={classes.leftPanel}>
+                            {leftCards.map((card, idx) => (
+                                <Panel key={idx}>
+                                    {/* Render field content here, e.g.: */}
+                                    <Title style={{
+                                        padding: "5px 10px",
+                                        borderBotton: "",
+                                        margin: 0,
+                                    }} variant="normal">{ucfirst(card.field)}</Title>
+                                    {renderField(card)}
+                                </Panel>
+                            ))}
+                        </div>
+                        <div className={classes.rightPanel}>
+                            {rightCards.map((card, idx) => (
+                                <Panel key={idx}>
+                                    {/* Render field content here, e.g.: */}
+                                    <Title variant="normal">{ucfirst(card.field)}</Title>
+                                    {renderField(card)}
+                                </Panel>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </Form>
+                </Form>
+            </div>
         </React.Fragment>
     )
 }
