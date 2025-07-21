@@ -48,11 +48,11 @@ export const AddEditContent = ({ query, type }) => {
             return `Enter content for ${element.field}`;
         }
         if (element.type === 'file' || element.type === 'image') {
-            return query === 'edit' ? `/uploads/${type}/${generateFieldValue(element.type)}` : null;
+            return query === 'edit' ? generateFilePath(element) : null;
         }
         if (element.type === 'checkbox' || element.type === 'radio') {
             return `Select ${element.field}`;
-        }   
+        }
         if (element.type === 'password') {
             return `Enter your ${element.field}`;
         }
@@ -69,6 +69,11 @@ export const AddEditContent = ({ query, type }) => {
             return `Select a color for ${element.field}`;
         }
     }, [entityData]);
+
+    const generateFilePath = (element) => {
+        const image = generateFieldValue(element.type);
+        return image ?`/uploads/${type}/${image}` : null;
+    }
 
     const generateFieldValue = React.useCallback((field) => {
         // Get the value of a field from entityData or return an empty string if not found

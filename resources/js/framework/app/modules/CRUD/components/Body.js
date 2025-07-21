@@ -51,6 +51,9 @@ const Body = (props) => {
         { value: "right", label: "Right" },
     ];
 
+    const guardedFields = ['id', 'uuid'];
+    const guardedTypes = ['index', 'timestamp'];
+
     const columns = [
         {
             field: "id",
@@ -179,6 +182,14 @@ const Body = (props) => {
                             control={
                                 <IOSSwitch
                                     sx={{ m: 1 }}
+                                    disabled={
+                                        guardedFields.includes(params?.row?.field) ||
+                                            guardedTypes.includes(
+                                                params?.row?.type
+                                            )
+                                            ? true
+                                            : false
+                                    }
                                     checked={
                                         params.value
                                             ? Boolean(params.value)
@@ -207,6 +218,14 @@ const Body = (props) => {
                             <Select
                                 onChange={(event) => updateCell(event, params)}
                                 defaultValue={"none"}
+                                disabled={
+                                    guardedFields.includes(params?.row?.field) ||
+                                        guardedTypes.includes(
+                                            params?.row?.type
+                                        )
+                                        ? true
+                                        : false
+                                }
                                 value={params.value ? params.value : "none"}
                             >
                                 {editPagePositions.map((option) => (
@@ -240,9 +259,9 @@ const Body = (props) => {
                     >
                         <IconButton
                             disabled={
-                                params?.row?.type == "index" ||
-                                    ["created_at", "updated_at"].includes(
-                                        params?.row?.field
+                                guardedFields.includes(params?.row?.field) ||
+                                    guardedTypes.includes(
+                                        params?.row?.type
                                     )
                                     ? true
                                     : false
