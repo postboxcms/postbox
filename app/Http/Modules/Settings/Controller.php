@@ -61,15 +61,19 @@ class Controller extends Framework
             if ($request->hasFile($key)) {
                 $this->filename = time() . '.' . $request->$key->getClientOriginalExtension();
                 $this->originalImage = $request->file($key);
+                $directory = public_path('uploads/settings');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0755, true);
+                }
 
                 if ($this->originalImage->getClientOriginalExtension() == 'svg') {
-                    $this->originalImage->move(public_path('images/'), $this->filename);
+                    $this->originalImage->move(public_path('uploads/settings/'), $this->filename);
                 } else {
                     $this->resizedImage = Image::read($this->originalImage->getRealPath());
                     // $this->resizedImage->scale(width:150);
-                    $this->resizedImage->save(public_path('images/') . $this->filename);
+                    $this->resizedImage->save(public_path('uploads/settings/') . $this->filename);
                 }
-                
+
                 $value = $this->filename;
             }
             Settings::updateOrCreate(['property' => $key], [
