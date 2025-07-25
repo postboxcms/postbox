@@ -11,6 +11,7 @@ export const AddField = (props) => {
     const cms = useCMSRoute();
     const api = useSecureRoute();
     const [field, setField] = React.useState("");
+    const [optionTypeSelected, setOptionTypeSelected] = React.useState(false);
     const [isFormDisabled, setIsFormDisabled] = React.useState(false);
 
     const updatePayload = (data, replaceKeys, newEntries) => {
@@ -25,20 +26,36 @@ export const AddField = (props) => {
     const saveField = (event) => {
         try {
             event.preventDefault();
+            let optionsData;
             const data = new FormData();
+
             for (const [key, value] of new FormData(event.target)) {
                 data.append(key, value);
+
                 if (key == "alias") {
                     data.append(
                         "field",
                         value.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase()
                     );
                 }
+
                 if (key == "type") {
                     const list = props.typeList.find(
                         (item) => item.value == value
                     );
                     data.append("dataType", list.dataType);
+                }
+
+                if (key == "options") {
+                    try {
+                        console.log("options value", value);
+                        JSON.parse(value);
+                        optionsData = data[key];
+                        data.delete(key);
+                    } catch (e) {
+                        notify("Options must be a valid JSON", "error");
+                        return;
+                    }
                 }
             }
 
@@ -50,12 +67,17 @@ export const AddField = (props) => {
                         editPosition: "position",
                         view: "list",
                     },
-                    { 
-                        table: props.table 
+                    {
+                        table: props.table,
                     }
                 );
 
                 api.post("/crud", crudPayload).then((response) => {
+                    const optionsPayload = {
+                        // check if optionsData is not empty, destructure it then loop over and generate payload 
+                        // eid: entity uuid
+                        // fid: crud uuid
+                    }
                     notify(response.data.message);
                     props.onClose();
                 });
@@ -105,6 +127,28 @@ export const AddField = (props) => {
                         fullWidth
                         label="Type"
                         options={props.typeList}
+                        onChange={(e) =>
+                            e.target.value == "dropdown"
+                                ? setOptionTypeSelected(true)
+                                : setOptionTypeSelected(false)
+                        }
+                    />
+                </Grid>
+            </Grid>
+            <Grid
+                container
+                hidden={!optionTypeSelected}
+                spacing={2}
+                marginBottom={2}
+            >
+                <Grid item xs={12} sm={12}>
+                    <Input
+                        type="text"
+                        name="options"
+                        defaultValue="[]"
+                        placeholder="Enter a value in json format. E.g [{'a':'b'}]"
+                        fullWidth
+                        label="Options"
                     />
                 </Grid>
             </Grid>

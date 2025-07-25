@@ -126,7 +126,7 @@ const List = (props) => {
                                 }
                             });
                         }
-                        if (dataValues[index].type == "radio") {
+                        if (dataValues[index].type == "switch") {
                             columnData.forEach((column) => {
                                 if (column["field"] == parameter) {
                                     column["cellClassName"] =

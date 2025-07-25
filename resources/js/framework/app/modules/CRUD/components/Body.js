@@ -37,6 +37,8 @@ const Body = (props) => {
         { value: "password", label: "Password", dataType: "string" },
         { value: "dropdown", label: "Dropdown", dataType: "boolean" },
         { value: "radio", label: "Radio", dataType: "boolean" },
+        { value: "checkbox", label: "Checkbox", dataType: "boolean" },
+        { value: "switch", label: "Switch", dataType: "boolean" },
         { value: "editor", label: "Editor", dataType: "longText" },
         { value: "textarea", label: "Textarea", dataType: "longText" },
         { value: "editor", label: "Editor", dataType: "longText" },

@@ -112,7 +112,7 @@ class Controller extends Framework
             $this->data = $request->all();
             $this->table = $this->data['module'];
 
-            $this->performFileOperations($request, 'update', $this->data);
+            $this->performFileOperations($request, 'upload', $this->data);
             $this->performDBOperations($this->table, 'update', $this->data);
             return response([
                 // 'entity' => new EntityResource($entity),

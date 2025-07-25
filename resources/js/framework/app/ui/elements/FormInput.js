@@ -76,12 +76,12 @@ export default function FormInput(props) {
                         required={required}
                     />
                 );
-            case 'radio':
+            case 'switch':
                 return (
                     <>
                         <IOSSwitch
                             name={name}
-                            checked={value}
+                            checked={Boolean(value)}
                             onChange={onChange}
                             inputProps={{ 'aria-label': placeholder, required }}
                             className={classes.radioSwitch}
