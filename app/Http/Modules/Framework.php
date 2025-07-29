@@ -16,9 +16,9 @@ class Framework extends BaseController
 
     protected $state = [];
 
-    protected function performDBOperations($table, $type, $data = [])
+    protected function performDBOperations($table, $type, $data = [], $requireFormat = true)
     {
-        $data = $this->formatData($data);
+        $data = $requireFormat ? $this->formatData($data) : $data;
 
         try {
             switch ($type) {

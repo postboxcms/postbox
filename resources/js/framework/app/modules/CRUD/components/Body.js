@@ -13,7 +13,7 @@ import PrimaryButton from "@ui/elements/PrimaryButton";
 import Dialog from "@ui/components/Dialog";
 import DataTable from "@ui/components/DataTable";
 import IconButton from "@ui/elements/IconButton";
-import AddField from "./AddField";
+import AddEditField from "./AddEditField";
 import DeleteField from "./DeleteField";
 
 const Body = (props) => {
@@ -53,8 +53,8 @@ const Body = (props) => {
         { value: "right", label: "Right" },
     ];
 
-    const guardedFields = ['id', 'uuid'];
-    const guardedTypes = ['index', 'timestamp'];
+    const guardedFields = ["id", "uuid"];
+    const guardedTypes = ["index", "timestamp"];
 
     const columns = [
         {
@@ -185,10 +185,10 @@ const Body = (props) => {
                                 <IOSSwitch
                                     sx={{ m: 1 }}
                                     disabled={
-                                        guardedFields.includes(params?.row?.field) ||
-                                            guardedTypes.includes(
-                                                params?.row?.type
-                                            )
+                                        guardedFields.includes(
+                                            params?.row?.field
+                                        ) ||
+                                        guardedTypes.includes(params?.row?.type)
                                             ? true
                                             : false
                                     }
@@ -221,10 +221,10 @@ const Body = (props) => {
                                 onChange={(event) => updateCell(event, params)}
                                 defaultValue={"none"}
                                 disabled={
-                                    guardedFields.includes(params?.row?.field) ||
-                                        guardedTypes.includes(
-                                            params?.row?.type
-                                        )
+                                    guardedFields.includes(
+                                        params?.row?.field
+                                    ) ||
+                                    guardedTypes.includes(params?.row?.type)
                                         ? true
                                         : false
                                 }
@@ -262,9 +262,35 @@ const Body = (props) => {
                         <IconButton
                             disabled={
                                 guardedFields.includes(params?.row?.field) ||
-                                    guardedTypes.includes(
-                                        params?.row?.type
-                                    )
+                                guardedTypes.includes(params?.row?.type)
+                                    ? true
+                                    : false
+                            }
+                            name="fa-pen-to-square"
+                            color={
+                                params?.row?.type == "index" ? "" : "primary"
+                            }
+                            onClick={() => {
+                                modal.handleOpen(
+                                    <AddEditField
+                                        typeList={fieldTypes}
+                                        row={params?.row}
+                                        table={first(gridResponse)?.table}
+                                        positionList={editPagePositions}
+                                        onClose={() => {
+                                            setCellFocus(!cellFocus);
+                                            modal.handleClose();
+                                        }}
+                                    />,
+                                    "Edit field",
+                                    "fa-pen-to-square"
+                                );
+                            }}
+                        />
+                        <IconButton
+                            disabled={
+                                guardedFields.includes(params?.row?.field) ||
+                                guardedTypes.includes(params?.row?.type)
                                     ? true
                                     : false
                             }
@@ -275,7 +301,10 @@ const Body = (props) => {
                             onClick={() => {
                                 modal.handleOpen(
                                     <DeleteField
-                                        data={{ table: params?.row?.table, column: params?.row.field }}
+                                        data={{
+                                            table: params?.row?.table,
+                                            column: params?.row.field,
+                                        }}
                                         onClose={() => {
                                             refreshTable();
                                             modal.handleClose();
@@ -300,7 +329,7 @@ const Body = (props) => {
     const updateCell = (event, data) => {
         data.row[data.field] =
             typeof event.target.type !== typeof undefined &&
-                event.target.type == "checkbox"
+            event.target.type == "checkbox"
                 ? event.target.checked
                 : event.target.value;
         data.value = data.row[data.field];
@@ -327,13 +356,16 @@ const Body = (props) => {
         const table = data.row.table;
 
         if (params.replaceType !== "id") {
-            return cms.patch("/dbo/" + table, params).then(() => {
-                console.log("Schema updated successfully", data);
-                saveField(data, event);
-            }).catch((error) => {
-                console.error("Error updating schema:", error);
-                notify(error.response.data.message, "error");
-            });
+            return cms
+                .patch("/dbo/" + table, params)
+                .then(() => {
+                    console.log("Schema updated successfully", data);
+                    saveField(data, event);
+                })
+                .catch((error) => {
+                    console.error("Error updating schema:", error);
+                    notify(error.response.data.message, "error");
+                });
         }
         return saveField(data, event);
     };
@@ -368,9 +400,9 @@ const Body = (props) => {
                     <PrimaryButton
                         type="button"
                         onClick={() => {
-                            console.log(gridResponse)
+                            console.log(gridResponse);
                             modal.handleOpen(
-                                <AddField
+                                <AddEditField
                                     typeList={fieldTypes}
                                     table={first(gridResponse)?.table}
                                     positionList={editPagePositions}
@@ -400,10 +432,10 @@ const Body = (props) => {
                         <MenuItem value="">Entity</MenuItem>
                         {props["entities"]
                             ? props["entities"].map((entity, i) => (
-                                <MenuItem key={entity.id} value={entity.slug}>
-                                    {entity.name}
-                                </MenuItem>
-                            ))
+                                  <MenuItem key={entity.id} value={entity.slug}>
+                                      {entity.name}
+                                  </MenuItem>
+                              ))
                             : ""}
                     </Select>
                 </FormControl>

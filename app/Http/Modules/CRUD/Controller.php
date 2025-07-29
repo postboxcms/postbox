@@ -2,7 +2,9 @@
 
 namespace App\Http\Modules\CRUD;
 
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Modules\Framework;
@@ -13,6 +15,7 @@ use App\Http\Modules\CRUD\Model as CRUD;
 
 class Controller extends Framework
 {
+    protected $id;
     protected $entity;
     protected $entityCollection;
     protected $fields;
@@ -23,8 +26,11 @@ class Controller extends Framework
     protected $model;
     protected $missingFields;
     protected $crud;
+    protected $options;
     protected $counter = 1;
     protected $validator;
+    protected $fieldId;
+    protected $entityId;
 
 
     private function _getField($name, $column, $default)
@@ -57,24 +63,48 @@ class Controller extends Framework
      */
     public function store(Request $request)
     {
-        // store CRUD data
-        $this->data = $request->all();
-        $this->validator = Validator::make($this->data, [
-            'alias' => 'required|max:20'
-        ]);
+        try {
+            // store CRUD data
+            $this->data = $request->all();
+            $this->validator = Validator::make($this->data, [
+                'alias' => 'required|max:20'
+            ]);
 
-        if ($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(), trans('crud.validationerror')], 400);
+            if ($this->validator->fails()) {
+                return response(['message' => $this->validator->errors(), trans('crud.validationerror')], 400);
+            }
+
+            $this->crud = CRUD::updateOrCreate([
+                'field' => $this->data['field'],
+                'table' => $this->data['table']
+            ], $this->data);
+
+            $this->options = [
+                'fid' => CRUD::where('field', $this->crud['field'])
+                    ->where('table', $this->crud['table'])
+                    ->first('uuid')->uuid,
+                'eid' => Entity::where('slug', $this->crud['table'])->first('uuid')->uuid
+            ];
+
+            if (isset($this->data['options']) && !is_array($this->data['options'])) {
+                foreach (json_decode($this->data['options']) as $options) {
+                    foreach ($options as $key => $value) {
+                        $this->options['key'] = $key;
+                        $this->options['value'] = $value;
+                        $this->performDBOperations("options", "insert", $this->options, false);
+                    }
+                }
+            }
+
+            return response([
+                'message' => trans('crud.success'),
+            ], 200);
+        } catch (Exception $e) {
+            return response([
+                'error' => trans('crud.error'),
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $this->crud = CRUD::updateOrCreate([
-            'field' => $this->data['field'],
-            'table' => $this->data['table']
-        ], $this->data);
-
-        return response([
-            'message' => trans('crud.success')
-        ], 200);
     }
 
     /**
@@ -87,8 +117,9 @@ class Controller extends Framework
     public function show(Entity $Entity)
     {
         // display CRUD fields
-        $this->model = Entity::where('slug', \Request::segment(count(\Request::segments())))->first()->model;
-        $this->model = "\\App\\Models\\" . $this->model;
+        $this->model = Entity::where('slug', \Request::segment(count(\Request::segments())))->first();
+        $this->entityId = $this->model->uuid;
+        $this->model = "\\App\\Models\\" . $this->model->model;
 
         if (class_exists($this->model)) {
             $this->model = new $this->model();
@@ -97,12 +128,18 @@ class Controller extends Framework
             $this->icon = $Entity->getTableIcon($this->table);
             $this->fields = collect($this->fields)->map(function ($field) {
                 $this->counter += 1;
+                $this->fieldId = $this->_getField($field, 'uuid', null);
+                if (in_array($this->_getField($field, 'type', 'text'), ["dropdown", "radio", "checkbox"])) {
+                    $this->options = DB::table('options')->where('fid', $this->fieldId)->where('eid', $this->entityId)->get();
+                }
                 return [
                     'id' => $this->counter,
+                    'uuid' => $this->fieldId,
                     'table' => $this->table,
                     'field' => $field,
                     'alias' => $this->_getField($field, 'alias', strtoupper($field)),
                     'type' => $this->_getField($field, 'type', 'text'),
+                    'options' => $this->options,
                     'position' => $this->_getField($field, 'position', 'none'),
                     'list' => $this->_getField($field, 'list', true),
                     'mandatory' => $this->_getField($field, 'mandatory', false),

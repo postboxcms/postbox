@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index()->default(DB::raw('(uuid())'))->index();
             $table->string('eid');
             $table->string('fid');
+            $table->string('key');
             $table->string('value');
             $table->timestamps();
         });

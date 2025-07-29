@@ -1,13 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import TextField from '@mui/material/TextField';
-import IOSSwitch from '@ui/elements/IOSSwitch';
-import ImageUploader from '@ui/components/ImageUploader';
-import { useCSS } from '@app/hooks';
-import { event } from 'jquery';
+import React from "react";
+import PropTypes from "prop-types";
+import TextField from "@mui/material/TextField";
+import IOSSwitch from "@ui/elements/IOSSwitch";
+import ImageUploader from "@ui/components/ImageUploader";
+import { useCSS } from "@app/hooks";
+import { event } from "jquery";
 
 export default function FormInput(props) {
-    const { type, required, value, onChange, placeholder, inputProps, rows = 4, name, fullWidth = true } = props;
+    const {
+        type,
+        required,
+        value,
+        onChange,
+        placeholder,
+        inputProps,
+        rows = 4,
+        name,
+        fullWidth = true,
+    } = props;
     const classes = useCSS();
 
     const updateField = (event) => {
@@ -21,20 +31,20 @@ export default function FormInput(props) {
 
     const renderInput = () => {
         switch (type) {
-            case 'text':
+            case "text":
                 return (
                     <TextField
                         name={name}
                         variant="outlined"
                         value={value}
                         onChange={updateField}
-                        placeholder={placeholder}   
+                        placeholder={placeholder}
                         fullWidth={fullWidth}
                         className={classes.formInput}
                         required={required}
                     />
                 );
-            case 'number':
+            case "number":
                 return (
                     <TextField
                         name={name}
@@ -48,7 +58,7 @@ export default function FormInput(props) {
                         required={required}
                     />
                 );
-            case 'date':
+            case "date":
                 return (
                     <TextField
                         name={name}
@@ -61,7 +71,7 @@ export default function FormInput(props) {
                         required={required}
                     />
                 );
-            case 'textarea':
+            case "textarea":
                 return (
                     <TextField
                         name={name}
@@ -76,20 +86,59 @@ export default function FormInput(props) {
                         required={required}
                     />
                 );
-            case 'switch':
+            case "switch":
                 return (
                     <>
                         <IOSSwitch
                             name={name}
                             checked={Boolean(value)}
                             onChange={onChange}
-                            inputProps={{ 'aria-label': placeholder, required }}
+                            inputProps={{ "aria-label": placeholder, required }}
                             className={classes.radioSwitch}
-                        />{' '}
+                        />{" "}
                         <span>{generateHelperText(placeholder)}</span>
                     </>
                 );
-            case 'image':
+            case "radio":
+                return (
+                    <TextField
+                        name={name}
+                        type="radio"
+                        variant="outlined"
+                        value={value}
+                        onChange={onChange}
+                        placeholder={placeholder}
+                        fullWidth={fullWidth}
+                        className={classes.formInput}
+                        required={required}
+                        inputProps={inputProps}
+                    />
+                );
+            case "dropdown":
+                return (
+                    <TextField
+                        name={name}
+                        select
+                        variant="outlined"
+                        value={value}
+                        onChange={onChange}
+                        placeholder={placeholder}
+                        fullWidth={fullWidth}
+                        className={classes.formInput}
+                        required={required}
+                        SelectProps={{
+                            native: false,
+                        }}
+                        {...inputProps}
+                    >
+                        {(inputProps?.options || []).map((option) => (
+                            <option key={option.key} value={option.value}>
+                                {option.value}
+                            </option>
+                        ))}
+                    </TextField>
+                );
+            case "image":
                 return (
                     <ImageUploader
                         name={name}
@@ -118,7 +167,7 @@ export default function FormInput(props) {
 }
 
 FormInput.propTypes = {
-    type: PropTypes.oneOf(['text', 'number', 'date']).isRequired,
+    type: PropTypes.oneOf(["text", "number", "date"]).isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,

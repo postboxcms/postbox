@@ -157,24 +157,16 @@ export const AddEditContent = ({ query, type }) => {
             case "dropdown":
                 return (
                     <FormInput
-                        select
                         required={field.mandatory}
-                        type="select"
+                        type="dropdown"
                         name={field.field}
                         placeholder={generatePlaceholder(field)}
                         value={generateFieldValue(field.field)}
                         onChange={updateEntityData}
                         variant="outlined"
                         fullWidth
-                        SelectProps={{
-                            native: true,
-                        }}
-                    >
-                        {field.options.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
+                        inputProps={field}
+                    >                        
                     </FormInput>
                 );
             case "editor":
@@ -195,8 +187,8 @@ export const AddEditContent = ({ query, type }) => {
                                 updateEntityData({
                                     target: {
                                         name: field.field,
-                                        value: content
-                                    }
+                                        value: content,
+                                    },
                                 });
                             }
                         }}
@@ -220,6 +212,28 @@ export const AddEditContent = ({ query, type }) => {
                 return (
                     <FormInput
                         type="checkbox"
+                        variant="outlined"
+                        name={field.field}
+                        value={generateFieldValue(field.field)}
+                        onChange={(event) => {
+                            const isChecked = event.target.checked;
+                            updateEntityData({
+                                target: {
+                                    name: field.field,
+                                    value: isChecked ? "1" : "0", // Convert checkbox value to '1' or '0'
+                                },
+                            });
+                        }}
+                        fullWidth
+                        InputProps={{
+                            inputProps: { "aria-label": field.label },
+                        }}
+                    />
+                );
+            case "radio":
+                return (
+                    <FormInput
+                        type="radio"
                         variant="outlined"
                         name={field.field}
                         value={generateFieldValue(field.field)}
@@ -375,15 +389,15 @@ export const AddEditContent = ({ query, type }) => {
     };
 
     const processBlankEntries = (entry) => {
-        switch(entry.type) {
-            case 'switch':
+        switch (entry.type) {
+            case "switch":
                 return 0;
-            case 'editor':
+            case "editor":
                 return entityData[entry.field]?.value;
             default:
                 return "";
         }
-    }
+    };
 
     const processFormData = (e) => {
         const formData = new FormData(e.target);
@@ -392,7 +406,6 @@ export const AddEditContent = ({ query, type }) => {
             formData.append(field.field, field.value || "");
         }
         // You can also process the form data here if needed
-        console.log("rightCards:", rightCards); // Replace 'fieldName' with actual field names
         // Process form data here, e.g., send it to the server
         for (let [key, value] of formData.entries()) {
             console.log(`Processing field: ${key}, value: ${value}`);
@@ -404,11 +417,11 @@ export const AddEditContent = ({ query, type }) => {
                 setError(true);
                 return;
             }
-            
+
             if (field && field.type === "textarea") {
                 formData.set(key, multiline[key] || String(value));
             }
-            
+
             if (field && (field.type === "file" || field.type === "image")) {
                 const fileInput = e.target.querySelector(
                     `input[name="${key}"]`
@@ -424,7 +437,7 @@ export const AddEditContent = ({ query, type }) => {
             ) {
                 formData.set(key, value ? "1" : "0"); // Convert checkbox value to 1 or 0
             }
-            
+
             if (field && field.type === "radio") {
                 const radioInput = e.target.querySelector(
                     `input[name="${key}"]:checked`
@@ -437,11 +450,11 @@ export const AddEditContent = ({ query, type }) => {
                     formData.set(key, ""); // Set empty if no radio is checked
                 }
             }
-            
+
             if (field && field.type === "editor") {
                 formData.set(key, editorContent[key] || "");
             }
-            
+
             if (field && field.type === "user") {
                 if (user) {
                     formData.set(key, user.id); // Assuming user ID is stored as a string

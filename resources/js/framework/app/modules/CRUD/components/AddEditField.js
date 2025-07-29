@@ -1,4 +1,5 @@
 import React from "react";
+import { forEach, get, isEmpty } from "lodash";
 import { Grid } from "@mui/material";
 import { useNotifier, useCMSRoute, useSecureRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
@@ -6,13 +7,15 @@ import SaveButton from "@ui/elements/SaveButton";
 import Input from "@ui/elements/Input";
 import { fetchEntries, pushToObject } from "@app/utils";
 
-export const AddField = (props) => {
+export const AddEditField = (props) => {
+    const { row } = props;
     const notify = useNotifier();
     const cms = useCMSRoute();
     const api = useSecureRoute();
     const [field, setField] = React.useState("");
     const [optionTypeSelected, setOptionTypeSelected] = React.useState(false);
     const [isFormDisabled, setIsFormDisabled] = React.useState(false);
+    const htmlSelectors = ["dropdown", "radio", "checkbox"];
 
     const updatePayload = (data, replaceKeys, newEntries) => {
         for (const [key, newKey] of fetchEntries(replaceKeys)) {
@@ -26,7 +29,9 @@ export const AddField = (props) => {
     const saveField = (event) => {
         try {
             event.preventDefault();
+
             let optionsData;
+            let optionSelectors = [];
             const data = new FormData();
 
             for (const [key, value] of new FormData(event.target)) {
@@ -43,49 +48,97 @@ export const AddField = (props) => {
                     const list = props.typeList.find(
                         (item) => item.value == value
                     );
+                    if (htmlSelectors.includes(value)) {
+                        optionSelectors.push(value);
+                    }
                     data.append("dataType", list.dataType);
                 }
 
-                if (key == "options") {
+                if (key == "options" && !isEmpty(optionSelectors)) {
                     try {
-                        console.log("options value", value);
+                        if (!/^\s*\[\s*\{.*:.*\}\s*\]\s*$/.test(value)) {
+                            notify(
+                                'Options must match pattern [{"a":"b"}]',
+                                "error"
+                            );
+                            return;
+                        }
                         JSON.parse(value);
-                        optionsData = data[key];
-                        data.delete(key);
+                        optionsData = value;
+                        if (optionsData.length <= 0) {
+                            notify("Options cannot be empty", "error");
+                            return;
+                        }
+                        // data.delete(key);
                     } catch (e) {
+                        console.error("JSON Exception:", e);
                         notify("Options must be a valid JSON", "error");
                         return;
                     }
                 }
             }
 
-            cms.post("/dbo/" + props.table, data).then((response) => {
-                // insert into CRUD table as well
-                const crudPayload = updatePayload(
-                    response?.data?.data,
-                    {
-                        editPosition: "position",
-                        view: "list",
-                    },
-                    {
-                        table: props.table,
-                    }
-                );
+            cms.post("/dbo/" + props.table, data)
+                .then((response) => {
+                    // insert into CRUD table as well
+                    console.log("crud payload:", response);
+                    const crudPayload = updatePayload(
+                        response?.data?.data,
+                        {
+                            editPosition: "position",
+                            view: "list",
+                        },
+                        {
+                            table: props.table,
+                        }
+                    );
 
-                api.post("/crud", crudPayload).then((response) => {
-                    const optionsPayload = {
-                        // check if optionsData is not empty, destructure it then loop over and generate payload 
-                        // eid: entity uuid
-                        // fid: crud uuid
+                    api.post("/crud", crudPayload).then((response) => {
+                        // const optionsPayload = {
+                        //     // check if optionsData is not empty, destructure it then loop over and generate payload
+                        //     // fid: response.data?.fid,
+                        //     // eid: response.data?.eid
+                        // };
+
+                        notify(response.data.message);
+                        props.onClose();
+                    });
+                })
+                .catch((error) => {
+                    console.error("Exception:", error?.response?.data?.error);
+                    if (
+                        error?.response?.data?.error.includes(
+                            "Column already exists"
+                        )
+                    ) {
+                        notify(
+                            "Duplicate column found. Please use a different alias",
+                            "error"
+                        );
+                        return;
                     }
-                    notify(response.data.message);
-                    props.onClose();
+                    notify("Something went wrong! Please try again", "error");
                 });
-            });
         } catch (error) {
             console.error(error);
-            notify("Something went wrong!", "error");
+            notify("Something went wrong! Please try again", "error");
         }
+    };
+
+    const getParam = (param, defaultValue = "") => {
+        const parseToString = (obj) => {
+            let newParam = "";
+            forEach(obj, (obj) => {
+                newParam += `{${obj.key}:${obj.value}},`;
+            });
+            return newParam.slice(0, -1);
+        };
+
+        return row && Object.prototype.hasOwnProperty.call(row, param)
+            ? typeof row[param] === "object"
+                ? parseToString(row[param])
+                : row[param]
+            : defaultValue;
     };
 
     return (
@@ -96,7 +149,7 @@ export const AddField = (props) => {
                     <Input
                         name="field"
                         fullWidth
-                        value={field}
+                        value={field || getParam("field")}
                         label="Field"
                         disabled
                     />
@@ -105,7 +158,7 @@ export const AddField = (props) => {
                     <Input
                         name="alias"
                         fullWidth
-                        defaultValue={""}
+                        defaultValue={getParam("alias")}
                         label="Alias"
                         onChange={(e) => {
                             setField(
@@ -121,14 +174,14 @@ export const AddField = (props) => {
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
                     <Input
-                        defaultValue="text"
+                        defaultValue={getParam("type", "text")}
                         type="dropdown"
                         name="type"
                         fullWidth
                         label="Type"
                         options={props.typeList}
                         onChange={(e) =>
-                            e.target.value == "dropdown"
+                            htmlSelectors.includes(e.target.value)
                                 ? setOptionTypeSelected(true)
                                 : setOptionTypeSelected(false)
                         }
@@ -137,7 +190,10 @@ export const AddField = (props) => {
             </Grid>
             <Grid
                 container
-                hidden={!optionTypeSelected}
+                hidden={
+                    !optionTypeSelected &&
+                    !htmlSelectors.includes(getParam("type"))
+                }
                 spacing={2}
                 marginBottom={2}
             >
@@ -145,7 +201,7 @@ export const AddField = (props) => {
                     <Input
                         type="text"
                         name="options"
-                        defaultValue="[]"
+                        defaultValue={getParam("options", "[]")}
                         placeholder="Enter a value in json format. E.g [{'a':'b'}]"
                         fullWidth
                         label="Options"
@@ -155,7 +211,7 @@ export const AddField = (props) => {
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
                     <Input
-                        defaultValue={1}
+                        defaultValue={Number(getParam("list", 1))}
                         type="dropdown"
                         name="view"
                         fullWidth
@@ -170,7 +226,7 @@ export const AddField = (props) => {
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
                     <Input
-                        defaultValue="none"
+                        defaultValue={getParam("position", "none")}
                         type="dropdown"
                         name="editPosition"
                         fullWidth
@@ -189,4 +245,4 @@ export const AddField = (props) => {
     );
 };
 
-export default AddField;
+export default AddEditField;
