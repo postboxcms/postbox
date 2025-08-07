@@ -14,7 +14,7 @@ export const AddEditField = (props) => {
     const api = useSecureRoute();
     const [field, setField] = React.useState("");
     const [optionTypeSelected, setOptionTypeSelected] = React.useState(false);
-    const [isFormDisabled, setIsFormDisabled] = React.useState(false);
+    const [isFormEnabled, setIsFormEnabled] = React.useState(false);
     const htmlSelectors = ["dropdown", "radio", "checkbox"];
 
     const updatePayload = (data, replaceKeys, newEntries) => {
@@ -131,7 +131,7 @@ export const AddEditField = (props) => {
             forEach(obj, (obj) => {
                 newParam += `{${obj.key}:${obj.value}},`;
             });
-            return newParam.slice(0, -1);
+            return `[${newParam.slice(0, -1)}]`;
         };
 
         return row && Object.prototype.hasOwnProperty.call(row, param)
@@ -140,6 +140,12 @@ export const AddEditField = (props) => {
                 : row[param]
             : defaultValue;
     };
+
+    React.useEffect(() => {
+        if (props.row && getParam("field")) {
+            setIsFormEnabled(true);
+        }
+    }, [props.row]);
 
     return (
         <Form onSubmit={saveField}>
@@ -166,7 +172,7 @@ export const AddEditField = (props) => {
                                     .replace(/[^a-zA-Z0-9]/g, "_")
                                     .toLowerCase()
                             );
-                            setIsFormDisabled(e.target.value.length > 2);
+                            setIsFormEnabled(e.target.value.length > 2);
                         }}
                     />
                 </Grid>
@@ -238,7 +244,7 @@ export const AddEditField = (props) => {
 
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
-                    <SaveButton disabled={!isFormDisabled} fullWidth />
+                    <SaveButton disabled={!isFormEnabled} fullWidth />
                 </Grid>
             </Grid>
         </Form>
