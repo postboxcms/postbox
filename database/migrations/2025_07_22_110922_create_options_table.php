@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('fid');
             $table->string('key');
             $table->string('value');
+            $table->boolean('url')->default(false);
             $table->timestamps();
         });
     }

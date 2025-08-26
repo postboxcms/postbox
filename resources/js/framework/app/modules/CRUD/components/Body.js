@@ -9,7 +9,7 @@ import { useNotifier, useSecureRoute, useCMSRoute } from "@app/hooks";
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
 import Input from "@ui/elements/Input";
-import PrimaryButton from "@ui/elements/PrimaryButton";
+import ClassicButton from "@ui/elements/ClassicButton";
 import Dialog from "@ui/components/Dialog";
 import DataTable from "@ui/components/DataTable";
 import IconButton from "@ui/elements/IconButton";
@@ -35,9 +35,9 @@ const Body = (props) => {
         { value: "text", label: "Text", dataType: "string" },
         { value: "email", label: "Email", dataType: "string" },
         { value: "password", label: "Password", dataType: "string" },
-        { value: "dropdown", label: "Dropdown", dataType: "boolean" },
-        { value: "radio", label: "Radio", dataType: "boolean" },
-        { value: "checkbox", label: "Checkbox", dataType: "boolean" },
+        { value: "dropdown", label: "Dropdown", dataType: "string" },
+        { value: "radio", label: "Radio", dataType: "string" },
+        { value: "checkbox", label: "Checkbox", dataType: "string" },
         { value: "switch", label: "Switch", dataType: "boolean" },
         { value: "editor", label: "Editor", dataType: "longText" },
         { value: "textarea", label: "Textarea", dataType: "longText" },
@@ -271,11 +271,13 @@ const Body = (props) => {
                                 params?.row?.type == "index" ? "" : "primary"
                             }
                             onClick={() => {
+                                console.log("gridResponse", gridResponse);
                                 modal.handleOpen(
                                     <AddEditField
                                         typeList={fieldTypes}
+                                        mode="edit"
                                         row={params?.row}
-                                        table={first(gridResponse)?.table}
+                                        table={first(gridResponse)?.table || params?.row?.table}
                                         positionList={editPagePositions}
                                         onClose={() => {
                                             setCellFocus(!cellFocus);
@@ -304,6 +306,7 @@ const Body = (props) => {
                                         data={{
                                             table: params?.row?.table,
                                             column: params?.row.field,
+                                            type: params?.row.type,
                                         }}
                                         onClose={() => {
                                             refreshTable();
@@ -397,10 +400,10 @@ const Body = (props) => {
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
-                    <PrimaryButton
+                    <ClassicButton
                         type="button"
                         onClick={() => {
-                            console.log(gridResponse);
+                            console.log("gridResponse",gridResponse);
                             modal.handleOpen(
                                 <AddEditField
                                     typeList={fieldTypes}
@@ -419,7 +422,7 @@ const Body = (props) => {
                         icon="fa-plus"
                     >
                         New field
-                    </PrimaryButton>
+                    </ClassicButton>
                     <Select
                         onChange={(e) =>
                             e.target.value

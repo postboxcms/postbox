@@ -1,19 +1,24 @@
 import React from "react";
-import { forEach, get, isEmpty } from "lodash";
+import PropTypes from "prop-types";
+import { forEach } from "lodash";
 import { Grid } from "@mui/material";
 import { useNotifier, useCMSRoute, useSecureRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
 import SaveButton from "@ui/elements/SaveButton";
+import ClassicButton from "@ui/elements/ClassicButton";
 import Input from "@ui/elements/Input";
 import { fetchEntries, pushToObject } from "@app/utils";
 
 export const AddEditField = (props) => {
-    const { row } = props;
+    const { row, typeList, table, positionList, onClose, mode } = props;
     const notify = useNotifier();
     const cms = useCMSRoute();
     const api = useSecureRoute();
     const [field, setField] = React.useState("");
-    const [optionTypeSelected, setOptionTypeSelected] = React.useState(false);
+    const [options, setOptions] = React.useState([]);
+    const [isOptionIsURL, setIsOptionIsURL] = React.useState(false);
+    const [source, setSource] = React.useState(false);
+    const [adornedText, setAdornedText] = React.useState("");
     const [isFormEnabled, setIsFormEnabled] = React.useState(false);
     const htmlSelectors = ["dropdown", "radio", "checkbox"];
 
@@ -30,12 +35,12 @@ export const AddEditField = (props) => {
         try {
             event.preventDefault();
 
-            let optionsData;
             let optionSelectors = [];
             const data = new FormData();
 
             for (const [key, value] of new FormData(event.target)) {
                 data.append(key, value);
+                console.log("key:", key, "value:", value);
 
                 if (key == "alias") {
                     data.append(
@@ -45,80 +50,100 @@ export const AddEditField = (props) => {
                 }
 
                 if (key == "type") {
-                    const list = props.typeList.find(
-                        (item) => item.value == value
-                    );
+                    const list = typeList.find((item) => item.value == value);
                     if (htmlSelectors.includes(value)) {
                         optionSelectors.push(value);
                     }
                     data.append("dataType", list.dataType);
                 }
 
-                if (key == "options" && !isEmpty(optionSelectors)) {
-                    try {
-                        if (!/^\s*\[\s*\{.*:.*\}\s*\]\s*$/.test(value)) {
+                // if (key === "options[]" && value.trim() !== "") {
+                //     data.set("options[]", [`${adornedText}${value.trim()}`]);
+                //     data.append("url", Number(source));
+                // }
+            }
+
+            if (mode === "edit") {
+                data.append("eid", row.tid);
+                data.append("fid", row.uuid);
+                data.append("field", row.field);
+                data.append(
+                    "replaceType",
+                    typeList.find((item) => item.value === data.get("type"))
+                        .dataType || "string"
+                );
+
+                cms.patch(`/dbo/${table}`, data)
+                    .then((response) => {
+                        // insert into CRUD table as well
+                        console.log("crud payload:", response);
+
+                        api.patch(`/crud/${row.tid}`, data).then((response) => {
+                            notify(response.data.message);
+                            onClose();
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Exception:", error);
+                        if (
+                            error?.response?.data?.error.includes(
+                                "Column already exists"
+                            )
+                        ) {
                             notify(
-                                'Options must match pattern [{"a":"b"}]',
+                                "Duplicate column found. Please use a different alias",
                                 "error"
                             );
                             return;
                         }
-                        JSON.parse(value);
-                        optionsData = value;
-                        if (optionsData.length <= 0) {
-                            notify("Options cannot be empty", "error");
-                            return;
-                        }
-                        // data.delete(key);
-                    } catch (e) {
-                        console.error("JSON Exception:", e);
-                        notify("Options must be a valid JSON", "error");
-                        return;
-                    }
-                }
-            }
-
-            cms.post("/dbo/" + props.table, data)
-                .then((response) => {
-                    // insert into CRUD table as well
-                    console.log("crud payload:", response);
-                    const crudPayload = updatePayload(
-                        response?.data?.data,
-                        {
-                            editPosition: "position",
-                            view: "list",
-                        },
-                        {
-                            table: props.table,
-                        }
-                    );
-
-                    api.post("/crud", crudPayload).then((response) => {
-                        // const optionsPayload = {
-                        //     // check if optionsData is not empty, destructure it then loop over and generate payload
-                        //     // fid: response.data?.fid,
-                        //     // eid: response.data?.eid
-                        // };
-
-                        notify(response.data.message);
-                        props.onClose();
-                    });
-                })
-                .catch((error) => {
-                    console.error("Exception:", error?.response?.data?.error);
-                    if (
-                        error?.response?.data?.error.includes(
-                            "Column already exists"
-                        )
-                    ) {
                         notify(
-                            "Duplicate column found. Please use a different alias",
+                            "Something went wrong! Please try again",
                             "error"
                         );
-                        return;
-                    }
-                    notify("Something went wrong! Please try again", "error");
-                });
+                    });
+            } else {
+                cms.post(`/dbo/${table}`, data)
+                    .then((response) => {
+                        // insert into CRUD table as well
+                        console.log("crud payload:", response);
+                        const crudPayload = updatePayload(
+                            response?.data?.data,
+                            {
+                                editPosition: "position",
+                                view: "list",
+                            },
+                            {
+                                table: table,
+                            }
+                        );
+
+                        api.post("/crud", crudPayload).then((response) => {
+                            notify(response.data.message);
+                            onClose();
+                        });
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Exception:",
+                            error?.response?.data?.error
+                        );
+                        if (
+                            error?.response?.data?.error.includes(
+                                "Column already exists"
+                            )
+                        ) {
+                            notify(
+                                "Duplicate column found. Please use a different alias",
+                                "error"
+                            );
+                            return;
+                        }
+                        notify(
+                            "Something went wrong! Please try again",
+                            "error"
+                        );
+                    });
+            }
         } catch (error) {
             console.error(error);
             notify("Something went wrong! Please try again", "error");
@@ -126,26 +151,28 @@ export const AddEditField = (props) => {
     };
 
     const getParam = (param, defaultValue = "") => {
-        const parseToString = (obj) => {
-            let newParam = "";
-            forEach(obj, (obj) => {
-                newParam += `{${obj.key}:${obj.value}},`;
-            });
-            return `[${newParam.slice(0, -1)}]`;
-        };
+        console.log(
+            "getParam called with:",
+            param,
+            "defaultValue:",
+            defaultValue
+        );
 
         return row && Object.prototype.hasOwnProperty.call(row, param)
-            ? typeof row[param] === "object"
-                ? parseToString(row[param])
-                : row[param]
+            ? row[param]
             : defaultValue;
     };
 
     React.useEffect(() => {
-        if (props.row && getParam("field")) {
+        if (row && getParam("field")) {
             setIsFormEnabled(true);
         }
-    }, [props.row]);
+        setOptions(
+            getParam("options", [])?.map((option, index) => ({
+                value: option.value || "",
+            }))
+        );
+    }, [row]);
 
     return (
         <Form onSubmit={saveField}>
@@ -163,6 +190,7 @@ export const AddEditField = (props) => {
                 <Grid item xs={6} sm={6}>
                     <Input
                         name="alias"
+                        disabled={mode === "edit"}
                         fullWidth
                         defaultValue={getParam("alias")}
                         label="Alias"
@@ -185,35 +213,91 @@ export const AddEditField = (props) => {
                         name="type"
                         fullWidth
                         label="Type"
-                        options={props.typeList}
-                        onChange={(e) =>
-                            htmlSelectors.includes(e.target.value)
-                                ? setOptionTypeSelected(true)
-                                : setOptionTypeSelected(false)
-                        }
+                        options={typeList}
+                        onChange={(e) => {
+                            if (
+                                htmlSelectors.includes(e.target.value) &&
+                                options?.length <= 0
+                            ) {
+                                setOptions([...options, { key: 1, value: "" }]);
+                            }
+                            if (!htmlSelectors.includes(e.target.value)) {
+                                setOptions([]);
+                                setAdornedText("");
+                                setIsOptionIsURL(false);
+                            }
+                        }}
                     />
                 </Grid>
             </Grid>
-            <Grid
-                container
-                hidden={
-                    !optionTypeSelected &&
-                    !htmlSelectors.includes(getParam("type"))
-                }
-                spacing={2}
-                marginBottom={2}
-            >
-                <Grid item xs={12} sm={12}>
-                    <Input
-                        type="text"
-                        name="options"
-                        defaultValue={getParam("options", "[]")}
-                        placeholder="Enter a value in json format. E.g [{'a':'b'}]"
-                        fullWidth
-                        label="Options"
-                    />
-                </Grid>
-            </Grid>
+            {options?.length > 0 &&
+                options?.map((val, key) => {
+                    return (
+                        <Grid container spacing={2} marginBottom={2}>
+                            <Grid item xs={9} sm={9}>
+                                <Input
+                                    key={key}
+                                    type="text"
+                                    name="options[]"
+                                    defaultValue={val.value}
+                                    placeholder={(() => {
+                                        if (isOptionIsURL) {
+                                            return "jsonplaceholder.typicode.com/posts";
+                                        }
+                                        if (key === 0) {
+                                            return "Provide a json resource or plain text values";
+                                        }
+                                        return "Provide a value";
+                                    })()}
+                                    fullWidth
+                                    label={"Options"}
+                                    onKeyDown={(e) => {
+                                        if (
+                                            e.key === "Backspace" &&
+                                            e.target.value.trim() === ""
+                                        ) {
+                                            setAdornedText(null);
+                                            setIsOptionIsURL(false);
+                                        }
+                                    }}
+                                />
+                            </Grid>
+                            <Grid
+                                item
+                                xs={3}
+                                sm={3}
+                                display="flex"
+                                alignItems="center"
+                            >
+                                <ClassicButton
+                                    hidden={key < options.length - 1}
+                                    onClick={() => {
+                                        setOptions([
+                                            ...options,
+                                            {
+                                                key: key,
+                                                value: "",
+                                            },
+                                        ]);
+                                    }}
+                                    fullWidth
+                                >
+                                    +
+                                </ClassicButton>
+                                <ClassicButton
+                                    hidden={key >= options.length - 1}
+                                    color="secondary"
+                                    onClick={() => {
+                                        setOptions([...options.slice(0, -1)]);
+                                    }}
+                                    fullWidth
+                                >
+                                    -
+                                </ClassicButton>
+                            </Grid>
+                        </Grid>
+                    );
+                })}
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
                     <Input
@@ -237,7 +321,7 @@ export const AddEditField = (props) => {
                         name="editPosition"
                         fullWidth
                         label="Edit Page Position"
-                        options={props.positionList}
+                        options={positionList}
                     />
                 </Grid>
             </Grid>
@@ -249,6 +333,24 @@ export const AddEditField = (props) => {
             </Grid>
         </Form>
     );
+};
+
+AddEditField.propTypes = {
+    row: PropTypes.object,
+    typeList: PropTypes.array.isRequired,
+    table: PropTypes.string.isRequired,
+    positionList: PropTypes.array.isRequired,
+    mode: PropTypes.oneOf(["add", "edit"]),
+    onClose: PropTypes.func,
+};
+
+AddEditField.defaultProps = {
+    row: {},
+    typeList: [],
+    table: "",
+    positionList: [],
+    mode: "add",
+    onClose: () => {},
 };
 
 export default AddEditField;

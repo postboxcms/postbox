@@ -85,4 +85,9 @@ class Framework extends BaseController
         $data = array_filter($data, fn($value) => $value !== null && $value !== '');
         return $data;
     }
+
+    protected function hashKey($data) {
+        $hash = hash('sha256', $data);
+        return substr($hash, 0, 16); // Return first 16 characters of the hash
+    }
 }

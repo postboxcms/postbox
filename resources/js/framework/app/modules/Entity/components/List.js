@@ -16,7 +16,7 @@ import {
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
-import PrimaryButton from "@ui/elements/PrimaryButton";
+import ClassicButton from "@ui/elements/ClassicButton";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 
@@ -169,13 +169,13 @@ const List = (props) => {
                 <Title icon={Icon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
-                <PrimaryButton
+                <ClassicButton
                     onClick={() => addContent(props)}
                     icon="fa-plus"
                     sx={{ float: 'right', marginBottom: 1 }}
                 >
                     Add {props["title"] ? props["title"] : props["name"]}
-                </PrimaryButton>
+                </ClassicButton>
             </div>
             <div className={classes.grid}>
                 <DataGrid

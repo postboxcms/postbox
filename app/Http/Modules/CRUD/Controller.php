@@ -86,13 +86,16 @@ class Controller extends Framework
                 'eid' => Entity::where('slug', $this->crud['table'])->first('uuid')->uuid
             ];
 
-            if (isset($this->data['options']) && !is_array($this->data['options'])) {
-                foreach (json_decode($this->data['options']) as $options) {
-                    foreach ($options as $key => $value) {
-                        $this->options['key'] = $key;
-                        $this->options['value'] = $value;
-                        $this->performDBOperations("options", "insert", $this->options, false);
-                    }
+            if (isset($this->data['options']) && is_array($this->data['options'])) {
+                foreach ($this->data['options'] as $option) {
+                    $value = is_string($option) ? $option : $option['value'];
+                    $this->performDBOperations("options", "insert", [
+                        'fid' => $this->options['fid'],
+                        'eid' => $this->options['eid'],
+                        'key' => $this->hashKey($value),
+                        'value' => $value,
+                        'url' => isset($this->data['url']) ? $this->data['url'] : false
+                    ], false);
                 }
             }
 
@@ -135,6 +138,7 @@ class Controller extends Framework
                 return [
                     'id' => $this->counter,
                     'uuid' => $this->fieldId,
+                    'tid' => $this->entityId,
                     'table' => $this->table,
                     'field' => $field,
                     'alias' => $this->_getField($field, 'alias', strtoupper($field)),
@@ -182,7 +186,9 @@ class Controller extends Framework
      */
     public function update(Request $request, $id)
     {
-        //
+        // update the specified resource
+        $this->data = $this->formatData($request->all());
+        return response(['message' => 'Update method not implemented'], 501);
     }
 
     /**
@@ -197,10 +203,14 @@ class Controller extends Framework
         $this->data = $request->all();
         // Remove data from CRUD table
         try {
-            CRUD::where('table', $this->table)->where('field', $this->data['column'])->delete();
-            return response()->json(['message' => trans('crud.delete')], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => trans('crud.error'), 'error' => $e->getMessage()], 400);
+            $record = CRUD::where('table', $this->table)->where('field', $this->data['column'])->first();
+            $record->delete();
+            if ($this->data['type'] === 'dropdown' || $this->data['type'] === 'radio' || $this->data['type'] === 'checkbox') {
+                DB::table('options')->where('fid', $record->uuid)->delete();
+            }
+            return response(['message' => trans('crud.delete')], 200);
+        } catch (Exception $e) {
+            return response(['message' => trans('crud.error'), 'error' => $e->getMessage()], 400);
         }
 
     }

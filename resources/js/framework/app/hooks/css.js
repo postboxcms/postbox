@@ -30,7 +30,7 @@ export const useCSS = makeStyles((theme) => ({
             width: "100%",
             padding: "5px 10px",
             marginBottom: "10px",
-            borderBottom: "1px solid #ccc",
+            // borderBottom: "1px solid #ccc",
             clear: "both",
         },
 
