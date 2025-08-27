@@ -361,7 +361,7 @@ const Body = (props) => {
             return updateSchema(data, event);
         }
 
-        return saveField(processPayload(data), event);
+        return saveField(processPayload(data, event), event);
     };
 
     const updateSchema = (payload, event) => {
