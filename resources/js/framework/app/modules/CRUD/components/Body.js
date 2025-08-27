@@ -277,7 +277,10 @@ const Body = (props) => {
                                         typeList={fieldTypes}
                                         mode="edit"
                                         row={params?.row}
-                                        table={first(gridResponse)?.table || params?.row?.table}
+                                        table={
+                                            first(gridResponse)?.table ||
+                                            params?.row?.table
+                                        }
                                         positionList={editPagePositions}
                                         onClose={() => {
                                             setCellFocus(!cellFocus);
@@ -329,7 +332,8 @@ const Body = (props) => {
         return;
     };
 
-    const updateCell = (event, data) => {
+    const processPayload = (payload, event) => {
+        let data = payload;
         data.row[data.field] =
             typeof event.target.type !== typeof undefined &&
             event.target.type == "checkbox"
@@ -337,21 +341,31 @@ const Body = (props) => {
                 : event.target.value;
         data.value = data.row[data.field];
         data.formattedValue = data.row[data.field];
+        return data;
+    };
 
+    const updateText = (data, event) => {
+        setTimeout(() => {
+            data["event"] = event;
+            setFormdata(data);
+        }, 1000);
+        return;
+    };
+
+    const updateCell = (event, data) => {
         if (event.target.type == "text") {
-            return setTimeout(() => {
-                setFormdata(data.row);
-            }, 4000);
+            return updateText(data, event);
         }
 
         if (event.target.name == "type") {
             return updateSchema(data, event);
         }
 
-        return saveField(data, event);
+        return saveField(processPayload(data), event);
     };
 
-    const updateSchema = (data, event) => {
+    const updateSchema = (payload, event) => {
+        const data = processPayload(payload, event);
         const replaceType = event.target.value;
         const fieldType = fieldTypes.find((type) => type.value === replaceType);
         const dataType = fieldType ? fieldType.dataType : null;
@@ -374,6 +388,7 @@ const Body = (props) => {
     };
 
     const saveField = (data, event) => {
+        console.log("saveField", data);
         return api.post("/crud", data.row).then((response) => {
             if (
                 typeof event.target.type === typeof undefined ||
@@ -388,9 +403,13 @@ const Body = (props) => {
     };
 
     React.useEffect(() => {
-        if (Object.keys(formdata).length > 0) {
-            saveField(formdata);
-        }
+        const timeoutId = setTimeout(() => {
+            if (formdata && formdata.event) {
+                const data = processPayload(formdata, formdata.event);
+                saveField(data, formdata.event);
+            }
+        }, 2000);
+        return () => clearTimeout(timeoutId);
     }, [formdata]);
 
     return (
@@ -403,7 +422,7 @@ const Body = (props) => {
                     <ClassicButton
                         type="button"
                         onClick={() => {
-                            console.log("gridResponse",gridResponse);
+                            console.log("gridResponse", gridResponse);
                             modal.handleOpen(
                                 <AddEditField
                                     typeList={fieldTypes}
