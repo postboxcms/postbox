@@ -17,8 +17,6 @@ export const AddEditField = (props) => {
     const [field, setField] = React.useState("");
     const [options, setOptions] = React.useState([]);
     const [isOptionIsURL, setIsOptionIsURL] = React.useState(false);
-    const [source, setSource] = React.useState(false);
-    const [adornedText, setAdornedText] = React.useState("");
     const [isFormEnabled, setIsFormEnabled] = React.useState(false);
     const htmlSelectors = ["dropdown", "radio", "checkbox"];
 
@@ -56,11 +54,6 @@ export const AddEditField = (props) => {
                     }
                     data.append("dataType", list.dataType);
                 }
-
-                // if (key === "options[]" && value.trim() !== "") {
-                //     data.set("options[]", [`${adornedText}${value.trim()}`]);
-                //     data.append("url", Number(source));
-                // }
             }
 
             if (mode === "edit") {
@@ -167,11 +160,14 @@ export const AddEditField = (props) => {
         if (row && getParam("field")) {
             setIsFormEnabled(true);
         }
-        setOptions(
-            getParam("options", [])?.map((option, index) => ({
-                value: option.value || "",
-            }))
-        );
+        const newOptions = getParam("options", []);
+        if (newOptions?.length > 0) {
+            setOptions(
+                getParam("options", [])?.map((option, index) => ({
+                    value: option.value || "",
+                }))
+            );
+        }
     }, [row]);
 
     return (
@@ -215,6 +211,8 @@ export const AddEditField = (props) => {
                         label="Type"
                         options={typeList}
                         onChange={(e) => {
+                            console.log("type changed:", e.target.value);
+                            console.log("current options:", options);
                             if (
                                 htmlSelectors.includes(e.target.value) &&
                                 options?.length <= 0
@@ -223,7 +221,6 @@ export const AddEditField = (props) => {
                             }
                             if (!htmlSelectors.includes(e.target.value)) {
                                 setOptions([]);
-                                setAdornedText("");
                                 setIsOptionIsURL(false);
                             }
                         }}
@@ -256,7 +253,6 @@ export const AddEditField = (props) => {
                                             e.key === "Backspace" &&
                                             e.target.value.trim() === ""
                                         ) {
-                                            setAdornedText(null);
                                             setIsOptionIsURL(false);
                                         }
                                     }}
