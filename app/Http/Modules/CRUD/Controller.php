@@ -130,6 +130,7 @@ class Controller extends Framework
             $this->fields = $Entity->getTableColumns($this->table);
             $this->icon = $Entity->getTableIcon($this->table);
             $this->fields = collect($this->fields)->map(function ($field) {
+                $this->options = [];
                 $this->counter += 1;
                 $this->fieldId = $this->_getField($field, 'uuid', null);
                 if (in_array($this->_getField($field, 'type', 'text'), ["dropdown", "radio", "checkbox"])) {
@@ -187,8 +188,16 @@ class Controller extends Framework
     public function update(Request $request, $id)
     {
         // update the specified resource
-        $this->data = $this->formatData($request->all());
-        return response(['message' => 'Update method not implemented'], 501);
+        try {
+            $this->data = $this->formatData($request->all(), false);
+            CRUD::where('uuid', $id)->update($this->data);
+            if ($this->data['type'] === "text") {
+                $this->performDBOperations("options", "delete", ['fid' => $this->data['uuid']]);
+            }
+            return response(['message' => 'Update successful'], 200);
+        } catch (Exception $e) {
+            return response(['message' => 'Update failed', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**

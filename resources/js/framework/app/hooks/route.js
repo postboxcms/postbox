@@ -94,23 +94,11 @@ export const useCMSRoute = () => {
     };
 
     const patch = (url, data) => {
-        const notify = useNotifier();
-        try {
-            if (data instanceof FormData) {
-                data.append("_method", "PATCH"); // Ensure the method is set to PATCH
-            } else if (typeof data === "object" && data !== null) {
-                data = { ...data, _method: "PATCH" }; // Ensure the method is set to PATCH
-            }
-            return axios.post(cms.url + url, data, {
-                headers: {
-                    Authorization: "Bearer " + token,
-                },
-            });
-        } catch (e) {
-            // data is not an object
-            console.error("Patch request failed:", e);
-            notify("Invalid data format", "error");
-        }
+        return axios.patch(cms.url + url, data, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
     };
 
     return {

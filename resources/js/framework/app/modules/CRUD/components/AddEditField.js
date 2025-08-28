@@ -57,24 +57,43 @@ export const AddEditField = (props) => {
             }
 
             if (mode === "edit") {
-                data.append("eid", row.tid);
-                data.append("fid", row.uuid);
-                data.append("field", row.field);
-                data.append(
-                    "replaceType",
-                    typeList.find((item) => item.value === data.get("type"))
-                        .dataType || "string"
-                );
+                const editData = {
+                    uuid: row.uuid,
+                    field: row.field,
+                    alias: row.alias,
+                    list: data.get("view"),
+                    position: data.get("editPosition"),
+                    type: data.get("type"),
+                };
 
-                cms.patch(`/dbo/${table}`, data)
+                const replaceType =
+                    typeList.find((item) => item.value === row.type).dataType ||
+                    "string";
+
+                cms.patch(`/dbo/${table}`, {
+                    field: row.field,
+                    replaceType: replaceType,
+                })
                     .then((response) => {
                         // insert into CRUD table as well
                         console.log("crud payload:", response);
 
-                        api.patch(`/crud/${row.tid}`, data).then((response) => {
-                            notify(response.data.message);
-                            onClose();
-                        });
+                        api.patch(`/crud/${row.tid}`, editData)
+                            .then((response) => {
+                                notify(response.data.message);
+                                onClose();
+                            })
+                            .catch((error) => {
+                                console.error(
+                                    "Exception:",
+                                    error?.response?.data?.error
+                                );
+                                notify(
+                                    "Something went wrong! Please try again",
+                                    "error"
+                                );
+                                onClose();
+                            });
                     })
                     .catch((error) => {
                         console.error("Exception:", error);
@@ -150,6 +169,7 @@ export const AddEditField = (props) => {
             "defaultValue:",
             defaultValue
         );
+        console.log("row:", row);
 
         return row && Object.prototype.hasOwnProperty.call(row, param)
             ? row[param]

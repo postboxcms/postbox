@@ -388,7 +388,6 @@ const Body = (props) => {
     };
 
     const saveField = (data, event) => {
-        console.log("saveField", data);
         return api.post("/crud", data.row).then((response) => {
             if (
                 typeof event.target.type === typeof undefined ||
