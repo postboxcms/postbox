@@ -408,7 +408,7 @@ const Body = (props) => {
                 const data = processPayload(formdata, formdata.event);
                 saveField(data, formdata.event);
             }
-        }, 2000);
+        }, 1000);
         return () => clearTimeout(timeoutId);
     }, [formdata]);
 
