@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import ImageUploader from "@ui/components/ImageUploader";
 import { useCSS } from "@app/hooks";
-import { event } from "jquery";
 
 export default function FormInput(props) {
     const {
@@ -116,27 +117,31 @@ export default function FormInput(props) {
                 );
             case "dropdown":
                 return (
-                    <TextField
+                    <Select
                         name={name}
-                        select
-                        variant="outlined"
                         value={value}
+                        defaultValue=""
                         onChange={onChange}
-                        placeholder={placeholder}
+                        displayEmpty
                         fullWidth={fullWidth}
                         className={classes.formInput}
                         required={required}
-                        SelectProps={{
-                            native: false,
-                        }}
-                        {...inputProps}
+                        inputProps={inputProps}
                     >
-                        {(inputProps?.options || []).map((option) => (
-                            <option key={option.key} value={option.value}>
-                                {option.value}
-                            </option>
-                        ))}
-                    </TextField>
+                        <MenuItem key={0} value={""}>
+                            Select {name}
+                        </MenuItem>
+                        {inputProps && inputProps.options
+                            ? inputProps.options.map((option) => (
+                                  <MenuItem
+                                      key={option.value}
+                                      value={option.value}
+                                  >
+                                      {option.value}
+                                  </MenuItem>
+                              ))
+                            : null}
+                    </Select>
                 );
             case "image":
                 return (
