@@ -30,6 +30,11 @@ export default function FormInput(props) {
         return `Toggle the ${text}`;
     };
 
+    React.useEffect(() => {
+        // Log when the component is rendered
+        console.log(`FormInput of type "${type}" rendered with value:`, value);
+    }, [value]);
+
     const renderInput = () => {
         switch (type) {
             case "text":
@@ -120,15 +125,16 @@ export default function FormInput(props) {
                     <Select
                         name={name}
                         value={value}
-                        defaultValue=""
+                        defaultValue={value}
                         onChange={onChange}
                         displayEmpty
                         fullWidth={fullWidth}
                         className={classes.formInput}
                         required={required}
                         inputProps={inputProps}
+                        {...props}
                     >
-                        <MenuItem key={0} value={""}>
+                        <MenuItem key={0} value={undefined}>
                             Select {name}
                         </MenuItem>
                         {inputProps && inputProps.options
