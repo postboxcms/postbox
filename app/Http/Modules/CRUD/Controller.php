@@ -31,6 +31,7 @@ class Controller extends Framework
     protected $validator;
     protected $fieldId;
     protected $entityId;
+    protected $multiSelectOptions = ["dropdown", "radio", "checkbox"];
 
 
     private function _getField($name, $column, $default)
@@ -133,7 +134,7 @@ class Controller extends Framework
                 $this->options = [];
                 $this->counter += 1;
                 $this->fieldId = $this->_getField($field, 'uuid', null);
-                if (in_array($this->_getField($field, 'type', 'text'), ["dropdown", "radio", "checkbox"])) {
+                if (in_array($this->_getField($field, 'type', 'text'), $this->multiSelectOptions)) {
                     $this->options = DB::table('options')->where('fid', $this->fieldId)->where('eid', $this->entityId)->get();
                 }
                 return [
@@ -190,9 +191,30 @@ class Controller extends Framework
         // update the specified resource
         try {
             $this->data = $this->formatData($request->all(), false);
-            CRUD::where('uuid', $id)->update($this->data);
-            if ($this->data['type'] === "text") {
+            $this->options = $this->data['options'] ?? [];
+            $this->table = $this->data['table'];
+
+            unset($this->data['options']);
+            unset($this->data['table']);
+
+            $this->performDBOperations("crud", 'update', $this->data);
+
+            if (!in_array($this->data['type'], $this->multiSelectOptions)) {
                 $this->performDBOperations("options", "delete", ['fid' => $this->data['uuid']]);
+            } else {
+                if (isset($this->options) && is_array($this->options) && !empty($this->options)) {
+                    $this->performDBOperations("options", "delete", ['fid' => $this->data['uuid']]);
+                    foreach ($this->options as $option) {
+                        $value = is_string($option) ? $option : $option['value'];
+                        $this->performDBOperations("options", "insert", [
+                            'fid' => $this->data['uuid'],
+                            'eid' => Entity::where('slug', $this->table)->first('uuid')->uuid,
+                            'key' => $this->hashKey($value),
+                            'value' => $value,
+                            'url' => isset($this->data['url']) ? $this->data['url'] : false
+                        ], false);
+                    }
+                }
             }
             return response(['message' => 'Update successful'], 200);
         } catch (Exception $e) {

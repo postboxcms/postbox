@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { forEach } from "lodash";
+import { forEach, get } from "lodash";
 import { Grid } from "@mui/material";
 import { useNotifier, useCMSRoute, useSecureRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
@@ -61,8 +61,10 @@ export const AddEditField = (props) => {
                     uuid: row.uuid,
                     field: row.field,
                     alias: row.alias,
-                    list: data.get("view"),
-                    position: data.get("editPosition"),
+                    list: data.get("view", 1),
+                    position: data.get("editPosition", "none"),
+                    options: data.getAll("options[]"),
+                    table: table,
                     type: data.get("type"),
                 };
 
@@ -80,6 +82,13 @@ export const AddEditField = (props) => {
 
                         api.patch(`/crud/${row.tid}`, editData)
                             .then((response) => {
+                                row.type = editData.type;
+                                row.alias = editData.alias;
+                                row.list = editData.list;
+                                row.position = editData.position;
+                                row.options = editData.options.map((option) => ({
+                                    value: option,
+                                }));
                                 notify(response.data.message);
                                 onClose();
                             })
@@ -163,14 +172,6 @@ export const AddEditField = (props) => {
     };
 
     const getParam = (param, defaultValue = "") => {
-        console.log(
-            "getParam called with:",
-            param,
-            "defaultValue:",
-            defaultValue
-        );
-        console.log("row:", row);
-
         return row && Object.prototype.hasOwnProperty.call(row, param)
             ? row[param]
             : defaultValue;
@@ -188,6 +189,7 @@ export const AddEditField = (props) => {
                 }))
             );
         }
+        console.log("options:", newOptions, row);
     }, [row]);
 
     return (
