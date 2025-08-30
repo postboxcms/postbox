@@ -32,7 +32,8 @@ export default function FormInput(props) {
 
     React.useEffect(() => {
         // Log when the component is rendered
-        console.log(`FormInput of type "${type}" rendered with value:`, value);
+        console.log(`FormInput of type "${type}", "${name}" rendered with value:`, value);
+        renderInput();
     }, [value]);
 
     const renderInput = () => {
@@ -125,16 +126,14 @@ export default function FormInput(props) {
                     <Select
                         name={name}
                         value={value}
-                        defaultValue={value}
                         onChange={onChange}
-                        displayEmpty
                         fullWidth={fullWidth}
                         className={classes.formInput}
                         required={required}
                         inputProps={inputProps}
-                        {...props}
+                        key={value} // Force re-mount when value changes
                     >
-                        <MenuItem key={0} value={undefined}>
+                        <MenuItem key={0} value={""}>
                             Select {name}
                         </MenuItem>
                         {inputProps && inputProps.options
@@ -143,7 +142,7 @@ export default function FormInput(props) {
                                       key={option.value}
                                       value={option.value}
                                   >
-                                      {option.value}
+                                      {option.label || option.value}
                                   </MenuItem>
                               ))
                             : null}
@@ -178,7 +177,7 @@ export default function FormInput(props) {
 }
 
 FormInput.propTypes = {
-    type: PropTypes.oneOf(["text", "number", "date"]).isRequired,
+    type: PropTypes.oneOf(["text", "number", "date", "dropdown"]).isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,

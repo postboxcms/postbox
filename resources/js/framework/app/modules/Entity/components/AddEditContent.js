@@ -87,7 +87,7 @@ export const AddEditContent = ({ query, type }) => {
         (field) => {
             // Get the value of a field from entityData or return an empty string if not found
             if (entityData) {
-                return entityData[field]?.value || "";
+                return entityData[field]?.value;
             }
             return;
         },
@@ -162,12 +162,12 @@ export const AddEditContent = ({ query, type }) => {
                         name={field.field}
                         placeholder={generatePlaceholder(field)}
                         value={generateFieldValue(field.field)}
+                        defaultValue={generateFieldValue(field.field)}
                         onChange={updateEntityData}
                         variant="outlined"
                         fullWidth
                         inputProps={field}
-                    >                        
-                    </FormInput>
+                    ></FormInput>
                 );
             case "editor":
                 return (
