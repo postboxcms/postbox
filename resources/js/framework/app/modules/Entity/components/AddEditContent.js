@@ -87,6 +87,10 @@ export const AddEditContent = ({ query, type }) => {
         (field) => {
             // Get the value of a field from entityData or return an empty string if not found
             if (entityData) {
+                console.log(
+                    "Generating field value for:",
+                    entityData[field]?.value
+                );
                 return entityData[field]?.value;
             }
             return;
@@ -220,7 +224,7 @@ export const AddEditContent = ({ query, type }) => {
                             updateEntityData({
                                 target: {
                                     name: field.field,
-                                    value: isChecked ? "1" : "0", // Convert checkbox value to '1' or '0'
+                                    value: isChecked ? 1 : 0, // Convert checkbox value to '1' or '0'
                                 },
                             });
                         }}

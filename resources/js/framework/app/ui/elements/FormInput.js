@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import IOSSwitch from "@ui/elements/IOSSwitch";
@@ -29,12 +30,6 @@ export default function FormInput(props) {
     const generateHelperText = (text) => {
         return `Toggle the ${text}`;
     };
-
-    React.useEffect(() => {
-        // Log when the component is rendered
-        console.log(`FormInput of type "${type}", "${name}" rendered with value:`, value);
-        renderInput();
-    }, [value]);
 
     const renderInput = () => {
         switch (type) {
@@ -147,6 +142,18 @@ export default function FormInput(props) {
                               ))
                             : null}
                     </Select>
+                );
+            case "checkbox":
+                return (
+                    <Checkbox
+                        name={name}
+                        checked={Boolean(value)}
+                        onChange={onChange}
+                        color="primary"
+                        required={required}
+                        inputProps={inputProps}
+                        className={classes.formOptions}
+                    />
                 );
             case "image":
                 return (

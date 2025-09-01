@@ -180,6 +180,10 @@ export const useCSS = makeStyles((theme) => ({
             border: "none",
         },
     },
+    formOptions: {
+        marginBottom: theme.spacing(2),
+        width: "fit-content",
+    },
     radioSwitch: {
         margin: theme.spacing(1, 0, 1, 2),
     },
