@@ -3,6 +3,8 @@
 namespace App\Http\Modules\Entity;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Modules\CRUD\Model as CRUD;
 
 class Resource extends JsonResource
@@ -44,7 +46,7 @@ class Resource extends JsonResource
             $this->collection['records'] = $this->model::count();
 
             if (isset($request->entity)) {
-                if(isset($request->eid)) {
+                if (isset($request->eid)) {
                     $this->collection['data'] = $this->model::where('uuid', $request->eid)->get();
                 } else {
                     $this->collection['data'] = $this->model::all();
@@ -62,6 +64,12 @@ class Resource extends JsonResource
                         }
                         if ($data[$field]['type'] == 'timestamp') {
                             $data[$field]['value'] = $data[$field]['value'] !== null ? (new \Carbon\Carbon($data[$field]['value']))->diffForHumans() : null;
+                        }
+                        if (in_array($data[$field]['type'], ['dropdown', 'checkbox', 'radio'])) {
+                            $uuid = CRUD::where('field', $field)
+                                ->where('table', $this->collection['slug'])
+                                ->first()->uuid;
+                            $data[$field]['options'] = DB::table('options')->where('fid', $uuid)->where('eid', $this->collection['uuid'])->get();
                         }
                     }
                     return $data;

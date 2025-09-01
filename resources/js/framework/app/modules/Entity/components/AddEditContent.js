@@ -213,49 +213,49 @@ export const AddEditContent = ({ query, type }) => {
                     />
                 );
             case "checkbox":
-                return (
+                return field.options.map((option, idx) => (
                     <FormInput
                         type="checkbox"
                         variant="outlined"
-                        name={field.field}
-                        value={generateFieldValue(field.field)}
+                        name={option.value}
+                        value={option.value}
                         onChange={(event) => {
                             const isChecked = event.target.checked;
                             updateEntityData({
                                 target: {
-                                    name: field.field,
+                                    name: option.value,
                                     value: isChecked ? 1 : 0, // Convert checkbox value to '1' or '0'
                                 },
                             });
                         }}
                         fullWidth
                         InputProps={{
-                            inputProps: { "aria-label": field.label },
+                            inputProps: { "aria-label": option.value },
                         }}
                     />
-                );
+                ));
             case "radio":
-                return (
+                return field.options.map((option, idx) => (
                     <FormInput
                         type="radio"
                         variant="outlined"
-                        name={field.field}
-                        value={generateFieldValue(field.field)}
+                        name={option.value}
+                        value={option.value}
                         onChange={(event) => {
                             const isChecked = event.target.checked;
                             updateEntityData({
                                 target: {
-                                    name: field.field,
-                                    value: isChecked ? "1" : "0", // Convert checkbox value to '1' or '0'
+                                    name: option.value,
+                                    value: isChecked ? 1 : 0, // Convert checkbox value to '1' or '0'
                                 },
                             });
                         }}
                         fullWidth
                         InputProps={{
-                            inputProps: { "aria-label": field.label },
+                            inputProps: { "aria-label": option.value },
                         }}
                     />
-                );
+                ));
             case "switch":
                 return (
                     <FormInput

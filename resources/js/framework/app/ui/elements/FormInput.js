@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import {
+    Checkbox,
+    Radio,
+    Select,
+    TextField,
+    MenuItem,
+} from "@mui/material";
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import ImageUploader from "@ui/components/ImageUploader";
 import { useCSS } from "@app/hooks";
@@ -103,18 +106,18 @@ export default function FormInput(props) {
                 );
             case "radio":
                 return (
-                    <TextField
-                        name={name}
-                        type="radio"
-                        variant="outlined"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        fullWidth={fullWidth}
-                        className={classes.formInput}
-                        required={required}
-                        inputProps={inputProps}
-                    />
+                    <div className={classes.formOptions}>
+                        <Radio
+                            name={name}
+                            type="radio"
+                            checked={Boolean(value)}
+                            onChange={onChange}
+                            color="primary"
+                            required={required}
+                            inputProps={inputProps}
+                        />
+                        <span className="label">{name}</span>
+                    </div>
                 );
             case "dropdown":
                 return (
@@ -145,15 +148,17 @@ export default function FormInput(props) {
                 );
             case "checkbox":
                 return (
-                    <Checkbox
-                        name={name}
-                        checked={Boolean(value)}
-                        onChange={onChange}
-                        color="primary"
-                        required={required}
-                        inputProps={inputProps}
-                        className={classes.formOptions}
-                    />
+                    <div className={classes.formOptions}>
+                        <Checkbox
+                            name={name}
+                            checked={Boolean(value)}
+                            onChange={onChange}
+                            color="primary"
+                            required={required}
+                            inputProps={inputProps}
+                        />{" "}
+                        <span className="label">{name}</span>
+                    </div>
                 );
             case "image":
                 return (

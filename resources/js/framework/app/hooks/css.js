@@ -43,10 +43,10 @@ export const useCSS = makeStyles((theme) => ({
     },
     cardIcons: {
         fontSize: "2.5rem",
-        color: lighten(theme.palette.primary.main, 85)
+        color: lighten(theme.palette.primary.main, 85),
     },
     noRowsOverlay: {
-        color: lighten(theme.palette.primary.main, 70)
+        color: lighten(theme.palette.primary.main, 70),
     },
     body: {
         paddingTop: theme.spacing(4),
@@ -83,7 +83,7 @@ export const useCSS = makeStyles((theme) => ({
         flexDirection: "row",
         "& button": {
             alignSelf: "right",
-        }
+        },
     },
     heading: {
         marginBottom: "8px",
@@ -151,17 +151,17 @@ export const useCSS = makeStyles((theme) => ({
         display: "flex",
         gap: theme.spacing(2),
         marginTop: theme.spacing(1),
-        '& .MuiCardContent-root': {
+        "& .MuiCardContent-root": {
             padding: 0,
-            '& h2': {
+            "& h2": {
                 padding: theme.spacing(1, 2),
                 margin: 0,
                 borderBottom: `1px solid ${theme.palette.divider}`,
             },
-        }
+        },
     },
     leftPanel: {
-        flex:7,
+        flex: 7,
     },
     rightPanel: {
         flex: 3,
@@ -171,7 +171,7 @@ export const useCSS = makeStyles((theme) => ({
         fontSize: theme.spacing(1.6),
     },
     footerLink: {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
     },
     formInput: {
         width: "100%",
@@ -181,17 +181,23 @@ export const useCSS = makeStyles((theme) => ({
         },
     },
     formOptions: {
-        marginBottom: theme.spacing(2),
-        width: "fit-content",
+        display: "flex",
+        "& .label": {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        "& .MuiCheckbox-root": {
+            width: "fit-content",
+        },
     },
     radioSwitch: {
         margin: theme.spacing(1, 0, 1, 2),
     },
     addEditWrapper: {
-        '& section': {
+        "& section": {
             border: "none",
             textAlign: "center",
-            padding: "2rem"
-        }
-    }
+            padding: "2rem",
+        },
+    },
 }));
