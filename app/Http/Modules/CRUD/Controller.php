@@ -4,7 +4,6 @@ namespace App\Http\Modules\CRUD;
 
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Modules\Framework;
@@ -90,6 +89,13 @@ class Controller extends Framework
             if (isset($this->data['options']) && is_array($this->data['options'])) {
                 foreach ($this->data['options'] as $option) {
                     $value = is_string($option) ? $option : $option['value'];
+                    $doesOptionExist = $this->optionsTable()
+                        ->where('fid', $this->options['fid'])
+                        ->where('value', $value)
+                        ->first();
+                    if ($doesOptionExist) {
+                        continue;
+                    }
                     $this->performDBOperations("options", "insert", [
                         'fid' => $this->options['fid'],
                         'eid' => $this->options['eid'],
@@ -135,7 +141,7 @@ class Controller extends Framework
                 $this->counter += 1;
                 $this->fieldId = $this->_getField($field, 'uuid', null);
                 if (in_array($this->_getField($field, 'type', 'text'), $this->multiSelectOptions)) {
-                    $this->options = DB::table('options')->where('fid', $this->fieldId)->where('eid', $this->entityId)->get();
+                    $this->options = $this->optionsTable()->where('fid', $this->fieldId)->where('eid', $this->entityId)->get();
                 }
                 return [
                     'id' => $this->counter,
@@ -237,7 +243,7 @@ class Controller extends Framework
             $record = CRUD::where('table', $this->table)->where('field', $this->data['column'])->first();
             $record->delete();
             if ($this->data['type'] === 'dropdown' || $this->data['type'] === 'radio' || $this->data['type'] === 'checkbox') {
-                DB::table('options')->where('fid', $record->uuid)->delete();
+                $this->optionsTable()->where('fid', $record->uuid)->delete();
             }
             return response(['message' => trans('crud.delete')], 200);
         } catch (Exception $e) {

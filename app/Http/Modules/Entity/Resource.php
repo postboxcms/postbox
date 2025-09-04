@@ -56,7 +56,7 @@ class Resource extends JsonResource
                     foreach ($data as $field => $parameter) {
                         $data[$field] = [
                             'type' => CRUD::where('table', $this->collection['slug'])
-                                ->where('field', $field)->value('type'),
+                                    ->where('field', $field)->value('type') ?? 'text',
                             'value' => $data[$field]
                         ];
                         if ($data[$field]['type'] == 'user') {
@@ -64,12 +64,6 @@ class Resource extends JsonResource
                         }
                         if ($data[$field]['type'] == 'timestamp') {
                             $data[$field]['value'] = $data[$field]['value'] !== null ? (new \Carbon\Carbon($data[$field]['value']))->diffForHumans() : null;
-                        }
-                        if (in_array($data[$field]['type'], ['dropdown', 'checkbox', 'radio'])) {
-                            $uuid = CRUD::where('field', $field)
-                                ->where('table', $this->collection['slug'])
-                                ->first()->uuid;
-                            $data[$field]['options'] = DB::table('options')->where('fid', $uuid)->where('eid', $this->collection['uuid'])->get();
                         }
                     }
                     return $data;

@@ -1,12 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-    Checkbox,
-    Radio,
-    Select,
-    TextField,
-    MenuItem,
-} from "@mui/material";
+import { Checkbox, Radio, Select, TextField, MenuItem } from "@mui/material";
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import ImageUploader from "@ui/components/ImageUploader";
 import { useCSS } from "@app/hooks";
@@ -16,11 +10,13 @@ export default function FormInput(props) {
         type,
         required,
         value,
+        checked,
         onChange,
         placeholder,
         inputProps,
         rows = 4,
         name,
+        label = "",
         fullWidth = true,
     } = props;
     const classes = useCSS();
@@ -116,7 +112,7 @@ export default function FormInput(props) {
                             required={required}
                             inputProps={inputProps}
                         />
-                        <span className="label">{name}</span>
+                        <span className="label">{label}</span>
                     </div>
                 );
             case "dropdown":
@@ -151,13 +147,13 @@ export default function FormInput(props) {
                     <div className={classes.formOptions}>
                         <Checkbox
                             name={name}
-                            checked={Boolean(value)}
+                            checked={checked}
                             onChange={onChange}
                             color="primary"
                             required={required}
                             inputProps={inputProps}
                         />{" "}
-                        <span className="label">{name}</span>
+                        <span className="label">{label}</span>
                     </div>
                 );
             case "image":

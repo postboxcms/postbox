@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { first } from "lodash";
+import { first, isEmpty } from "lodash";
 
 import {
     useCSS,
@@ -87,10 +87,6 @@ export const AddEditContent = ({ query, type }) => {
         (field) => {
             // Get the value of a field from entityData or return an empty string if not found
             if (entityData) {
-                console.log(
-                    "Generating field value for:",
-                    entityData[field]?.value
-                );
                 return entityData[field]?.value;
             }
             return;
@@ -100,14 +96,18 @@ export const AddEditContent = ({ query, type }) => {
 
     const updateEntityData = (event) => {
         // Update the entityData state with the new value from the input field
-        const { name, value } = event.target;
+        const { name, value, option } = event.target;
+
         if (!entityData || !entityData[name]) {
             setEntityData((prevData) => ({
                 ...prevData,
-                [name]: { value: value },
+                [name]: option
+                    ? { name: option, value: value }
+                    : { value: value },
             }));
             return;
         }
+
         setEntityData((prevData) => ({
             ...prevData,
             [name]: {
@@ -115,6 +115,7 @@ export const AddEditContent = ({ query, type }) => {
                 value: value,
             },
         }));
+        return;
     };
 
     const renderField = (field) => {
@@ -217,20 +218,32 @@ export const AddEditContent = ({ query, type }) => {
                     <FormInput
                         type="checkbox"
                         variant="outlined"
-                        name={option.value}
-                        value={option.value}
+                        checked={
+                            entityData &&
+                            entityData[field.field] &&
+                            entityData[field.field].value &&
+                            entityData[field.field].value
+                                .toString()
+                                .includes(option.value)
+                                ? true
+                                : false
+                        }
+                        name={`${field.field}[]`}
+                        label={option.value}
+                        value={generateFieldValue(field.field)}
                         onChange={(event) => {
                             const isChecked = event.target.checked;
                             updateEntityData({
                                 target: {
-                                    name: option.value,
+                                    name: field.field,
+                                    option: option.value,
                                     value: isChecked ? 1 : 0, // Convert checkbox value to '1' or '0'
                                 },
                             });
                         }}
                         fullWidth
-                        InputProps={{
-                            inputProps: { "aria-label": option.value },
+                        inputProps={{
+                            "aria-label": option.value,
                         }}
                     />
                 ));
@@ -239,7 +252,8 @@ export const AddEditContent = ({ query, type }) => {
                     <FormInput
                         type="radio"
                         variant="outlined"
-                        name={option.value}
+                        name={field.field}
+                        label={option.value}
                         value={option.value}
                         onChange={(event) => {
                             const isChecked = event.target.checked;
@@ -412,10 +426,13 @@ export const AddEditContent = ({ query, type }) => {
         // You can also process the form data here if needed
         // Process form data here, e.g., send it to the server
         for (let [key, value] of formData.entries()) {
-            console.log(`Processing field: ${key}, value: ${value}`);
-            const leftField = leftCards.find((f) => f.field === key);
-            const rightField = rightCards.find((f) => f.field === key);
+            const leftField = leftCards.find((f) => f.field === key || f.field + "[]" === key);
+            const rightField = rightCards.find((f) => f.field === key || f.field + "[]" === key);
             const field = leftField || rightField;
+
+            console.log(
+                `Processing field: ${key}, value: ${value}, type: ${field?.type}`
+            );
 
             if (field && field.mandatory && !(value || "").toString().trim()) {
                 setError(true);
@@ -435,11 +452,18 @@ export const AddEditContent = ({ query, type }) => {
                 }
             }
 
-            if (
-                field &&
-                (field.type === "checkbox" || field.type === "switch")
-            ) {
+            if (field && field.type === "switch") {
                 formData.set(key, value ? "1" : "0"); // Convert checkbox value to 1 or 0
+            }
+
+            if (field && field.type === "checkbox") {
+                const checkboxInputs = e.target.querySelectorAll(
+                    `input[name="${key}"]:checked`
+                );
+                const checkboxValues = Array.from(checkboxInputs).map(
+                    (input) => input.getAttribute("aria-label")
+                ).join("|"); // Get values of all checked checkboxes
+                formData.set(key, checkboxValues); // Join multiple values with a comma
             }
 
             if (field && field.type === "radio") {
@@ -477,8 +501,14 @@ export const AddEditContent = ({ query, type }) => {
         for (const [key, value] of Object.entries(
             leftCards.concat(rightCards)
         )) {
-            if (!formData.get(value.field)) {
-                formData.append(value.field, processBlankEntries(value));
+            if (isEmpty(formData.get(value.field))) {
+                if (value.type !== "checkbox") {
+                    formData.set(value.field, processBlankEntries(value));
+                }
+                if (value.type === "checkbox") {
+                    formData.set(value.field, formData.getAll(value.field + "[]"));
+                    formData.delete(value.field + "[]");
+                }
             }
         }
 

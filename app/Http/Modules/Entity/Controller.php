@@ -58,22 +58,6 @@ class Controller extends Framework
                 }
             }
             return response(['error' => trans('entity.validationerror')], 400);
-
-            // $this->validator = Validator::make($this->data, [
-            //     'name' => 'required|max:50',
-            //     'description' => 'max:191',
-            //     'icon' => 'required'
-            // ]);
-
-            // if ($this->validator->fails()) {
-            //     return response(['message' => $this->validator->errors(), trans('entity.validationerror')]);
-            // }
-
-            // $this->entity = Entity::create($this->data);
-            // return response([
-            //     'entity' => new EntityResource($this->entity),
-            //     'message' => trans('entity.success')
-            // ], 200);
         } catch (\Exception $e) {
             throw new \Exception(trans('entity.exception', ['message' => $e->getMessage()]));
         }

@@ -93,4 +93,8 @@ class Framework extends BaseController
         $hash = hash('sha256', $data);
         return substr($hash, 0, 16); // Return first 16 characters of the hash
     }
+
+    protected function optionsTable() {
+        return DB::table('options');
+    }
 }
