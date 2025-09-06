@@ -97,22 +97,39 @@ export const AddEditContent = ({ query, type }) => {
     const updateEntityData = (event) => {
         // Update the entityData state with the new value from the input field
         const { name, value, option } = event.target;
+        let dynamicValue = value;
 
         if (!entityData || !entityData[name]) {
+            if (option) {
+                const currentValue = entityData[name]?.value || "";
+                const valuesArray = currentValue
+                    ? currentValue.toString().split("|")
+                    : [];
+                valuesArray.push(option);
+                dynamicValue = valuesArray.join("|");
+            }
             setEntityData((prevData) => ({
                 ...prevData,
-                [name]: option
-                    ? { name: option, value: value }
-                    : { value: value },
+                [name]: { value: dynamicValue },
             }));
             return;
+        }
+
+        if (option) {
+            const currentValue = entityData[name]?.value || "";
+            const valuesArray = currentValue
+                ? currentValue.toString().split("|")
+                : [];
+            dynamicValue = valuesArray.includes(option)
+                ? valuesArray.filter((val) => val !== option).join("|")
+                : [...valuesArray, option].join("|");
         }
 
         setEntityData((prevData) => ({
             ...prevData,
             [name]: {
                 ...prevData[name],
-                value: value,
+                value: dynamicValue,
             },
         }));
         return;
@@ -221,13 +238,14 @@ export const AddEditContent = ({ query, type }) => {
                         checked={
                             entityData &&
                             entityData[field.field] &&
-                            entityData[field.field].value &&
-                            entityData[field.field].value
-                                .toString()
-                                .includes(option.value)
-                                ? true
+                            entityData[field.field]?.value
+                                ? entityData[field.field].value
+                                      .toString()
+                                      .split("|")
+                                      .includes(option.value)
                                 : false
                         }
+                        key={idx}
                         name={`${field.field}[]`}
                         label={option.value}
                         value={generateFieldValue(field.field)}
@@ -426,8 +444,12 @@ export const AddEditContent = ({ query, type }) => {
         // You can also process the form data here if needed
         // Process form data here, e.g., send it to the server
         for (let [key, value] of formData.entries()) {
-            const leftField = leftCards.find((f) => f.field === key || f.field + "[]" === key);
-            const rightField = rightCards.find((f) => f.field === key || f.field + "[]" === key);
+            const leftField = leftCards.find(
+                (f) => f.field === key || f.field + "[]" === key
+            );
+            const rightField = rightCards.find(
+                (f) => f.field === key || f.field + "[]" === key
+            );
             const field = leftField || rightField;
 
             console.log(
@@ -460,9 +482,9 @@ export const AddEditContent = ({ query, type }) => {
                 const checkboxInputs = e.target.querySelectorAll(
                     `input[name="${key}"]:checked`
                 );
-                const checkboxValues = Array.from(checkboxInputs).map(
-                    (input) => input.getAttribute("aria-label")
-                ).join("|"); // Get values of all checked checkboxes
+                const checkboxValues = Array.from(checkboxInputs)
+                    .map((input) => input.getAttribute("aria-label"))
+                    .join("|"); // Get values of all checked checkboxes
                 formData.set(key, checkboxValues); // Join multiple values with a comma
             }
 
@@ -506,7 +528,10 @@ export const AddEditContent = ({ query, type }) => {
                     formData.set(value.field, processBlankEntries(value));
                 }
                 if (value.type === "checkbox") {
-                    formData.set(value.field, formData.getAll(value.field + "[]"));
+                    formData.set(
+                        value.field,
+                        formData.getAll(value.field + "[]")
+                    );
                     formData.delete(value.field + "[]");
                 }
             }
