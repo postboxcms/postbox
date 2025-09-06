@@ -10,7 +10,13 @@ const NavLink = ({ children, to, hidden, submenu, title }) => {
     const isNavOpen = useSelector(getNavOpen);
     const location = useLocation();
     const classes = useCSS();
-    const isActive = location.pathname === to;
+    const routePrefix = (path) => {
+        const parts = path.split("/").filter(Boolean);
+        return "/" + parts.slice(0, 2).join("/");
+    };
+    const currentRoute = routePrefix(location.pathname);
+    const targetRoute = routePrefix(to);
+    const isActive = currentRoute === targetRoute;
     const activeClass = isActive ? "active" : "";
     const submenuClass = submenu ? "submenu" : "";
 

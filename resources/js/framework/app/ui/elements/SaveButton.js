@@ -1,11 +1,11 @@
 import React from "react";
-import PrimaryButton from "./PrimaryButton";
+import ClassicButton from "./ClassicButton";
 
 export const SaveButton = (props) => {
     return (
-        <PrimaryButton 
+        <ClassicButton 
             icon="fa-bookmark" 
-            type="submit" { ...props}>Save</PrimaryButton>
+            type="submit" { ...props}>Save</ClassicButton>
     );
 }
 

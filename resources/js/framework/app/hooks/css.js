@@ -8,7 +8,7 @@ export const useCSS = makeStyles((theme) => ({
             "0px 1px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
     },
     grid: {
-        height: 450,
+        height: "calc(100vh - 175px)",
         width: "100%",
         backgroundColor: "#fff",
     },
@@ -30,7 +30,7 @@ export const useCSS = makeStyles((theme) => ({
             width: "100%",
             padding: "5px 10px",
             marginBottom: "10px",
-            borderBottom: "1px solid #ccc",
+            // borderBottom: "1px solid #ccc",
             clear: "both",
         },
 
@@ -43,10 +43,10 @@ export const useCSS = makeStyles((theme) => ({
     },
     cardIcons: {
         fontSize: "2.5rem",
-        color: lighten(theme.palette.primary.main, 85)
+        color: lighten(theme.palette.primary.main, 85),
     },
     noRowsOverlay: {
-        color: lighten(theme.palette.primary.main, 70)
+        color: lighten(theme.palette.primary.main, 70),
     },
     body: {
         paddingTop: theme.spacing(4),
@@ -83,7 +83,7 @@ export const useCSS = makeStyles((theme) => ({
         flexDirection: "row",
         "& button": {
             alignSelf: "right",
-        }
+        },
     },
     heading: {
         marginBottom: "8px",
@@ -151,17 +151,17 @@ export const useCSS = makeStyles((theme) => ({
         display: "flex",
         gap: theme.spacing(2),
         marginTop: theme.spacing(1),
-        '& .MuiCardContent-root': {
+        "& .MuiCardContent-root": {
             padding: 0,
-            '& h2': {
+            "& h2": {
                 padding: theme.spacing(1, 2),
                 margin: 0,
                 borderBottom: `1px solid ${theme.palette.divider}`,
             },
-        }
+        },
     },
     leftPanel: {
-        flex:7,
+        flex: 7,
     },
     rightPanel: {
         flex: 3,
@@ -171,7 +171,7 @@ export const useCSS = makeStyles((theme) => ({
         fontSize: theme.spacing(1.6),
     },
     footerLink: {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
     },
     formInput: {
         width: "100%",
@@ -180,7 +180,24 @@ export const useCSS = makeStyles((theme) => ({
             border: "none",
         },
     },
+    formOptions: {
+        display: "flex",
+        "& .label": {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        "& .MuiCheckbox-root": {
+            width: "fit-content",
+        },
+    },
     radioSwitch: {
         margin: theme.spacing(1, 0, 1, 2),
+    },
+    addEditWrapper: {
+        "& section": {
+            border: "none",
+            textAlign: "center",
+            padding: "2rem",
+        },
     },
 }));

@@ -2,13 +2,25 @@ import React from "react";
 import { MenuItem, Select, TextField } from "@mui/material";
 
 export const Input = (props) => {
-    switch (props.type) {
+    const { type, options, inputProps } = props;
+    switch (type) {
         case "text":
             return <TextField size="small" variant="outlined" {...props} />;
+        case "adornedText":
+            return (
+                <TextField
+                    size="small"
+                    variant="outlined"
+                    InputProps={{
+                        startAdornment: inputProps?.startAdornment
+                    }}
+                    {...props}
+                />
+            );
         case "dropdown":
             return (
                 <TextField select variant="outlined" size="small" {...props}>
-                    {props.options.map((option) => (
+                    {options.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
                             {option.label}
                         </MenuItem>

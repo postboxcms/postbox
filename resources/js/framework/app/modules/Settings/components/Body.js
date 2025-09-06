@@ -1,10 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    Grid,
-    TextField,
-    Typography,
-} from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 
 import { useCSS, useSecureRoute, useNotifier } from "@app/hooks";
 import {
@@ -30,7 +26,7 @@ const Body = (props) => {
     const [title, setTitle] = React.useState("");
     const [name, setName] = React.useState("");
     const [isProductionReady, setIsProductionReady] = React.useState(false);
-    const [image, setImage] = React.useState([]);
+    const [image, setImage] = React.useState(null);
 
     const websiteLogo = useSelector(getWebsiteLogo);
     const websiteName = useSelector(getWebsiteName);
@@ -67,21 +63,23 @@ const Body = (props) => {
                 type: "file",
             },
         ];
+
         settings.forEach((item) => {
-            if (item.type === "file" && item.value.length > 0) {
-                data.append(item.property, item.value, item.value.name);
-            } else {
+            if (item.value) {
                 data.append(item.property, item.value);
             }
         });
         // Handle form submission
         api.post("/settings", data)
             .then((response) => {
+                const responseLogo = response?.data?.data?.file;
                 dispatch(setWebsiteName(name));
                 dispatch(setWebsiteTitle(title));
                 dispatch(setWebsiteStatus(isProductionReady));
                 dispatch(setWebsiteStatus(isProductionReady));
-                dispatch(setWebsiteLogo(response?.data?.file));
+                if (responseLogo) {
+                    dispatch(setWebsiteLogo(responseLogo));
+                }
                 notify(response.data.message);
             })
             .catch((error) => notify(error, "error"));
@@ -184,7 +182,7 @@ const Body = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <ImageUploader
-                                placeholder={websiteLogo}
+                                placeholder={"/uploads/settings/" + websiteLogo}
                                 uploadImage={(file) => setImage(file)}
                             />
                         </Grid>

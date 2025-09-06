@@ -9,11 +9,11 @@ import { useNotifier, useSecureRoute, useCMSRoute } from "@app/hooks";
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
 import Input from "@ui/elements/Input";
-import PrimaryButton from "@ui/elements/PrimaryButton";
+import ClassicButton from "@ui/elements/ClassicButton";
 import Dialog from "@ui/components/Dialog";
 import DataTable from "@ui/components/DataTable";
 import IconButton from "@ui/elements/IconButton";
-import AddField from "./AddField";
+import AddEditField from "./AddEditField";
 import DeleteField from "./DeleteField";
 
 const Body = (props) => {
@@ -35,8 +35,10 @@ const Body = (props) => {
         { value: "text", label: "Text", dataType: "string" },
         { value: "email", label: "Email", dataType: "string" },
         { value: "password", label: "Password", dataType: "string" },
-        { value: "dropdown", label: "Dropdown", dataType: "boolean" },
-        { value: "radio", label: "Radio", dataType: "boolean" },
+        { value: "dropdown", label: "Dropdown", dataType: "string" },
+        { value: "radio", label: "Radio", dataType: "string" },
+        { value: "checkbox", label: "Checkbox", dataType: "string" },
+        { value: "switch", label: "Switch", dataType: "boolean" },
         { value: "editor", label: "Editor", dataType: "longText" },
         { value: "textarea", label: "Textarea", dataType: "longText" },
         { value: "editor", label: "Editor", dataType: "longText" },
@@ -50,6 +52,9 @@ const Body = (props) => {
         { value: "left", label: "Left" },
         { value: "right", label: "Right" },
     ];
+
+    const guardedFields = ["id", "uuid"];
+    const guardedTypes = ["index", "timestamp"];
 
     const columns = [
         {
@@ -179,6 +184,14 @@ const Body = (props) => {
                             control={
                                 <IOSSwitch
                                     sx={{ m: 1 }}
+                                    disabled={
+                                        guardedFields.includes(
+                                            params?.row?.field
+                                        ) ||
+                                        guardedTypes.includes(params?.row?.type)
+                                            ? true
+                                            : false
+                                    }
                                     checked={
                                         params.value
                                             ? Boolean(params.value)
@@ -207,6 +220,14 @@ const Body = (props) => {
                             <Select
                                 onChange={(event) => updateCell(event, params)}
                                 defaultValue={"none"}
+                                disabled={
+                                    guardedFields.includes(
+                                        params?.row?.field
+                                    ) ||
+                                    guardedTypes.includes(params?.row?.type)
+                                        ? true
+                                        : false
+                                }
                                 value={params.value ? params.value : "none"}
                             >
                                 {editPagePositions.map((option) => (
@@ -240,10 +261,41 @@ const Body = (props) => {
                     >
                         <IconButton
                             disabled={
-                                params?.row?.type == "index" ||
-                                    ["created_at", "updated_at"].includes(
-                                        params?.row?.field
-                                    )
+                                guardedFields.includes(params?.row?.field) ||
+                                guardedTypes.includes(params?.row?.type)
+                                    ? true
+                                    : false
+                            }
+                            name="fa-pen-to-square"
+                            color={
+                                params?.row?.type == "index" ? "" : "primary"
+                            }
+                            onClick={() => {
+                                console.log("gridResponse", gridResponse);
+                                modal.handleOpen(
+                                    <AddEditField
+                                        typeList={fieldTypes}
+                                        mode="edit"
+                                        row={params?.row}
+                                        table={
+                                            first(gridResponse)?.table ||
+                                            params?.row?.table
+                                        }
+                                        positionList={editPagePositions}
+                                        onClose={() => {
+                                            setCellFocus(!cellFocus);
+                                            modal.handleClose();
+                                        }}
+                                    />,
+                                    "Edit field",
+                                    "fa-pen-to-square"
+                                );
+                            }}
+                        />
+                        <IconButton
+                            disabled={
+                                guardedFields.includes(params?.row?.field) ||
+                                guardedTypes.includes(params?.row?.type)
                                     ? true
                                     : false
                             }
@@ -254,7 +306,11 @@ const Body = (props) => {
                             onClick={() => {
                                 modal.handleOpen(
                                     <DeleteField
-                                        data={{ table: params?.row?.table, column: params?.row.field }}
+                                        data={{
+                                            table: params?.row?.table,
+                                            column: params?.row.field,
+                                            type: params?.row.type,
+                                        }}
                                         onClose={() => {
                                             refreshTable();
                                             modal.handleClose();
@@ -276,29 +332,40 @@ const Body = (props) => {
         return;
     };
 
-    const updateCell = (event, data) => {
+    const processPayload = (payload, event) => {
+        let data = payload;
         data.row[data.field] =
             typeof event.target.type !== typeof undefined &&
-                event.target.type == "checkbox"
+            event.target.type == "checkbox"
                 ? event.target.checked
                 : event.target.value;
         data.value = data.row[data.field];
         data.formattedValue = data.row[data.field];
+        return data;
+    };
 
+    const updateText = (data, event) => {
+        setTimeout(() => {
+            data["event"] = event;
+            setFormdata(data);
+        }, 1000);
+        return;
+    };
+
+    const updateCell = (event, data) => {
         if (event.target.type == "text") {
-            return setTimeout(() => {
-                setFormdata(data.row);
-            }, 4000);
+            return updateText(data, event);
         }
 
         if (event.target.name == "type") {
             return updateSchema(data, event);
         }
 
-        return saveField(data, event);
+        return saveField(processPayload(data, event), event);
     };
 
-    const updateSchema = (data, event) => {
+    const updateSchema = (payload, event) => {
+        const data = processPayload(payload, event);
         const replaceType = event.target.value;
         const fieldType = fieldTypes.find((type) => type.value === replaceType);
         const dataType = fieldType ? fieldType.dataType : null;
@@ -306,13 +373,16 @@ const Body = (props) => {
         const table = data.row.table;
 
         if (params.replaceType !== "id") {
-            return cms.patch("/dbo/" + table, params).then(() => {
-                console.log("Schema updated successfully", data);
-                saveField(data, event);
-            }).catch((error) => {
-                console.error("Error updating schema:", error);
-                notify(error.response.data.message, "error");
-            });
+            return cms
+                .patch("/dbo/" + table, params)
+                .then(() => {
+                    console.log("Schema updated successfully", data);
+                    saveField(data, event);
+                })
+                .catch((error) => {
+                    console.error("Error updating schema:", error);
+                    notify(error.response.data.message, "error");
+                });
         }
         return saveField(data, event);
     };
@@ -332,9 +402,13 @@ const Body = (props) => {
     };
 
     React.useEffect(() => {
-        if (Object.keys(formdata).length > 0) {
-            saveField(formdata);
-        }
+        const timeoutId = setTimeout(() => {
+            if (formdata && formdata.event) {
+                const data = processPayload(formdata, formdata.event);
+                saveField(data, formdata.event);
+            }
+        }, 1000);
+        return () => clearTimeout(timeoutId);
     }, [formdata]);
 
     return (
@@ -344,12 +418,12 @@ const Body = (props) => {
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
                 <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
-                    <PrimaryButton
+                    <ClassicButton
                         type="button"
                         onClick={() => {
-                            console.log(gridResponse)
+                            console.log("gridResponse", gridResponse);
                             modal.handleOpen(
-                                <AddField
+                                <AddEditField
                                     typeList={fieldTypes}
                                     table={first(gridResponse)?.table}
                                     positionList={editPagePositions}
@@ -366,7 +440,7 @@ const Body = (props) => {
                         icon="fa-plus"
                     >
                         New field
-                    </PrimaryButton>
+                    </ClassicButton>
                     <Select
                         onChange={(e) =>
                             e.target.value
@@ -379,10 +453,10 @@ const Body = (props) => {
                         <MenuItem value="">Entity</MenuItem>
                         {props["entities"]
                             ? props["entities"].map((entity, i) => (
-                                <MenuItem key={entity.id} value={entity.slug}>
-                                    {entity.name}
-                                </MenuItem>
-                            ))
+                                  <MenuItem key={entity.id} value={entity.slug}>
+                                      {entity.name}
+                                  </MenuItem>
+                              ))
                             : ""}
                     </Select>
                 </FormControl>

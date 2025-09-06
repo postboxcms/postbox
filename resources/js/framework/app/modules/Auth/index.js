@@ -18,7 +18,7 @@ import { useSecureRoute, useNotifier, useNavigation } from "@app/hooks";
 import { platform } from "@app/utils/constants";
 
 import Footer from "@ui/components/Footer";
-import PrimaryButton from "@ui/elements/PrimaryButton";
+import ClassicButton from "@ui/elements/ClassicButton";
 import Logo from "@ui/elements/Logo";
 import Icon from "@ui/elements/Icon";
 
@@ -159,14 +159,14 @@ const Auth = (props) => {
                                 }
                                 label="Remember me"
                             />
-                            <PrimaryButton
+                            <ClassicButton
                                 icon="fa-sign-in-alt"
                                 type="submit"
                                 fullWidth
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign In
-                            </PrimaryButton>
+                            </ClassicButton>
                             {/* <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">

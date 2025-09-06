@@ -2,6 +2,7 @@
 
 namespace App\Http\Modules\CRUD;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,6 +14,7 @@ use App\Http\Modules\CRUD\Model as CRUD;
 
 class Controller extends Framework
 {
+    protected $id;
     protected $entity;
     protected $entityCollection;
     protected $fields;
@@ -23,8 +25,12 @@ class Controller extends Framework
     protected $model;
     protected $missingFields;
     protected $crud;
+    protected $options;
     protected $counter = 1;
     protected $validator;
+    protected $fieldId;
+    protected $entityId;
+    protected $multiSelectOptions = ["dropdown", "radio", "checkbox"];
 
 
     private function _getField($name, $column, $default)
@@ -57,24 +63,58 @@ class Controller extends Framework
      */
     public function store(Request $request)
     {
-        // store CRUD data
-        $this->data = $request->all();
-        $this->validator = Validator::make($this->data, [
-            'alias' => 'required|max:20'
-        ]);
+        try {
+            // store CRUD data
+            $this->data = $request->all();
+            $this->validator = Validator::make($this->data, [
+                'alias' => 'required|max:20'
+            ]);
 
-        if ($this->validator->fails()) {
-            return response(['message' => $this->validator->errors(), trans('crud.validationerror')], 400);
+            if ($this->validator->fails()) {
+                return response(['message' => $this->validator->errors(), trans('crud.validationerror')], 400);
+            }
+
+            $this->crud = CRUD::updateOrCreate([
+                'field' => $this->data['field'],
+                'table' => $this->data['table']
+            ], $this->data);
+
+            $this->options = [
+                'fid' => CRUD::where('field', $this->crud['field'])
+                    ->where('table', $this->crud['table'])
+                    ->first('uuid')->uuid,
+                'eid' => Entity::where('slug', $this->crud['table'])->first('uuid')->uuid
+            ];
+
+            if (isset($this->data['options']) && is_array($this->data['options'])) {
+                foreach ($this->data['options'] as $option) {
+                    $value = is_string($option) ? $option : $option['value'];
+                    $doesOptionExist = $this->optionsTable()
+                        ->where('fid', $this->options['fid'])
+                        ->where('value', $value)
+                        ->first();
+                    if ($doesOptionExist) {
+                        continue;
+                    }
+                    $this->performDBOperations("options", "insert", [
+                        'fid' => $this->options['fid'],
+                        'eid' => $this->options['eid'],
+                        'key' => $this->hashKey($value),
+                        'value' => $value,
+                        'url' => isset($this->data['url']) ? $this->data['url'] : false
+                    ], false);
+                }
+            }
+
+            return response([
+                'message' => trans('crud.success'),
+            ], 200);
+        } catch (Exception $e) {
+            return response([
+                'error' => trans('crud.error'),
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $this->crud = CRUD::updateOrCreate([
-            'field' => $this->data['field'],
-            'table' => $this->data['table']
-        ], $this->data);
-
-        return response([
-            'message' => trans('crud.success')
-        ], 200);
     }
 
     /**
@@ -87,8 +127,9 @@ class Controller extends Framework
     public function show(Entity $Entity)
     {
         // display CRUD fields
-        $this->model = Entity::where('slug', \Request::segment(count(\Request::segments())))->first()->model;
-        $this->model = "\\App\\Models\\" . $this->model;
+        $this->model = Entity::where('slug', \Request::segment(count(\Request::segments())))->first();
+        $this->entityId = $this->model->uuid;
+        $this->model = "\\App\\Models\\" . $this->model->model;
 
         if (class_exists($this->model)) {
             $this->model = new $this->model();
@@ -96,13 +137,21 @@ class Controller extends Framework
             $this->fields = $Entity->getTableColumns($this->table);
             $this->icon = $Entity->getTableIcon($this->table);
             $this->fields = collect($this->fields)->map(function ($field) {
+                $this->options = [];
                 $this->counter += 1;
+                $this->fieldId = $this->_getField($field, 'uuid', null);
+                if (in_array($this->_getField($field, 'type', 'text'), $this->multiSelectOptions)) {
+                    $this->options = $this->optionsTable()->where('fid', $this->fieldId)->where('eid', $this->entityId)->get();
+                }
                 return [
                     'id' => $this->counter,
+                    'uuid' => $this->fieldId,
+                    'tid' => $this->entityId,
                     'table' => $this->table,
                     'field' => $field,
                     'alias' => $this->_getField($field, 'alias', strtoupper($field)),
                     'type' => $this->_getField($field, 'type', 'text'),
+                    'options' => $this->options,
                     'position' => $this->_getField($field, 'position', 'none'),
                     'list' => $this->_getField($field, 'list', true),
                     'mandatory' => $this->_getField($field, 'mandatory', false),
@@ -145,7 +194,38 @@ class Controller extends Framework
      */
     public function update(Request $request, $id)
     {
-        //
+        // update the specified resource
+        try {
+            $this->data = $this->formatData($request->all(), false);
+            $this->options = $this->data['options'] ?? [];
+            $this->table = $this->data['table'];
+
+            unset($this->data['options']);
+            unset($this->data['table']);
+
+            $this->performDBOperations("crud", 'update', $this->data);
+
+            if (!in_array($this->data['type'], $this->multiSelectOptions)) {
+                $this->performDBOperations("options", "delete", ['fid' => $this->data['uuid']]);
+            } else {
+                if (isset($this->options) && is_array($this->options) && !empty($this->options)) {
+                    $this->performDBOperations("options", "delete", ['fid' => $this->data['uuid']]);
+                    foreach ($this->options as $option) {
+                        $value = is_string($option) ? $option : $option['value'];
+                        $this->performDBOperations("options", "insert", [
+                            'fid' => $this->data['uuid'],
+                            'eid' => Entity::where('slug', $this->table)->first('uuid')->uuid,
+                            'key' => $this->hashKey($value),
+                            'value' => $value,
+                            'url' => isset($this->data['url']) ? $this->data['url'] : false
+                        ], false);
+                    }
+                }
+            }
+            return response(['message' => 'Update successful'], 200);
+        } catch (Exception $e) {
+            return response(['message' => 'Update failed', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -160,10 +240,14 @@ class Controller extends Framework
         $this->data = $request->all();
         // Remove data from CRUD table
         try {
-            CRUD::where('table', $this->table)->where('field', $this->data['column'])->delete();
-            return response()->json(['message' => trans('crud.delete')], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => trans('crud.error'), 'error' => $e->getMessage()], 400);
+            $record = CRUD::where('table', $this->table)->where('field', $this->data['column'])->first();
+            $record->delete();
+            if ($this->data['type'] === 'dropdown' || $this->data['type'] === 'radio' || $this->data['type'] === 'checkbox') {
+                $this->optionsTable()->where('fid', $record->uuid)->delete();
+            }
+            return response(['message' => trans('crud.delete')], 200);
+        } catch (Exception $e) {
+            return response(['message' => trans('crud.error'), 'error' => $e->getMessage()], 400);
         }
 
     }

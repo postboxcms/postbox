@@ -16,9 +16,9 @@ class Framework extends BaseController
 
     protected $state = [];
 
-    protected function performDBOperations($table, $type, $data = [])
+    protected function performDBOperations($table, $type, $data = [], $resetEID = true)
     {
-        $data = $this->formatData($data);
+        $data = $this->formatData($data, $resetEID);
 
         try {
             switch ($type) {
@@ -26,10 +26,10 @@ class Framework extends BaseController
                     DB::table($table)->insert($data);
                     break;
                 case 'update':
-                    DB::table($table)->where('id', $data['id'])->update($data);
+                    DB::table($table)->where('uuid', $data['uuid'])->update($data);
                     break;
                 case 'delete':
-                    DB::table($table)->where('id', $data['id'])->delete();
+                    DB::table($table)->where(key($data),  current($data))->delete();
                     break;
                 default:
                     DB::table($table)->insert($data);
@@ -72,14 +72,29 @@ class Framework extends BaseController
         return response(['error' => trans('database.success')]);
     }
 
-    protected function formatData($data = [])
+    protected function formatData($data = [], $resetEID = true)
     {
-        $data = !empty($this->state) ? array_merge($data,$this->state) : $data;
+        $data = !empty($this->state) ? array_merge($data, $this->state) : $data;
+        if ($resetEID) {
+            $data['uuid'] = $data['eid'] ?? $data['uuid'] ?? null;
+            unset($data['eid']);
+        }
         unset($data['module']);
         unset($data['state']);
+        unset($data['_method']);
         $data['created_at'] = Carbon::now();
         $data['updated_at'] = Carbon::now();
         $data = array_filter($data, fn($value) => $value !== null && $value !== '');
         return $data;
+    }
+
+    protected function hashKey($data)
+    {
+        $hash = hash('sha256', $data);
+        return substr($hash, 0, 16); // Return first 16 characters of the hash
+    }
+
+    protected function optionsTable() {
+        return DB::table('options');
     }
 }

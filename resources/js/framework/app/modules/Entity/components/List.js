@@ -16,7 +16,7 @@ import {
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
-import PrimaryButton from "@ui/elements/PrimaryButton";
+import ClassicButton from "@ui/elements/ClassicButton";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 
@@ -49,6 +49,7 @@ const List = (props) => {
     const updateCell = (event, data) => {
         const field = [];
         field['id'] = data.id;
+        field['uuid'] = data.row?.uuid
         field["module"] = module;
         field[data.field] =
             (typeof event.target.type !== typeof undefined &&
@@ -97,7 +98,7 @@ const List = (props) => {
                 headerName: "ACTIONS",
                 headerClassName: "table-header-light",
                 flex: 1,
-                renderCell: () => <ActionButtons />,
+                renderCell: (params) => <ActionButtons entity={params} module={module} />,
             });
 
             api.get("/entity" + props["path"]).then((response) => {
@@ -125,7 +126,7 @@ const List = (props) => {
                                 }
                             });
                         }
-                        if (dataValues[index].type == "radio") {
+                        if (dataValues[index].type == "switch") {
                             columnData.forEach((column) => {
                                 if (column["field"] == parameter) {
                                     column["cellClassName"] =
@@ -168,19 +169,19 @@ const List = (props) => {
                 <Title icon={Icon}>
                     {props["title"] ? props["title"] : props["name"]}
                 </Title>
-                <PrimaryButton
+                <ClassicButton
                     onClick={() => addContent(props)}
                     icon="fa-plus"
                     sx={{ float: 'right', marginBottom: 1 }}
                 >
                     Add {props["title"] ? props["title"] : props["name"]}
-                </PrimaryButton>
+                </ClassicButton>
             </div>
             <div className={classes.grid}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
-                    pageSize={5}
+                    pageSize={10}
                     checkboxSelection
                     disableSelectionOnClick
                     components={{

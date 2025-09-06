@@ -30,7 +30,7 @@ class Controller extends Framework
         $this->entities = Entity::where('status', 1)->get();
         return response([
             'entities' => EntityResource::collection($this->entities),
-            'routes'=> EntityResource::routes($this->entities),
+            'routes' => EntityResource::routes($this->entities),
             'message' => trans('entity.fetched')
         ], 200);
     }
@@ -54,28 +54,12 @@ class Controller extends Framework
                     $this->performDBOperations($this->table, 'insert', $this->data);
                     return response(['message' => trans('entity.added', ['name' => $this->table])], 200);
                 } catch (\Exception $e) {
-                    return response(['message' => trans('entity.failed',['name'=>$this->table]),'error'=> $e->getMessage()],400);
+                    return response(['message' => trans('entity.failed', ['name' => $this->table]), 'error' => $e->getMessage()], 400);
                 }
             }
             return response(['error' => trans('entity.validationerror')], 400);
-
-            // $this->validator = Validator::make($this->data, [
-            //     'name' => 'required|max:50',
-            //     'description' => 'max:191',
-            //     'icon' => 'required'
-            // ]);
-
-            // if ($this->validator->fails()) {
-            //     return response(['message' => $this->validator->errors(), trans('entity.validationerror')]);
-            // }
-
-            // $this->entity = Entity::create($this->data);
-            // return response([
-            //     'entity' => new EntityResource($this->entity),
-            //     'message' => trans('entity.success')
-            // ], 200);
         } catch (\Exception $e) {
-            throw new \Exception( trans('entity.exception', ['message' => $e->getMessage()]));
+            throw new \Exception(trans('entity.exception', ['message' => $e->getMessage()]));
         }
     }
 
@@ -87,11 +71,15 @@ class Controller extends Framework
      */
     public function show(Entity $entity)
     {
-        // show content type info
-        return response([
-            'entity' => new EntityResource($entity),
-            'message' => trans('entity.fetched')
-        ], 200);
+        try {
+            // show content type info
+            return response([
+                'entity' => new EntityResource($entity),
+                'message' => trans('entity.fetched')
+            ], 200);
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -108,7 +96,7 @@ class Controller extends Framework
             $this->data = $request->all();
             $this->table = $this->data['module'];
 
-            $this->performFileOperations($request, 'update', $this->data);
+            $this->performFileOperations($request, 'upload', $this->data);
             $this->performDBOperations($this->table, 'update', $this->data);
             return response([
                 // 'entity' => new EntityResource($entity),

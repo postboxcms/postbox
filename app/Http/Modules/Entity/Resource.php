@@ -3,6 +3,8 @@
 namespace App\Http\Modules\Entity;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Modules\CRUD\Model as CRUD;
 
 class Resource extends JsonResource
@@ -44,12 +46,17 @@ class Resource extends JsonResource
             $this->collection['records'] = $this->model::count();
 
             if (isset($request->entity)) {
-                $this->collection['data'] = $this->model::all();
+                if (isset($request->eid)) {
+                    $this->collection['data'] = $this->model::where('uuid', $request->eid)->get();
+                } else {
+                    $this->collection['data'] = $this->model::all();
+                }
+                // $this->collection['data'] = $this->model::all();
                 $this->collection['data'] = collect($this->collection['data']->toArray())->map(function ($data) {
                     foreach ($data as $field => $parameter) {
                         $data[$field] = [
                             'type' => CRUD::where('table', $this->collection['slug'])
-                                ->where('field', $field)->value('type'),
+                                    ->where('field', $field)->value('type') ?? 'text',
                             'value' => $data[$field]
                         ];
                         if ($data[$field]['type'] == 'user') {
