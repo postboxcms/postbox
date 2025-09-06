@@ -7,12 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {
-    useNotifier,
-    useNavigation,
-    useSecureRoute,
-    useCSS,
-} from "@app/hooks";
+import { useNotifier, useNavigation, useSecureRoute, useCSS } from "@app/hooks";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
@@ -31,6 +26,7 @@ const List = (props) => {
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
+    const [triggerRefresh, setTriggerRefresh] = React.useState(false);
     const entity = props["path"];
     const module = entity.replace("/", "");
 
@@ -48,18 +44,19 @@ const List = (props) => {
 
     const updateCell = (event, data) => {
         const field = [];
-        field['id'] = data.id;
-        field['uuid'] = data.row?.uuid
+        field["id"] = data.id;
+        field["uuid"] = data.row?.uuid;
         field["module"] = module;
         field[data.field] =
             (typeof event.target.type !== typeof undefined &&
                 event.target.type == "checkbox") ||
-                event.target.type == "radio"
+            event.target.type == "radio"
                 ? event.target.checked
                 : event.target.value;
         if (
             typeof event.target.type === typeof undefined ||
-            event.target.type == "checkbox" || event.target.type == "radio"
+            event.target.type == "checkbox" ||
+            event.target.type == "radio"
         ) {
             data.row[data.field] = field[data.field];
             setCellFocus(!cellFocus);
@@ -77,18 +74,15 @@ const List = (props) => {
 
     const ImageCell = (params) => {
         const { value } = params;
-        return !value && (
-            <FontAwesomeIcon
-                icon={"image"}
-                size="lg"
-            />
-        ) || (
+        return (
+            (!value && <FontAwesomeIcon icon={"image"} size="lg" />) || (
                 <img
                     src={`/uploads/${module}/${value}`}
                     className="cell-image"
                 />
-            );
-    }
+            )
+        );
+    };
 
     React.useEffect(() => {
         api.get("/crud" + props["path"]).then((response) => {
@@ -98,7 +92,13 @@ const List = (props) => {
                 headerName: "ACTIONS",
                 headerClassName: "table-header-light",
                 flex: 1,
-                renderCell: (params) => <ActionButtons entity={params} module={module} />,
+                renderCell: (params) => (
+                    <ActionButtons
+                        entity={params}
+                        module={module}
+                        refresh={() => setTriggerRefresh(!triggerRefresh)}
+                    />
+                ),
             });
 
             api.get("/entity" + props["path"]).then((response) => {
@@ -161,7 +161,7 @@ const List = (props) => {
                 setColumns(columnData);
             });
         });
-    }, [props["path"]]);
+    }, [props["path"], triggerRefresh]);
 
     return (
         <React.Fragment>
@@ -172,7 +172,7 @@ const List = (props) => {
                 <ClassicButton
                     onClick={() => addContent(props)}
                     icon="fa-plus"
-                    sx={{ float: 'right', marginBottom: 1 }}
+                    sx={{ float: "right", marginBottom: 1 }}
                 >
                     Add {props["title"] ? props["title"] : props["name"]}
                 </ClassicButton>
