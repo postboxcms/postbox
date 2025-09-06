@@ -137,6 +137,16 @@ export const AddEditContent = ({ query, type }) => {
 
     const renderField = (field) => {
         // This function should return the appropriate component based on the field type
+        const generateSelectedOptions = (option) =>
+            entityData &&
+            entityData[field.field] &&
+            entityData[field.field]?.value
+                ? entityData[field.field].value
+                      .toString()
+                      .split("|")
+                      .includes(option.value)
+                : false;
+
         switch (field.type) {
             case "text":
                 return (
@@ -235,16 +245,7 @@ export const AddEditContent = ({ query, type }) => {
                     <FormInput
                         type="checkbox"
                         variant="outlined"
-                        checked={
-                            entityData &&
-                            entityData[field.field] &&
-                            entityData[field.field]?.value
-                                ? entityData[field.field].value
-                                      .toString()
-                                      .split("|")
-                                      .includes(option.value)
-                                : false
-                        }
+                        checked={generateSelectedOptions(option)}
                         key={idx}
                         name={`${field.field}[]`}
                         label={option.value}
@@ -266,26 +267,27 @@ export const AddEditContent = ({ query, type }) => {
                     />
                 ));
             case "radio":
-                return field.options.map((option, idx) => (
+                return field.options.map((option) => (
                     <FormInput
+                        key={option.value}
                         type="radio"
                         variant="outlined"
+                        checked={generateSelectedOptions(option)}
                         name={field.field}
                         label={option.value}
                         value={option.value}
                         onChange={(event) => {
-                            const isChecked = event.target.checked;
-                            updateEntityData({
-                                target: {
-                                    name: option.value,
-                                    value: isChecked ? 1 : 0, // Convert checkbox value to '1' or '0'
-                                },
-                            });
+                            if (event.target.checked) {
+                                updateEntityData({
+                                    target: {
+                                        name: field.field,
+                                        value: option.value,
+                                    },
+                                });
+                            }
                         }}
                         fullWidth
-                        InputProps={{
-                            inputProps: { "aria-label": option.value },
-                        }}
+                        inputProps={{ "aria-label": option.value }}
                     />
                 ));
             case "switch":
@@ -482,6 +484,7 @@ export const AddEditContent = ({ query, type }) => {
                 const checkboxInputs = e.target.querySelectorAll(
                     `input[name="${key}"]:checked`
                 );
+                console.log("Radio input:", checkboxInputs, "key", key);
                 const checkboxValues = Array.from(checkboxInputs)
                     .map((input) => input.getAttribute("aria-label"))
                     .join("|"); // Get values of all checked checkboxes
@@ -489,6 +492,21 @@ export const AddEditContent = ({ query, type }) => {
             }
 
             if (field && field.type === "radio") {
+                const radioInput = e.target.querySelector(
+                    `input[name="${key}"]:checked`
+                );
+                console.log("Radio input:", radioInput, "key", key);
+                const radioValue = radioInput
+                    ? radioInput.getAttribute("aria-label")
+                    : "";
+                if (radioInput) {
+                    formData.set(key, radioValue); // Set the value of the checked radio button
+                } else {
+                    formData.set(key, ""); // Set empty if no radio is checked
+                }
+            }
+
+            if (field && field.type === "switch") {
                 const radioInput = e.target.querySelector(
                     `input[name="${key}"]:checked`
                 );

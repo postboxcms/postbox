@@ -105,8 +105,7 @@ export default function FormInput(props) {
                     <div className={classes.formOptions}>
                         <Radio
                             name={name}
-                            type="radio"
-                            checked={Boolean(value)}
+                            checked={checked}
                             onChange={onChange}
                             color="primary"
                             required={required}
