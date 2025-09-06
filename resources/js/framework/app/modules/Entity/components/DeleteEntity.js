@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Typography } from "@mui/material";
 import { useNotifier, useSecureRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
-import SaveButton from "@ui/elements/SaveButton";
+import DeleteButton from "@ui/elements/DeleteButton";
 
 export const DeleteEntity = (props) => {
     const notify = useNotifier();
@@ -41,7 +41,7 @@ export const DeleteEntity = (props) => {
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={8} sm={8}></Grid>
                 <Grid item xs={4} sm={4}>
-                    <SaveButton fullWidth />
+                    <DeleteButton fullWidth />
                 </Grid>
             </Grid>
         </Form>
