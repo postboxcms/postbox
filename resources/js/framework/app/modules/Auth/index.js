@@ -20,7 +20,6 @@ import { platform } from "@app/utils/constants";
 import Footer from "@ui/components/Footer";
 import ClassicButton from "@ui/elements/ClassicButton";
 import Logo from "@ui/elements/Logo";
-import Icon from "@ui/elements/Icon";
 
 import {
     setToken,
@@ -32,7 +31,6 @@ import {
 } from "./reducers/jwt";
 
 const Auth = (props) => {
-    // const history = useHistory();
     const auth = useSecureRoute();
     const token = useSelector(getToken);
     const user = useSelector(getUser);
