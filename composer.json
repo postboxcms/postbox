@@ -22,7 +22,6 @@
         "phpunit/phpunit": "^10.0",
         "postboxcms/dbo": "^1.0",
         "postboxcms/desk": "^1.2",
-        "postboxcms/dbo": "^1.0",
         "postboxcms/inspire": "^1.0",
         "spatie/laravel-ignition": "^2.0"
     },
