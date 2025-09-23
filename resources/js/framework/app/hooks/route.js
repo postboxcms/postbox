@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { api, cms } from "@app/utils/constants";
-import { getToken } from "@modules/Auth/reducers/jwt";
-import { useNotifier } from "@app/hooks";
+import { getToken } from "@modules/Auth/reducers/user";
 
 export const useSecureRoute = () => {
     const token = useSelector(getToken);

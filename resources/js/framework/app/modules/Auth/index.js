@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -20,7 +19,6 @@ import { platform } from "@app/utils/constants";
 import Footer from "@ui/components/Footer";
 import ClassicButton from "@ui/elements/ClassicButton";
 import Logo from "@ui/elements/Logo";
-import Icon from "@ui/elements/Icon";
 
 import {
     setToken,
@@ -29,10 +27,11 @@ import {
     getToken,
     unsetUser,
     getUser,
-} from "./reducers/jwt";
+    loginUser,
+    logoutUser,
+} from "./reducers/user";
 
 const Auth = (props) => {
-    // const history = useHistory();
     const auth = useSecureRoute();
     const token = useSelector(getToken);
     const user = useSelector(getUser);
@@ -44,35 +43,38 @@ const Auth = (props) => {
     const doLogin = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        dispatch(loginUser(data));
         // eslint-disable-next-line no-console
-        axios
-            .post(api.url + "/login", data)
-            .then((response) => {
-                const token = response.data.token;
-                const user = response.data.user;
-                dispatch(setToken(token));
-                dispatch(setUser(user));
-                navigate("/");
-                notify("Login successful");
-            })
-            .catch((error) => {
-                const message = error?.response?.data.message;
-                notify(
-                    message === undefined ? "Something went wrong" : message,
-                    "error"
-                );
-            });
+        // auth.post("/login", data)
+        //     .then((response) => {
+        //         const token = response.data.token;
+        //         const user = response.data.user;
+        //         dispatch(setToken(token));
+        //         dispatch(setUser(user));
+        //         navigate("/");
+        //         notify("Login successful");
+        //     })
+        //     .catch((error) => {
+        //         const message = error?.response?.data.message;
+        //         notify(
+        //             message === undefined ? "Something went wrong" : message,
+        //             "error"
+        //         );
+        //     });
     };
 
-    React.useEffect(() => {
-        if (props.mode == "logout") {
-            auth.post("/logout", {}).then(() => {
-                dispatch(unsetToken(token));
-                dispatch(unsetUser(user));
-                navigate(api.loginUrl);
-            });
-        }
-    }, [props.mode]);
+    // React.useEffect(() => {
+        // console.log("propsmode:", props.mode);
+        // console.log("propstoken:", token);
+        // if (props.mode == "logout") {
+            // navigate(api.loginUrl);
+            // auth.post("/logout", {}).then(() => {
+            //     dispatch(unsetToken(token));
+            //     dispatch(unsetUser(user));
+            //     navigate(api.loginUrl);
+            // });
+    //     }
+    // }, []);
 
     return (
         <ThemeProvider theme={admin}>
@@ -120,7 +122,7 @@ const Auth = (props) => {
                         {/* <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                             <LockOutlinedIcon />
                         </Avatar> */}
-                        <Logo width="80" style={{marginBottom: 10}} />
+                        <Logo width="80" style={{ marginBottom: 10 }} />
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>

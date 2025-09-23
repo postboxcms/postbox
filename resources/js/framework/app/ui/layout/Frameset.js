@@ -25,7 +25,7 @@ import TopMenu from './TopMenu';
 import {  useAdminCSS } from '@app/hooks/admin';
 import { admin } from '@app/init/theme';
 import { getNavOpen, setNavOpen } from '@modules/Settings/reducers/platform';
-import { getUser } from '@modules/Auth/reducers/jwt';
+import { getUser } from '@modules/Auth/reducers/user';
 
 import { platform } from '@app/utils/constants';
 import Footer from '@ui/components/Footer';

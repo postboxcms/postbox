@@ -11,7 +11,6 @@ import { api } from "@app/utils";
 // store
 import { store, persistor } from "@app/store";
 // layout
-import Frameset from "@ui/layout/Frameset";
 import Website from "@ui/layout/Website";
 // core modules
 import DataProvider from "@providers/DataProvider";

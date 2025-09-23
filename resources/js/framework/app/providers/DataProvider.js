@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEntities } from "@modules/Entity/reducers/entities";
 import { useSecureRoute } from "@app/hooks";
-import { getToken } from "@modules/Auth/reducers/jwt";
+import { getToken } from "@modules/Auth/reducers/user";
 import {
     setWebsiteLogo,
     setWebsiteName,

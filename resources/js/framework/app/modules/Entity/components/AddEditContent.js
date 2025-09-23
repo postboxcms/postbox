@@ -10,7 +10,7 @@ import {
     singularize,
 } from "@app/hooks";
 
-import { getUser } from "@modules/Auth/reducers/jwt";
+import { getUser } from "@modules/Auth/reducers/user";
 
 import SaveButton from "@ui/elements/SaveButton";
 import Panel from "@ui/components/Panel";
