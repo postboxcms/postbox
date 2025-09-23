@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 // material components
 import Menu from '@mui/material/Menu';
@@ -9,8 +10,13 @@ import Logout from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
 // libs
 import { api } from '@app/utils/constants';
+import { useNavigation } from '@app/hooks';
+import { getToken, logoutUser } from '@modules/Auth/reducers/user';
 
 export const TopMenu = (props) => {
+    const navigate = useNavigation();
+    const token = useSelector(getToken);
+    const dispatch = useDispatch();
     const [anchor, setAnchor] = React.useState(null);
     const [dropdown, setDropdown] = React.useState(false);
     const switchDropdown = () => {
@@ -18,13 +24,17 @@ export const TopMenu = (props) => {
         setAnchor(null)
         props.state(null);
     }
+    const processLogout = () => {
+        dispatch(logoutUser(token));
+        navigate(api.loginUrl);
+    }
 
     React.useEffect(() => {
         setDropdown(!Boolean(props.anchor));
-        if(dropdown) {
+        if (dropdown) {
             setAnchor(props.anchor)
         }
-    },[props.anchor])
+    }, [props.anchor]);
 
     return (
         <Menu
@@ -70,7 +80,7 @@ export const TopMenu = (props) => {
             </MenuItem>
             <Divider />
             <MenuItem>
-                <Link to={api.adminPrefix + api.logoutUrl} className="menu-link MuiMenuItem-root">
+                <Link onClick={processLogout} className="menu-link MuiMenuItem-root">
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
