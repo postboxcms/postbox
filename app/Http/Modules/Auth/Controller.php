@@ -46,7 +46,7 @@ class Controller extends Framework
         }
         $this->token = auth()->user()->createToken(env('APP_NAME') . ' Token')->accessToken;
 
-        return response(['user' => auth()->user(), 'token' => $this->token], 200);
+        return response(['user' => auth()->user(), 'token' => $this->token, 'message' => 'Login successful'], 200);
     }
 
     // logout a user

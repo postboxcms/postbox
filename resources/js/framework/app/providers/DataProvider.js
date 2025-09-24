@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEntities } from "@modules/Entity/reducers/entities";
-import { useSecureRoute } from "@app/hooks";
+import { useSecureRoute, useNotifier } from "@app/hooks";
 import { getToken } from "@modules/Auth/reducers/user";
 import {
     setWebsiteLogo,
@@ -9,42 +9,54 @@ import {
     setWebsiteStatus,
     setWebsiteTitle,
 } from "@modules/Settings/reducers/site";
+import { getNotification } from "@modules/Settings/reducers/platform";
+import { loadEntities } from "@modules/Entity/reducers/entities";
 
 const DataProvider = ({ children }) => {
     const api = useSecureRoute();
+    const notification = useSelector(getNotification);
+    const notify = useNotifier();
     const token = useSelector(getToken);
     const dispatch = useDispatch();
+    const hasNotification = notification && notification.message !== '';
+    const hasUserAuthenticated = token;
+    const hasAdminRoute = window.location.href.includes('/admin') ? true : false;
 
     React.useEffect(() => {
-        if (token) {
-            // set content type data
-            api.get("/entity").then((response) => {
-                dispatch(setEntities(response.data));
+        if (hasUserAuthenticated) {
+            dispatch(loadEntities(token));
+        }
+        if (hasNotification) {
+            if (notification.type == "error") {
+                notify(notification.message, "error");
+            } else {
+                notify(notification.message);
+            }
+        }
+        if (!hasAdminRoute) {
+            api.get("/website").then((res) => {
+                const settings = res?.data?.data;
+                settings.map((item) => {
+                    switch (item.property) {
+                        case "name":
+                            dispatch(setWebsiteName(item.value));
+                            return;
+                        case "title":
+                            dispatch(setWebsiteTitle(item.value));
+                            return;
+                        case "isProductionReady":
+                            dispatch(setWebsiteStatus(Boolean(Number(item.value))));
+                            return;
+                        case "siteLogo":
+                            dispatch(setWebsiteLogo(item.value));
+                            return;
+                        default:
+                            return;
+                    }
+                });
             });
         }
-        // set website data
-        api.get("/website").then((res) => {
-            const settings = res?.data?.data;
-            settings.map((item) => {
-                switch (item.property) {
-                    case "name":
-                        dispatch(setWebsiteName(item.value));
-                        return;
-                    case "title":
-                        dispatch(setWebsiteTitle(item.value));
-                        return;
-                    case "isProductionReady":
-                        dispatch(setWebsiteStatus(Boolean(Number(item.value))));
-                        return;
-                    case "siteLogo":
-                        dispatch(setWebsiteLogo(item.value));
-                        return;
-                    default:
-                        return;
-                }
-            });
-        });
-    }, [token]);
+    }, [hasUserAuthenticated, hasNotification]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };

@@ -35,6 +35,7 @@ const userSlice = createSlice({
 
 export const getToken = (state) => state.auth.token;
 export const getUser = (state) => state.auth.user;
+export const getUserError = (state) => state.auth.error;
 
 export const { setToken, setUser, unsetToken, unsetUser, loginUser, logoutUser, setUserError } = userSlice.actions;
 
