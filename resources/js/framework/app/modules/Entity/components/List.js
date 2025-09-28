@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { DataGrid } from "@mui/x-data-grid";
 import { FormControlLabel } from "@mui/material";
@@ -15,13 +16,21 @@ import ClassicButton from "@ui/elements/ClassicButton";
 import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 
+import { loadCRUD, getCRUD } from "@modules/CRUD/reducers/crud";
+import { getToken } from "@modules/Auth/reducers/user";
+
 import ActionButtons from "./ActionButtons";
+import { getEntity, loadEntity } from "../reducers/entities";
 
 const List = (props) => {
     const api = useSecureRoute();
     const classes = useCSS();
     const navigate = useNavigation();
     const notify = useNotifier();
+    const crudData = useSelector(getCRUD);
+    const token = useSelector(getToken);
+    const crud = useSelector(getCRUD);
+    const entityDetails = useSelector(getEntity);
     const [cellFocus, setCellFocus] = React.useState(false);
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
@@ -29,6 +38,7 @@ const List = (props) => {
     const [triggerRefresh, setTriggerRefresh] = React.useState(false);
     const entity = props["path"];
     const module = entity.replace("/", "");
+    const dispatch = useDispatch();
 
     const noRowsMessage =
         "No " +
@@ -50,7 +60,7 @@ const List = (props) => {
         field[data.field] =
             (typeof event.target.type !== typeof undefined &&
                 event.target.type == "checkbox") ||
-            event.target.type == "radio"
+                event.target.type == "radio"
                 ? event.target.checked
                 : event.target.value;
         if (
@@ -85,9 +95,92 @@ const List = (props) => {
     };
 
     React.useEffect(() => {
-        api.get("/crud" + props["path"]).then((response) => {
-            const columnData = response.data.columns;
-            columnData.push({
+        const path = props?.path.slice(1);
+        dispatch(loadCRUD({ path: path, token: token }));
+        dispatch(loadEntity({ path: path, token: token }));
+        // api.get("/crud" + props["path"]).then((response) => {
+        //     const columnData = response.data.columns;
+        //     columnData.push({
+        //         field: "actions",
+        //         headerName: "ACTIONS",
+        //         headerClassName: "table-header-light",
+        //         flex: 1,
+        //         renderCell: (params) => (
+        //             <ActionButtons
+        //                 entity={params}
+        //                 module={module}
+        //                 refresh={() => setTriggerRefresh(!triggerRefresh)}
+        //             />
+        //         ),
+        //     });
+
+        //     api.get("/entity" + props["path"]).then((response) => {
+        //         const dataset = [];
+        //         setData(response.data.entity);
+
+        //         response.data.entity.data.map((data) => {
+        //             const rowdata = {};
+        //             const dataKeys = Object.keys(data);
+        //             const dataValues = Object.values(data);
+
+        //             dataKeys.forEach((parameter, index) => {
+        //                 dataValues[index]["field"] = parameter;
+        //                 rowdata[parameter] = dataValues[index].value;
+        //                 console.log("parameter", rowdata[parameter]);
+
+        //                 if (dataValues[index].type == "image") {
+        //                     columnData.forEach((column) => {
+        //                         if (column["field"] == parameter) {
+        //                             column["cellClassName"] =
+        //                                 "grid-image-column";
+        //                             column["renderCell"] = (params) => (
+        //                                 <ImageCell {...params} />
+        //                             );
+        //                         }
+        //                     });
+        //                 }
+        //                 if (dataValues[index].type == "switch") {
+        //                     columnData.forEach((column) => {
+        //                         if (column["field"] == parameter) {
+        //                             column["cellClassName"] =
+        //                                 "grid-image-column";
+        //                             column["renderCell"] = (params) => (
+        //                                 <>
+        //                                     <FormControlLabel
+        //                                         onChange={(event) =>
+        //                                             updateCell(event, params)
+        //                                         }
+        //                                         control={
+        //                                             <IOSSwitch
+        //                                                 sx={{ m: 1 }}
+        //                                                 checked={Boolean(
+        //                                                     params?.value
+        //                                                 )}
+        //                                             />
+        //                                         }
+        //                                         label=""
+        //                                     />
+        //                                 </>
+        //                             );
+        //                         }
+        //                     });
+        //                 }
+        //             });
+
+        //             dataset.push(rowdata);
+        //         });
+
+        //         setRows(dataset);
+        //         setColumns(columnData);
+        //     });
+        // });
+    }, [props["path"], triggerRefresh]);
+
+    React.useEffect(() => {
+        const dataset = [];
+        const columnData = [
+            ...crud?.columns,
+            {
                 field: "actions",
                 headerName: "ACTIONS",
                 headerClassName: "table-header-light",
@@ -99,69 +192,83 @@ const List = (props) => {
                         refresh={() => setTriggerRefresh(!triggerRefresh)}
                     />
                 ),
-            });
+            }];
 
-            api.get("/entity" + props["path"]).then((response) => {
-                const dataset = [];
-                setData(response.data.entity);
+        entityDetails?.entity?.data?.map((data) => {
+            const rowdata = {};
+            const dataKeys = Object.keys(data);
+            const dataValues = Object.values(data);
 
-                response.data.entity.data.map((data) => {
-                    const rowdata = {};
-                    const dataKeys = Object.keys(data);
-                    const dataValues = Object.values(data);
+            dataKeys.forEach((parameter, index) => {
+                // dataValues[index]["field"] = parameter; // check this code -TODO: PBX
+                rowdata[parameter] = dataValues[index].value;
+                console.log("parameter", rowdata[parameter]);
 
-                    dataKeys.forEach((parameter, index) => {
-                        dataValues[index]["field"] = parameter;
-                        rowdata[parameter] = dataValues[index].value;
-                        console.log("parameter", rowdata[parameter]);
-
-                        if (dataValues[index].type == "image") {
-                            columnData.forEach((column) => {
-                                if (column["field"] == parameter) {
-                                    column["cellClassName"] =
-                                        "grid-image-column";
-                                    column["renderCell"] = (params) => (
-                                        <ImageCell {...params} />
-                                    );
-                                }
-                            });
-                        }
-                        if (dataValues[index].type == "switch") {
-                            columnData.forEach((column) => {
-                                if (column["field"] == parameter) {
-                                    column["cellClassName"] =
-                                        "grid-image-column";
-                                    column["renderCell"] = (params) => (
-                                        <>
-                                            <FormControlLabel
-                                                onChange={(event) =>
-                                                    updateCell(event, params)
-                                                }
-                                                control={
-                                                    <IOSSwitch
-                                                        sx={{ m: 1 }}
-                                                        checked={Boolean(
-                                                            params?.value
-                                                        )}
-                                                    />
-                                                }
-                                                label=""
-                                            />
-                                        </>
-                                    );
-                                }
-                            });
+                if (dataValues[index].type == "image") {
+                    columnData.forEach((column) => {
+                        if (column["field"] == parameter) {
+                            column["cellClassName"] =
+                                "grid-image-column";
+                            column["renderCell"] = (params) => (
+                                <ImageCell {...params} />
+                            );
                         }
                     });
-
-                    dataset.push(rowdata);
-                });
-
-                setRows(dataset);
-                setColumns(columnData);
+                }
+                if (dataValues[index].type == "switch") {
+                    columnData.forEach((column) => {
+                        if (column["field"] == parameter) {
+                            column["cellClassName"] =
+                                "grid-image-column";
+                            column["renderCell"] = (params) => (
+                                <>
+                                    <FormControlLabel
+                                        onChange={(event) =>
+                                            updateCell(event, params)
+                                        }
+                                        control={
+                                            <IOSSwitch
+                                                sx={{ m: 1 }}
+                                                checked={Boolean(
+                                                    params?.value
+                                                )}
+                                            />
+                                        }
+                                        label=""
+                                    />
+                                </>
+                            );
+                        }
+                    });
+                }
             });
+
+            dataset.push(rowdata);
         });
-    }, [props["path"], triggerRefresh]);
+
+        setData(entityDetails?.entity);
+        setRows(dataset);
+        setColumns(columnData);
+    }, [crud, entityDetails]);
+
+    React.useEffect(() => {
+        const columnData = crudData.columns;
+        setColumns([
+            ...columnData,
+            {
+                field: "actions",
+                headerName: "ACTIONS",
+                headerClassName: "table-header-light",
+                flex: 1,
+                renderCell: (params) => (
+                    <ActionButtons
+                        entity={params}
+                        module={module}
+                        refresh={() => setTriggerRefresh(!triggerRefresh)}
+                    />
+                ),
+            }]);
+    }, [crudData]);
 
     return (
         <React.Fragment>

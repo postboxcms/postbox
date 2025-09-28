@@ -29,17 +29,17 @@ export const MainItems = React.memo((props) => {
         "crud",
         "settings",
     ];
-    const isOpen = !reservedRoutes.includes(location.pathname.split("/").pop());
+    const isEntityListLarge = entities?.entities?.length <= nav.maxEntityLimit;
+    const isOpen = !reservedRoutes.includes(location.pathname.split("/").pop()) || isEntityListLarge;
     const [open, setOpen] = useState(isOpen);
-    const [isHidden, setIsHidden] = useState(false);
+    const [isHidden, setIsHidden] = useState(isEntityListLarge);
     const [timeout, setTimeout] = useState("auto");
     const collapsePanel = () => {
         setOpen(!open);
     };
 
     React.useEffect(() => {
-        const totalEntities = entities?.entities?.length;
-        if (totalEntities <= nav.maxEntityLimit) {
+        if (isEntityListLarge) {
             setOpen(true);
             setIsHidden(true);
             setTimeout(0);
