@@ -23,6 +23,7 @@ import ActionButtons from "./ActionButtons";
 import { getEntity, loadEntity } from "../reducers/entities";
 
 const List = (props) => {
+    const dispatch = useDispatch();
     const api = useSecureRoute();
     const classes = useCSS();
     const navigate = useNavigation();
@@ -36,19 +37,19 @@ const List = (props) => {
     const [data, setData] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
     const [triggerRefresh, setTriggerRefresh] = React.useState(false);
-    const entity = props["path"];
+    const { title, name, path } = props;
+    const entity = path;
     const module = entity.replace("/", "");
-    const dispatch = useDispatch();
 
     const noRowsMessage =
         "No " +
-        (props["title"] ? props["title"] : props["name"]) +
+        (title ? title : name) +
         " added yet";
     const Icon =
         typeof data["icon"] !== typeof undefined ? data["icon"] : "square";
 
-    const addContent = (props) => {
-        navigate(`/${props["title"]?.toLowerCase()}/add`);
+    const addContent = () => {
+        navigate(`/${title?.toLowerCase()}/add`);
         console.log("add new content");
     };
 
@@ -95,86 +96,10 @@ const List = (props) => {
     };
 
     React.useEffect(() => {
-        const path = props?.path.slice(1);
+        const path = entity.slice(1);
         dispatch(loadCRUD({ path: path, token: token }));
         dispatch(loadEntity({ path: path, token: token }));
-        // api.get("/crud" + props["path"]).then((response) => {
-        //     const columnData = response.data.columns;
-        //     columnData.push({
-        //         field: "actions",
-        //         headerName: "ACTIONS",
-        //         headerClassName: "table-header-light",
-        //         flex: 1,
-        //         renderCell: (params) => (
-        //             <ActionButtons
-        //                 entity={params}
-        //                 module={module}
-        //                 refresh={() => setTriggerRefresh(!triggerRefresh)}
-        //             />
-        //         ),
-        //     });
-
-        //     api.get("/entity" + props["path"]).then((response) => {
-        //         const dataset = [];
-        //         setData(response.data.entity);
-
-        //         response.data.entity.data.map((data) => {
-        //             const rowdata = {};
-        //             const dataKeys = Object.keys(data);
-        //             const dataValues = Object.values(data);
-
-        //             dataKeys.forEach((parameter, index) => {
-        //                 dataValues[index]["field"] = parameter;
-        //                 rowdata[parameter] = dataValues[index].value;
-        //                 console.log("parameter", rowdata[parameter]);
-
-        //                 if (dataValues[index].type == "image") {
-        //                     columnData.forEach((column) => {
-        //                         if (column["field"] == parameter) {
-        //                             column["cellClassName"] =
-        //                                 "grid-image-column";
-        //                             column["renderCell"] = (params) => (
-        //                                 <ImageCell {...params} />
-        //                             );
-        //                         }
-        //                     });
-        //                 }
-        //                 if (dataValues[index].type == "switch") {
-        //                     columnData.forEach((column) => {
-        //                         if (column["field"] == parameter) {
-        //                             column["cellClassName"] =
-        //                                 "grid-image-column";
-        //                             column["renderCell"] = (params) => (
-        //                                 <>
-        //                                     <FormControlLabel
-        //                                         onChange={(event) =>
-        //                                             updateCell(event, params)
-        //                                         }
-        //                                         control={
-        //                                             <IOSSwitch
-        //                                                 sx={{ m: 1 }}
-        //                                                 checked={Boolean(
-        //                                                     params?.value
-        //                                                 )}
-        //                                             />
-        //                                         }
-        //                                         label=""
-        //                                     />
-        //                                 </>
-        //                             );
-        //                         }
-        //                     });
-        //                 }
-        //             });
-
-        //             dataset.push(rowdata);
-        //         });
-
-        //         setRows(dataset);
-        //         setColumns(columnData);
-        //     });
-        // });
-    }, [props["path"], triggerRefresh]);
+    }, [entity, triggerRefresh]);
 
     React.useEffect(() => {
         const dataset = [];
@@ -274,14 +199,14 @@ const List = (props) => {
         <React.Fragment>
             <div className={classes.header}>
                 <Title icon={Icon}>
-                    {props["title"] ? props["title"] : props["name"]}
+                    {title ? title : name}
                 </Title>
                 <ClassicButton
-                    onClick={() => addContent(props)}
+                    onClick={() => addContent()}
                     icon="fa-plus"
                     sx={{ float: "right", marginBottom: 1 }}
                 >
-                    Add {props["title"] ? props["title"] : props["name"]}
+                    Add {title ? title : name}
                 </ClassicButton>
             </div>
             <div className={classes.grid}>
