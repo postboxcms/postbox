@@ -99,7 +99,7 @@ const List = (props) => {
         const path = entity.slice(1);
         dispatch(loadCRUD({ path: path, token: token }));
         dispatch(loadEntity({ path: path, token: token }));
-    }, [entity, triggerRefresh]);
+    }, []);
 
     React.useEffect(() => {
         const dataset = [];
@@ -174,7 +174,7 @@ const List = (props) => {
         setData(entityDetails?.entity);
         setRows(dataset);
         setColumns(columnData);
-    }, [crud, entityDetails]);
+    }, [entityDetails]);
 
     React.useEffect(() => {
         const columnData = crudData.columns;

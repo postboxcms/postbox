@@ -17,18 +17,23 @@ const userSlice = createSlice({
         },
         setUserError: (state, action) => {
             state.error = action.payload;
+            state.status = "rejected";
         },
         setToken: (state, action) => {
             state.token = action.payload;
+            state.status = "fulfilled";
         },
         unsetToken: (state) => {
             state.token = null;
+            state.status = "fulfilled";
         },
         setUser: (state, action) => {
             state.user = action.payload;
+            state.status = "fulfilled";
         },
         unsetUser: (state) => {
             state.user = null;
+            state.status = "fulfilled";
         },
     },
 });

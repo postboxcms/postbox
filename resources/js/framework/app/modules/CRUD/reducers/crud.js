@@ -12,6 +12,7 @@ const crud = createSlice({
         },
         setCRUD: (state, action) => {
             state.data = action.payload;
+            state.status = "fulfilled";
         }
     }
 });

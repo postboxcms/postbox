@@ -16,9 +16,11 @@ const entities = createSlice({
         },
         setEntity: (state, action) => {
             state.details = action.payload;
+            state.status = "fulfilled";
         },
         setEntities: (state, action) => {
             state.types = action.payload;
+            state.status = "fulfilled";
         }
     }
 });

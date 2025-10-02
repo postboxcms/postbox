@@ -56,7 +56,7 @@ const DataProvider = ({ children }) => {
                 });
             });
         }
-    }, [hasUserAuthenticated, hasNotification]);
+    }, []);
 
     return <React.Fragment>{children}</React.Fragment>;
 };
