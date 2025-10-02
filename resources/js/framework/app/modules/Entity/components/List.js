@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import { FormControlLabel } from "@mui/material";
 
-import AddIcon from "@mui/icons-material/Add";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useNotifier, useNavigation, useSecureRoute, useCSS } from "@app/hooks";
@@ -35,7 +33,7 @@ const List = (props) => {
     const [cellFocus, setCellFocus] = React.useState(false);
     const [rows, setRows] = React.useState([]);
     const [data, setData] = React.useState([]);
-    const [columns, setColumns] = React.useState([]);
+    const [columns, setColumns] = React.useState(crudData?.columns || []);
     const [triggerRefresh, setTriggerRefresh] = React.useState(false);
     const { title, name, path } = props;
     const entity = path;
