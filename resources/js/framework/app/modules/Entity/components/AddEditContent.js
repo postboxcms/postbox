@@ -729,7 +729,7 @@ export const AddEditContent = ({ query, type }) => {
                                         }}
                                         variant="normal"
                                     >
-                                        {ucfirst(card.field)}
+                                        {ucfirst(card.alias || card.field)}
                                     </Title>
                                     {renderField(card)}
                                 </Panel>
@@ -740,7 +740,7 @@ export const AddEditContent = ({ query, type }) => {
                                 <Panel key={idx}>
                                     {/* Render field content here, e.g.: */}
                                     <Title variant="normal">
-                                        {ucfirst(card.field)}
+                                        {ucfirst(card.alias || card.field)}
                                     </Title>
                                     {renderField(card)}
                                 </Panel>

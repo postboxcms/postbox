@@ -97,7 +97,7 @@ const List = (props) => {
         const path = entity.slice(1);
         dispatch(loadCRUD({ path: path, token: token }));
         dispatch(loadEntity({ path: path, token: token }));
-    }, []);
+    }, [triggerRefresh]);
 
     React.useEffect(() => {
         const dataset = [];
