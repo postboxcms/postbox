@@ -6,7 +6,7 @@ import { FormControlLabel } from "@mui/material";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { useNotifier, useNavigation, useSecureRoute, useCSS } from "@app/hooks";
+import { useNotifier, useNavigation, useSecureRoute, useCSS, useAuth } from "@app/hooks";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
@@ -15,7 +15,6 @@ import NoRowsOverlay from "@ui/components/NoRowsOverlay";
 import Placeholder, { Loader } from "@ui/components/Placeholder";
 
 import { loadCRUD, getCRUD } from "@modules/CRUD/reducers/crud";
-import { getToken } from "@modules/Auth/reducers/user";
 
 import ActionButtons from "./ActionButtons";
 import { getEntity, loadEntity } from "../reducers/entities";
@@ -27,7 +26,7 @@ const List = (props) => {
     const navigate = useNavigation();
     const notify = useNotifier();
     const crudData = useSelector(getCRUD);
-    const token = useSelector(getToken);
+    const { token } = useAuth();
     const crud = useSelector(getCRUD);
     const entityDetails = useSelector(getEntity);
     const [cellFocus, setCellFocus] = React.useState(false);

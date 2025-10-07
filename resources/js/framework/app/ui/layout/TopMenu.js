@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 // material components
 import Menu from '@mui/material/Menu';
@@ -10,12 +10,12 @@ import Logout from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
 // libs
 import { api } from '@app/utils/constants';
-import { useNavigation } from '@app/hooks';
-import { getToken, logoutUser } from '@modules/Auth/reducers/user';
+import { useNavigation, useAuth } from '@app/hooks';
+import { logoutUser } from '@modules/Auth/reducers/user';
 
 export const TopMenu = (props) => {
     const navigate = useNavigation();
-    const token = useSelector(getToken);
+    const { token } = useAuth();
     const dispatch = useDispatch();
     const [anchor, setAnchor] = React.useState(null);
     const [dropdown, setDropdown] = React.useState(false);

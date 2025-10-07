@@ -13,18 +13,18 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { admin } from "@app/init/theme";
-import { useNotifier, useNavigation } from "@app/hooks";
+import { useNotifier, useNavigation, useAuth } from "@app/hooks";
 import { platform } from "@app/utils/constants";
 
 import Footer from "@ui/components/Footer";
 import ClassicButton from "@ui/elements/ClassicButton";
 import Logo from "@ui/elements/Logo";
 
-import { getToken, loginUser, getUser } from "./reducers/user";
+import { loginUser, getUser } from "./reducers/user";
 
 const Auth = () => {
     const user = useSelector(getUser);
-    const token = useSelector(getToken);
+    const { token } = useAuth();
     const notify = useNotifier();
     const navigate = useNavigation();
     const dispatch = useDispatch();

@@ -1,8 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setEntities } from "@modules/Entity/reducers/entities";
-import { useSecureRoute, useNotifier } from "@app/hooks";
-import { getToken } from "@modules/Auth/reducers/user";
+import { useSecureRoute, useNotifier, useAuth } from "@app/hooks";
 import {
     setWebsiteLogo,
     setWebsiteName,
@@ -16,7 +14,7 @@ const DataProvider = ({ children }) => {
     const api = useSecureRoute();
     const notification = useSelector(getNotification);
     const notify = useNotifier();
-    const token = useSelector(getToken);
+    const { token } = useAuth();
     const dispatch = useDispatch();
     const hasNotification = notification && notification.message !== '';
     const hasUserAuthenticated = token;
@@ -56,7 +54,7 @@ const DataProvider = ({ children }) => {
                 });
             });
         }
-    }, []);
+    }, [token]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };

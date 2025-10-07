@@ -5,3 +5,4 @@ export * from './navigation';
 export * from './notifications';
 export * from './modal';
 export * from './typography';
+export * from './auth';
