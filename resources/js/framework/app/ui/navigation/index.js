@@ -44,7 +44,7 @@ export const MainItems = React.memo((props) => {
             setIsHidden(true);
             setTimeout(0);
         }
-    }, []);
+    }, [entityList]);
 
     return (
         <React.Fragment>

@@ -43,7 +43,7 @@ const List = (props) => {
         (title ? title : name) +
         " added yet";
     const Icon =
-        typeof data["icon"] !== typeof undefined ? data["icon"] : "square";
+        typeof data?.icon !== typeof undefined ? data.icon : "square";
 
     const addContent = () => {
         navigate(`/${title?.toLowerCase()}/add`);
@@ -102,7 +102,7 @@ const List = (props) => {
         const updateColumns = [];
         const dataset = [];
         const columnData = [
-            ...crud?.columns,
+            ...crud?.columns || [],
             {
                 field: "actions",
                 headerName: "ACTIONS",
@@ -187,7 +187,7 @@ const List = (props) => {
     React.useEffect(() => {
         const columnData = crudData.columns;
         setColumns([
-            ...columnData,
+            ...columnData || [],
             {
                 field: "actions",
                 headerName: "ACTIONS",
