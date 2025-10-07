@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { FormControlLabel } from "@mui/material";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -69,7 +69,7 @@ const List = (props) => {
         ) {
             data.row[data.field] = field[data.field];
             setCellFocus(!cellFocus);
-            data.api.setCellFocus(cellFocus);
+            data.api.updateRows([data.row]);
         }
 
         saveField(Object.assign({}, field));
@@ -100,6 +100,7 @@ const List = (props) => {
     }, [triggerRefresh]);
 
     React.useEffect(() => {
+        const updateColumns = [];
         const dataset = [];
         const columnData = [
             ...crud?.columns,
@@ -128,39 +129,45 @@ const List = (props) => {
                 console.log("parameter", rowdata[parameter]);
 
                 if (dataValues[index].type == "image") {
-                    columnData.forEach((column) => {
+                    columnData.map((column) => {
                         if (column["field"] == parameter) {
-                            column["cellClassName"] =
-                                "grid-image-column";
-                            column["renderCell"] = (params) => (
-                                <ImageCell {...params} />
-                            );
+                            updateColumns.push({
+                                ...column,
+                                cellClassName: "grid-image-column",
+                                renderCell: (params) => (
+                                    <ImageCell {...params} />
+                                ),
+                            });
+                            columnData.splice(columnData.findIndex((col) => col.field === parameter), 1);
                         }
                     });
                 }
                 if (dataValues[index].type == "switch") {
-                    columnData.forEach((column) => {
+                    columnData.map((column) => {
                         if (column["field"] == parameter) {
-                            column["cellClassName"] =
-                                "grid-image-column";
-                            column["renderCell"] = (params) => (
-                                <>
-                                    <FormControlLabel
-                                        onChange={(event) =>
-                                            updateCell(event, params)
-                                        }
-                                        control={
-                                            <IOSSwitch
-                                                sx={{ m: 1 }}
-                                                checked={Boolean(
-                                                    params?.value
-                                                )}
-                                            />
-                                        }
-                                        label=""
-                                    />
-                                </>
-                            );
+                            updateColumns.push({
+                                ...column,
+                                cellClassName: "grid-image-column",
+                                renderCell: (params) => (
+                                    <>
+                                        <FormControlLabel
+                                            onChange={(event) => {
+                                                updateCell(event, params);
+                                            }}
+                                            control={
+                                                <IOSSwitch
+                                                    sx={{ m: 1 }}
+                                                    checked={Boolean(
+                                                        params?.value
+                                                    )}
+                                                />
+                                            }
+                                            label=""
+                                        />
+                                    </>
+                                ),
+                            });
+                            columnData.splice(columnData.findIndex((col) => col.field === parameter), 1);
                         }
                     });
                 }
@@ -171,7 +178,11 @@ const List = (props) => {
 
         setData(entityDetails?.entity);
         setRows(dataset);
-        setColumns(columnData);
+        if (updateColumns.length > 0) {
+            setColumns([...updateColumns, ...columnData]);
+        } else {
+            setColumns(columnData);
+        }
     }, [entityDetails]);
 
     React.useEffect(() => {
@@ -214,6 +225,14 @@ const List = (props) => {
                     pageSize={10}
                     checkboxSelection
                     disableSelectionOnClick
+                    sx={{
+                        [`& .${gridClasses.cell}:focus-within`]: {
+                            outline: 'none !important', // Removes the outline on focus
+                        },
+                        [`& .${gridClasses.columnHeader}:focus-within`]: {
+                            outline: 'none !important', // Removes the outline on header focus
+                        },
+                    }}
                     components={{
                         NoRowsOverlay: function () {
                             return (
