@@ -1,16 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { first, isEmpty } from "lodash";
 
 import {
     useCSS,
     useSecureRoute,
     useNotifier,
+    useAuth,
     ucfirst,
     singularize,
 } from "@app/hooks";
 
 import { getUser } from "@modules/Auth/reducers/user";
+import { loadCRUD } from "@modules/CRUD/reducers/crud";
 
 import SaveButton from "@ui/elements/SaveButton";
 import Panel from "@ui/components/Panel";
@@ -24,11 +26,15 @@ export const AddEditContent = ({ query, type }) => {
     const api = useSecureRoute();
     const notify = useNotifier();
     const user = useSelector(getUser);
+    const crud = useSelector((state) => state.crud.data);
+    const dispatch = useDispatch();
+    const { token } = useAuth();
     const [icon, setIcon] = React.useState("");
     const [pageTitle, setPageTitle] = React.useState("...");
     const [editorContent, setEditorContent] = React.useState({});
     const [image, setImage] = React.useState([]);
     const [multiline, setMultiline] = React.useState({});
+    const [fields, setFields] = React.useState([]);
     const [hiddenFields, setHiddenFields] = React.useState([]);
     const [leftCards, setLeftCards] = React.useState([]);
     const [entityData, setEntityData] = React.useState({});
@@ -139,12 +145,12 @@ export const AddEditContent = ({ query, type }) => {
         // This function should return the appropriate component based on the field type
         const generateSelectedOptions = (option) =>
             entityData &&
-            entityData[field.field] &&
-            entityData[field.field]?.value
+                entityData[field.field] &&
+                entityData[field.field]?.value
                 ? entityData[field.field].value
-                      .toString()
-                      .split("|")
-                      .includes(option.value)
+                    .toString()
+                    .split("|")
+                    .includes(option.value)
                 : false;
 
         switch (field.type) {
@@ -560,52 +566,46 @@ export const AddEditContent = ({ query, type }) => {
     };
 
     const processFields = React.useCallback(() => {
-        api.get(`/crud/${type}`)
-            .then((response) => {
-                console.log("Fields response:", response);
-                if (response?.data?.fields) {
-                    setEntityData(first(response.data?.entity?.data || []));
-                    response.data.fields.filter((field) => {
-                        if (
-                            field.position !== "hidden" &&
-                            field.position == "left"
-                        ) {
-                            setLeftCards((prevFields) => [
-                                ...prevFields,
-                                field,
-                            ]);
-                            return true;
-                        }
-                        if (
-                            field.position !== "hidden" &&
-                            field.position == "right"
-                        ) {
-                            setRightCards((prevFields) => [
-                                ...prevFields,
-                                field,
-                            ]);
-                            return true;
-                        }
-                        if (field.type === "hidden" || field.type === "user") {
-                            if (field.type === "user" && user) {
-                                field.value = user.id; // Set user ID if available
-                            }
-                            setHiddenFields((prevFields) => [
-                                ...prevFields,
-                                field,
-                            ]);
-                            return false;
-                        }
-                    });
-                    setIcon(response.data?.icon || "");
+        dispatch(loadCRUD({ path: type, token: token }));
+        const response = crud;
+        console.log("Fields response:", response);
+        if (response?.fields) {
+            setEntityData(first(response?.entity?.data || []));
+            response.fields.filter((field) => {
+                if (
+                    field.position !== "hidden" &&
+                    field.position == "left"
+                ) {
+                    setLeftCards((prevFields) => [
+                        ...prevFields,
+                        field,
+                    ]);
+                    return true;
                 }
-                return [];
-            })
-            .catch((error) => {
-                console.error("Error fetching fields:", error);
-                return [];
+                if (
+                    field.position !== "hidden" &&
+                    field.position == "right"
+                ) {
+                    setRightCards((prevFields) => [
+                        ...prevFields,
+                        field,
+                    ]);
+                    return true;
+                }
+                if (field.type === "hidden" || field.type === "user") {
+                    if (field.type === "user" && user) {
+                        field.value = user.id; // Set user ID if available
+                    }
+                    setHiddenFields((prevFields) => [
+                        ...prevFields,
+                        field,
+                    ]); return false;
+                }
             });
-    }, [api, type]);
+            setIcon(response?.icon || "");
+        }
+        return [];
+    }, [api, type, crud]);
 
     const processTitle = React.useCallback(() => {
         switch (query) {
@@ -667,7 +667,7 @@ export const AddEditContent = ({ query, type }) => {
                         console.log("Content updated successfully:", response);
                         notify(
                             response.data.message ||
-                                "Content updated successfully!"
+                            "Content updated successfully!"
                         );
                     })
                     .catch((error) => {
@@ -675,7 +675,7 @@ export const AddEditContent = ({ query, type }) => {
                         console.error("Error updating content:", error);
                         notify(
                             error.response?.data?.message ||
-                                "Error while updating content",
+                            "Error while updating content",
                             "error"
                         );
                     });
@@ -686,7 +686,7 @@ export const AddEditContent = ({ query, type }) => {
                         console.log("Content saved successfully:", response);
                         notify(
                             response.data.message ||
-                                "Content saved successfully!"
+                            "Content saved successfully!"
                         );
                     })
                     .catch((error) => {
@@ -694,7 +694,7 @@ export const AddEditContent = ({ query, type }) => {
                         console.error("Error saving content:", error);
                         notify(
                             error.response?.data?.message ||
-                                "Error while saving content",
+                            "Error while saving content",
                             "error"
                         );
                     });

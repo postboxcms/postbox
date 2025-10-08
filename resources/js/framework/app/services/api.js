@@ -51,8 +51,8 @@ export const fetchCRUD = async (data) => {
     try {
         const modifiedPath = path !== "" ? `/crud/${path}` : "/crud";
         const response = await axios.get(`${api.url}${modifiedPath}`, setHeaders(token));
-        if (response.data?.columns && response.data?.columns.length >= 0) {
-            return { columns: response.data.columns };
+        if (response.data?.columns && response.data?.columns.length >= 0 && response.data?.fields && response.data?.fields.length >= 0) {
+            return { columns: response.data.columns, fields: response.data.fields};
         }
         if (response.data?.entities && response.data?.entities.length >= 0) {
             return { entities: response.data.entities };
