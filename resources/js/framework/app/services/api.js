@@ -49,8 +49,15 @@ export const fetchEntity = async (data) => {
 export const fetchCRUD = async (data) => {
     const { path, token } = data;
     try {
-        const response = await axios.get(`${api.url}/crud/${path}`, setHeaders(token));
-        return { columns: response.data.columns };
+        const modifiedPath = path !== "" ? `/crud/${path}` : "/crud";
+        const response = await axios.get(`${api.url}${modifiedPath}`, setHeaders(token));
+        if (response.data?.columns && response.data?.columns.length >= 0) {
+            return { columns: response.data.columns };
+        }
+        if (response.data?.entities && response.data?.entities.length >= 0) {
+            return { entities: response.data.entities };
+        }
+        return response.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");
     }

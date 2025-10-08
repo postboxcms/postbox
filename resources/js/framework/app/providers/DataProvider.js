@@ -16,7 +16,7 @@ const DataProvider = ({ children }) => {
     const notify = useNotifier();
     const { token } = useAuth();
     const dispatch = useDispatch();
-    const hasNotification = notification && notification.message !== '';
+    const hasNotification = notification !== undefined && notification.message !== '';
     const hasUserAuthenticated = token;
     const hasAdminRoute = window.location.href.includes('/admin') ? true : false;
 
@@ -27,7 +27,8 @@ const DataProvider = ({ children }) => {
         if (hasNotification) {
             if (notification.type == "error") {
                 notify(notification.message, "error");
-            } else {
+            }
+            if (notification.type == "message") {
                 notify(notification.message);
             }
         }
