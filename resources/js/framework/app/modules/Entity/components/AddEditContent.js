@@ -13,6 +13,7 @@ import {
 
 import { getUser } from "@modules/Auth/reducers/user";
 import { loadCRUD } from "@modules/CRUD/reducers/crud";
+import { loadEntity } from "@modules/Entity/reducers/entities";
 
 import SaveButton from "@ui/elements/SaveButton";
 import Panel from "@ui/components/Panel";
@@ -27,6 +28,8 @@ export const AddEditContent = ({ query, type }) => {
     const notify = useNotifier();
     const user = useSelector(getUser);
     const crud = useSelector((state) => state.crud.data);
+    const status = useSelector((state) => state.crud.status);
+    const entity = useSelector((state) => state.entities);
     const dispatch = useDispatch();
     const { token } = useAuth();
     const [icon, setIcon] = React.useState("");
@@ -37,7 +40,7 @@ export const AddEditContent = ({ query, type }) => {
     const [fields, setFields] = React.useState([]);
     const [hiddenFields, setHiddenFields] = React.useState([]);
     const [leftCards, setLeftCards] = React.useState([]);
-    const [entityData, setEntityData] = React.useState({});
+    const [entityData, setEntityData] = React.useState(entity?.details);
     const [rightCards, setRightCards] = React.useState([]);
     const [error, setError] = React.useState(false);
 
@@ -92,12 +95,12 @@ export const AddEditContent = ({ query, type }) => {
     const generateFieldValue = React.useCallback(
         (field) => {
             // Get the value of a field from entityData or return an empty string if not found
-            if (entityData) {
+            if (entityData && status === "fulfilled") {
                 return entityData[field]?.value;
             }
             return;
         },
-        [entityData]
+        [entityData, status]
     );
 
     const updateEntityData = (event) => {
@@ -567,11 +570,10 @@ export const AddEditContent = ({ query, type }) => {
 
     const processFields = React.useCallback(() => {
         dispatch(loadCRUD({ path: type, token: token }));
-        const response = crud;
-        console.log("Fields response:", response);
-        if (response?.fields) {
-            setEntityData(first(response?.entity?.data || []));
-            response.fields.filter((field) => {
+        console.log("Fields response:", crud);
+        if (crud?.fields && status === "fulfilled") {
+            setEntityData(first(crud?.entity?.data || []));
+            crud.fields.filter((field) => {
                 if (
                     field.position !== "hidden" &&
                     field.position == "left"
@@ -602,7 +604,7 @@ export const AddEditContent = ({ query, type }) => {
                     ]); return false;
                 }
             });
-            setIcon(response?.icon || "");
+            setIcon(crud?.icon || "");
         }
         return [];
     }, [api, type, crud]);
@@ -627,22 +629,22 @@ export const AddEditContent = ({ query, type }) => {
             const entityId = new URLSearchParams(window.location.search).get(
                 "eid"
             );
-            api.get(`/entity/${type}?eid=${entityId}`)
-                .then((response) => {
-                    console.log("Entity response:", response);
-                    if (response?.data) {
-                        // Populate fields with entity data
-                        console.log("Entity data:", response.data);
-                        setEntityData(first(response.data?.entity?.data || []));
-                        notify("Entity data fetched successfully", "success");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error fetching entity data:", error);
-                    notify("Error fetching entity data", "error");
-                });
+            try {
+                dispatch(loadEntity({ path: type, token: token, eid: entityId }));
+                const response = { data: entity?.details };
+                console.log("Entity response:", response);
+                if (response?.data) {
+                    // Populate fields with entity data
+                    console.log("Entity data:", response.data);
+                    setEntityData(first(response.data?.entity?.data || []));
+                    notify("Entity data fetched successfully", "success");
+                }
+            } catch (error) {
+                console.error("Error fetching entity data:", error);
+                notify("Error fetching entity data", "error");
+            }
         }
-    }, [api, query, type, leftCards, rightCards, notify]);
+    }, [entity, api, query, type, leftCards, rightCards, notify]);
 
     const saveContent = () => {
         return (e) => {

@@ -18,6 +18,7 @@ function* processEntity(action) {
     try {
         const status = yield select((state) => state.entities.status);
         if (status !== "pending") return;
+        yield put(setEntity([])); // Reset previous entity details
         const data = yield call(fetchEntity, action.payload);
         yield put(setEntity(data));
     } catch (e) {

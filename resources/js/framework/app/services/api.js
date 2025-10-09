@@ -38,8 +38,9 @@ export const fetchEntities = async (token) => {
 
 export const fetchEntity = async (data) => {
     try {
-        const { path, token } = data;
-        const response = await axios.get(`${api.url}/entity/${path}`, setHeaders(token));
+        const { path, token, eid } = data;
+        const modifiedPath = eid ? `${path}?eid=${eid}` : path;
+        const response = await axios.get(`${api.url}/entity/${modifiedPath}`, setHeaders(token));
         return response.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");
@@ -52,7 +53,7 @@ export const fetchCRUD = async (data) => {
         const modifiedPath = path !== "" ? `/crud/${path}` : "/crud";
         const response = await axios.get(`${api.url}${modifiedPath}`, setHeaders(token));
         if (response.data?.columns && response.data?.columns.length >= 0 && response.data?.fields && response.data?.fields.length >= 0) {
-            return { columns: response.data.columns, fields: response.data.fields};
+            return { columns: response.data.columns, fields: response.data.fields, icon: response.data.icon || null };
         }
         if (response.data?.entities && response.data?.entities.length >= 0) {
             return { entities: response.data.entities };

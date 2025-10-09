@@ -75,9 +75,10 @@ const List = (props) => {
     };
 
     const saveField = (data) => {
-        api.put(`/entity/${module}`, data).then((response) =>
-            notify(response.data.message)
-        );
+        api.put(`/entity/${module}`, data).then((response) => {
+            dispatch(loadEntity({ path: entity.slice(1), token: token }));
+            notify(response.data.message);
+        });
     };
 
     const ImageCell = (params) => {
