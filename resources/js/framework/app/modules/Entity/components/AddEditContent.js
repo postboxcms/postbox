@@ -319,7 +319,7 @@ export const AddEditContent = ({ query, type }) => {
                         InputProps={{
                             inputProps: { "aria-label": field.label },
                         }}
-                        placeholder={field.field}
+                        placeholder={field.alias || field.field}
                     />
                 );
             case "file":
@@ -637,7 +637,7 @@ export const AddEditContent = ({ query, type }) => {
                     // Populate fields with entity data
                     console.log("Entity data:", response.data);
                     setEntityData(first(response.data?.entity?.data || []));
-                    notify("Entity data fetched successfully", "success");
+                    // notify("Entity data fetched successfully", "message");
                 }
             } catch (error) {
                 console.error("Error fetching entity data:", error);

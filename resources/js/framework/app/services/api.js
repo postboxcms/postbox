@@ -63,3 +63,13 @@ export const fetchCRUD = async (data) => {
         throw new Error(e.response.data.message || "Something went wrong");
     }
 }
+
+export const modifyEntity = async (payload) => {
+    try {
+        const { path, token, data, method } = payload;
+        const response = await axios[method](`${api.url}/entity/${path}`, data, setHeaders(token));
+        return response.data;
+    } catch (e) {
+        throw new Error(e.response.data.message || "Something went wrong");
+    };
+}

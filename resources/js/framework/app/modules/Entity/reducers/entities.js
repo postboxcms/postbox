@@ -21,12 +21,15 @@ const entities = createSlice({
         setEntities: (state, action) => {
             state.types = action.payload;
             state.status = "fulfilled";
-        }
+        },
+        updateEntity: (state) => {
+            state.status = "pending";
+        },
     }
 });
 
 export const getEntities = (state) => state.entities.types;
 export const getEntity = (state) => state.entities.details;
-export const { setEntities, setEntity, loadEntities, loadEntity } = entities.actions;
+export const { setEntities, setEntity, loadEntities, loadEntity, updateEntity } = entities.actions;
 
 export default entities.reducer;

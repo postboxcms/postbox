@@ -17,7 +17,7 @@ import Placeholder, { Loader } from "@ui/components/Placeholder";
 import { loadCRUD, getCRUD } from "@modules/CRUD/reducers/crud";
 
 import ActionButtons from "./ActionButtons";
-import { getEntity, loadEntity } from "../reducers/entities";
+import { getEntity, loadEntity, updateEntity } from "@modules/Entity/reducers/entities";
 
 const List = (props) => {
     const dispatch = useDispatch();
@@ -71,14 +71,8 @@ const List = (props) => {
             data.api.updateRows([data.row]);
         }
 
-        saveField(Object.assign({}, field));
-    };
-
-    const saveField = (data) => {
-        api.put(`/entity/${module}`, data).then((response) => {
-            dispatch(loadEntity({ path: entity.slice(1), token: token }));
-            notify(response.data.message);
-        });
+        const payload = Object.assign({}, field);
+        dispatch(updateEntity({ path: module, token: token, data: payload, method: "put" }));
     };
 
     const ImageCell = (params) => {
