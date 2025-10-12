@@ -69,7 +69,6 @@ const Auth = () => {
                             "url(https://picsum.photos/seed/" +
                             randomWord +
                             "/1920/1080)",
-                        // backgroundImage: 'url('+process.env.MIX_APP_URL+'/background.jpg)',
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
                             t.palette.mode === "light"
