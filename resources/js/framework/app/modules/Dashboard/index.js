@@ -18,7 +18,17 @@ const Dashboard = (props) => {
             <Placeholder repeat={3} map={entities}>
                 <Card xs={12} md={4} lg={4}>
                     <Body height="fixed">
-                        <Loader lines={4} />
+                        <div style={{ display: 'flex', flexDirection: "row", alignItems: 'left' }}>
+                            <div style={{ display: 'flex', flex: "1 0", width: "30%", flexDirection: "column", alignItems: 'left' }}>
+                                <Loader variant="text" height={40} width="30%" />
+                                <Loader variant="circular" height={50} width={50} />
+                                <Loader variant="text" height={20} width="20%"  />
+                                <Loader variant="text" height={20} width="20%" />
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: "column", alignItems: 'end' }}>
+                                <Loader variant="rounded" height={60} width={60} />
+                            </div>
+                        </div>
                     </Body>
                 </Card>
             </Placeholder>
