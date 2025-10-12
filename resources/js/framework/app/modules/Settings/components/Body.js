@@ -76,7 +76,6 @@ const Body = (props) => {
                 dispatch(setWebsiteName(name));
                 dispatch(setWebsiteTitle(title));
                 dispatch(setWebsiteStatus(isProductionReady));
-                dispatch(setWebsiteStatus(isProductionReady));
                 if (responseLogo) {
                     dispatch(setWebsiteLogo(responseLogo));
                 }
