@@ -32,8 +32,9 @@ const Auth = () => {
 
     const doLogin = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const { email, password } = Object.fromEntries(data);
+        const formdata = new FormData(event.currentTarget);
+        const data = Object.fromEntries(formdata);
+        const { email, password } = data;
         if (!isEmpty(email) && !isEmpty(password)) {
             try {
                 dispatch(loginUser(data));

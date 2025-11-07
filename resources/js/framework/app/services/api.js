@@ -9,67 +9,31 @@ const setHeaders = (token) => {
         }
     }
 }
-export const authenticateUser = async (data) => {
-    try {
-        const response = await axios.post(`${api.url}/login`, data);
-        return { user: response.data.user, token: response.data.token, message: response.data.message };
+
+export const postRequest = async (data) => {
+    try {4
+        const response = await axios.post(`${api.url}/${data.endpoint}`, data, setHeaders(data.token));
+        return response?.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");
     };
 }
 
-export const unAuthenticateUser = async (token) => {
+export const getRequest = async (data) => {
     try {
-        const response = await axios.post(`${api.url}/logout`, {}, setHeaders(token));
-        return { user: response.data.user, token: token };
-    } catch (e) {
-        throw new Error(e.response.data.message || "Something went wrong");
-    }
-}
-
-export const fetchEntities = async (token) => {
-    try {
-        const response = await axios.get(`${api.url}/entity`, setHeaders(token));
-        return response.data;
+        const response = await axios.get(`${api.url}/${data.endpoint}`, setHeaders(data.token));
+        return response?.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");
     };
 }
 
-export const fetchEntity = async (data) => {
+export const updateRequest = async (payload) => {
     try {
-        const { path, token, eid } = data;
-        const modifiedPath = eid ? `${path}?eid=${eid}` : path;
-        const response = await axios.get(`${api.url}/entity/${modifiedPath}`, setHeaders(token));
-        return response.data;
-    } catch (e) {
-        throw new Error(e.response.data.message || "Something went wrong");
-    };
-}
-
-export const fetchCRUD = async (data) => {
-    const { path, token } = data;
-    try {
-        const modifiedPath = path !== "" ? `/crud/${path}` : "/crud";
-        const response = await axios.get(`${api.url}${modifiedPath}`, setHeaders(token));
-        if (response.data?.columns && response.data?.columns.length >= 0 && response.data?.fields && response.data?.fields.length >= 0) {
-            return { columns: response.data.columns, fields: response.data.fields, icon: response.data.icon || null };
-        }
-        if (response.data?.entities && response.data?.entities.length >= 0) {
-            return { entities: response.data.entities };
-        }
+        const  { endpoint, token, data, method } = payload;
+        const response = await axios[method](`${api.url}/${endpoint}`, data, setHeaders(token));
         return response.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");
     }
-}
-
-export const modifyEntity = async (payload) => {
-    try {
-        const { path, token, data, method } = payload;
-        const response = await axios[method](`${api.url}/entity/${path}`, data, setHeaders(token));
-        return response.data;
-    } catch (e) {
-        throw new Error(e.response.data.message || "Something went wrong");
-    };
 }

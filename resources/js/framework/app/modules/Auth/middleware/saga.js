@@ -1,24 +1,24 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { authenticateUser, unAuthenticateUser } from "@app/services/api";
+import { postRequest } from "@app/services/api";
 import { loginUser, logoutUser, setUser, unsetToken, unsetUser, setUserError, setToken } from "@modules/Auth/reducers/user";
 import { setNotification } from "@modules/Settings/reducers/platform";
 
 function* processLogin(action) {
     try {
-        const data = yield call(authenticateUser, action.payload);
+        const data = yield call(postRequest, {...action.payload, endpoint: 'login'});
         yield put(setUser(data.user));
         yield put(setToken(data.token));
-        yield put(setNotification({message: data.message, type: 'message'}));
+        yield put(setNotification({ message: data.message, type: 'message' }));
     } catch (e) {
         yield put(setUser(null));
         yield put(setToken(null));
-        yield put(setNotification({message: e.message, type: 'error'}));
+        yield put(setNotification({ message: e.message, type: 'error' }));
     }
 }
 
 function* processLogout(action) {
     try {
-        const data = yield call(unAuthenticateUser, action.payload);
+        const data = yield call(postRequest, {endpoint: 'logout', token: action.payload});
         yield put(unsetToken(data.token));
         yield put(unsetUser(data.user));
     } catch (e) {
