@@ -10,6 +10,9 @@ const crud = createSlice({
         loadCRUD: (state) => {
             state.status = "pending";
         },
+        storeCRUD: (state) => {
+            state.status = "pending";
+        },
         setCRUD: (state, action) => {
             state.data = action.payload;
             state.status = "fulfilled";
@@ -18,6 +21,6 @@ const crud = createSlice({
 });
 
 export const getCRUD = (state) => state.crud.data;
-export const { setCRUD, loadCRUD } = crud.actions;
+export const { storeCRUD, setCRUD, loadCRUD } = crud.actions;
 
 export default crud.reducer;
