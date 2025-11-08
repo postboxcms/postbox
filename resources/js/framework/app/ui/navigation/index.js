@@ -23,28 +23,28 @@ import { getEntities } from "@modules/Entity/reducers/entities";
 
 export const MainItems = React.memo((props) => {
     const location = useLocation();
-    const entities = useSelector(getEntities);
+    const entityList = useSelector(getEntities);
     const reservedRoutes = [
         api.adminPrefix.split("/").pop(),
         "crud",
         "settings",
     ];
-    const isOpen = !reservedRoutes.includes(location.pathname.split("/").pop());
+    const isEntityListLarge = entityList?.entities?.length <= nav.maxEntityLimit;
+    const isOpen = !reservedRoutes.includes(location.pathname.split("/").pop()) || isEntityListLarge;
     const [open, setOpen] = useState(isOpen);
-    const [isHidden, setIsHidden] = useState(false);
+    const [isHidden, setIsHidden] = useState(isEntityListLarge);
     const [timeout, setTimeout] = useState("auto");
     const collapsePanel = () => {
         setOpen(!open);
     };
 
     React.useEffect(() => {
-        const totalEntities = entities?.entities?.length;
-        if (totalEntities <= nav.maxEntityLimit) {
+        if (isEntityListLarge) {
             setOpen(true);
             setIsHidden(true);
             setTimeout(0);
         }
-    }, []);
+    }, [entityList]);
 
     return (
         <React.Fragment>
@@ -68,7 +68,7 @@ export const MainItems = React.memo((props) => {
                 </NavLink>
                 <Collapse in={open} timeout={timeout}>
                     <List component="div" disablePadding>
-                        {entities?.entities?.map((data) => {
+                        {entityList?.entities?.map((data) => {
                             return (
                                 <NavLink
                                     title={data["name"]}

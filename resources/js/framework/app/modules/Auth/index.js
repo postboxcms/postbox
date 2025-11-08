@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
 
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,69 +13,48 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { admin } from "@app/init/theme";
-import { api } from "@app/utils/constants";
-import { useSecureRoute, useNotifier, useNavigation } from "@app/hooks";
+import { useNotifier, useNavigation, useAuth } from "@app/hooks";
 import { platform } from "@app/utils/constants";
 
 import Footer from "@ui/components/Footer";
 import ClassicButton from "@ui/elements/ClassicButton";
 import Logo from "@ui/elements/Logo";
 
-import {
-    setToken,
-    setUser,
-    unsetToken,
-    getToken,
-    unsetUser,
-    getUser,
-    loginUser,
-    logoutUser,
-} from "./reducers/user";
+import { loginUser, getUser } from "./reducers/user";
 
-const Auth = (props) => {
-    const auth = useSecureRoute();
-    const token = useSelector(getToken);
+const Auth = () => {
     const user = useSelector(getUser);
+    const { token } = useAuth();
     const notify = useNotifier();
-    const dispatch = useDispatch();
     const navigate = useNavigation();
+    const dispatch = useDispatch();
     const randomWord = (Math.random() + 1).toString(36).substring(7);
 
     const doLogin = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        dispatch(loginUser(data));
-        // eslint-disable-next-line no-console
-        // auth.post("/login", data)
-        //     .then((response) => {
-        //         const token = response.data.token;
-        //         const user = response.data.user;
-        //         dispatch(setToken(token));
-        //         dispatch(setUser(user));
-        //         navigate("/");
-        //         notify("Login successful");
-        //     })
-        //     .catch((error) => {
-        //         const message = error?.response?.data.message;
-        //         notify(
-        //             message === undefined ? "Something went wrong" : message,
-        //             "error"
-        //         );
-        //     });
+        const formdata = new FormData(event.currentTarget);
+        const data = Object.fromEntries(formdata);
+        const { email, password } = data;
+        if (!isEmpty(email) && !isEmpty(password)) {
+            try {
+                dispatch(loginUser(data));
+            } catch (e) {
+                const message = e?.response?.data.message;
+                notify(
+                    message === undefined ? "Something went wrong" : message,
+                    "error"
+                );
+            }
+        } else {
+            notify('Please provide your email and password', 'error');
+        }
     };
 
-    // React.useEffect(() => {
-        // console.log("propsmode:", props.mode);
-        // console.log("propstoken:", token);
-        // if (props.mode == "logout") {
-            // navigate(api.loginUrl);
-            // auth.post("/logout", {}).then(() => {
-            //     dispatch(unsetToken(token));
-            //     dispatch(unsetUser(user));
-            //     navigate(api.loginUrl);
-            // });
-    //     }
-    // }, []);
+    React.useEffect(() => {
+        if (user && token) {
+            navigate("/");
+        }
+    },[user,token]);
 
     return (
         <ThemeProvider theme={admin}>
@@ -90,7 +70,6 @@ const Auth = (props) => {
                             "url(https://picsum.photos/seed/" +
                             randomWord +
                             "/1920/1080)",
-                        // backgroundImage: 'url('+process.env.MIX_APP_URL+'/background.jpg)',
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
                             t.palette.mode === "light"

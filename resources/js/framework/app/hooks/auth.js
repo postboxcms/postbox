@@ -1,0 +1,21 @@
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+export const useAuth = () => {
+    const token = useSelector((state) => state.auth.token);
+    const dispatch = useDispatch();
+
+    const login = (token) => {
+        dispatch({ type: "LOGIN", payload: token });
+    };
+
+    const logout = () => {
+        dispatch({ type: "LOGOUT" });
+    };
+
+    return {
+        token,
+        login,
+        logout,
+    };
+}

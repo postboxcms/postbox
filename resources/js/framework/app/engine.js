@@ -22,31 +22,29 @@ import EntityRoutes from "@app/routes/EntityRoutes";
 /** React router to setup UI routes */
 const Engine = () => {
     return (
-        <React.StrictMode>
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <DataProvider>
-                        <Router history={history}>
-                            {/* public routes */}
-                            <AuthRoutes />
-                            {/* admin private routes */}
-                            <AdminRoutes />
-                            {/* entity routes */}
-                            <EntityRoutes />
-                            <Switch>
-                                <PublicRoute
-                                    restricted={true}
-                                    filter={api.adminPrefix}
-                                    path="*"
-                                >
-                                    <Website controller={Theme} />
-                                </PublicRoute>
-                            </Switch>
-                        </Router>
-                    </DataProvider>
-                </PersistGate>
-            </Provider>
-        </React.StrictMode>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <DataProvider>
+                    <Router history={history}>
+                        {/* public routes */}
+                        <AuthRoutes />
+                        {/* admin private routes */}
+                        <AdminRoutes />
+                        {/* entity routes */}
+                        <EntityRoutes />
+                        <Switch>
+                            <PublicRoute
+                                restricted={true}
+                                filter={api.adminPrefix}
+                                path="*"
+                            >
+                                <Website controller={Theme} />
+                            </PublicRoute>
+                        </Switch>
+                    </Router>
+                </DataProvider>
+            </PersistGate>
+        </Provider>
     );
 };
 

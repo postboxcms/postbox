@@ -1,24 +1,44 @@
 import axios from "axios";
 import { api } from "@app/utils/constants";
 
-export const authenticateUser = async (data) => {
+
+const setHeaders = (token) => {
+    return {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }
+}
+
+export const postRequest = async (data) => {
     try {
-        const response = await axios.post(`${api.url}/login`, data);
-        return { user: response.data.user, token: response.data.token };
-    } catch (error) {
-        throw new Error(error.response.data.message || "Something went wrong");
+        if (data instanceof FormData) {
+            const { token, endpoint } = Object.fromEntries(data);
+            const response = await axios.post(`${api.url}/${endpoint}`, data, setHeaders(token));
+            return response?.data;
+        }
+        const response = await axios.post(`${api.url}/${data.endpoint}`, data, setHeaders(data.token));
+        return response?.data;
+    } catch (e) {
+        throw new Error(e.response.data.message || "Something went wrong");
     };
 }
 
-export const unAuthenticateUser = async (token) => {
+export const getRequest = async (data) => {
     try {
-        const response = await axios.post(`${api.url}/logout`, {}, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        });
-        return { user: response.data.user, token: token };
-    } catch (error) {
-        throw new Error(error.response.data.message || "Something went wrong");
+        const response = await axios.get(`${api.url}/${data.endpoint}`, setHeaders(data.token));
+        return response?.data;
+    } catch (e) {
+        throw new Error(e.response.data.message || "Something went wrong");
+    };
+}
+
+export const updateRequest = async (payload) => {
+    try {
+        const  { endpoint, token, data, method } = payload;
+        const response = await axios[method](`${api.url}/${endpoint}`, data, setHeaders(token));
+        return response.data;
+    } catch (e) {
+        throw new Error(e.response.data.message || "Something went wrong");
     }
 }

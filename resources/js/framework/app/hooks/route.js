@@ -1,10 +1,9 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { api, cms } from "@app/utils/constants";
-import { getToken } from "@modules/Auth/reducers/user";
+import { useAuth } from "@app/hooks";
 
 export const useSecureRoute = () => {
-    const token = useSelector(getToken);
+    const { token } = useAuth();
 
     const get = (url, payload) => {
         return axios.get(api.url + url, {
@@ -57,7 +56,7 @@ export const useSecureRoute = () => {
 };
 
 export const useCMSRoute = () => {
-    const token = useSelector(getToken);
+    const { token } = useAuth();
 
     const get = (url) => {
         return axios.get(cms.url + url, {

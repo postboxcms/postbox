@@ -1,4 +1,4 @@
-## Notes
+## Specifications
 * Laravel framework: 8.0
 * Laravel UI preset: React `[php artisan ui react]`
 * Components:
@@ -11,5 +11,6 @@
 * HomeComponent:
   * Loads individual components with their cards
 
-### Dashboard Component
-* Wrapper component or master component, applies theme layout and custom css, alongwith primary or brand colors
+## Components
+### Dashboard
+  * Wrapper component or master component, applies theme layout and custom css, alongwith primary or brand colors

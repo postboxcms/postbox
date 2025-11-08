@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { forEach, get } from "lodash";
 import { Grid } from "@mui/material";
-import { useNotifier, useCMSRoute, useSecureRoute } from "@app/hooks";
+import { useNotifier, useCMSRoute, useSecureRoute, useAuth } from "@app/hooks";
+import { storeCRUD } from "@modules/CRUD/reducers/crud";
 import Form from "@ui/components/Form";
 import SaveButton from "@ui/elements/SaveButton";
 import ClassicButton from "@ui/elements/ClassicButton";
@@ -14,6 +16,8 @@ export const AddEditField = (props) => {
     const notify = useNotifier();
     const cms = useCMSRoute();
     const api = useSecureRoute();
+    const dispatch = useDispatch();
+    const { token } = useAuth();
     const [field, setField] = React.useState("");
     const [options, setOptions] = React.useState([]);
     const [isOptionIsURL, setIsOptionIsURL] = React.useState(false);
@@ -135,13 +139,11 @@ export const AddEditField = (props) => {
                             },
                             {
                                 table: table,
+                                token: token,
+                                onClose: onClose,
                             }
                         );
-
-                        api.post("/crud", crudPayload).then((response) => {
-                            notify(response.data.message);
-                            onClose();
-                        });
+                        dispatch(storeCRUD(crudPayload));
                     })
                     .catch((error) => {
                         console.error(

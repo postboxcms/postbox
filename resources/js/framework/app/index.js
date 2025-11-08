@@ -4,9 +4,11 @@ import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { setup } from "@app/init";
 import Engine from "@app/engine";
 
-if (document.getElementById("app")) {
+const appRoot = document.getElementById("app");
+
+if (appRoot) {
     const { theme } = setup();
-    const app = createRoot(document.getElementById("app"));
+    const app = createRoot(appRoot);
     app.render(
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>

@@ -8,12 +8,14 @@ import userReducer from "@modules/Auth/reducers/user";
 import entitiesReducer from "@modules/Entity/reducers/entities";
 import siteReducer from "@modules/Settings/reducers/site";
 import platformReducer from "@modules/Settings/reducers/platform";
+import crudReducer from "@modules/CRUD/reducers/crud";
 
 const rootReducer = combineReducers({
     auth: userReducer,
     entities: entitiesReducer,
     site: siteReducer,
-    platform: platformReducer
+    platform: platformReducer,
+    crud: crudReducer
 });
 const persistConfig = {
     key: "root",

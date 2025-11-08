@@ -47,6 +47,8 @@ class Controller extends Framework
     {
         // store settings data
         $this->data = $request->all();
+        unset($this->data['token']);
+        unset($this->data['endpoint']);
         $this->validator = Validator::make($this->data, [
             'property.*' => 'required|max:50',
             'value.*' => 'max:1000',

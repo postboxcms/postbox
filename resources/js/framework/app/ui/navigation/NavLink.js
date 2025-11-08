@@ -1,21 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Tooltip } from "@mui/material";
-import { useCSS } from "@app/hooks";
-import { api } from "@app/utils/constants";
+import { useCSS, useCurrentRoute } from "@app/hooks";
 import { getNavOpen } from "@modules/Settings/reducers/platform";
 
 const NavLink = ({ children, to, hidden, submenu, title }) => {
     const isNavOpen = useSelector(getNavOpen);
-    const location = useLocation();
     const classes = useCSS();
-    const routePrefix = (path) => {
-        const parts = path.split("/").filter(Boolean);
-        return "/" + parts.slice(0, 2).join("/");
-    };
-    const currentRoute = routePrefix(location.pathname);
-    const targetRoute = routePrefix(to);
+    const { getCurrentRoute, getTargetRoute } = useCurrentRoute();
+    const currentRoute = getCurrentRoute();
+    const targetRoute = getTargetRoute(to);
     const isActive = currentRoute === targetRoute;
     const activeClass = isActive ? "active" : "";
     const submenuClass = submenu ? "submenu" : "";

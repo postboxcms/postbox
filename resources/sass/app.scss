@@ -729,7 +729,8 @@ input[type="text"] {
         .skeleton-loader {
             padding: 0 10px;
             .MuiSkeleton-root {
-                border-radius: 10px;
+                // border-radius: 10px;
+                margin-bottom: 5px;
             }
         }
     
