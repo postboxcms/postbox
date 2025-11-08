@@ -11,7 +11,7 @@ const setHeaders = (token) => {
 }
 
 export const postRequest = async (data) => {
-    try {4
+    try {
         const response = await axios.post(`${api.url}/${data.endpoint}`, data, setHeaders(data.token));
         return response?.data;
     } catch (e) {

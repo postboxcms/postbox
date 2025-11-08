@@ -81,6 +81,8 @@ class Framework extends BaseController
         }
         unset($data['module']);
         unset($data['state']);
+        unset($data['token']);
+        unset($data['endpoint']);
         unset($data['_method']);
         $data['created_at'] = Carbon::now();
         $data['updated_at'] = Carbon::now();

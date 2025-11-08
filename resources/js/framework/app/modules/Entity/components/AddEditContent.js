@@ -13,7 +13,7 @@ import {
 
 import { getUser } from "@modules/Auth/reducers/user";
 import { loadCRUD } from "@modules/CRUD/reducers/crud";
-import { loadEntity } from "@modules/Entity/reducers/entities";
+import { loadEntity, updateEntity, storeEntity } from "@modules/Entity/reducers/entities";
 
 import SaveButton from "@ui/elements/SaveButton";
 import Panel from "@ui/components/Panel";
@@ -662,44 +662,10 @@ export const AddEditContent = ({ query, type }) => {
                     window.location.search
                 ).get("eid");
                 formData.append("eid", entityId);
-                formData.append("_method", "put");
-                api.post(`/entity/${type}`, formData)
-                    .then((response) => {
-                        // Handle success, e.g., redirect or show a success message
-                        console.log("Content updated successfully:", response);
-                        notify(
-                            response.data.message ||
-                            "Content updated successfully!"
-                        );
-                    })
-                    .catch((error) => {
-                        // Handle error, e.g., show an error message
-                        console.error("Error updating content:", error);
-                        notify(
-                            error.response?.data?.message ||
-                            "Error while updating content",
-                            "error"
-                        );
-                    });
+                dispatch(updateEntity({ path: `${type}`, data: Object.fromEntries(formData), token: token, method: "put" }));
             } else {
-                api.post(`/entity`, formData)
-                    .then((response) => {
-                        // Handle success, e.g., redirect or show a success message
-                        console.log("Content saved successfully:", response);
-                        notify(
-                            response.data.message ||
-                            "Content saved successfully!"
-                        );
-                    })
-                    .catch((error) => {
-                        // Handle error, e.g., show an error message
-                        console.error("Error saving content:", error);
-                        notify(
-                            error.response?.data?.message ||
-                            "Error while saving content",
-                            "error"
-                        );
-                    });
+                formData.append("token", token);
+                dispatch(storeEntity(Object.fromEntries(formData)));
             }
         };
     };

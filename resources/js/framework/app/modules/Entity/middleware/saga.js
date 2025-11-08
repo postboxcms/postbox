@@ -1,6 +1,6 @@
 import { put, call, select, takeLeading, takeEvery } from "redux-saga/effects";
-import { getRequest, updateRequest } from "@app/services/api";
-import { setEntities, setEntity, loadEntities, loadEntity, updateEntity } from "@modules/Entity/reducers/entities";
+import { getRequest, updateRequest, postRequest } from "@app/services/api";
+import { setEntities, setEntity, loadEntities, loadEntity, updateEntity, storeEntity } from "@modules/Entity/reducers/entities";
 import { setNotification } from "@modules/Settings/reducers/platform";
 import { generateEntityPath } from "@modules/Entity/helpers/entity";
 
@@ -41,10 +41,23 @@ function* putEntity(action) {
     }
 }
 
+function* postEntity(action) {
+    try {
+        const status = yield select((state) => state.entities.status);
+        if (status !== "pending") return;
+        const response = yield call(postRequest, { ...action.payload, endpoint: `entity`, token: action.payload.token });
+        yield put(setEntity(response));
+        yield put(setNotification({ message: response?.message, type: 'message' }));
+    } catch (e) {
+        yield put(setNotification({ message: e.message, type: 'error' }));
+    }
+}
+
 function* entitySaga() {
     yield takeLeading(loadEntities, getEntities);
     yield takeLeading(loadEntity, getEntity);
     yield takeEvery(updateEntity, putEntity);
+    yield takeEvery(storeEntity, postEntity);
 }
 
 export default entitySaga;
