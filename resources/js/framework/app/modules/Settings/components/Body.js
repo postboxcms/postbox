@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, TextField, Typography } from "@mui/material";
 
-import { useCSS, useSecureRoute, useNotifier } from "@app/hooks";
+import { useCSS, useSecureRoute, useNotifier, useAuth } from "@app/hooks";
 import {
     getWebsiteLogo,
     getWebsiteName,
@@ -12,6 +12,7 @@ import {
     setWebsiteName,
     setWebsiteStatus,
     setWebsiteTitle,
+    updateSettings
 } from "@modules/Settings/reducers/site";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
@@ -33,6 +34,7 @@ const Body = (props) => {
     const websiteTitle = useSelector(getWebsiteTitle);
     const websiteStatus = useSelector(getWebsiteStatus);
     const api = useSecureRoute();
+    const { token } = useAuth();
     const notify = useNotifier();
     const dispatch = useDispatch();
     const classes = useCSS();
@@ -41,6 +43,8 @@ const Body = (props) => {
     const saveSettings = (event) => {
         event.preventDefault();
         const data = new FormData();
+        data.append("token", token);
+        data.append("endpoint", "settings");
         const settings = [
             {
                 property: "name",
@@ -70,18 +74,19 @@ const Body = (props) => {
             }
         });
         // Handle form submission
-        api.post("/settings", data)
-            .then((response) => {
-                const responseLogo = response?.data?.data?.file;
-                dispatch(setWebsiteName(name));
-                dispatch(setWebsiteTitle(title));
-                dispatch(setWebsiteStatus(isProductionReady));
-                if (responseLogo) {
-                    dispatch(setWebsiteLogo(responseLogo));
-                }
-                notify(response.data.message);
-            })
-            .catch((error) => notify(error, "error"));
+        dispatch(updateSettings(data));
+        // api.post("/settings", data)
+        //     .then((response) => {
+        //         const responseLogo = response?.data?.data?.file;
+        //         dispatch(setWebsiteName(name));
+        //         dispatch(setWebsiteTitle(title));
+        //         dispatch(setWebsiteStatus(isProductionReady));
+        //         if (responseLogo) {
+        //             dispatch(setWebsiteLogo(responseLogo));
+        //         }
+        //         notify(response.data.message);
+        //     })
+        //     .catch((error) => notify(error, "error"));
     };
 
     React.useEffect(() => {

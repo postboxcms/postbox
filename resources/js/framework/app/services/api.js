@@ -12,6 +12,11 @@ const setHeaders = (token) => {
 
 export const postRequest = async (data) => {
     try {
+        if (data instanceof FormData) {
+            const { token, endpoint } = Object.fromEntries(data);
+            const response = await axios.post(`${api.url}/${endpoint}`, data, setHeaders(token));
+            return response?.data;
+        }
         const response = await axios.post(`${api.url}/${data.endpoint}`, data, setHeaders(data.token));
         return response?.data;
     } catch (e) {
