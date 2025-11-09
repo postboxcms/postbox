@@ -18,3 +18,4 @@ npm-debug.log
 yarn-error.log
 composer.lock
 /app/Models/*.php
+/dist

@@ -1,3 +1,3 @@
 import { createBrowserHistory } from 'history';
 
-export const history = createBrowserHistory();
+export const history = typeof document !== typeof undefined ? createBrowserHistory() : null;

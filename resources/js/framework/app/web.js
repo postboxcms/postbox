@@ -15,24 +15,14 @@ import Website from "@ui/layout/Website";
 // core modules
 import DataProvider from "@providers/DataProvider";
 
-import AuthRoutes from "@app/routes/AuthRoute";
-import AdminRoutes from "@app/routes/AdminRoutes";
-import EntityRoutes from "@app/routes/EntityRoutes";
-
 /** React router to setup UI routes */
-const Engine = () => {
+const Web = () => {
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <DataProvider>
                     <Router history={history}>
-                        {/* public routes */}
-                        <AuthRoutes />
-                        {/* admin private routes */}
-                        <AdminRoutes />
-                        {/* entity routes */}
-                        <EntityRoutes />
-                        {/* <Switch>
+                        <Switch>
                             <PublicRoute
                                 restricted={true}
                                 filter={api.adminPrefix}
@@ -40,7 +30,7 @@ const Engine = () => {
                             >
                                 <Website controller={Theme} />
                             </PublicRoute>
-                        </Switch> */}
+                        </Switch>
                     </Router>
                 </DataProvider>
             </PersistGate>
@@ -48,4 +38,4 @@ const Engine = () => {
     );
 };
 
-export default Engine;
+export default Web;

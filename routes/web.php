@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('web');
-});
+// Route::get('/', function () {
+//     return view('web');
+// });
 
 // admin routes
 Route::group(['prefix' => env('MIX_ADMIN_PREFIX','/admin')], function () {
@@ -28,3 +28,10 @@ Route::group(['prefix' => env('MIX_ADMIN_PREFIX','/admin')], function () {
         return view('app');
     });
 });
+
+Route::get('/{any}', function($any = null) {
+    $response = Http::get('http://localhost:3000/ssr?url='. request()->getRequestUri());
+    $html = $response->body();  
+
+    return view('web', ['ssr' => $html]);
+})->where('any', '.*');

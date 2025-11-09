@@ -6,7 +6,7 @@ const generateURL = (url, port) => {
 
 export const api = {
     adminPrefix: process.env.MIX_ADMIN_PREFIX,
-    csrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+    csrfToken: typeof document !== typeof undefined ? document.head.querySelector('meta[name="csrf-token"]').content : null,
     domain: process.env.MIX_APP_URL,
     loginUrl: process.env.MIX_LOGIN_URL,
     logoutUrl: process.env.MIX_LOGOUT_URL,
