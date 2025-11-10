@@ -6,6 +6,7 @@
 /public/js
 /public/images
 /public/uploads
+/public/build
 /storage/*.key
 /vendor
 /.vscode

@@ -7,7 +7,7 @@ import { Theme } from "@website";
 // routes
 import { PublicRoute } from "@app/routes";
 // variables
-import { api } from "@app/utils";
+import { api, history } from "@app/utils";
 // store
 import { store, persistor } from "@app/store";
 // layout
@@ -16,12 +16,13 @@ import Website from "@ui/layout/Website";
 import DataProvider from "@providers/DataProvider";
 
 /** React router to setup UI routes */
-const Web = () => {
+const Web = ({router}) => {
+    const RouterComponent = router || Router;
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <DataProvider>
-                    <Router history={history}>
+                    <RouterComponent history={history}>
                         <Switch>
                             <PublicRoute
                                 restricted={true}
@@ -31,7 +32,7 @@ const Web = () => {
                                 <Website controller={Theme} />
                             </PublicRoute>
                         </Switch>
-                    </Router>
+                    </RouterComponent>
                 </DataProvider>
             </PersistGate>
         </Provider>

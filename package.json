@@ -1,6 +1,5 @@
 {
     "private": true,
-    "type": "module",
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
@@ -9,9 +8,12 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "build:client": "vite build --outDir dist/client --ssrManifest",
+        "build:client": "vite build --outDir public/build --ssrManifest",
         "build:server": "vite build --ssr resources/js/website/server.js --outDir dist/server",
         "build": "npm run build:client && npm run build:server",
+        "watch:server": "vite build --ssr resources/js/website/server.js --outDir dist/server --watch",
+        "watch:client": "vite build --outDir public/build --ssrManifest --watch",
+        "watch:all": "npm run watch:client & npm run watch:server && npm run watch && node server.js",
         "test": "jest"
     },
     "devDependencies": {

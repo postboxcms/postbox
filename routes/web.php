@@ -17,21 +17,20 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // admin routes
-Route::group(['prefix' => env('MIX_ADMIN_PREFIX','/admin')], function () {
-    Route::get('/', function() {
+Route::group(['prefix' => env('MIX_ADMIN_PREFIX', '/admin')], function () {
+    Route::get('/', function () {
         return view('app');
     });
-    Route::get('{module}', function() {
+    Route::get('{module}', function () {
         return view('app');
     });
-    Route::get('{module}/{action}', function() {
+    Route::get('{module}/{action}', function () {
         return view('app');
     });
 });
 
-Route::get('/{any}', function($any = null) {
-    $response = Http::get('http://localhost:3000/ssr?url='. request()->getRequestUri());
-    $html = $response->body();  
-
+Route::get('/{any}', function () {
+    $response = Http::get('http://host.docker.internal:5172/ssr?url=' . request()->getRequestUri());
+    $html = $response->body();
     return view('web', ['ssr' => $html]);
 })->where('any', '.*');

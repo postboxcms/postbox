@@ -1,5 +1,8 @@
-const mix = require('laravel-mix');
-const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import mix from 'laravel-mix';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /*
  |--------------------------------------------------------------------------

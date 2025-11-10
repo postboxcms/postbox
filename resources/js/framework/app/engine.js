@@ -7,7 +7,7 @@ import { Theme } from "@website";
 // routes
 import { PublicRoute } from "@app/routes";
 // variables
-import { api } from "@app/utils";
+import { api, history } from "@app/utils";
 // store
 import { store, persistor } from "@app/store";
 // layout

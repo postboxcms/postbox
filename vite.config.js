@@ -1,26 +1,38 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import laravel from 'laravel-vite-plugin';
 import path from 'path';
 
 export default defineConfig({
-    plugins: [react({
-        jsxRuntime: 'automatic',
-        include: /resources\/js\/.*\.js?x?$/,
-        exclude: [],
-    })],
+    plugins: [
+        laravel([
+            'resources/js/website/client.js',
+            'resources/js/website/server.js',
+        ]),
+        react({
+            jsxRuntime: 'automatic',
+            include: /resources\/js\/.*\.js?x?$/,
+            exclude: [],
+        })
+    ],
     build: {
-        outDir: path.resolve(__dirname, 'dist'),
-        manifest: true,
+        outDir: path.resolve(__dirname, 'public/build'),
+        port: 5172,
         rollupOptions: {
             input: {
                 client: 'resources/js/website/client.js',
                 server: 'resources/js/website/server.js',
             },
+            output: {
+                entryFileNames: '[name]/[name].js',
+                chunkFileNames: '[name]/[name].js',
+                assetFileNames: '[name]/[name].[ext]',
+            },
         },
     },
     esbuild: {
         loader: 'jsx',
-        include: /resources\/js\/.*\.js?x?$/,
+        include: /resources\/js\/.*\.js?$/,
         exclude: [],
     },
     resolve: {
