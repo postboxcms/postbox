@@ -632,11 +632,12 @@ export const AddEditContent = ({ query, type }) => {
             try {
                 dispatch(loadEntity({ path: type, token: token, eid: entityId }));
                 const response = { data: entity?.details };
+                const eid = entityId;
                 console.log("Entity response:", response);
                 if (response?.data) {
                     // Populate fields with entity data
                     console.log("Entity data:", response.data);
-                    setEntityData(first(response.data?.entity?.data || []));
+                    setEntityData(response.data?.entity?.data.find(e => e.uuid.value == eid) || {});
                     // notify("Entity data fetched successfully", "message");
                 }
             } catch (error) {
