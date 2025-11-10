@@ -6,8 +6,7 @@ import path from 'path';
 export default defineConfig({
     plugins: [
         laravel([
-            'resources/js/website/client.js',
-            'resources/js/website/server.js',
+            'resources/js/website/client.js'
         ]),
         react({
             jsxRuntime: 'automatic',

@@ -5,7 +5,7 @@ import { render } from "./dist/server/server/server.js";
 const app = express();
 const port = process.env.PORT || 5172;
 
-app.use("/dist", express.static(path.resolve("./dist/client/client/client.js")));
+app.use("/dist", express.static(path.resolve("./public/build/client/client.js")));
 
 app.get("/ssr", (req, res) => {
     try {

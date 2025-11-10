@@ -7,7 +7,7 @@
 
         <title>{{env('APP_NAME','Postbox')}}</title>
         @viteReactRefresh
-        @vite(['resources/js/website/client.js', 'resources/js/website/server.js'])
+        @vite(['resources/js/website/client.js'])
         <link href="{{asset('css/app.css')}}" rel="stylesheet"/>
         <link href="{{asset('css/theme.css')}}" rel="stylesheet"/>
     </head>
