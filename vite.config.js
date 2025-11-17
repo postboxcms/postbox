@@ -6,7 +6,9 @@ import path from 'path';
 export default defineConfig({
     plugins: [
         laravel([
-            'resources/js/website/client.js'
+            'resources/js/website/server.js',
+            'resources/css/app.css',
+            'resources/css/theme.css',
         ]),
         react({
             jsxRuntime: 'automatic',
@@ -17,6 +19,7 @@ export default defineConfig({
     build: {
         outDir: path.resolve(__dirname, 'public/build'),
         port: 5172,
+        emptyOutDir: true,
         rollupOptions: {
             input: {
                 client: 'resources/js/website/client.js',

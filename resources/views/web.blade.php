@@ -25,8 +25,8 @@
                 </div>
             </div> -->
             {{-- React code UI rendered here --}}
-            {!! $ssr ?? '' !!}
+            {!! $html ?? '' !!}
         </div>
-        <script src="{{asset('js/app.js')}}"></script>
+        <script src="/build/client/client.js"></script>
     </body>
 </html>

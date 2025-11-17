@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import { darken, lighten } from "@app/utils/colors";
+import baseConfig from "@resources/config/base.json";
 
-const baseConfig = require("@resources/config/colors");
 const frameworkColor = baseConfig.css.frameworkColor;
 const brandColor = baseConfig.css.brandColor;
 const adminNavbarColor = baseConfig.css.adminNavbarColor;
@@ -71,11 +71,11 @@ export const website = createTheme({
             '"Segoe UI Emoji"',
             '"Segoe UI Symbol"',
         ].join(","),
-        fontSize: 13,
-        fontWeightLight: 300,
-        fontWeightRegular: 400,
-        fontWeightMedium: 500,
-        fontWeightBold: 700,
+        // fontSize: 13,
+        // fontWeightLight: 300,
+        // fontWeightRegular: 400,
+        // fontWeightMedium: 500,
+        // fontWeightBold: 700,
     },
     palette: {
         mode: "light",

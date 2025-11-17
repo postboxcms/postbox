@@ -8,10 +8,6 @@ import {
     getWebsiteName,
     getWebsiteStatus,
     getWebsiteTitle,
-    setWebsiteLogo,
-    setWebsiteName,
-    setWebsiteStatus,
-    setWebsiteTitle,
     updateSettings
 } from "@modules/Settings/reducers/site";
 
@@ -33,9 +29,7 @@ const Body = (props) => {
     const websiteName = useSelector(getWebsiteName);
     const websiteTitle = useSelector(getWebsiteTitle);
     const websiteStatus = useSelector(getWebsiteStatus);
-    const api = useSecureRoute();
     const { token } = useAuth();
-    const notify = useNotifier();
     const dispatch = useDispatch();
     const classes = useCSS();
     const pageIcon = "gear";
@@ -69,24 +63,12 @@ const Body = (props) => {
         ];
 
         settings.forEach((item) => {
-            if (item.value) {
+            if (item.value || item.property === "isProductionReady") {
                 data.append(item.property, item.value);
             }
         });
         // Handle form submission
         dispatch(updateSettings(data));
-        // api.post("/settings", data)
-        //     .then((response) => {
-        //         const responseLogo = response?.data?.data?.file;
-        //         dispatch(setWebsiteName(name));
-        //         dispatch(setWebsiteTitle(title));
-        //         dispatch(setWebsiteStatus(isProductionReady));
-        //         if (responseLogo) {
-        //             dispatch(setWebsiteLogo(responseLogo));
-        //         }
-        //         notify(response.data.message);
-        //     })
-        //     .catch((error) => notify(error, "error"));
     };
 
     React.useEffect(() => {

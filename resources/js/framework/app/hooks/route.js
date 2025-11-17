@@ -6,7 +6,7 @@ export const useSecureRoute = () => {
     const { token } = useAuth();
 
     const get = (url, payload) => {
-        return axios.get(api.url + url, {
+        return url && axios.get(api.url + url, {
             headers: {
                 Authorization: "Bearer " + token,
             },

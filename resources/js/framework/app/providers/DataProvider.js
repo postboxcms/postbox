@@ -6,6 +6,7 @@ import {
     setWebsiteName,
     setWebsiteStatus,
     setWebsiteTitle,
+    loadWebsite,
 } from "@modules/Settings/reducers/site";
 import { getNotification } from "@modules/Settings/reducers/platform";
 import { loadEntities } from "@modules/Entity/reducers/entities";
@@ -18,7 +19,7 @@ const DataProvider = ({ children }) => {
     const dispatch = useDispatch();
     const hasNotification = notification !== undefined && notification.message !== '';
     const hasUserAuthenticated = token;
-    const hasAdminRoute = window.location.href.includes('/admin') ? true : false;
+    const hasAdminRoute = typeof window !== typeof undefined ? (window.location.href.includes('/admin') ? true : false) : false;
 
     React.useEffect(() => {
         if (hasUserAuthenticated) {
@@ -33,27 +34,28 @@ const DataProvider = ({ children }) => {
             }
         }
         if (!hasAdminRoute) {
-            api.get("/website").then((res) => {
-                const settings = res?.data?.data;
-                settings.map((item) => {
-                    switch (item.property) {
-                        case "name":
-                            dispatch(setWebsiteName(item.value));
-                            return;
-                        case "title":
-                            dispatch(setWebsiteTitle(item.value));
-                            return;
-                        case "isProductionReady":
-                            dispatch(setWebsiteStatus(Boolean(Number(item.value))));
-                            return;
-                        case "siteLogo":
-                            dispatch(setWebsiteLogo(item.value));
-                            return;
-                        default:
-                            return;
-                    }
-                });
-            });
+            // dispatch(loadWebsite({ token }));
+            // api.get("/website").then((res) => {
+            //     const settings = res?.data?.data;
+            //     settings?.map((item) => {
+            //         switch (item.property) {
+            //             case "name":
+            //                 dispatch(setWebsiteName(item.value));
+            //                 return;
+            //             case "title":
+            //                 dispatch(setWebsiteTitle(item.value));
+            //                 return;
+            //             case "isProductionReady":
+            //                 dispatch(setWebsiteStatus(Boolean(Number(item.value))));
+            //                 return;
+            //             case "siteLogo":
+            //                 dispatch(setWebsiteLogo(item.value));
+            //                 return;
+            //             default:
+            //                 return;
+            //         }
+            //     });
+            // });
         }
     }, [token, notification]);
 

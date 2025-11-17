@@ -6,28 +6,30 @@ const siteSlice = createSlice({
         name: "Postbox",
         title: "",
         status: "idle",
-        isProductionReady: 0,
+        isProductionReady: false,
         logo: null
     },
     reducers: {
         setWebsiteName: (state, action) => {
             state.name = action.payload;
-            state.status = "fulfilled";
         },
         setWebsiteTitle: (state, action) => {
             state.title = action.payload;
-            state.status = "fulfilled";
         },
         setWebsiteStatus: (state, action) => {
             state.isProductionReady = action.payload;
-            state.status = "fulfilled";
         },
         setWebsiteLogo: (state, action) => {
             state.logo = action.payload;
-            state.status = "fulfilled";
         },
         updateSettings: (state) => {
             state.status = "pending";
+        },
+        loadWebsite: (state) => {
+            state.status = "pending";
+        },
+        setWebsiteLoaded: (state) => {
+            state.status = "fulfilled";
         }
     },
 });
@@ -36,9 +38,10 @@ export const getWebsiteName = (state) => state.site.name;
 export const getWebsiteTitle = (state) => state.site.title;
 export const getWebsiteStatus = (state) => state.site.isProductionReady;
 export const getWebsiteLogo = (state) => state.site.logo;
+export const getSystemStatus = (state) => state.site.status;
 
 
-export const { setWebsiteName, setWebsiteTitle, setWebsiteStatus, setWebsiteLogo, updateSettings } =
+export const { setWebsiteName, setWebsiteTitle, setWebsiteStatus, setWebsiteLogo, setWebsiteLoaded, updateSettings, loadWebsite } =
     siteSlice.actions;
 
 export default siteSlice.reducer;

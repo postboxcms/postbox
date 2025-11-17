@@ -30,7 +30,7 @@ Route::group(['prefix' => env('MIX_ADMIN_PREFIX', '/admin')], function () {
 });
 
 Route::get('/{any}', function () {
-    $response = Http::get('http://host.docker.internal:5172/ssr?url=' . request()->getRequestUri());
+    $response = Http::get('http://host.docker.internal:5172/server?url=' . request()->getRequestUri());
     $html = $response->body();
-    return view('web', ['ssr' => $html]);
+    return view('web', ['html' => $html]);
 })->where('any', '.*');

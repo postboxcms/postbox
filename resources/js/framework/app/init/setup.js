@@ -10,6 +10,6 @@ export const setup = () => {
 }
 
 export const getTheme = () => {
-    const url = window.location.href;
+    const url = typeof window !== typeof undefined ? window.location.href : "";
     return url.includes("/admin") ? admin : website;
 }

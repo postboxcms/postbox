@@ -17,24 +17,24 @@ import DataProvider from "@providers/DataProvider";
 
 /** React router to setup UI routes */
 const Web = ({router}) => {
-    const RouterComponent = router || Router;
+    // const RouterComponent = router || Router;
     return (
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
+            {/* <PersistGate loading={null} persistor={persistor}> */}
                 <DataProvider>
-                    <RouterComponent history={history}>
-                        <Switch>
-                            <PublicRoute
+                    {/* <RouterComponent history={history}>
+                        <Switch> */}
+                            {/* <PublicRoute
                                 restricted={true}
                                 filter={api.adminPrefix}
                                 path="*"
-                            >
+                            > */}
                                 <Website controller={Theme} />
-                            </PublicRoute>
-                        </Switch>
-                    </RouterComponent>
+                            {/* </PublicRoute> */}
+                        {/* </Switch>
+                    </RouterComponent> */}
                 </DataProvider>
-            </PersistGate>
+            {/* </PersistGate> */}
         </Provider>
     );
 };

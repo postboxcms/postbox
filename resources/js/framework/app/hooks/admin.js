@@ -9,8 +9,8 @@ export const useAdminCSS = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        boxShadow: "none",
-        marginBottom: "20px",
+        // boxShadow: "none",
+        // marginBottom: "20px",
     },
     appBarShift: {
         marginLeft: drawerWidth,
@@ -35,7 +35,7 @@ export const useAdminCSS = makeStyles((theme) => ({
         }
     },
     toolbar: {
-        justifyContent: "center",
+        // justifyContent: "center",
     },
     menuButton: {
         marginRight: 18,
