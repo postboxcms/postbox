@@ -9,6 +9,7 @@ import { useCSS } from "@app/hooks";
 import { getWebsiteStatus } from "@modules/Settings/reducers/site";
 import { site } from "@app/utils";
 import Title from "@ui/elements/Title";
+import UserInfo from "@themes/blog/components/UserInfo";
 
 export const Body = () => {
     const websiteStatus = useSelector(getWebsiteStatus);
@@ -16,13 +17,7 @@ export const Body = () => {
     const classes = useCSS();
     const BodyContent = ({ message }) => (
         <Grid container spacing={2} className={classes.body}>
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-                <Panel
-                    style={{ padding: "16px", justifyContent: "center" }}
-                >
-                    <p>{message}</p>
-                </Panel>
-            </Grid>
+            <UserInfo message={message} />
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <Panel
                     style={{ padding: "16px", justifyContent: "center" }}

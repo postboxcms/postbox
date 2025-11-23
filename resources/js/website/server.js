@@ -14,7 +14,9 @@ export function render() {
     const html = renderToString(
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
-                    <Web />
+                <Provider store={store}>
+                        <Web />
+                </Provider>
             </ThemeProvider>
         </StyledEngineProvider>
     );

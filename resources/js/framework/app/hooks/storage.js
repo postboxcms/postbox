@@ -1,10 +1,10 @@
-const cookiesManager = () => {
-    const getCookie = (name) => {
+const useStorage = () => {
+    const getItem = (name) => {
         if(name !== null) {
             return localStorage.getItem(name);
         }
     }
-    const setCookie = (name,token) =>  {
+    const setItem = (name,token) =>  {
         if(typeof name !== typeof undefined && name !== null && typeof token !== typeof undefined && token !== null) {
             localStorage.setItem(name,token);
         }
@@ -12,9 +12,9 @@ const cookiesManager = () => {
     const removeCookie = (name) => localStorage.removeItem(name);
 
     return {
-        getCookie,
-        setCookie,
+        getItem,
+        setItem,
     }
 }
 
-export default cookiesManager();
+export default useStorage();

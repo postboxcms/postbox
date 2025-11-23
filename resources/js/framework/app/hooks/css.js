@@ -69,6 +69,7 @@ export const useCSS = makeStyles((theme) => ({
     },
     primaryButton: {
         fontWeight: 600,
+        boxShadow: "none",
         "& .MuiButton-iconSizeMedium": {
             "& svg": {
                 fontSize: "1rem",

@@ -2,7 +2,7 @@ import React from 'react';
 import {Typography, Link} from '@mui/material';
 import {useCSS} from '@app/hooks/css';
 
-const Footer = ({prefix, suffix, linkText, linkURL}) => {
+export const Footer = ({prefix, suffix, linkText, linkURL}) => {
     const classes = useCSS();
     const Prefix = prefix;
     const Suffix = suffix;

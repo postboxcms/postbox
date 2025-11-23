@@ -37,7 +37,7 @@ export const site = {
     name: process.env.MIX_APP_NAME,
     url: generateURL(process.env.MIX_APP_URL, process.env.MIX_APP_PORT),
     themeMessage: 'Theme content goes here ...',
-    comingSoonMessage: 'The website will be launching soon ...',
+    comingSoonMessage: 'Coming Soon!',
     loadingMessage: '...',
 };
 export const platform = {

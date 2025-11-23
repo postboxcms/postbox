@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Frame } from "../../ui/layout/Frame";
+import { Card, Frame } from "@ui/layout/Frame";
 import Body from "./components/Body";
 
 const Settings = (props) => {

@@ -1,9 +1,9 @@
-import express from "express";
-import path from "path";
-import { render } from "./public/build/server/server/server.js";
+require("dotenv").config();
+const express = require("express");
+const { render } = require("../public/build/server/server.js");
 
 const app = express();
-const port = process.env.PORT || 5172;
+const port = process.env.SSR_PORT || 5172;
 
 // app.use("/dist", express.static(path.resolve("./public/build/client/client.js")));
 

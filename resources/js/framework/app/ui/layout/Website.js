@@ -18,9 +18,9 @@ export default function Website(props) {
         <div className="web-root">
             <CssBaseline />
             {renderTheme(props)}
-            <Box pt={4}>
+            {/* <Box pt={4}>
                 <Footer prefix={() => <>Powered by</>} suffix={() => <>&copy; {new Date().getFullYear()}</>} linkText="Postbox" linkURL="https://digitalbit.in" />
-            </Box>
+            </Box> */}
         </div>
     );
 }
