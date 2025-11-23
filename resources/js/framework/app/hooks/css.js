@@ -2,7 +2,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { green, grey } from '@mui/material/colors';
 import { lighten } from '@app/utils/colors';
 
-export const useCSS = makeStyles((theme) => ({
+export const useWebCSS = makeStyles((theme) => ({
   panel: {
     boxShadow:
       '0px 1px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',

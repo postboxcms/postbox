@@ -4,14 +4,14 @@ import { useSelector } from "react-redux";
 
 import { Container, Typography, Toolbar, AppBar } from "@mui/material";
 
-import { useAdminCSS } from "@app/hooks";
+import { useAppCSS } from "@app/hooks";
 import {
     getWebsiteLogo,
     getWebsiteName,
 } from "@modules/Settings/reducers/site";
 
 export const Header = () => {
-    const classes = useAdminCSS();
+    const classes = useAppCSS();
     const websiteName = useSelector(getWebsiteName);
     const websiteLogo = useSelector(getWebsiteLogo);
 

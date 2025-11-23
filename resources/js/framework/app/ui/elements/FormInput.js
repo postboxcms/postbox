@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Checkbox, Radio, Select, TextField, MenuItem } from "@mui/material";
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import ImageUploader from "@ui/components/ImageUploader";
-import { useCSS } from "@app/hooks";
+import { useWebCSS } from "@app/hooks";
 
 export default function FormInput(props) {
     const {
@@ -19,7 +19,7 @@ export default function FormInput(props) {
         label = "",
         fullWidth = true,
     } = props;
-    const classes = useCSS();
+    const classes = useWebCSS();
 
     const updateField = (event) => {
         console.log("Updating field:", event.target.name, event.target.value);

@@ -6,7 +6,7 @@ import { FormControlLabel } from "@mui/material";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { useNotifier, useNavigation, useSecureRoute, useCSS, useAuth } from "@app/hooks";
+import { useNotifier, useNavigation, useSecureRoute, useWebCSS, useAuth } from "@app/hooks";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
 import Title from "@ui/elements/Title";
@@ -22,7 +22,7 @@ import { getEntity, loadEntity, updateEntity } from "@modules/Entity/reducers/en
 const List = (props) => {
     const dispatch = useDispatch();
     const api = useSecureRoute();
-    const classes = useCSS();
+    const classes = useWebCSS();
     const navigate = useNavigation();
     const notify = useNotifier();
     const crudData = useSelector(getCRUD);

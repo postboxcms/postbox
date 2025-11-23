@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Typography } from '@mui/material';
 
-import { useCSS, useAuth } from '@app/hooks';
+import { useWebCSS, useAuth } from '@app/hooks';
 import {
   getWebsiteLogo,
   getWebsiteName,
@@ -37,7 +37,7 @@ const Body = (props) => {
 
   const { token } = useAuth();
   const dispatch = useDispatch();
-  const classes = useCSS();
+  const classes = useWebCSS();
   const pageIcon = 'gear';
 
   const getThemes = () => {

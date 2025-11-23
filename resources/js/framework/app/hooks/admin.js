@@ -5,7 +5,7 @@ import { useAuth } from '@app/hooks';
 
 const drawerWidth = 200;
 
-export const useAdminCSS = makeStyles((theme) => ({
+export const useAppCSS = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer - 1,
     transition: theme.transitions.create(['width', 'margin'], {

@@ -1,10 +1,10 @@
 import React from "react";
 import { IconButton as MuiIconButton } from "@mui/material";
-import { useCSS } from "@app/hooks/css";
+import { useWebCSS } from "@app/hooks/css";
 import Icon from "./Icon";
 
 const IconButton = (props) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     const { color, size } = props;
 
     return (

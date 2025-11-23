@@ -1,9 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCSS } from "@app/hooks/css";
+import { useWebCSS } from "@app/hooks/css";
 
 export default function NoRowsOverlay(props) {
-    const classes = useCSS();
+    const classes = useWebCSS();
     return (
         <div className={classes.noRowsOverlay + " no-rows-overlay"}>
             <div className="icon"><FontAwesomeIcon size='lg' icon={props.icon} /></div>

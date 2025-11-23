@@ -1,10 +1,10 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { useCSS, useNotifier } from "@app/hooks";
+import { useWebCSS, useNotifier } from "@app/hooks";
 import { site } from "@app/utils";
 
 const ImageUploader = ({ uploadImage, placeholder, name }) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     const [placeholderText, setPlaceholderText] = React.useState(
         placeholder ? <img width="200px" src={`${site.url}/images/${placeholder}`} /> : "Drag 'n' drop any image here, or click to select one"
     );

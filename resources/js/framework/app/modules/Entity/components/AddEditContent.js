@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { first, isEmpty } from "lodash";
 
 import {
-    useCSS,
+    useWebCSS,
     useSecureRoute,
     useNotifier,
     useAuth,
@@ -23,7 +23,7 @@ import Title from "@ui/elements/Title";
 import BoxEditor from "@ui/elements/BoxEditor";
 
 export const AddEditContent = ({ query, type }) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     const api = useSecureRoute();
     const notify = useNotifier();
     const user = useSelector(getUser);

@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Grid, Modal } from "@mui/material";
-import { useCSS } from "@app/hooks";
+import { useWebCSS } from "@app/hooks";
 import Title from "@ui/elements/Title";
 
 export const Dialog = ({ open, content, handleClose, title, icon }) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     return (
         <Modal
             open={open}

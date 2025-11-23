@@ -3,7 +3,7 @@ import { first } from "lodash";
 
 import { MenuItem, Select, FormControl, FormControlLabel } from "@mui/material";
 
-import { useCSS, useModal } from "@app/hooks";
+import { useWebCSS, useModal } from "@app/hooks";
 import { useNotifier, useSecureRoute, useCMSRoute } from "@app/hooks";
 
 import IOSSwitch from "@ui/elements/IOSSwitch";
@@ -17,7 +17,7 @@ import AddEditField from "./AddEditField";
 import DeleteField from "./DeleteField";
 
 const Body = (props) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     const modal = useModal();
     const api = useSecureRoute();
     const cms = useCMSRoute();

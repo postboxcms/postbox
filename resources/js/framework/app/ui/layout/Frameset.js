@@ -22,7 +22,7 @@ import { MainItems, SubItems } from '../navigation';
 import Breadcrumb from '../components/Breadcrumb';
 import TopMenu from './TopMenu';
 
-import {  useAdminCSS } from '@app/hooks/admin';
+import {  useAppCSS } from '@app/hooks/admin';
 import { admin } from '@app/init/theme';
 import { getNavOpen, setNavOpen } from '@modules/Settings/reducers/platform';
 import { getUser } from '@modules/Auth/reducers/user';
@@ -33,7 +33,7 @@ import Logo from '@ui/elements/Logo';
 import Icon from '@ui/elements/Icon';
 
 export default function Frameset(props) {
-    const classes = useAdminCSS();
+    const classes = useAppCSS();
     const dispatch = useDispatch();
     const user = useSelector(getUser);
     const isNavOpen = useSelector(getNavOpen);

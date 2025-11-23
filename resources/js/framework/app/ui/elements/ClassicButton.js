@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCSS } from "@app/hooks/css";
+import { useWebCSS } from "@app/hooks/css";
 
 export const ClassicButton = (props) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     const { icon, color } = props;
 
     return (

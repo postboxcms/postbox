@@ -18,7 +18,7 @@ const DataProvider = ({ children }) => {
       dispatch(loadWebsite({ token }));
     }
 
-    if (hasUserAuthenticated() && hasAdminRoute()) {
+    if (hasUserAuthenticated(token) && hasAdminRoute()) {
       dispatch(loadEntities(token));
       dispatch(loadThemes());
     }

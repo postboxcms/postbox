@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Container, Grid, Typography } from "@mui/material";
 import Panel from "@ui/components/Panel";
 import Icon from "@ui/elements/Icon";
-import { useCSS } from "@app/hooks";
+import { useWebCSS } from "@app/hooks";
 
 import { getWebsiteStatus } from "@modules/Settings/reducers/site";
 import { site } from "@app/utils";
@@ -14,7 +14,7 @@ import UserInfo from "@themes/blog/components/UserInfo";
 export const Body = () => {
     const websiteStatus = useSelector(getWebsiteStatus);
     const systemStatus = useSelector((state) => state.site.status);
-    const classes = useCSS();
+    const classes = useWebCSS();
     const BodyContent = ({ message }) => (
         <Grid container spacing={2} className={classes.body}>
             <UserInfo message={message} />
