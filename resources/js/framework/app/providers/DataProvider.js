@@ -1,34 +1,29 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNotifier, useAuth } from '@app/hooks';
+import { useNotifier, useAuth, usePermissions } from '@app/hooks';
 import { loadWebsite } from '@modules/Settings/reducers/site';
 import { loadThemes } from '@modules/Settings/reducers/platform';
 import { getNotification } from '@modules/Settings/reducers/platform';
 import { loadEntities } from '@modules/Entity/reducers/entities';
 
 const DataProvider = ({ children }) => {
-  const notification = useSelector(getNotification);
-  const notify = useNotifier();
   const { token } = useAuth();
+  const notify = useNotifier();
   const dispatch = useDispatch();
-  const hasNotification = notification !== undefined && notification.message !== '';
-  const hasUserAuthenticated = token;
-  const hasAdminRoute =
-    typeof window !== typeof undefined
-      ? window.location.href.includes('/admin')
-        ? true
-        : false
-      : false;
+  const notification = useSelector(getNotification);
+  const { hasAdminRoute, hasNotification, hasUserAuthenticated } = usePermissions();
 
   React.useEffect(() => {
-    dispatch(loadWebsite({ token }));
-    dispatch(loadThemes({ token }));
-
-    if (hasUserAuthenticated && hasAdminRoute) {
-      dispatch(loadEntities(token));
+    if (!hasAdminRoute() || (hasUserAuthenticated(token) && hasAdminRoute())) {
+      dispatch(loadWebsite({ token }));
     }
 
-    if (hasNotification) {
+    if (hasUserAuthenticated() && hasAdminRoute()) {
+      dispatch(loadEntities(token));
+      dispatch(loadThemes());
+    }
+
+    if (hasNotification(notification)) {
       if (notification.type == 'error') {
         notify(notification.message, 'error');
       }
