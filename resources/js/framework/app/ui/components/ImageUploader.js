@@ -6,7 +6,7 @@ import { site } from "@app/utils";
 const ImageUploader = ({ uploadImage, placeholder, name }) => {
     const classes = useWebCSS();
     const [placeholderText, setPlaceholderText] = React.useState(
-        placeholder ? <img width="200px" src={`${site.url}/images/${placeholder}`} /> : "Drag 'n' drop any image here, or click to select one"
+        placeholder && placeholder.indexOf(null) <= 0 ? <img width="200px" src={`${site.url}/images/${placeholder}`} /> : "Drag 'n' drop any image here, or click to select one"
     );
     const notify = useNotifier();
     const {
@@ -31,7 +31,7 @@ const ImageUploader = ({ uploadImage, placeholder, name }) => {
 
     React.useEffect(() => {
         console.log("updated");
-        if (placeholder) {
+        if (placeholder && placeholder.indexOf(null) <= 0) {
             setPlaceholderText(<img width="200px" src={`${site.url}${placeholder}`} />);
         }
     }, [placeholder]);

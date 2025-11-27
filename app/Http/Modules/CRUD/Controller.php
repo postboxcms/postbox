@@ -154,6 +154,7 @@ class Controller extends Framework
                     'options' => $this->options,
                     'position' => $this->_getField($field, 'position', 'none'),
                     'list' => $this->_getField($field, 'list', true),
+                    'url' => $this->_getField($field, 'url', false),
                     'mandatory' => $this->_getField($field, 'mandatory', false),
                     'actions' => null
                 ];

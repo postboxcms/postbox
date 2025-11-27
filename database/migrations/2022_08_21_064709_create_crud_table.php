@@ -22,6 +22,7 @@ class CreateCrudTable extends Migration
             $table->string('type')->default('text');
             $table->boolean('list')->default(true);
             $table->boolean('mandatory')->default(false);
+            $table->boolean('url')->default(false);
             $table->string('position')->default('none');
             $table->timestamps();
         });
