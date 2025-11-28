@@ -1,10 +1,10 @@
 import { createTheme } from "@mui/material/styles";
 import { darken, lighten } from "@app/utils/colors";
-import baseConfig from "@resources/config/base.json";
+import themeConfig from "@resources/config/theme.json";
 
-const frameworkColor = baseConfig.css.frameworkColor;
-const brandColor = baseConfig.css.brandColor;
-const adminNavbarColor = baseConfig.css.adminNavbarColor;
+const frameworkColor = themeConfig.css.frameworkColor;
+const brandColor = themeConfig.css.brandColor;
+const adminNavbarColor = themeConfig.css.adminNavbarColor;
 
 export const admin = createTheme({
     typography: {

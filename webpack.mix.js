@@ -74,9 +74,4 @@ mix
       quietDeps: true,
     },
   })
-  .sass('resources/sass/theme.scss', 'public/css', {
-    sassOptions: {
-      quietDeps: true,
-    },
-  })
   .react();
