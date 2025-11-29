@@ -1,0 +1,31 @@
+@import './colors';
+
+#web {
+  .web-root {
+    header {
+      box-shadow: none !important;
+      margin-bottom: 20px !important;
+
+      div.MuiToolbar-root {
+        min-height: 48px;
+      }
+    }
+    div.MuiGrid-root {
+      padding-top: 0;
+      margin-top: 0;
+    }
+    .toolbar {
+      padding-left: 120px !important;
+      padding-right: 120px !important;
+      justify-content: center !important;
+    }
+    a {
+      text-decoration: none !important;
+      color: $brand-color;
+    }
+    a:hover {
+      text-decoration: none !important;
+      color: $brand-color-dark;
+    }
+  }
+}
