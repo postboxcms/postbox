@@ -27,7 +27,7 @@ const getThemeConfigurations = () => {
       })
       .filter(Boolean);
   } catch (e) {
-    throw new Error('Error:', e);
+    throw new Error('ThemeRenderException:', e);
   }
 };
 const themes = getThemeConfigurations();
@@ -75,3 +75,25 @@ mix
     },
   })
   .react();
+
+themes.forEach((theme) => {
+  mix
+    .sass(
+      `resources/js/themes/${theme.dbval}/assets/theme.scss`,
+      `public/themes/${theme.dbval}/css/theme.css`,
+      {
+        sassOptions: {
+          quietDeps: true,
+        },
+      }
+    )
+    .options({
+      processCssUrls: false,
+    });
+});
+
+if (mix.inProduction()) {
+  mix.version();
+} else {
+  mix.sourceMaps();
+}

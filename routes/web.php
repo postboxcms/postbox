@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Modules\Settings\Model as Settings;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,9 @@ Route::group(['prefix' => env('MIX_ADMIN_PREFIX', '/admin')], function () {
     });
 });
 
-Route::get('/{any}', function () {
+Route::get('/{any}', function (Settings $db) {
     $response = Http::get('http://host.docker.internal:5172/server?url=' . request()->getRequestUri());
     $html = $response->body();
-    return view('web', ['html' => $html]);
+    $theme = $db->where('property', 'theme')->value('value');
+    return view('web', ['html' => $html, 'theme' => $theme]);
 })->where('any', '.*');

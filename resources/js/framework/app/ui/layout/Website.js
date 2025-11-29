@@ -1,10 +1,6 @@
 import React from 'react';
 // elements
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-// footer
-import Footer from '@ui/components/Footer';
-import Icon from "@ui/elements/Icon";
 
 export default function Website(props) {
     const renderTheme = (props) => {
