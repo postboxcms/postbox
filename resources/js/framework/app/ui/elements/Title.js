@@ -4,10 +4,10 @@ import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWebCSS } from '@app/hooks';
 
-export default function Title({variant, children, icon}) {
+export default function Title({variant, children, icon, ...props}) {
   const classes = useWebCSS();
   return (
-    <Typography className={variant !== "normal" && classes.pageTitle} component="h2" variant="h6" color="primary" gutterBottom>
+    <Typography {...props} className={variant !== "normal" && classes.pageTitle} component="h2" variant="h6" color="primary" gutterBottom>
       <FontAwesomeIcon size="lg" icon={icon} />{" "}
       {children}
     </Typography>

@@ -1,8 +1,18 @@
-import React from "react";
+import React from 'react';
+import { Box, CssBaseline } from '@mui/material';
+import { Body, Header, Footer } from './layout';
 
-
-const Default = () => {
-    return <div>Default Theme</div>;
+const Blog = () => {
+  return (
+    <div className="web-root">
+      <CssBaseline />
+      <Box>
+        <Header />
+        <Body />
+        <Footer />
+      </Box>
+    </div>
+  );
 };
 
-export default Default;
+export default Blog;

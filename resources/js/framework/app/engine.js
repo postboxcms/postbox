@@ -1,17 +1,12 @@
 import * as React from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import { Theme } from "@website";
-// routes
-import { PublicRoute } from "@app/routes";
 // variables
-import { api, history } from "@app/utils";
+import { history } from "@app/utils";
 // store
 import { store, persistor } from "@app/store";
-// layout
-import Website from "@ui/layout/Website";
 // core modules
 import DataProvider from "@providers/DataProvider";
 
@@ -32,15 +27,6 @@ const Engine = () => {
                         <AdminRoutes />
                         {/* entity routes */}
                         <EntityRoutes />
-                        {/* <Switch>
-                            <PublicRoute
-                                restricted={true}
-                                filter={api.adminPrefix}
-                                path="*"
-                            >
-                                <Website controller={Theme} />
-                            </PublicRoute>
-                        </Switch> */}
                     </Router>
                 </DataProvider>
             </PersistGate>
