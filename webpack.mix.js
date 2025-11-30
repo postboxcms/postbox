@@ -17,7 +17,7 @@ const getThemeConfigurations = () => {
       .map((theme) => {
         try {
           const parsedConfig = JSON.parse(
-            fs.readFileSync(`${folderPath}/${theme}/config.json`, 'utf8')
+            fs.readFileSync(`${folderPath}/${theme}/manifest.json`, 'utf8')
           );
           parsedConfig.dbval = theme;
           return parsedConfig;

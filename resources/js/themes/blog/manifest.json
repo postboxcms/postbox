@@ -4,9 +4,5 @@
     "version": "1.0.0",
     "author": "Postbox Team",
     "license": "MIT",
-    "settings": {
-        "primaryColor": "#1976d2",
-        "secondaryColor": "#dc004e",
-        "logo": "/assets/logo.png"
-    }
+    "settings": {}
 }
