@@ -1,16 +1,19 @@
-import React from "react";
+import React, { lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { Box } from '@mui/material';
 
-import { Box } from "@mui/material";
-import { Header, Body, Footer } from "@website/components";
-
-export const Theme = () => {
-    return (
-        <Box>
-            <Header />
-            <Body />
-            <Footer />
-        </Box>
-    );
+export const Website = () => {
+  const theme = useSelector((state) => state.site.theme);
+  const ThemeComponent = lazy(() =>
+    import(`@themes/${theme}/index.js`)
+  );
+  return (
+    <Box>
+      <Suspense fallback={null}>
+        <ThemeComponent />
+      </Suspense>
+    </Box>
+  );
 };
 
-export default Theme;
+export default Website;
