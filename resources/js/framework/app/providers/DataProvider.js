@@ -1,63 +1,41 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSecureRoute, useNotifier, useAuth } from "@app/hooks";
-import {
-    setWebsiteLogo,
-    setWebsiteName,
-    setWebsiteStatus,
-    setWebsiteTitle,
-} from "@modules/Settings/reducers/site";
-import { getNotification } from "@modules/Settings/reducers/platform";
-import { loadEntities } from "@modules/Entity/reducers/entities";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNotifier, useAuth, usePermissions } from '@app/hooks';
+import { loadWebsite } from '@modules/Settings/reducers/site';
+import { loadThemes } from '@modules/Settings/reducers/platform';
+import { getNotification } from '@modules/Settings/reducers/platform';
+import { loadEntities } from '@modules/Entity/reducers/entities';
 
 const DataProvider = ({ children }) => {
-    const api = useSecureRoute();
-    const notification = useSelector(getNotification);
-    const notify = useNotifier();
-    const { token } = useAuth();
-    const dispatch = useDispatch();
-    const hasNotification = notification !== undefined && notification.message !== '';
-    const hasUserAuthenticated = token;
-    const hasAdminRoute = window.location.href.includes('/admin') ? true : false;
+  const { token } = useAuth();
+  const notify = useNotifier();
+  const dispatch = useDispatch();
+  const notification = useSelector(getNotification);
+  const { hasAdminRoute, hasNotification, hasUserAuthenticated } = usePermissions();
 
-    React.useEffect(() => {
-        if (hasUserAuthenticated) {
-            dispatch(loadEntities(token));
-        }
-        if (hasNotification) {
-            if (notification.type == "error") {
-                notify(notification.message, "error");
-            }
-            if (notification.type == "message") {
-                notify(notification.message);
-            }
-        }
-        if (!hasAdminRoute) {
-            api.get("/website").then((res) => {
-                const settings = res?.data?.data;
-                settings.map((item) => {
-                    switch (item.property) {
-                        case "name":
-                            dispatch(setWebsiteName(item.value));
-                            return;
-                        case "title":
-                            dispatch(setWebsiteTitle(item.value));
-                            return;
-                        case "isProductionReady":
-                            dispatch(setWebsiteStatus(Boolean(Number(item.value))));
-                            return;
-                        case "siteLogo":
-                            dispatch(setWebsiteLogo(item.value));
-                            return;
-                        default:
-                            return;
-                    }
-                });
-            });
-        }
-    }, [token, notification]);
+  React.useEffect(() => {
+    if (!hasAdminRoute() || (hasUserAuthenticated(token) && hasAdminRoute())) {
+      dispatch(loadWebsite({ token }));
+    }
 
-    return <React.Fragment>{children}</React.Fragment>;
+    if (hasUserAuthenticated(token) && hasAdminRoute()) {
+      dispatch(loadEntities(token));
+      dispatch(loadThemes());
+    }
+
+    if (hasNotification(notification)) {
+      if (notification.type == 'error') {
+        notify(notification.message, 'error');
+      }
+      if (notification.type == 'message') {
+        notify(notification.message);
+      }
+    }
+
+    return () => {};
+  }, [token, notification]);
+
+  return <React.Fragment>{children}</React.Fragment>;
 };
 
 export default DataProvider;

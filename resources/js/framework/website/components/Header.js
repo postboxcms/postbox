@@ -4,19 +4,19 @@ import { useSelector } from "react-redux";
 
 import { Container, Typography, Toolbar, AppBar } from "@mui/material";
 
-import { useAdminCSS } from "../../app/hooks/admin";
+import { useAppCSS } from "@app/hooks";
 import {
     getWebsiteLogo,
     getWebsiteName,
-} from "../../app/modules/Settings/reducers/site";
+} from "@modules/Settings/reducers/site";
 
 export const Header = () => {
-    const classes = useAdminCSS();
+    const classes = useAppCSS();
     const websiteName = useSelector(getWebsiteName);
     const websiteLogo = useSelector(getWebsiteLogo);
 
     return (
-        <AppBar position="relative" className={clsx(classes.appBar, open)}>
+        <AppBar position="relative" className={clsx(classes.appBar, "open")}>
             <Container maxWidth="lg">
                 <Toolbar className={classes.toolbar}>
                     <Typography
@@ -28,7 +28,7 @@ export const Header = () => {
                     >
                         {websiteLogo ? (
                             <img
-                                src={`images/${websiteLogo}`}
+                                src={`uploads/settings/${websiteLogo}`}
                                 style={{ maxHeight: "36px" }}
                             />
                         ) : (

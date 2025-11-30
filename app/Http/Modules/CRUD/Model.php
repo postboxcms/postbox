@@ -11,5 +11,5 @@ class Model extends BaseModel
 
     protected $table = 'crud';
 
-    protected $fillable = ['table','field','alias','type','list','mandatory','position'];
+    protected $fillable = ['table','field','alias','type','list','mandatory', 'url','position'];
 }

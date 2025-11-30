@@ -1,3 +1,7 @@
 <?php
 // Postbox configuration setup
-return [];
+return [
+    'theme' => [
+        'website' => env('POSTBOX_WEBSITE_THEME', 'blog'),
+    ],
+];

@@ -2,12 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Tooltip } from "@mui/material";
-import { useCSS, useCurrentRoute } from "@app/hooks";
+import { useWebCSS, useCurrentRoute } from "@app/hooks";
 import { getNavOpen } from "@modules/Settings/reducers/platform";
 
 const NavLink = ({ children, to, hidden, submenu, title }) => {
     const isNavOpen = useSelector(getNavOpen);
-    const classes = useCSS();
+    const classes = useWebCSS();
     const { getCurrentRoute, getTargetRoute } = useCurrentRoute();
     const currentRoute = getCurrentRoute();
     const targetRoute = getTargetRoute(to);

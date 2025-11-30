@@ -7,7 +7,7 @@ import { Theme } from "@website";
 // routes
 import { PublicRoute } from "@app/routes";
 // variables
-import { api } from "@app/utils";
+import { api, history } from "@app/utils";
 // store
 import { store, persistor } from "@app/store";
 // layout
@@ -32,7 +32,7 @@ const Engine = () => {
                         <AdminRoutes />
                         {/* entity routes */}
                         <EntityRoutes />
-                        <Switch>
+                        {/* <Switch>
                             <PublicRoute
                                 restricted={true}
                                 filter={api.adminPrefix}
@@ -40,7 +40,7 @@ const Engine = () => {
                             >
                                 <Website controller={Theme} />
                             </PublicRoute>
-                        </Switch>
+                        </Switch> */}
                     </Router>
                 </DataProvider>
             </PersistGate>

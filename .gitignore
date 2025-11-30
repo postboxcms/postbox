@@ -6,6 +6,8 @@
 /public/js
 /public/images
 /public/uploads
+/public/build
+/public/themes
 /storage/*.key
 /vendor
 /.vscode
@@ -18,3 +20,4 @@ npm-debug.log
 yarn-error.log
 composer.lock
 /app/Models/*.php
+/dist

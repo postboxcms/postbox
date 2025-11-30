@@ -4,12 +4,19 @@ import { admin, website } from "./theme";
 export const setup = () => {
     // app init code goes here
     const theme = getTheme();
+    const status = getStatus();
     return {
-        theme
+        theme,
+        status
     };
 }
 
 export const getTheme = () => {
-    const url = window.location.href;
+    const url = typeof window !== typeof undefined ? window.location.href : "";
     return url.includes("/admin") ? admin : website;
+}
+
+export const getStatus = () => {
+    // site status code goes here
+    return true;
 }

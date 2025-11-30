@@ -4,13 +4,17 @@ const generateURL = (url, port) => {
     return port != 80 && process.env.APP_ENV === 'local' ? parseURL(`${url}:${port}`) : parseURL(url);
 }
 
+const getAPIURL = () => {
+    return process.env.MIX_API_ROUTE !== undefined && parseURL(`${generateURL(process.env.MIX_APP_URL, process.env.MIX_APP_PORT)}/${process.env.MIX_API_ROUTE}`);
+}
+
 export const api = {
     adminPrefix: process.env.MIX_ADMIN_PREFIX,
-    csrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+    csrfToken: typeof document !== typeof undefined ? document.head.querySelector('meta[name="csrf-token"]').content : null,
     domain: process.env.MIX_APP_URL,
     loginUrl: process.env.MIX_LOGIN_URL,
     logoutUrl: process.env.MIX_LOGOUT_URL,
-    url: parseURL(`${generateURL(process.env.MIX_APP_URL, process.env.MIX_APP_PORT)}/${process.env.MIX_API_ROUTE}`),
+    url: getAPIURL(),
     token: process.env.MIX_API_TOKEN,
     editorToken: process.env.MIX_EDITOR_TOKEN,
 };
@@ -33,7 +37,8 @@ export const site = {
     name: process.env.MIX_APP_NAME,
     url: generateURL(process.env.MIX_APP_URL, process.env.MIX_APP_PORT),
     themeMessage: 'Theme content goes here ...',
-    comingSoonMessage: 'The website will be launching soon ...'
+    comingSoonMessage: 'Coming Soon!',
+    loadingMessage: '...',
 };
 export const platform = {
     company: process.env.MIX_COMPANY_NAME,

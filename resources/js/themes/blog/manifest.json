@@ -1,0 +1,8 @@
+{
+    "name": "Blog",
+    "description": "Blog - Default theme for Postbox",
+    "version": "1.0.0",
+    "author": "Postbox Team",
+    "license": "MIT",
+    "settings": {}
+}

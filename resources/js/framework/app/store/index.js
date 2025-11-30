@@ -24,6 +24,24 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const sagaMiddleware = createSagaMiddleware();
 
+const MAX_SAGA_RUNS = 5;
+let _sagaRunCount = 0;
+const _origRun = sagaMiddleware.run.bind(sagaMiddleware);
+
+sagaMiddleware.run = (saga, ...args) => {
+    if (_sagaRunCount >= MAX_SAGA_RUNS) {
+        console.warn(`Saga run blocked: exceeded max of ${MAX_SAGA_RUNS}`);
+        // return a minimal Task-like object so callers expecting a Task won't break
+        return {
+            done: Promise.resolve(),
+            isRunning: false,
+            toPromise() { return Promise.resolve(); },
+        };
+    }
+    _sagaRunCount += 1;
+    return _origRun(saga, ...args);
+};
+
 export const store = configureStore({
     reducer: persistedReducer,
     middleware: [sagaMiddleware],

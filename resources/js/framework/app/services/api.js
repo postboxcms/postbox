@@ -26,7 +26,7 @@ export const postRequest = async (data) => {
 
 export const getRequest = async (data) => {
     try {
-        const response = await axios.get(`${api.url}/${data.endpoint}`, setHeaders(data.token));
+        const response = api.url && await axios.get(`${api.url}/${data.endpoint}`, setHeaders(data.token));
         return response?.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");

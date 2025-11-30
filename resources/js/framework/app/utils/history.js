@@ -1,3 +1,3 @@
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory, createMemoryHistory } from 'history';
 
-export const history = createBrowserHistory();
+export const history = typeof document !== typeof undefined ? createBrowserHistory() : createMemoryHistory();

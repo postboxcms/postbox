@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { Card, Frame, Body, DataCard } from "../../ui/layout/Frame";
 
 import Placeholder, { Loader } from "@ui/components/Placeholder";
-import { useCSS } from "@app/hooks/css";
+import { useWebCSS } from "@app/hooks/css";
 import { getEntities } from "@modules/Entity/reducers/entities";
 
 
 const Dashboard = (props) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     const entities = useSelector(getEntities);
 
     return (

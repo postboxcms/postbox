@@ -5,7 +5,7 @@ const Panel = (props) => {
     const { children, width } = props;
     
     return (
-        <Card {...props} sx={{ width: width, marginBottom: 2 }}>
+        <Card {...props} sx={{ width: width || '100%', marginBottom: 2 }}>
             <CardContent>
                 {children}
             </CardContent>

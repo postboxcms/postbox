@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Modules\Settings\Model as Settings;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,19 +13,26 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('web');
-});
+// Route::get('/', function () {
+//     return view('web');
+// });
 
 // admin routes
-Route::group(['prefix' => env('MIX_ADMIN_PREFIX','/admin')], function () {
-    Route::get('/', function() {
+Route::group(['prefix' => env('MIX_ADMIN_PREFIX', '/admin')], function () {
+    Route::get('/', function () {
         return view('app');
     });
-    Route::get('{module}', function() {
+    Route::get('{module}', function () {
         return view('app');
     });
-    Route::get('{module}/{action}', function() {
+    Route::get('{module}/{action}', function () {
         return view('app');
     });
 });
+
+Route::get('/{any}', function (Settings $db) {
+    $response = Http::get('http://host.docker.internal:5172/server?url=' . request()->getRequestUri());
+    $html = $response->body();
+    $theme = $db->where('property', 'theme')->value('value');
+    return view('web', ['html' => $html, 'theme' => $theme]);
+})->where('any', '.*');

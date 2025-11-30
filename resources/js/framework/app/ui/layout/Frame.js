@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useAdminCSS, useCSS } from '@app/hooks';
+import { useAppCSS, useWebCSS } from '@app/hooks';
 import {api} from '@app/utils/constants';
 import Title from '@ui/elements/Title';
 import Icon from '../elements/Icon';
@@ -31,7 +31,7 @@ export const Card = (props) => {
 }
 
 export const Body = (props) => {
-    const classes = useAdminCSS();
+    const classes = useAppCSS();
     const paperClass = props.height == "fixed" ? (clsx(classes.paper, classes.fixedHeight)) + ' ' + props.className : classes.paper + ' ' + props.className;
     return (
         <Paper elevation={3} className={paperClass}>
@@ -41,7 +41,7 @@ export const Body = (props) => {
 }
 
 export const DataCard = (props) => {
-    const classes = useCSS();
+    const classes = useWebCSS();
     return (
         <React.Fragment>
             <Grid container>
