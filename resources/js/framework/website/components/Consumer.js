@@ -5,8 +5,9 @@ import { useSecureRoute } from '@app/hooks';
 import { Loader } from '@ui/components/Placeholder';
 import Panel from '@ui/components/Panel';
 
-export const Consumer = ({ children, table }) => {
+export const Consumer = ({ children, table, placeholder }) => {
   const api = useSecureRoute();
+  const CustomPlaceholder = typeof placeholder === 'string' ? () => placeholder : placeholder;
   const BlankPlaceholder = () => (
     <>
       <div
@@ -26,7 +27,9 @@ export const Consumer = ({ children, table }) => {
       </div>
     </>
   );
-  const [consumer, setConsumer] = React.useState(() => <BlankPlaceholder />);
+  const [consumer, setConsumer] = React.useState(() =>
+    placeholder ? <CustomPlaceholder /> : <BlankPlaceholder />
+  );
   React.useEffect(() => {
     api &&
       api.get(`/consumer`, {}, { headers: { 'X-Entity': table } }).then((response) => {
