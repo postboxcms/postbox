@@ -376,7 +376,7 @@ export const AddEditContent = ({ query, type }) => {
       case 'switch':
         return 0;
       case 'editor':
-        return entityData[entry.field]?.value;
+        return entityData?.[entry?.field]?.value;
       default:
         return '';
     }
