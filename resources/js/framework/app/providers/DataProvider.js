@@ -25,7 +25,7 @@ const DataProvider = ({ children }) => {
       dispatch(loadThemes());
     }
 
-    if (hasNotification(notification)) {
+    if (hasNotification(notification) && hasAdminRoute()) {
       if (notification.type == 'error') {
         notify(notification.message, 'error');
       }
