@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "@mui/material";
 import Panel from "@ui/components/Panel";
 
-const MenuBar = ({ message }) => {
+export const MenuBar = ({ message }) => {
     return (
         <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
             <Panel

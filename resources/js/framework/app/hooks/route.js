@@ -5,9 +5,10 @@ import { useAuth } from "@app/hooks";
 export const useSecureRoute = () => {
     const { token } = useAuth();
 
-    const get = (url, payload) => {
+    const get = (url, payload, customHeaders = {}) => {
         return url && axios.get(api.url + url, {
             headers: {
+                ...customHeaders?.headers,
                 Authorization: "Bearer " + token,
             },
             params: payload,

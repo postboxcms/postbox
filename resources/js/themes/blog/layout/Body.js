@@ -10,19 +10,23 @@ import { getWebsiteStatus } from '@modules/Settings/reducers/site';
 import { site } from '@app/utils';
 import Title from '@ui/elements/Title';
 import UserInfo from '@themes/blog/components/UserInfo';
+import Consumer from '@website/components/Consumer';
+import FeedPanel from '../components/FeedPanel';
 
 export const Body = () => {
   const websiteStatus = useSelector(getWebsiteStatus);
   const systemStatus = useSelector((state) => state.site.status);
   const classes = useWebCSS();
+  // const attributes = useConsumer();
+
   const BodyContent = ({ message }) => (
     <Grid container spacing={2} className={classes.body}>
-      <UserInfo message={message} />
-      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-        <Panel style={{ padding: '16px', justifyContent: 'center' }}>
-          <p>{message}</p>
-        </Panel>
-      </Grid>
+      <Consumer entity="users">
+        <UserInfo message={message} />
+      </Consumer>
+      <Consumer entity="posts">
+        <FeedPanel message={message} />
+      </Consumer>
       <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
         <Panel style={{ padding: '16px', justifyContent: 'center' }}>
           <p>{message}</p>
@@ -67,15 +71,6 @@ export const Body = () => {
   return (
     <Container maxWidth="lg" style={{ justifyContent: 'center', display: 'flex' }}>
       {/* shift the above code to Theme and render the theme as a module through Website layout */}
-      {/* <Typography
-                    component="h1"
-                    variant="p"
-                    color="inherit"
-                    noWrap
-                    className="title"
-                >
-                    {systemStatus !== "idle" ? (websiteStatus ? site.themeMessage : site.comingSoonMessage) : site.loadingMessage}
-                </Typography> */}
       {systemStatus === 'idle' && <BodyContent message={site.loadingMessage} />}
       {systemStatus !== 'idle' && websiteStatus && <BodyContent message={site.themeMessage} />}
       {systemStatus !== 'idle' && !websiteStatus && <ComingSoonContent />}

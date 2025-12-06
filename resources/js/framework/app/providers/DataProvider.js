@@ -12,10 +12,12 @@ const DataProvider = ({ children }) => {
   const dispatch = useDispatch();
   const notification = useSelector(getNotification);
   const { hasAdminRoute, hasNotification, hasUserAuthenticated } = usePermissions();
+  const isUserAuthorized = hasUserAuthenticated(token) && hasAdminRoute();
+  const isUserOnWebsite = !hasAdminRoute();
 
   React.useEffect(() => {
-    if (!hasAdminRoute() || (hasUserAuthenticated(token) && hasAdminRoute())) {
-      dispatch(loadWebsite({ token }));
+    if (isUserOnWebsite || isUserAuthorized) {
+      dispatch(loadWebsite({token}));
     }
 
     if (hasUserAuthenticated(token) && hasAdminRoute()) {

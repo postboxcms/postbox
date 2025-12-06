@@ -19,4 +19,6 @@ return [
     'exists'            => 'Entity :name exists',
     'delete'            => 'Entity deleted successfully',
     'failed'            => 'Failed to save :name',
+    'notfound'          => 'Entity :name not found',
+    'emptyresponse'     => 'No data found for entity :name',
 ];

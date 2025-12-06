@@ -3,9 +3,12 @@ import { Box, CssBaseline } from '@mui/material';
 import { Body, Header, Footer } from './layout';
 
 const Blog = () => {
+  React.useEffect(()=> {
+    console.log('blog theme loaded');
+  },[]);
   return (
     <div className="web-root">
-      <CssBaseline />
+      <CssBaseline /> 
       <Box>
         <Header />
         <Body />

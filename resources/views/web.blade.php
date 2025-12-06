@@ -15,6 +15,6 @@
         <div id="web">
             {!! $html ?? '' !!}
         </div>
-        <script src="/build/client/client.js"></script>
+        <script src="/build/client.js"></script>
     </body>
 </html>

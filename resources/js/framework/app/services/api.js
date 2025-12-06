@@ -2,9 +2,11 @@ import axios from "axios";
 import { api } from "@app/utils/constants";
 
 
-const setHeaders = (token) => {
+const setHeaders = (customHeaders) => {
+    const { token } = customHeaders || {};
     return {
         headers: {
+            ...customHeaders,
             Authorization: "Bearer " + token
         }
     }
@@ -12,21 +14,23 @@ const setHeaders = (token) => {
 
 export const postRequest = async (data) => {
     try {
+        const { token, endpoint } = data;
         if (data instanceof FormData) {
             const { token, endpoint } = Object.fromEntries(data);
-            const response = await axios.post(`${api.url}/${endpoint}`, data, setHeaders(token));
+            const response = await axios.post(`${api.url}/${endpoint}`, data, setHeaders({token: token}));
             return response?.data;
         }
-        const response = await axios.post(`${api.url}/${data.endpoint}`, data, setHeaders(data.token));
+        const response = await axios.post(`${api.url}/${endpoint}`, data, setHeaders({token: token}));
         return response?.data;
     } catch (e) {
-        throw new Error(e.response.data.message || "Something went wrong");
+        throw new Error(e.response?.data?.message || "Something went wrong");
     };
 }
 
 export const getRequest = async (data) => {
     try {
-        const response = api.url && await axios.get(`${api.url}/${data.endpoint}`, setHeaders(data.token));
+        const { token, endpoint, headers } = data;
+        const response = api.url && await axios.get(`${api.url}/${endpoint}`, setHeaders({...headers, token}));
         return response?.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");
@@ -36,7 +40,7 @@ export const getRequest = async (data) => {
 export const updateRequest = async (payload) => {
     try {
         const  { endpoint, token, data, method } = payload;
-        const response = await axios[method](`${api.url}/${endpoint}`, data, setHeaders(token));
+        const response = await axios[method](`${api.url}/${endpoint}`, data, setHeaders({token}));
         return response.data;
     } catch (e) {
         throw new Error(e.response.data.message || "Something went wrong");

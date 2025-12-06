@@ -7,6 +7,7 @@ export const Website = () => {
   const ThemeComponent = lazy(() =>
     import(`@themes/${theme}/index.js`)
   );
+  
   return (
     <Box>
       <Suspense fallback={null}>
