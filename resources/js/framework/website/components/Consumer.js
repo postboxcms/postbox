@@ -5,19 +5,31 @@ import { useSecureRoute } from '@app/hooks';
 import { Loader } from '@ui/components/Placeholder';
 import Panel from '@ui/components/Panel';
 
-export const Consumer = ({ children, entity }) => {
+export const Consumer = ({ children, table }) => {
   const api = useSecureRoute();
-  const [consumer, setConsumer] = React.useState(() => (
+  const BlankPlaceholder = () => (
     <>
-      <Loader variant="circular" height={40} width={40} />
-      {Array.from({ length: 2 }).map((_, i) => (
-        <Loader variant="text" height={30} width="50%" key={i} />
-      ))}
+      <div
+        style={{ display: 'flex', gap: '20px', width: '100%', flex: '1 1 0', flexDirection: 'row' }}
+      >
+        <Loader style={{ flex: 1 }} variant="circular" height={60} width={60} />
+        <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Loader style={{ flex: 1 }} variant="text" height={20} width="80%" key={i} />
+          ))}
+        </div>
+      </div>
+      <div style={{ display: 'flex', marginTop: '20px', width: '100%', flexDirection: 'column' }}>
+        {Array.from({ length: 4 }).map((_, i) => (
+          <Loader style={{ flex: 1 }} variant="text" height={25} width="100%" key={i} />
+        ))}
+      </div>
     </>
-  ));
+  );
+  const [consumer, setConsumer] = React.useState(() => <BlankPlaceholder />);
   React.useEffect(() => {
     api &&
-      api.get(`/consumer`, {}, { headers: { 'X-Entity': entity } }).then((response) => {
+      api.get(`/consumer`, {}, { headers: { 'X-Entity': table } }).then((response) => {
         setConsumer(JSON.stringify(response?.data?.data) || null);
       });
   }, []);

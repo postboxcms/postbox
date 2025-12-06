@@ -5,7 +5,7 @@ export const Loader = (props) => {
     const { lines, height, width, variant } = props;
     return lines ? [...Array(lines)].map((e, i) => {
         return (
-            <div key={i} className='skeleton-loader'>
+            <div key={i} className='skeleton-loader' {...props}>
                 <Skeleton variant={variant} key={i} height={height} width={width} {...props} />
             </div>
         );

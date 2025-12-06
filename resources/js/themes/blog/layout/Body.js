@@ -21,17 +21,15 @@ export const Body = () => {
 
   const BodyContent = ({ message }) => (
     <Grid container spacing={2} className={classes.body}>
-      <Consumer entity="users">
+      <Consumer table="pages">
         <UserInfo message={message} />
       </Consumer>
-      <Consumer entity="posts">
+      <Consumer table="posts">
         <FeedPanel message={message} />
       </Consumer>
-      <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-        <Panel style={{ padding: '16px', justifyContent: 'center' }}>
-          <p>{message}</p>
-        </Panel>
-      </Grid>
+      <Consumer table="users">
+        <UserInfo message={message} />
+      </Consumer>
     </Grid>
   );
 
