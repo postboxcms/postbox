@@ -9,7 +9,7 @@ export const MenuBar = () => {
 
   return (
     <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-      <Panel style={{ padding: '16px', justifyContent: 'center' }}>
+      <Panel className="menu-bar" style={{ padding: 0, justifyContent: 'center' }}>
         <nav aria-label="main mailbox folders">
           <List>
             <ListItem disablePadding>
@@ -19,20 +19,6 @@ export const MenuBar = () => {
                 </ListItemIcon>
                 <ListItemText primary="Home" />
               </ListItemButton>
-              {/* {attributes && attributes.length > 0 && (
-                <List component="div" disablePadding>
-                  {/* {attributes.map((item, index) => (
-                    <ListItem key={index} disablePadding sx={{ pl: 4 }}>
-                      <ListItemButton className='menu-button'>
-                        <ListItemIcon>
-                          <Icon name="fa-file-alt" />
-                        </ListItemIcon>
-                        <ListItemText primary={item.title || `Item ${index + 1}`} />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </List>
-              )} */}
             </ListItem>
           </List>
         </nav>
