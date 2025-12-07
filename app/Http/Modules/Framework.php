@@ -84,10 +84,10 @@ class Framework extends BaseController
         return response(['error' => trans('database.success')]);
     }
 
-    protected function fetchPublicEntityResponse($table)
+    protected function fetchPublicEntityResponse($table, $limit = null, $offset = null)
     {
         try {
-            $entity = DB::table($table)->get()->toArray();
+            $entity = DB::table($table)->limit($limit)->offset($offset)->orderBy('updated_at')->get()->toArray();
 
             if (!$entity) {
                 return response()->json([trans('entity.emptyresponse', ['name' => $table])], 200);

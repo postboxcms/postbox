@@ -10,7 +10,7 @@ class Controller extends Framework
 
     public function index(Request $request)
     {
-        $this->data = $this->fetchPublicEntityResponse($request->header('X-Entity'));
+        $this->data = $this->fetchPublicEntityResponse($request->header('X-Entity'), $request->limit, $request->offset);
         return response([
             'data' => $this->data,
             'message' => 'Consumer data fetched successfully'

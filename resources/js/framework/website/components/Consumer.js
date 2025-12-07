@@ -5,7 +5,7 @@ import { useSecureRoute } from '@app/hooks';
 import { Loader } from '@ui/components/Placeholder';
 import Panel from '@ui/components/Panel';
 
-export const Consumer = ({ children, table, placeholder }) => {
+export const Consumer = ({ children, table, placeholder, start, end }) => {
   const api = useSecureRoute();
   const CustomPlaceholder = typeof placeholder === 'string' ? () => placeholder : placeholder;
   const BlankPlaceholder = () => (
@@ -27,14 +27,20 @@ export const Consumer = ({ children, table, placeholder }) => {
       </div>
     </>
   );
+  const [limit, setLimit] = React.useState(end || 10);
+  const [offset, setOffset] = React.useState(start || 0);
   const [consumer, setConsumer] = React.useState(() =>
     placeholder ? <CustomPlaceholder /> : <BlankPlaceholder />
   );
   React.useEffect(() => {
     api &&
-      api.get(`/consumer`, {}, { headers: { 'X-Entity': table } }).then((response) => {
-        setConsumer(JSON.stringify(response?.data?.data) || null);
-      });
+      api
+        .get(`/consumer`, { limit, offset }, { headers: { 'X-Entity': table } })
+        .then((response) => {
+          setConsumer(JSON.stringify(response?.data?.data) || null);
+          setLimit(response?.data?.data?.length || 0);
+          setOffset(offset);
+        });
   }, []);
   return <ConsumerContext.Provider value={consumer}>{children}</ConsumerContext.Provider>;
 };
