@@ -552,7 +552,7 @@ export const AddEditContent = ({ query, type }) => {
     return (e) => {
       e.preventDefault();
       const formData = processFormData(e);
-
+      formData.append('token', token);
       if (error || !formData) {
         notify('Please fill all mandatory fields', 'error');
         setError(false);
@@ -562,17 +562,12 @@ export const AddEditContent = ({ query, type }) => {
       if (query === 'edit') {
         const entityId = new URLSearchParams(window.location.search).get('eid');
         formData.append('eid', entityId);
-        dispatch(
-          updateEntity({
-            path: `${type}`,
-            data: Object.fromEntries(formData),
-            token: token,
-            method: 'put',
-          })
-        );
+        formData.append('endpoint', `entity/${type}`);
+        formData.append('_method', 'put');
+        dispatch(updateEntity(formData));
       } else {
-        formData.append('token', token);
-        dispatch(storeEntity(Object.fromEntries(formData)));
+        formData.append('endpoint', 'entity');
+        dispatch(storeEntity(formData));
       }
     };
   };
