@@ -15,6 +15,18 @@ class Framework extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $state = [];
+    protected $guardedFields = [];
+
+    private function __filterGuardedFields($data)
+    {
+        $data = (array) $data;
+        $updatedData = [];
+        $this->guardedFields = config('postbox.guarded_fields', []);
+        foreach ($data as $value) {
+            $updatedData[] = array_filter((array) $value, fn($key) => !in_array($key, $this->guardedFields), ARRAY_FILTER_USE_KEY);
+        }
+        return (object) $updatedData;
+    }
 
     protected function performDBOperations($table, $type, $data = [], $resetEID = true)
     {
@@ -29,7 +41,7 @@ class Framework extends BaseController
                     DB::table($table)->where('uuid', $data['uuid'])->update($data);
                     break;
                 case 'delete':
-                    DB::table($table)->where(key($data),  current($data))->delete();
+                    DB::table($table)->where(key($data), current($data))->delete();
                     break;
                 default:
                     DB::table($table)->insert($data);
@@ -72,6 +84,21 @@ class Framework extends BaseController
         return response(['error' => trans('database.success')]);
     }
 
+    protected function fetchPublicEntityResponse($table, $where, $limit = 9999, $offset = 0)
+    {
+        try {
+            $entity = DB::table($table)
+                        ->where($where)->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
+
+            if (!$entity) {
+                return response()->json([trans('entity.emptyresponse', ['name' => $table])], 200);
+            }
+            return $this->__filterGuardedFields($entity);
+        } catch (Exception $e) {
+            throw new Exception(trans('database.exception') . $e->getMessage());
+        }
+    }
+
     protected function formatData($data = [], $resetEID = true)
     {
         $data = !empty($this->state) ? array_merge($data, $this->state) : $data;
@@ -96,7 +123,8 @@ class Framework extends BaseController
         return substr($hash, 0, 16); // Return first 16 characters of the hash
     }
 
-    protected function optionsTable() {
+    protected function optionsTable()
+    {
         return DB::table('options');
     }
 }

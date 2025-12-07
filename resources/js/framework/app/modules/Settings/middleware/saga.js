@@ -1,4 +1,4 @@
-import { put, call, select, takeLeading, takeEvery } from 'redux-saga/effects';
+import { put, call, select, takeLeading, takeEvery, takeLatest } from 'redux-saga/effects';
 import {
   setWebsiteLogo,
   setWebsiteName,

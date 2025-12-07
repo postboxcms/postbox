@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Modules\Auth\Controller as OAuth;
 use App\Http\Modules\Entity\Controller as Entity;
+use App\Http\Modules\Consumer\Controller as Consumer;
 use App\Http\Modules\CRUD\Controller as CRUD;
 use App\Http\Modules\Settings\Controller as Settings;
 use App\Http\Modules\Website\Controller as Website;
@@ -45,3 +46,4 @@ Route::apiResource('/settings', Settings::class)->middleware('auth:api');
 
 // website routes
 Route::apiResource('/website', Website::class);
+Route::apiResource('/consumer', Consumer::class);

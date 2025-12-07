@@ -27,5 +27,19 @@
       text-decoration: none !important;
       color: $brand-color-dark;
     }
+    .menu-button:hover {
+      border-radius: 5px !important;
+    }
+    .menu-bar {
+      padding: 0 !important;
+    }
+    .avatar-icon {
+      width: 100px;
+      height: 100px;
+      font-size: 48px;
+      background-color: $brand-color-light !important;
+      color: #fff !important;
+      margin-bottom: 10px;
+    }
   }
 }
