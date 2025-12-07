@@ -42,7 +42,6 @@ function* putEntity(action) {
   try {
     const status = yield select((state) => state.entities.status);
     if (status !== 'pending') return;
-    // yield call(updateRequest, { endpoint: `entity/${action.payload.path}`, data: action.payload.data, token: action.payload.token, method: 'put' });
     yield call(postRequest, action.payload);
     const payload = Object.fromEntries(action.payload);
     const path = payload.endpoint.replace('/entity/','');
