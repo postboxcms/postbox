@@ -9,9 +9,9 @@ import { useWebCSS } from '@app/hooks';
 import { getWebsiteStatus } from '@modules/Settings/reducers/site';
 import { site } from '@app/utils';
 import Title from '@ui/elements/Title';
-import UserInfo from '@themes/blog/components/UserInfo';
 import Consumer from '@website/components/Consumer';
-import FeedPanel from '../components/FeedPanel';
+
+import { UserInfo, FeedPanel, MenuBar } from '@themes/blog/components';
 
 export const Body = () => {
   const websiteStatus = useSelector(getWebsiteStatus);
@@ -22,13 +22,13 @@ export const Body = () => {
   const BodyContent = ({ message }) => (
     <Grid container spacing={2} className={classes.body}>
       <Consumer table="pages">
-        <UserInfo message={message} />
+        <MenuBar />
       </Consumer>
       <Consumer table="posts">
-        <FeedPanel message={message} />
+        <FeedPanel />
       </Consumer>
       <Consumer table="users">
-        <UserInfo message={message} />
+        <UserInfo />
       </Consumer>
     </Grid>
   );

@@ -9,7 +9,7 @@ export const UserInfo = () => {
   return (
     <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
       <Panel style={{ padding: '16px', justifyContent: 'center' }}>
-        <p>{attributes}</p>
+        {/* <p>{attributes}</p> */}
       </Panel>
     </Grid>
   );

@@ -38,7 +38,7 @@ export const Consumer = ({ children, table, placeholder, start, end }) => {
         .get(`/consumer`, { limit, offset }, { headers: { 'X-Entity': table } })
         .then((response) => {
           setConsumer(JSON.stringify(response?.data?.data) || null);
-          setLimit(response?.data?.data?.length || 0);
+          setLimit(limit);
           setOffset(offset);
         });
   }, []);
