@@ -475,6 +475,12 @@ export const AddEditContent = ({ query, type }) => {
           formData.set(value.field, formData.getAll(value.field + '[]'));
           formData.delete(value.field + '[]');
         }
+        if (value.type === 'editor') {
+          formData.set(
+            value.field,
+            formData.get(value.field).toString() !== 'undefined' ? formData.get(value.field) : ''
+          );
+        }
       }
     }
 
