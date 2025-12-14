@@ -12,6 +12,7 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
   const [blocked, setBlocked] = React.useState(false);
   const [calling, setCalling] = React.useState(true);
   const [consumer, setConsumer] = React.useState({});
+  const apiCheckOK = api && calling && !blocked;
 
   useScrollEffect(() => {
     if (blocked) {
@@ -20,17 +21,15 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
       return;
     }
     if (scroll) {
-      setCalling(true);
       setFetching(true);
+      setCalling(true);
       setStart(Number(end));
       setEnd(Number(end) + Number(limit));
     }
   }, [start, end]);
 
   React.useEffect(() => {
-    api &&
-      !blocked &&
-      calling &&
+      apiCheckOK &&
       api
         .get(`/consumer`, { limit, offset: start }, { headers: { 'X-Entity': table } })
         .then((response) => {
@@ -42,20 +41,22 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
             setFetching(false);
             return;
           }
-          
+
           if (first(response?.data?.data?.original)?.includes('No data found')) {
             setFetching(false);
             return;
           }
-          
+
           const parsedConsumer = typeof consumer === 'string' ? JSON.parse(consumer) : {};
           let data = {};
           let consumerLength = parsedConsumer?.data?.data
             ? Object.keys(parsedConsumer?.data?.data).length
             : 0;
+
           for (const key in response?.data?.data) {
             data[consumerLength++] = response?.data?.data[key];
           }
+
           const parsedResponse = {
             ...parsedConsumer,
             data: { data: { ...parsedConsumer?.data?.data, ...data } },
