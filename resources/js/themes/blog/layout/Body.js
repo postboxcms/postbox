@@ -24,7 +24,7 @@ export const Body = () => {
       <Consumer table="pages">
         <MenuBar />
       </Consumer>
-      <Consumer table="posts">
+      <Consumer table="posts" scroll={true} limit="4">
         <FeedPanel />
       </Consumer>
       <Consumer table="users">
@@ -34,7 +34,7 @@ export const Body = () => {
   );
 
   const ComingSoonContent = () => (
-    <Grid container justifyContent={'center'} flex={1} spacing={2}>
+    <Grid container style={{ marginTop: '66px' }} justifyContent={'center'} flex={1} spacing={2}>
       <Grid
         alignItems={'center'}
         textAlign={'center'}

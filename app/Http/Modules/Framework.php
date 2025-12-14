@@ -88,7 +88,8 @@ class Framework extends BaseController
     {
         try {
             $entity = DB::table($table)
-                        ->where($where)->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
+                        ->where($where)
+                        ->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
 
             if (!$entity) {
                 return response()->json([trans('entity.emptyresponse', ['name' => $table])], 200);

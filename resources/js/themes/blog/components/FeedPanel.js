@@ -13,9 +13,11 @@ import Panel from '@ui/components/Panel';
 import Icon from '@ui/elements/Icon';
 import Title from '@ui/elements/Title';
 import { useConsumer } from '@website/hooks/consumer';
+import { Loader } from '@ui/components/Placeholder';
 
 export const FeedPanel = () => {
   const attributes = useConsumer();
+  const [ready, setReady] = React.useState(false);
 
   const NoPosts = () => (
     <Grid container justifyContent={'center'} flex={1} spacing={2}>
@@ -30,7 +32,7 @@ export const FeedPanel = () => {
         lg={12}
         xl={12}
       >
-        <Icon name={attributes?.meta?.icon || 'fa-square'} color="#eee" size="120px" />
+        <Icon name={attributes?.meta?.icon || 'fa-message'} color="#eee" size="120px" />
       </Grid>
       <Grid
         alignItems={'center'}
@@ -49,9 +51,44 @@ export const FeedPanel = () => {
       </Grid>
     </Grid>
   );
+
+  const Placeholder = () => (
+    <Card sx={{ alignContent: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+      <CardActionArea>
+        {/* <CardMedia component="img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" height="140" /> */}
+        <div style={{ background: '#eee', display:'inline-block', width: '100%' }}>
+          <Icon
+            name="fa-image"
+            style={{ display: 'flex', margin: '0 auto' }}
+            size="8x"
+            color="#ddd"
+          />
+        </div>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            <Loader style={{ flex: 1 }} variant="text" height={25} width="30%" />
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Loader style={{ flex: 1 }} variant="text" height={25} width="70%" />
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          <Loader style={{ flex: 1 }} variant="text" height={25} width="100%" />
+        </Button>
+      </CardActions>
+    </Card>
+  );
+
+  React.useEffect(() => {
+    if (attributes?.data?.length > 0) {
+      setReady(true);
+    }
+  }, []);
+
   return (
-    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-      {/* <Panel style={{ padding: '16px', justifyContent: 'center' }}> */}
+    <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className="feed-panel">
       {attributes && attributes?.data?.length > 0 ? (
         attributes?.data?.map((item, index) => (
           <Card
@@ -59,11 +96,11 @@ export const FeedPanel = () => {
             key={index}
           >
             <CardActionArea>
-              {item.image ? (
+              {item?.image ? (
                 <CardMedia
                   component="img"
                   height="140"
-                  image={`/uploads/posts/${item.image}`}
+                  image={`/uploads/posts/${item?.image}`}
                   alt="green iguana"
                 />
               ) : null}
@@ -83,11 +120,12 @@ export const FeedPanel = () => {
             </CardActions>
           </Card>
         ))
+      ) : ready ? (
+        <NoPosts />
       ) : (
-        <Panel style={{ padding: '16px', justifyContent: 'center' }}>
-          <NoPosts />
-        </Panel>
+        <Placeholder />
       )}
+      {attributes?.isFetching ? <>Loading ...</> : ''}
     </Grid>
   );
 };
