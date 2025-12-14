@@ -11,6 +11,10 @@ const DataProvider = ({ children }) => {
   const notify = useNotifier();
   const dispatch = useDispatch();
   const notification = useSelector(getNotification);
+  const websiteProps = useSelector((state) => ({
+    name: state.site.name,
+    title: state.site.title
+  }));
   const { hasAdminRoute, hasNotification, hasUserAuthenticated } = usePermissions();
   const isUserAuthorized = hasUserAuthenticated(token) && hasAdminRoute();
   const isUserOnWebsite = !hasAdminRoute();
@@ -36,6 +40,13 @@ const DataProvider = ({ children }) => {
 
     return () => {};
   }, [token, notification]);
+
+  React.useEffect(() => {
+    if (typeof window !== typeof undefined) {
+      window.document.title = `${websiteProps.name} - ${websiteProps.title}`;
+      window.document.querySelector('meta[name="description"]')?.setAttribute('content', 'Postbox');
+    }
+  },[]);
 
   return <React.Fragment>{children}</React.Fragment>;
 };

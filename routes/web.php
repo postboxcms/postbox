@@ -33,10 +33,8 @@ Route::group(['prefix' => env('MIX_ADMIN_PREFIX', '/admin')], function () {
 Route::get('/{any}', function (Settings $db) {
     $response = Http::get(env('VITE_SSR_URL') . ':' . env('VITE_SSR_PORT') . '/server?url=' . request()->getRequestUri());
     $html = $response->body();
-    $web = [
-        'name' => $db->where('property', 'name')->value('value'),
-        'title' => $db->where('property', 'title')->value('value'),
+    $properties = [
         'theme' => $db->where('property', 'theme')->value('value')
     ];
-    return view('web', ['html' => $html, 'web' => $web]);
+    return view('web', ['html' => $html, 'web' => $properties]);
 })->where('any', '.*');
