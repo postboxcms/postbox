@@ -9,10 +9,18 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
   const [end, setEnd] = React.useState(limit || 10);
   const [start, setStart] = React.useState(offset || 0);
   const [fetching, setFetching] = React.useState(false);
+  const [blocked, setBlocked] = React.useState(false);
+  const [calling, setCalling] = React.useState(true);
   const [consumer, setConsumer] = React.useState({});
 
   useScrollEffect(() => {
+    if (blocked) {
+      setFetching(false);
+      setCalling(false);
+      return;
+    }
     if (scroll) {
+      setCalling(true);
       setFetching(true);
       setStart(Number(end));
       setEnd(Number(end) + Number(limit));
@@ -21,13 +29,25 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
 
   React.useEffect(() => {
     api &&
+      !blocked &&
+      calling &&
       api
-        .get(`/consumer`, { limit: end, offset: start }, { headers: { 'X-Entity': table } })
+        .get(`/consumer`, { limit, offset: start }, { headers: { 'X-Entity': table } })
         .then((response) => {
+          setCalling(false);
+          setFetching(false);
+
+          if (first(response?.data?.data?.original)?.includes('Total limit crossed max records')) {
+            setBlocked(true);
+            setFetching(false);
+            return;
+          }
+          
           if (first(response?.data?.data?.original)?.includes('No data found')) {
             setFetching(false);
             return;
           }
+          
           const parsedConsumer = typeof consumer === 'string' ? JSON.parse(consumer) : {};
           let data = {};
           let consumerLength = parsedConsumer?.data?.data
@@ -43,7 +63,6 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
           setConsumer(JSON.stringify(parsedResponse));
           setStart(start);
           setEnd(end);
-          setFetching(false);
         });
   }, [fetching]);
 

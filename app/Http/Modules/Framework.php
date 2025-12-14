@@ -87,14 +87,18 @@ class Framework extends BaseController
     protected function fetchPublicEntityResponse($table, $where, $limit = 9999, $offset = 0)
     {
         try {
-            $entity = DB::table($table)
-                        ->where($where)
-                        ->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
+            $totalEntityRecords = DB::table($table)->count();
+            if ($totalEntityRecords > $offset) {
+                $entity = DB::table($table)
+                    ->where($where)
+                    ->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
 
-            if (!$entity) {
-                return response()->json([trans('entity.emptyresponse', ['name' => $table])], 200);
+                if (!$entity) {
+                    return response()->json([trans('entity.emptyresponse', ['name' => $table])], 200);
+                }
+                return $this->__filterGuardedFields($entity);
             }
-            return $this->__filterGuardedFields($entity);
+            return response()->json([trans('entity.maxrecordlimit')]);
         } catch (Exception $e) {
             throw new Exception(trans('database.exception') . $e->getMessage());
         }

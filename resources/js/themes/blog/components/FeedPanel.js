@@ -55,8 +55,7 @@ export const FeedPanel = () => {
   const Placeholder = () => (
     <Card sx={{ alignContent: 'center', justifyContent: 'center', marginBottom: '16px' }}>
       <CardActionArea>
-        {/* <CardMedia component="img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" height="140" /> */}
-        <div style={{ background: '#eee', display:'inline-block', width: '100%' }}>
+        <div style={{ background: '#eee', display: 'inline-block', width: '100%' }}>
           <Icon
             name="fa-image"
             style={{ display: 'flex', margin: '0 auto' }}
@@ -103,7 +102,16 @@ export const FeedPanel = () => {
                   image={`/uploads/posts/${item?.image}`}
                   alt="green iguana"
                 />
-              ) : null}
+              ) : (
+                <div style={{ background: '#eee', display: 'inline-block', width: '100%' }}>
+                  <Icon
+                    name="fa-image"
+                    style={{ display: 'flex', margin: '0 auto' }}
+                    size="8x"
+                    color="#ddd"
+                  />
+                </div>
+              )}
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {item.title || `Post ${index + 1}`}
