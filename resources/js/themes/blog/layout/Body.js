@@ -46,7 +46,7 @@ export const Body = () => {
         lg={12}
         xl={12}
       >
-        <Icon name="fa-dolly" color="#ccc" size="240px" />
+        <Icon name="fa-dolly" color="#ccc" style={{ fontSize: '240px' }} />
       </Grid>
       <Grid
         alignItems={'center'}
