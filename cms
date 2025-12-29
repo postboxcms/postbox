@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+WHITE='\033[0;37m'
+RED='\e[31m'
+YELLOW='\e[33m'
+GREEN='\033[0;32m'
+CHECK='\u2714'
+LOADING='\u23F3'
+STATUS='Idle'
+
+MACHINE="$(uname -s)"
+PHP_VERSION=$(php -r "echo PHP_VERSION;")
+NODE_VERSION=$(node -v 2>/dev/null | sed 's/v//')
+
+case "${MACHINE}" in
+    Linux*)             SYSTEM=linux;;
+    Darwin*)            SYSTEM=mac;;
+    *)                  SYSTEM="UNKNOWN"
+esac
+
+if [ "$SYSTEM" = "UNKNOWN" ]; then
+    echo "${RED} Unsupported operating system [$(uname -s)]. PostboxCMS Desk supports macOS, Linux, and Windows (WSL2)." >&2
+
+    exit 1
+fi
+
+
+if [[ "$PHP_VERSION" < "8.2" ]]; then
+    echo "${RED} PostboxCMS Desk requires PHP version 8.2 or higher. Current version: $PHP_VERSION" >&2
+
+    exit 1
+fi
+
+setup_environment() {
+    sudo apt-get update > /dev/null 
+    STATUS='Starting'
+    echo -e "${GREEN}${LOADING} ${WHITE}Analyzing system requirements \t\t ${GREEN}${STATUS} ${RESET}"
+    if ! command -v php &> /dev/null; then
+        echo "${RED} PHP is not installed. Please install PHP version 8.2 or higher." >&2
+        exit 1
+    fi
+
+    if ! command -v composer &> /dev/null; then
+        echo "${RED} Composer is not installed. Please install Composer to proceed." >&2
+        exit 1
+    fi
+
+    if ! command -v node &> /dev/null; then
+        echo "${RED} Node.js is not installed. Please install Node.js version 16 or higher." >&2
+        exit 1
+    fi
+
+    if [[ "$NODE_VERSION" < "20" ]]; then
+        echo "${RED} PostboxCMS Desk requires Node.js version 20 or higher. Current version: $NODE_VERSION" >&2
+        exit 1
+    fi
+
+    STATUS='Finished'
+    echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Analyzing system requirements \t\t ${GREEN}${STATUS} ${RESET}"
+
+    STATUS='Starting'
+    echo -e "\n${GREEN}${LOADING} ${WHITE}Installing missing php extensions \t\t ${GREEN}${STATUS} ${RESET}"
+    if [ "$SYSTEM" = "linux" ]; then
+        sudo apt-get install -y php8.2-dom php8.2-gd php8.2-imagick php8.2-fileinfo php8.2-openssl &> /dev/null 
+    elif [ "$SYSTEM" = "mac" ]; then
+        brew install php@8.2 && brew install imagemagick
+    fi
+    STATUS='Finished'
+    echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Installing missing php extensions \t\t ${GREEN}${STATUS} ${RESET}"
+}
+
+setup_composer() {
+    STATUS='Starting'
+    echo -e "\n${GREEN}${LOADING} ${WHITE}Installing php dependencies \t\t\t ${GREEN}${STATUS} ${RESET}"
+    composer install -q > /dev/null 2>&1
+    STATUS='Finished'
+    echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Installing php dependencies \t\t\t ${GREEN}${STATUS} ${RESET}"
+
+    # php -m | grep -q dom && php -m | grep -q gd && php -m | grep -q imagick && php -m | grep -q fileinfo && php -m | grep -q openssl && echo "All extensions enabled" || echo "Missing PHP extensions: ext-dom, gd, imagick, fileinfo, openssl" >&2
+    # echo " DONE"
+}
+
+setup_node() {
+    STATUS='Starting'
+    echo -e "\n${GREEN}${LOADING} ${WHITE}Installing node dependencies \t\t ${GREEN}${STATUS} ${RESET}"
+    npm install -y > /dev/null
+    STATUS='Finished'
+    echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Installing node dependencies \t\t\t ${GREEN}${STATUS} ${RESET}\n"
+}
+
+if [ $# -gt 0 ]; then
+    if [ "$1" == "init" ]; then
+        setup_environment
+        setup_composer
+        setup_node
+    fi
+fi
