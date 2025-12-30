@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+RESET='\033[0m'
 WHITE='\033[0;37m'
 RED='\e[31m'
 YELLOW='\e[33m'
