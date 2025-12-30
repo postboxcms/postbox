@@ -46,7 +46,7 @@ setup_environment() {
 
     if ! command -v composer &> /dev/null; then
         STATUS='Failed'
-        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t ${RED}${STATUS} ${RESET}\n"
+        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t  ${RED}${STATUS} ${RESET}\n"
         echo -e "${RED} Composer is not installed. Please install Composer to proceed.${RESET}" >&2
         exit 1
     fi
