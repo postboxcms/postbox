@@ -100,8 +100,8 @@ setup_composer() {
 
 setup_node() {
     STATUS='Starting'
-    echo -e "\n${GREEN}${LOADING} ${WHITE}Installing node dependencies \t\t ${GREEN}${STATUS} ${RESET}"
-    npm install -y > /dev/null
+    echo -e "\n${GREEN}${LOADING} ${WHITE}Installing node dependencies \t\t\t ${GREEN}${STATUS} ${RESET}"
+    npm install --silent --production -y > /dev/null
     STATUS='Finished'
     echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Installing node dependencies \t\t\t ${GREEN}${STATUS} ${RESET}\n"
 }
