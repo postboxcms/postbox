@@ -58,6 +58,13 @@ setup_environment() {
         exit 1
     fi
 
+    if ! command -v npm &> /dev/null; then
+        STATUS='Failed'
+        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t  ${RED}${STATUS} ${RESET}\n"
+        echo -e "${RED} npm is not installed. Please install npm to proceed.${RESET}" >&2
+        exit 1
+    fi
+
     if [[ "$NODE_VERSION" < "20" ]]; then
         STATUS='Failed'
         echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t  ${RED}${STATUS} ${RESET}\n"
