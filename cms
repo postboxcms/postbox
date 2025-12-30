@@ -7,6 +7,7 @@ YELLOW='\e[33m'
 GREEN='\033[0;32m'
 CHECK='\u2714'
 LOADING='\u23F3'
+SNAKE='\uD83D\uDC0D'
 ERROR='\u274C'
 STATUS='Idle'
 
@@ -36,7 +37,7 @@ fi
 setup_environment() {
     sudo apt-get update > /dev/null 
     STATUS='Starting'
-    echo -e "${GREEN}${LOADING} ${WHITE}Analyzing system requirements \t\t ${GREEN}${STATUS} ${RESET}"
+    echo -e "${GREEN}${SNAKE} ${WHITE}Analyzing system requirements \t\t ${GREEN}${STATUS} ${RESET}"
     if ! command -v php &> /dev/null; then
         STATUS='Failed'
         echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t  ${RED}${STATUS} ${RESET}\n"
