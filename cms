@@ -78,11 +78,12 @@ setup_environment() {
 
     STATUS='Starting'
     echo -e "\n${GREEN}${LOADING} ${WHITE}Installing missing php extensions \t\t ${GREEN}${STATUS} ${RESET}"
-    if [ "$SYSTEM" = "linux" ]; then
-        sudo apt-get install -y php8.2-dom php8.2-gd php8.2-imagick php8.2-fileinfo php8.2-openssl &> /dev/null 
-    elif [ "$SYSTEM" = "mac" ]; then
-        brew install php@8.2 && brew install imagemagick
-    fi
+    REQUIRED_EXTENSIONS=(dom gd imagick fileinfo openssl)
+    for EXT in "${REQUIRED_EXTENSIONS[@]}"; do
+        if ! php -m | grep -q "^${EXT}$"; then
+            sudo apt-get install -y "php-${EXT}" > /dev/null 2>&1
+        fi
+    done
     STATUS='Finished'
     echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Installing missing php extensions \t\t ${GREEN}${STATUS} ${RESET}"
 }
