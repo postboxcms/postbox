@@ -25,8 +25,8 @@ if [ "$SYSTEM" = "UNKNOWN" ]; then
 fi
 
 
-if [[ "$PHP_VERSION" < "8.2" ]]; then
-    echo "${RED} PostboxCMS Desk requires PHP version 8.2 or higher. Current version: $PHP_VERSION" >&2
+if [[ "$PHP_VERSION" < "8" ]]; then
+    echo "${RED} PostboxCMS Desk requires PHP version 8 or higher. Current version: $PHP_VERSION" >&2
 
     exit 1
 fi
