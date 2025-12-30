@@ -39,7 +39,7 @@ setup_environment() {
     echo -e "${GREEN}${LOADING} ${WHITE}Analyzing system requirements \t\t ${GREEN}${STATUS} ${RESET}"
     if ! command -v php &> /dev/null; then
         STATUS='Failed'
-        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t ${RED}${STATUS} ${RESET}\n"
+        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t  ${RED}${STATUS} ${RESET}\n"
         echo -e "${RED} PHP is not installed. Please install PHP version 8.2 or higher.${RESET}" >&2
         exit 1
     fi
@@ -53,14 +53,14 @@ setup_environment() {
 
     if ! command -v node &> /dev/null; then
         STATUS='Failed'
-        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t ${RED}${STATUS} ${RESET}\n"
-        echo -e "${RED} Node.js is not installed. Please install Node.js version 16 or higher.${RESET}" >&2
+        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t  ${RED}${STATUS} ${RESET}\n"
+        echo -e "${RED} Node.js is not installed. Please install Node.js version 20 or higher.${RESET}" >&2
         exit 1
     fi
 
     if [[ "$NODE_VERSION" < "20" ]]; then
         STATUS='Failed'
-        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t ${RED}${STATUS} ${RESET}\n"
+        echo -ne "\033[1A\r${GREEN}${ERROR} ${WHITE}Analyzing system requirements \t\t  ${RED}${STATUS} ${RESET}\n"
         echo -e "${RED} PostboxCMS Desk requires Node.js version 20 or higher. Current version: $NODE_VERSION ${RESET}" >&2
         exit 1
     fi
