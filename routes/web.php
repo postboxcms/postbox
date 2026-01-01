@@ -33,6 +33,6 @@ Route::group(['prefix' => env('MIX_ADMIN_PREFIX', '/admin')], function () {
 Route::get('/{any}', function (Settings $db) {
     $response = Http::get(env('VITE_SSR_URL') . ':' . env('VITE_SSR_PORT') . '/server?url=' . request()->getRequestUri());
     $html = $response->body();
-    $theme = $db->where('property', 'theme')->value('value');
+    $theme = $db->where('property', 'theme')->value('value') ?? 'blog';
     return view('web', ['html' => $html, 'theme' => $theme]);
 })->where('any', '.*');
