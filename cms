@@ -22,20 +22,20 @@ case "${MACHINE}" in
 esac
 
 if [ "$SYSTEM" = "UNKNOWN" ]; then
-    echo "${RED} Unsupported operating system [$(uname -s)]. PostboxCMS Desk supports macOS, Linux, and Windows (WSL2)." >&2
+    echo -e "${RED} Unsupported operating system [$(uname -s)]. PostboxCMS Desk supports macOS, Linux, and Windows (WSL2)." >&2
 
     exit 1
 fi
 
 
 if [[ "$PHP_VERSION" < "8" ]]; then
-    echo "${RED} PostboxCMS Desk requires PHP version 8 or higher. Current version: $PHP_VERSION" >&2
+    echo -e "${RED} PostboxCMS Desk requires PHP version 8 or higher. Current version: $PHP_VERSION" >&2
 
     exit 1
 fi
 
 if ! command -v docker &> /dev/null; then
-    echo "${RED}${ERROR} Docker is not installed. Please install Docker to proceed.${RESET}" >&2
+    echo -e "${RED}${ERROR} Docker is not installed. Please install Docker to proceed.${RESET}" >&2
     exit 1
 fi
 
