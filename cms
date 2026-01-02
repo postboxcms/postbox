@@ -22,14 +22,14 @@ case "${MACHINE}" in
 esac
 
 if [ "$SYSTEM" = "UNKNOWN" ]; then
-    echo -e "${RED} Unsupported operating system [$(uname -s)]. PostboxCMS Desk supports macOS, Linux, and Windows (WSL2)." >&2
+    echo -e "${RED} Unsupported operating system [$(uname -s)]. PostboxCMS Desk supports macOS, Linux, and Windows (WSL2).${RESET}" >&2
 
     exit 1
 fi
 
 
 if [[ "$PHP_VERSION" < "8" ]]; then
-    echo -e "${RED} PostboxCMS Desk requires PHP version 8 or higher. Current version: $PHP_VERSION" >&2
+    echo -e "${RED} PostboxCMS Desk requires PHP version 8 or higher. Current version: $PHP_VERSION ${RESET}" >&2
 
     exit 1
 fi
