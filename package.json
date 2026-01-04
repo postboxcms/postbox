@@ -11,11 +11,12 @@
         "build:client": "vite build --outDir public/build --ssrManifest",
         "build:server": "vite build --ssr resources/js/website/server.js --outDir public/build/server",
         "build": "npm run build:client && npm run build:server",
+        "build:prod": "cross-env NODE_ENV=production npm run prod && npm run build",
         "watch:server": "vite build --ssr resources/js/website/server.js --outDir public/build/server --watch",
         "watch:client": "vite build --outDir public/build --ssrManifest --watch",
         "watch:all": "npm run watch:client && npm run watch:server && npm run watch && npm start",
         "test": "jest",
-        "start": "npm run build && node server" 
+        "start": "npm run build && node server"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.28.3",
