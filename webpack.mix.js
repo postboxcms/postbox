@@ -80,7 +80,7 @@ themes.forEach((theme) => {
   mix
     .sass(
       `resources/js/themes/${theme.dbval}/assets/theme.scss`,
-      `public/themes/${theme.dbval}/css/theme.css`,
+      `public/themes/${theme.dbval}/css`,
       {
         sassOptions: {
           quietDeps: true,
