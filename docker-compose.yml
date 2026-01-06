@@ -31,8 +31,8 @@ services:
   web:
     container_name: postbox-web
     build:
-      context: .
-      dockerfile: Dockerfile.node
+      context: ./vendor/postboxcms/desk/node/v20
+      dockerfile: Dockerfile
     command: ['node', 'server']
     volumes:
       - .:/projects/postbox
