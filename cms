@@ -37,7 +37,14 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null; then
+# Define Docker Compose command prefix...
+if docker compose &> /dev/null; then
+    DOCKER_COMPOSE=(docker compose)
+else
+    DOCKER_COMPOSE=(docker-compose)
+fi
+
+if ! command -v ${DOCKER_COMPOSE} &> /dev/null; then
     echo -e "${RED}${ERROR} Docker Compose is not installed. Please install Docker Compose to proceed.${RESET}" >&2
     exit 1
 fi
