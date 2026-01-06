@@ -6,7 +6,7 @@ services:
       args:
         WWWGROUP: '${WWWGROUP}'
     image: desk-8.3/app
-    container_name: Postbox
+    container_name: postbox-app
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
@@ -29,7 +29,7 @@ services:
           cpus: '${DESK_APP_CPU_LIMIT:-1.0}'
           memory: '${DESK_APP_MEMORY_LIMIT:-512M}'
   web:
-    container_name: Website
+    container_name: postbox-web
     build:
       context: .
       dockerfile: Dockerfile.node
@@ -51,7 +51,7 @@ services:
           memory: '${DESK_WEB_MEMORY_LIMIT:-256M}'
   mysql:
     image: 'mysql/mysql-server:8.0'
-    container_name: MySQL
+    container_name: postbox-db
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'
     environment:
@@ -81,7 +81,7 @@ services:
           memory: '${DESK_DB_MEMORY_LIMIT:-512M}'
   redis:
     image: 'redis:alpine'
-    container_name: Redis
+    container_name: postbox-cache
     ports:
       - '${FORWARD_REDIS_PORT:-6379}:6379'
     networks:
@@ -94,8 +94,8 @@ services:
 networks:
   desk:
     driver: bridge
-    name: postbox
+    name: postbox-network
 volumes:
   desk-mysql:
     driver: local
-    name: DeskStorage
+    name: postbox-storage
