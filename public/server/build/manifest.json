@@ -1,0 +1,44 @@
+{
+  "_mk6ny8ws6gq33n.css": {
+    "file": "css/mk6ny8ws6gq33n.css",
+    "src": "_mk6ny8ws6gq33n.css"
+  },
+  "_mk6ny8wsbd73sx2.js": {
+    "file": "js/mk6ny8wsbd73sx2.js",
+    "name": "toastr.min",
+    "css": [
+      "css/mk6ny8ws6gq33n.css"
+    ]
+  },
+  "resources/js/themes/blog/index.js": {
+    "file": "js/mk6ny8wsbd73sx.js",
+    "name": "index",
+    "src": "resources/js/themes/blog/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_mk6ny8wsbd73sx2.js",
+      "resources/js/website/client.js"
+    ]
+  },
+  "resources/js/website/client.js": {
+    "file": "client.js",
+    "name": "client",
+    "src": "resources/js/website/client.js",
+    "isEntry": true,
+    "imports": [
+      "_mk6ny8wsbd73sx2.js"
+    ],
+    "dynamicImports": [
+      "resources/js/themes/blog/index.js"
+    ]
+  },
+  "resources/js/website/server.js": {
+    "file": "server.js",
+    "name": "server",
+    "src": "resources/js/website/server.js",
+    "isEntry": true,
+    "imports": [
+      "_mk6ny8wsbd73sx2.js"
+    ]
+  }
+}
