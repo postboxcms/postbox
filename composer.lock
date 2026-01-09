@@ -7947,16 +7947,16 @@
         },
         {
             "name": "postboxcms/desk",
-            "version": "v1.11.0",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/postboxcms/desk.git",
-                "reference": "510f731f47b02b4c9275622ea6ad99ae9ee1d05c"
+                "reference": "72ee397feca05cae77d68173252bb70dd47befb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/postboxcms/desk/zipball/510f731f47b02b4c9275622ea6ad99ae9ee1d05c",
-                "reference": "510f731f47b02b4c9275622ea6ad99ae9ee1d05c",
+                "url": "https://api.github.com/repos/postboxcms/desk/zipball/72ee397feca05cae77d68173252bb70dd47befb7",
+                "reference": "72ee397feca05cae77d68173252bb70dd47befb7",
                 "shasum": ""
             },
             "require": {
@@ -8007,7 +8007,7 @@
                 "issues": "https://github.com/postboxcms/postbox/issues",
                 "source": "https://github.com/postboxcms/desk"
             },
-            "time": "2026-01-08T14:14:10+00:00"
+            "time": "2026-01-09T02:39:10+00:00"
         },
         {
             "name": "postboxcms/inspire",
