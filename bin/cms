@@ -132,6 +132,7 @@ setup_node() {
 setup_assets() {
     STATUS='Starting'
     echo -e "${GREEN}${LOADING} ${WHITE}Building frontend assets \t\t\t ${GREEN}${STATUS} ${RESET}"
+    chmod +X node_modules/.bin 2>/dev/null || true
     npm run build --silent > /dev/null
     npm run prod --silent > /dev/null
     STATUS='Finished'
