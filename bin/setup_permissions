@@ -61,7 +61,7 @@ ensure_laravel_writable() {
   for dir in storage bootstrap/cache; do
     if [ -d "$APP_DIR/$dir" ]; then
       echo "🔧 Ensuring write access for $dir"
-      chmod -R g+w "$APP_DIR/$dir"
+      chmod -R 777 "$APP_DIR/$dir"
     fi
   done
 }
