@@ -15,6 +15,8 @@ MACHINE="$(uname -s)"
 PHP_VERSION=$(php -r "echo PHP_VERSION;")
 NODE_VERSION=$(node -v 2>/dev/null | sed 's/v//')
 
+source ./setup_permissions
+
 case "${MACHINE}" in
     Linux*)             SYSTEM=linux;;
     Darwin*)            SYSTEM=mac;;

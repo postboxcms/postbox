@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -e
+
+APP_DIR=$PWD
+APP_USER=$SUDO_USER
+WEB_USER="www-data"
+WEB_GROUP="web"
+
+echo "🔧 Setting up web permissions ..."
+
+# Create group if it doesn't exist
+getent group $WEB_GROUP >/dev/null || groupadd $WEB_GROUP
+
+# Add users to group
+usermod -aG $WEB_GROUP $APP_USER
+usermod -aG $WEB_GROUP $WEB_USER
+
+# Set ownership
+chown -R $APP_USER:$WEB_GROUP $APP_DIR
+
+# Directories: rwxrwsr-x
+find $APP_DIR -type d -exec chmod 2775 {} \;
+
+# Files: rw-rw-r--
+find $APP_DIR -type f -exec chmod 664 {} \;
+
+# Laravel writable paths
+chmod -R g+w \
+  $APP_DIR/storage \
+  $APP_DIR/bootstrap/cache
+
+# SELinux handling (only if present)
+if command -v getenforce >/dev/null && [ "$(getenforce)" != "Disabled" ]; then
+  chcon -R -t httpd_sys_content_t $APP_DIR
+  chcon -R -t httpd_sys_rw_content_t \
+    $APP_DIR/storage \
+    $APP_DIR/bootstrap/cache
+fi
+
+echo "✅ Permissions configured successfully."
+echo "⚠️  Log out and back in for group changes to apply."
