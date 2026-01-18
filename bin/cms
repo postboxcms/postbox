@@ -126,8 +126,16 @@ setup_node() {
     echo -e "\n${GREEN}${LOADING} ${WHITE}Installing node dependencies \t\t\t ${GREEN}${STATUS} ${RESET}"
     npm install --silent -y > /dev/null
     STATUS='Finished'
-    chmod +X "$APP_DIR/node_modules/.bin" 2>/dev/null || true;
     echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Installing node dependencies \t\t\t ${GREEN}${STATUS} ${RESET}\n"
+}
+
+setup_assets() {
+    STATUS='Starting'
+    echo -e "${GREEN}${LOADING} ${WHITE}Building frontend assets \t\t\t ${GREEN}${STATUS} ${RESET}"
+    npm run build --silent > /dev/null
+    npm run prod --silent > /dev/null
+    STATUS='Finished'
+    echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Building frontend assets \t\t\t ${GREEN}${STATUS} ${RESET}\n"
 }
 
 if [ $# -gt 0 ]; then
@@ -135,5 +143,7 @@ if [ $# -gt 0 ]; then
         setup_environment || exit 1
         setup_composer || exit 1
         setup_node || exit 1
+        setup_assets || exit 1
+        echo -e "${GREEN} PostboxCMS Desk setup completed successfully! ${RESET}"
     fi
 fi
