@@ -11,6 +11,7 @@ SNAKE='\uD83D\uDC0D'
 ERROR='\u274C'
 STATUS='Idle'
 
+APP_DIR=$(pwd)
 MACHINE="$(uname -s)"
 PHP_VERSION=$(php -r "echo PHP_VERSION;")
 NODE_VERSION=$(node -v 2>/dev/null | sed 's/v//')
