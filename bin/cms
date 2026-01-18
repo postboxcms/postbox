@@ -129,12 +129,25 @@ setup_node() {
     echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Installing node dependencies \t\t\t ${GREEN}${STATUS} ${RESET}\n"
 }
 
+setup_assets() {
+    STATUS='Starting'
+    echo -e "\n${GREEN}${LOADING} ${WHITE}Building frontend assets \t\t\t ${GREEN}${STATUS} ${RESET}"
+    npm run build --silent > /dev/null
+    npm run prod --silent > /dev/null
+    STATUS='Finished'
+    echo -ne "\033[1A\r${GREEN}${CHECK} ${WHITE}Building frontend assets \t\t\t ${GREEN}${STATUS} ${RESET}\n"
+}
+
 if [ $# -gt 0 ]; then
     if [ "$1" == "init" ]; then
         setup_environment || exit 1
         setup_composer || exit 1
         setup_node || exit 1
     fi
+
+    if [ "$1" == "assets" ]; then
+        setup_assets || exit 1
+    fi
 fi
 
-source bin/setup_node_permissions
+source bin/setup_deps_permissions

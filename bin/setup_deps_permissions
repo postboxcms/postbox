@@ -39,6 +39,11 @@ if [ -d "$APP_DIR/node_modules/.bin" ]; then
   chmod +x "$APP_DIR/node_modules/.bin/"*
 fi
 
+# --- Vendor executables safeguard ---------------------------
+if [ -d "$APP_DIR/vendor/bin" ]; then
+  chmod +x "$APP_DIR/vendor/bin/"*
+fi
+
 # --- SELinux (if enforced) ----------------------------------
 if command -v getenforce >/dev/null && [ "$(getenforce)" = "Enforcing" ]; then
   chcon -R -t httpd_sys_content_t "$APP_DIR"
