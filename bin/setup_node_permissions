@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-APP_DIR="/var/www/laravel"
-APP_USER="your_username"
+APP_DIR=$(pwd)
+APP_USER=$SUDO_USER
 WEB_USER="www-data"
 WEB_GROUP="web"
 
