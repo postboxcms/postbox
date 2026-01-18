@@ -50,7 +50,6 @@ if ! command -v ${DOCKER_COMPOSE} &> /dev/null; then
 fi
 
 setup_environment() {
-    sudo -su www-data
     sudo apt-get update > /dev/null 
     STATUS='Starting'
     echo -e "${GREEN}${LOADING} ${WHITE}Analyzing system requirements \t\t ${GREEN}${STATUS} ${RESET}"
