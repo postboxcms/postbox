@@ -3,12 +3,12 @@
 # Helper function to show progress and completion
 show_progress() {
     local message=$1
-    echo -n "⏳ $message... "
+    echo -e "\n⏳ $message... "
 }
 
 show_complete() {
     local message=$1
-    echo -ne "✓ $message\n"
+    echo -e "\n✓ $message"
 }
 
 
@@ -20,7 +20,7 @@ setup_system() {
     # Update package manager
     show_progress "Updating system package manager"
     sudo apt-get update > /dev/null 2>&1
-    sudo apt-get upgrade -y > /dev/null 2>&1
+    # sudo apt-get upgrade -y > /dev/null 2>&1
     show_complete "System package manager updated"
 
     # Install PHP 8.4 FPM
