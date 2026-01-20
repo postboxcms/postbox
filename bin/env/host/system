@@ -15,7 +15,7 @@ show_complete() {
 setup_system() {
     set -e
 
-    echo "Installing PHP 8.4 FPM, Nginx, MySQL Server, Node.js 20, and npm..."
+    echo "Installing PHP 8.4 FPM, Nginx, MySQL Server, Composer, Node.js 20, and npm..."
 
     # Update package manager
     show_progress "Updating system package manager"
@@ -27,6 +27,20 @@ setup_system() {
     show_progress "Installing PHP 8.4 FPM"
     sudo apt-get install -y php8.4-fpm php8.4-cli php8.4-common php8.4-mysql > /dev/null 2>&1
     show_complete "PHP 8.4 FPM installed"
+
+    # Install Composer
+    show_progress "Installing Composer"
+    EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig)
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
+    if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then
+        echo "⚠️  Composer installer corrupt"
+        rm composer-setup.php
+        exit 1
+    fi
+    php composer-setup.php --quiet --install-dir=/usr/local/bin --filename=composer
+    rm composer-setup.php
+    show_complete "Composer installed"
 
     # Install Nginx
     show_progress "Installing Nginx"
