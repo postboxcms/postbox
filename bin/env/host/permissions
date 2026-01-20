@@ -83,13 +83,16 @@ ensure_selinux() {
 
 # --- Execution ------------------------------------------------
 
-ensure_group
-ensure_user_in_group "$APP_USER"
-ensure_user_in_group "$WEB_USER"
-ensure_owner
-ensure_permissions
-ensure_laravel_writable
-ensure_selinux
+setup_permissions() {
+  echo "⚙️  Setting up permissions for PostboxCMS Desk..."
+  ensure_group
+  ensure_user_in_group "$APP_USER"
+  ensure_user_in_group "$WEB_USER"
+  ensure_owner
+  ensure_permissions
+  ensure_laravel_writable
+  ensure_selinux
+  echo "✅ Permission state verified and enforced"
+  echo "⚠️  Log out and back in if group membership was changed"
+}
 
-echo "✅ Permission state verified and enforced"
-echo "⚠️  Log out and back in if group membership was changed"

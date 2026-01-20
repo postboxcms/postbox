@@ -8,7 +8,7 @@ show_progress() {
 
 show_complete() {
     local message=$1
-    echo -n "✓ $message\n"
+    echo -ne "✓ $message\n"
 }
 
 
@@ -60,4 +60,24 @@ setup_system() {
     show_complete "PHP extensions enabled"
 
     echo "Installation complete!"
+}
+
+setup_assets() {
+    set -e
+
+    APP_DIR=$(pwd)
+    APP_USER=$SUDO_USER
+
+    echo "Building frontend assets..."
+
+    show_progress "Installing npm dependencies"
+    sudo -u "$APP_USER" npm install --prefix "$APP_DIR" > /dev/null 2>&1
+    show_complete "npm dependencies installed"
+
+    show_progress "Building assets with npm"
+    sudo -u "$APP_USER" npm run build --prefix "$APP_DIR" > /dev/null 2>&1
+    sudo -u "$APP_USER" npm run prod --prefix "$APP_DIR" > /dev/null 2>&1
+    show_complete "Assets built successfully"
+
+    echo "Frontend assets are ready!"
 }
