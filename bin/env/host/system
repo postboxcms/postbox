@@ -61,7 +61,15 @@ setup_system() {
 
     # Enable php extensions
     show_progress "Enabling PHP extensions"
-    sudo phpenmod xml curl gd imagick fileinfo openssl > /dev/null 2>&1
+    REQUIRED_EXTENSIONS=(xml curl gd imagick fileinfo openssl)
+    for EXT in "${REQUIRED_EXTENSIONS[@]}"; do
+        if ! php -m | grep -q "^${EXT}$"; then
+            sudo apt-get install -y "php-${EXT}" > /dev/null 2>&1 || {
+                echo -e "${RED}Failed to install php-${EXT}${RESET}" >&2
+                exit 1
+            }
+        fi
+    done
     show_complete "PHP extensions enabled"
 
     echo "Installation complete!"
