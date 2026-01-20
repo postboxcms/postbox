@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -e
+
+APP_DIR=$(pwd)
+APP_USER=$SUDO_USER
+WEB_USER="www-data"
+WEB_GROUP="web"
+
+echo "🔍 Verifying permissions (Node-safe)…"
+
+# --- Groups --------------------------------------------------
+getent group "$WEB_GROUP" >/dev/null || groupadd "$WEB_GROUP"
+id -nG "$APP_USER" | grep -qw "$WEB_GROUP" || usermod -aG "$WEB_GROUP" "$APP_USER"
+id -nG "$WEB_USER" | grep -qw "$WEB_GROUP" || usermod -aG "$WEB_GROUP" "$WEB_USER"
+
+# --- Ownership ----------------------------------------------
+if [[ "$(stat -c '%U:%G' "$APP_DIR")" != "$APP_USER:$WEB_GROUP" ]]; then
+  chown -R "$APP_USER:$WEB_GROUP" "$APP_DIR"
+fi
+
+# --- Permissions (exclude executables) ----------------------
+find "$APP_DIR" -type d \
+  ! -path "*/node_modules/*" \
+  ! -path "*/vendor/*" \
+  -exec chmod 2775 {} \;
+
+find "$APP_DIR" -type f \
+  ! -path "*/node_modules/*" \
+  ! -path "*/vendor/*" \
+  -exec chmod 664 {} \;
+
+# --- Laravel writable paths --------------------------------
+chmod -R g+w \
+  "$APP_DIR/storage" \
+  "$APP_DIR/bootstrap/cache"
+
+# --- Node executables safeguard -----------------------------
+if [ -d "$APP_DIR/node_modules/.bin" ]; then
+  chmod +x "$APP_DIR/node_modules/.bin/"*
+fi
+
+# --- Vendor executables safeguard ---------------------------
+if [ -d "$APP_DIR/vendor/bin" ]; then
+  chmod +x "$APP_DIR/vendor/bin/"*
+fi
+
+# --- SELinux (if enforced) ----------------------------------
+if command -v getenforce >/dev/null && [ "$(getenforce)" = "Enforcing" ]; then
+  chcon -R -t httpd_sys_content_t "$APP_DIR"
+  chcon -R -t httpd_sys_rw_content_t \
+    "$APP_DIR/storage" \
+    "$APP_DIR/bootstrap/cache"
+fi
+
+echo "✅ Permissions sane and Node-safe"
+echo "⚠️  Re-login required if group membership changed"
