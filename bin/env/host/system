@@ -11,50 +11,53 @@ show_complete() {
     echo -n "✓ $message\n"
 }
 
-set -e
 
-echo "Installing PHP 8.4 FPM, Nginx, MySQL Server, Node.js 20, and npm..."
+setup_system() {
+    set -e
 
-# Update package manager
-show_progress "Updating system package manager"
-sudo apt-get update > /dev/null 2>&1
-sudo apt-get upgrade -y > /dev/null 2>&1
-show_complete "System package manager updated"
+    echo "Installing PHP 8.4 FPM, Nginx, MySQL Server, Node.js 20, and npm..."
 
-# Install PHP 8.4 FPM
-show_progress "Installing PHP 8.4 FPM"
-sudo apt-get install -y php8.4-fpm php8.4-cli php8.4-common php8.4-mysql > /dev/null 2>&1
-show_complete "PHP 8.4 FPM installed"
+    # Update package manager
+    show_progress "Updating system package manager"
+    sudo apt-get update > /dev/null 2>&1
+    sudo apt-get upgrade -y > /dev/null 2>&1
+    show_complete "System package manager updated"
 
-# Install Nginx
-show_progress "Installing Nginx"
-sudo apt-get install -y nginx > /dev/null 2>&1
-show_complete "Nginx installed"
+    # Install PHP 8.4 FPM
+    show_progress "Installing PHP 8.4 FPM"
+    sudo apt-get install -y php8.4-fpm php8.4-cli php8.4-common php8.4-mysql > /dev/null 2>&1
+    show_complete "PHP 8.4 FPM installed"
 
-# Install MySQL Server
-show_progress "Installing MySQL Server"
-sudo apt-get install -y mysql-server > /dev/null 2>&1
-show_complete "MySQL Server installed"
+    # Install Nginx
+    show_progress "Installing Nginx"
+    sudo apt-get install -y nginx > /dev/null 2>&1
+    show_complete "Nginx installed"
 
-# Install Node.js 20 and npm
-show_progress "Installing Node.js 20 and npm"
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - > /dev/null 2>&1
-sudo apt-get install -y nodejs > /dev/null 2>&1
-show_complete "Node.js 20 and npm installed"
+    # Install MySQL Server
+    show_progress "Installing MySQL Server"
+    sudo apt-get install -y mysql-server > /dev/null 2>&1
+    show_complete "MySQL Server installed"
 
-# Enable services
-show_progress "Enabling services"
-sudo systemctl enable php8.4-fpm > /dev/null 2>&1
-sudo systemctl enable nginx > /dev/null 2>&1
-sudo systemctl enable mysql > /dev/null 2>&1
-sudo systemctl start php8.4-fpm > /dev/null 2>&1
-sudo systemctl start nginx > /dev/null 2>&1
-sudo systemctl start mysql > /dev/null 2>&1
-show_complete "Services enabled and started"
+    # Install Node.js 20 and npm
+    show_progress "Installing Node.js 20 and npm"
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - > /dev/null 2>&1
+    sudo apt-get install -y nodejs > /dev/null 2>&1
+    show_complete "Node.js 20 and npm installed"
 
-# Enable php extensions
-show_progress "Enabling PHP extensions"
-sudo phpenmod xml curl gd imagick fileinfo openssl > /dev/null 2>&1
-show_complete "PHP extensions enabled"
+    # Enable services
+    show_progress "Enabling services"
+    sudo systemctl enable php8.4-fpm > /dev/null 2>&1
+    sudo systemctl enable nginx > /dev/null 2>&1
+    sudo systemctl enable mysql > /dev/null 2>&1
+    sudo systemctl start php8.4-fpm > /dev/null 2>&1
+    sudo systemctl start nginx > /dev/null 2>&1
+    sudo systemctl start mysql > /dev/null 2>&1
+    show_complete "Services enabled and started"
 
-echo "Installation complete!"
+    # Enable php extensions
+    show_progress "Enabling PHP extensions"
+    sudo phpenmod xml curl gd imagick fileinfo openssl > /dev/null 2>&1
+    show_complete "PHP extensions enabled"
+
+    echo "Installation complete!"
+}

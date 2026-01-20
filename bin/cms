@@ -29,7 +29,8 @@ if [ "$1" = "--with" ] || [ "$1" = "-w" ]; then
         fi
 
         if [ "$arg" = "host" ]; then
-            
+            source bin/env/host/system
+            setup_system || exit 1           
             source bin/env/host/permissions
             source bin/env/host/dependencies
             setup_permissions || exit 1
