@@ -62,6 +62,21 @@ setup_system() {
     echo "Installation complete!"
 }
 
+setup_php_composer() {
+    set -e
+
+    APP_DIR=$(pwd)
+    APP_USER=$SUDO_USER
+
+    echo "Setting up PHP Composer dependencies..."
+
+    show_progress "Installing Composer dependencies"
+    sudo -u "$APP_USER" composer install --no-interaction --prefer-dist --optimize-autoloader --working-dir="$APP_DIR" > /dev/null 2>&1
+    show_complete "Composer dependencies installed"
+
+    echo "PHP Composer setup complete!"
+}
+
 setup_assets() {
     set -e
 
