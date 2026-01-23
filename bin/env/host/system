@@ -120,7 +120,6 @@ setup_environment_variables() {
 
     show_progress "Creating .env file"
     sudo -u "$APP_USER" awk -F':' '/^[[:space:]]*$/ {next}; {gsub(/^[[:space:]]+|[[:space:]]+$/, "", $1); gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if (NF==2) print $1"=\""$2"\""; else print}' "$APP_DIR/vendor/postboxcms/desk/stubs/environment.stub" | sudo -u "$APP_USER" tee "$APP_DIR/.env" > /dev/null 2>&1
-    fi
     show_complete "Environment file created"
 
     show_progress "Generating application key"
