@@ -121,8 +121,9 @@ setup_environment_variables() {
     show_progress "Creating .env file"
     sudo -u "$APP_USER" awk -F':' '
         BEGIN { proto="(https?|ftp|file)" }
-        $0 ~ proto":" { print; next }
+        NR==1 { print; next }
         /^[[:space:]]*$/ { next }
+        $0 ~ proto":" { gsub(/:/, "=", $0); print; next }
         {
             gsub(/^[[:space:]]+|[[:space:]]+$/, "", $1)
             gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)
