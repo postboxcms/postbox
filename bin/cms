@@ -47,14 +47,24 @@ if [ "$1" = "--setup" ]; then
     read -p "🌐 Enter site name: " site_name
     read -p "🔗 Enter site URL: " site_url
     read -p "🔌 Enter port number: " port_number
+    read -p "🗄️  Enter database host: " db_host
+    read -p "💾 Enter database name: " db_name
+    read -p "👤 Enter database user: " db_user
+    read -sp "🔒 Enter database password: " db_password
 
     # Update .env file with user inputs
     sed -i "s/^APP_NAME=.*/APP_NAME=${site_name}/" .env
     sed -i "s|^APP_URL=.*|APP_URL=${site_url}|" .env
     sed -i "s/^PORT=.*/PORT=${port_number}/" .env
+    sed -i "s/^DB_HOST=.*/DB_HOST=${db_host}/" .env
+    sed -i "s/^DB_DATABASE=.*/DB_DATABASE=${db_name}/" .env
+    sed -i "s/^DB_USERNAME=.*/DB_USERNAME=${db_user}/" .env
+    sed -i "s/^DB_PASSWORD=.*/DB_PASSWORD=${db_password}/" .env
 
-    echo "✔ Environment variables updated successfully."
+    echo ""
+    echo -e "✔ Environment variables updated successfully."
 fi
+
 
 if [ "$#" -eq 0 ]; then
     show_help
