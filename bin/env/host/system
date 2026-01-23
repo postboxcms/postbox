@@ -125,7 +125,7 @@ setup_environment_variables() {
     show_complete "Environment file created"
 
     show_progress "Generating application key"
-    sudo -u "$APP_USER" php "$APP_DIR/artisan" key:generate > /dev/null 2>&1
+    sudo -u "$APP_USER" php artisan key:generate > /dev/null 2>&1
     show_complete "Application key generated"
 
     echo "Environment variables setup complete!"
