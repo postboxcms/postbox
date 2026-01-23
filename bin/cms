@@ -30,13 +30,14 @@ if [ "$1" = "--with" ] || [ "$1" = "-w" ]; then
 
         if [ "$arg" = "host" ]; then
             source bin/env/host/system
-            setup_system || exit 1           
             source bin/env/host/permissions
             source bin/env/host/dependencies
+            setup_system || exit 1           
             setup_permissions || exit 1
             setup_dependencies || exit 1
             setup_php_composer || exit 1
             setup_assets || exit 1
+            setup_environment_variables || exit 1
         fi
     done
 fi

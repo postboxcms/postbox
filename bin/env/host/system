@@ -109,3 +109,24 @@ setup_assets() {
 
     echo "Frontend assets are ready!"
 }
+
+setup_environment_variables() {
+    set -e
+
+    APP_DIR=$(pwd)
+    APP_USER=$SUDO_USER
+
+    echo "Setting up environment variables for the application ..."
+
+    show_progress "Creating .env file"
+    if [ ! -f "$APP_DIR/.env" ]; then
+        sudo -u "$APP_USER" cp "$APP_DIR/vendor/postboxcms/desk/stubs/environment.stub" "$APP_DIR/.env"
+    fi
+    show_complete "Environment file created"
+
+    show_progress "Generating application key"
+    sudo -u "$APP_USER" php "$APP_DIR/artisan" key:generate > /dev/null 2>&1
+    show_complete "Application key generated"
+
+    echo "Environment variables setup complete!"
+}
