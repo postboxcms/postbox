@@ -42,6 +42,19 @@ if [ "$1" = "--with" ] || [ "$1" = "-w" ]; then
     done
 fi
 
+if [ "$1" = "--setup" ]; then
+    read -p "🌐 Enter site name: " site_name
+    read -p "🔗 Enter site URL: " site_url
+    read -p "🔌 Enter port number: " port_number
+
+    # Update .env file with user inputs
+    sed -i "s/^APP_NAME=.*/APP_NAME=${site_name}/" .env
+    sed -i "s|^APP_URL=.*|APP_URL=${site_url}|" .env
+    sed -i "s/^PORT=.*/PORT=${port_number}/" .env
+
+    echo "✔ Environment variables updated successfully."
+fi
+
 if [ "$#" -eq 0 ]; then
     show_help
     exit 1
