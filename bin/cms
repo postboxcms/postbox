@@ -38,7 +38,7 @@ if [ "$1" = "--with" ] || [ "$1" = "-w" ]; then
             setup_php_composer || exit 1
             setup_assets || exit 1
             setup_environment_variables || exit 1
-            set_directory_permissions || exit 1
+            setup_bin_folder_permissions || exit 1
         fi
     done
 fi

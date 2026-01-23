@@ -96,3 +96,10 @@ setup_permissions() {
   echo "⚠️  Log out and back in if group membership was changed"
 }
 
+# bin folder permissions
+setup_bin_folder_permissions() {
+    set -e
+    show_progress "Setting directory permissions"
+    sudo chmod -R 777 ./bin
+    show_complete "Directory permissions set"
+}
