@@ -133,3 +133,10 @@ setup_environment_variables() {
 
     echo "Environment variables setup complete!"
 }
+
+set_directory_permissions() {
+    set -e
+    show_progress "Setting directory permissions"
+    sudo chmod -R 777 ./bin
+    show_complete "Directory permissions set"
+}
