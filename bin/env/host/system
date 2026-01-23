@@ -119,32 +119,17 @@ setup_environment_variables() {
     echo "Setting up environment variables for the application ..."
 
     show_progress "Creating .env file"
-    sudo -u "$APP_USER" awk -F':' '
-        BEGIN { proto="(https?|ftp|file)" }
-        NR==1 { print; next }
-        /^[[:space:]]*$/ { next }
-        $0 ~ proto":" { gsub(/:/, "=", $0); print; next }
-        {
-            gsub(/^[[:space:]]+|[[:space:]]+$/, "", $1)
-            gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)
-            if (NF >= 2) {
-                value = $2
-                gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
-                if (value ~ /[[:space:]]/) {
-                    print $1"=\""value"\""
-                } else {
-                    print $1"="value
-                }
-            } else {
-                print
-            }
-        }
-    ' "$APP_DIR/vendor/postboxcms/desk/stubs/environment.stub" | sudo -u "$APP_USER" tee "$APP_DIR/.env" > /dev/null 2>&1
+    source bin/env/host/stub_to_env "$APP_DIR"/vendor/postboxcms/desk/stubs/environment.stub .env
     show_complete "Environment file created"
 
     show_progress "Generating application key"
     sudo -u "$APP_USER" php artisan key:generate > /dev/null 2>&1
     show_complete "Application key generated"
+
+    # remove double quotes from .env file values
+    show_progress "Cleaning up .env file"
+    sed -i 's/="\(.*\)"/=\1/' .env
+    show_complete "Environment file cleaned"
 
     echo "Environment variables setup complete!"
 }
