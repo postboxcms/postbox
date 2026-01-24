@@ -51,7 +51,10 @@ if [ "$1" = "--setup" ]; then
     read -p "💾 Enter database name: " db_name
     read -p "👤 Enter database user: " db_user
     read -sp "🔒 Enter database password: " db_password
-    read -p "Would you like to create the database now? (y/n): " create_db_choice
+    echo ""
+    echo "🗄️ Configuring database..."
+    mysql -h "$db_host" -u root -p -e "CREATE USER IF NOT EXISTS '$db_user'@'$db_host' IDENTIFIED BY '$db_password'; GRANT ALL PRIVILEGES ON \`$db_name\`.* TO '$db_user'@'$db_host'; FLUSH PRIVILEGES;"
+    read -p "🗄️ Would you like to create the database now? (y/n): " create_db_choice
     echo ""
     if [[ "$create_db_choice" =~ ^[Yy]$ ]]; then
         mysql -h "$db_host" -u "$db_user" -p"$db_password" -e "CREATE DATABASE IF NOT EXISTS \`$db_name\`;"
