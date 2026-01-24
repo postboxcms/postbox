@@ -51,6 +51,17 @@ if [ "$1" = "--setup" ]; then
     read -p "💾 Enter database name: " db_name
     read -p "👤 Enter database user: " db_user
     read -sp "🔒 Enter database password: " db_password
+    read -p "Would you like to create the database now? (y/n): " create_db_choice
+    echo ""
+    if [[ "$create_db_choice" =~ ^[Yy]$ ]]; then
+        mysql -h "$db_host" -u "$db_user" -p"$db_password" -e "CREATE DATABASE IF NOT EXISTS \`$db_name\`;"
+        if [ $? -eq 0 ]; then
+            echo -e "✔ Database '$db_name' created successfully."
+        else
+            echo -e "✘ Failed to create database '$db_name'. Please check your credentials and try again."
+            exit 1
+        fi
+    fi
 
     # Update .env file with user inputs
     sed -i "s/^APP_NAME=.*/APP_NAME=${site_name}/" .env
