@@ -15,7 +15,7 @@ show_complete() {
 setup_system() {
     set -e
 
-    echo "Installing PHP 8.4 FPM, Nginx, MySQL Server, Composer, Node.js 20, and npm..."
+    echo "Installing PHP 8.1 FPM, Nginx, MySQL Server, Composer, Node.js 20, and npm..."
 
     # Update package manager
     show_progress "Updating system package manager"
@@ -23,10 +23,10 @@ setup_system() {
     # sudo apt-get upgrade -y > /dev/null 2>&1
     show_complete "System package manager updated"
 
-    # Install PHP 8.4 FPM
-    show_progress "Installing PHP 8.4 FPM"
-    sudo apt-get install -y php8.4-fpm php8.4-cli php8.4-common php8.4-mysql > /dev/null 2>&1
-    show_complete "PHP 8.4 FPM installed"
+    # Install PHP 8.1 FPM
+    show_progress "Installing PHP 8.1 FPM"
+    sudo apt-get install -y php8.1-fpm php8.1-cli php8.1-common php8.1-mysql > /dev/null 2>&1
+    show_complete "PHP 8.1 FPM installed"
 
     # Install Composer
     show_progress "Installing Composer"
