@@ -119,7 +119,7 @@ setup_environment_variables() {
     echo "Setting up environment variables for the application ..."
 
     show_progress "Creating .env file"
-    source bin/env/host/stub_to_env "$APP_DIR"/vendor/postboxcms/desk/stubs/environment.stub .env
+    source bin/env/host/environment "$APP_DIR"/vendor/postboxcms/desk/stubs/environment.stub .env
     show_complete "Environment file created"
 
     show_progress "Generating application key"

@@ -84,12 +84,31 @@ if [ "$1" = "--setup" ]; then
     echo -e "✔ Environment variables updated successfully."
     echo ""
     echo "⚙️ Setting up Nginx configuration..."
-    sudo cp bin/env/host/site_config /etc/nginx/sites-available/"${site_name}"
+    echo "🔧 Creating Nginx configuration for application ${site_name}..."
+    sudo cp bin/env/host/nginx/app /etc/nginx/sites-available/"${site_name}"
     sed -i "s/{{DOMAIN_NAME}}/$(echo ${site_url} | sed 's|https\?://||')/g" /etc/nginx/sites-available/"${site_name}"
     sed -i "s/{{PORT}}/${port_number}/g" /etc/nginx/sites-available/"${site_name}"
     sed -i "s|{{DOCUMENT_ROOT}}|$(pwd)|g" /etc/nginx/sites-available/"${site_name}"
     ln -sf /etc/nginx/sites-available/"${site_name}" /etc/nginx/sites-enabled/"${site_name}"
-    echo "✔ Nginx configuration created and symlink established."
+    echo "✔ Nginx configuration for application ${site_name} created and symlink established."
+    echo ""
+    echo "⚙️ Setting up Nginx SSR configuration..."
+    echo "🔧 Creating Nginx SSR configuration for application ${site_name}..."
+    sudo cp bin/env/host/nginx/ssr /etc/nginx/sites-available/"${site_name}"-ssr
+    sed -i "s/{{SSR_DOMAIN_NAME}}/$(echo ${site_url} | sed 's|https\?://||')-ssr/g" /etc/nginx/sites-available/"${site_name}"-ssr
+    sed -i "s/{{PORT}}/${port_number}/g" /etc/nginx/sites-available/"${site_name}"-ssr
+    sed -i "s|{{DOCUMENT_ROOT}}|$(pwd)|g" /etc/nginx/sites-available/"${site_name}"-ssr
+    ln -sf /etc/nginx/sites-available/"${site_name}"-ssr /etc/nginx/sites-enabled/"${site_name}"-ssr
+    echo "✔ Nginx SSR configuration for application ${site_name} created and symlink established."
+    echo ""
+    echo "⚙️ Copying SSR systemd service file..."
+    sudo cp bin/env/host/conf/ssr.conf /etc/systemd/system/ssr.service
+    sudo systemctl daemon-reexec
+    sudo systemctl daemon-reload
+    sudo systemctl enable ssr
+    sudo systemctl start ssr
+    echo -e "✔ SSR systemd service setup complete."
+    echo ""
     echo "🔄 Restarting Nginx to apply changes..."
     sudo systemctl restart nginx
     echo -e "✔ Nginx restarted successfully."
