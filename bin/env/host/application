@@ -53,7 +53,7 @@ setup_application() {
     echo "⚙️ Setting up Nginx SSR configuration..."
     echo "🔧 Creating Nginx SSR configuration for application ${site_name}..."
     sudo cp bin/env/host/nginx/ssr /etc/nginx/sites-available/"${site_name}"-ssr
-    sed -i "s/{{SSR_DOMAIN_NAME}}/$(echo ${site_url} | sed 's|https\?://||')-ssr/g" /etc/nginx/sites-available/"${site_name}"-ssr
+    sed -i "s/{{DOMAIN_NAME}}/$(echo ${site_url} | sed 's|https\?://||')-ssr/g" /etc/nginx/sites-available/"${site_name}"-ssr
     sed -i "s/{{PORT}}/${port_number}/g" /etc/nginx/sites-available/"${site_name}"-ssr
     sed -i "s|{{DOCUMENT_ROOT}}|$(pwd)|g" /etc/nginx/sites-available/"${site_name}"-ssr
     ln -sf /etc/nginx/sites-available/"${site_name}"-ssr /etc/nginx/sites-enabled/"${site_name}"-ssr
