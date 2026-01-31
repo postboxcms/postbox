@@ -127,9 +127,9 @@ setup_environment_variables() {
     show_complete "Application key generated"
 
     # update cms installation flag
-    show_progress "🔧 Setting cms installation flag"
+    show_progress "Setting cms installation flag"
     sed -i 's/^CMS_INSTALLATION=.*/CMS_INSTALLATION=success/' .env > /dev/null 2>&1
-    show_complete "✓ CMS installation done"
+    show_complete "CMS installation done"
 
 
     # remove double quotes from .env file values
