@@ -5,7 +5,7 @@ setup_application() {
     if grep -q "^CMS_INSTALLATION=success" .env; then
         site_name=$(grep "^APP_NAME=" .env | cut -d'=' -f2)
         site_url=$(grep "^APP_URL=" .env | cut -d'=' -f2)
-        port_number=$(grep "^PORT=" .env | cut -d'=' -f2)
+        port_number=$(grep "^APP_PORT=" .env | cut -d'=' -f2)
         echo "✔ CMS is already installed. Skipping setup ..."
         echo ""
     else
@@ -48,6 +48,10 @@ setup_application() {
         sed -i "s/^DB_PASSWORD=.*/DB_PASSWORD=${db_password}/" .env
         echo ""
         echo -e "✔ Environment variables updated successfully."
+        # update cms installation flag
+        echo "🔧 Finalizing CMS installation..."
+        sed -i 's/^CMS_INSTALLATION=.*/CMS_INSTALLATION=success/' .env > /dev/null 2>&1
+        echo -e "✔ CMS installation DONE."
     fi
     echo ""
     echo "⚙️ Setting up Nginx configuration..."
