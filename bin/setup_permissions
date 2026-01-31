@@ -57,6 +57,13 @@ ensure_permissions() {
   find "$APP_DIR" -type f ! -perm 664  -exec chmod 664  {} \;
 }
 
+ensure_vendor_writable() {
+  if [ -d "$APP_DIR/vendor" ]; then
+    echo "🔧 Ensuring write access for vendor"
+    chmod -R 777 "$APP_DIR/vendor"
+  fi
+}
+
 ensure_laravel_writable() {
   for dir in storage bootstrap/cache; do
     if [ -d "$APP_DIR/$dir" ]; then

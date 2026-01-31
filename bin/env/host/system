@@ -126,6 +126,12 @@ setup_environment_variables() {
     sudo -u "$APP_USER" php artisan key:generate > /dev/null 2>&1
     show_complete "Application key generated"
 
+    # update cms installation flag
+    show_progress "🔧 Setting cms installation flag"
+    sed -i 's/^CMS_INSTALLATION=.*/CMS_INSTALLATION=success/' .env > /dev/null 2>&1
+    show_complete "✓ CMS installation done"
+
+
     # remove double quotes from .env file values
     show_progress "Cleaning up .env file"
     sed -i 's/="\(.*\)"/=\1/' .env
