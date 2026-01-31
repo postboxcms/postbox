@@ -3,6 +3,9 @@
 setup_application() {
     # Check if CMS installation is already complete
     if grep -q "^CMS_INSTALLATION=success" .env; then
+        site_name=$(grep "^APP_NAME=" .env | cut -d'=' -f2)
+        site_url=$(grep "^APP_URL=" .env | cut -d'=' -f2)
+        port_number=$(grep "^PORT=" .env | cut -d'=' -f2)
         echo "✔ CMS is already installed. Skipping setup ..."
         echo ""
     else
