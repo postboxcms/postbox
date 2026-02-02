@@ -24,9 +24,9 @@ setup_system() {
     show_complete "System package manager updated"
 
     # Install PHP 8.1 FPM
-    show_progress "Installing PHP 8.1 FPM"
-    sudo apt-get install -y php8.1-fpm php8.1-cli php8.1-common php8.1-mysql > /dev/null 2>&1
-    show_complete "PHP 8.1 FPM installed"
+    show_progress "Installing PHP FPM"
+    sudo apt-get install -y php-fpm php-cli php-common php-mysql > /dev/null 2>&1
+    show_complete "PHP FPM installed"
 
     # Install Composer
     show_progress "Installing Composer"

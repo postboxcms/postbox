@@ -2,6 +2,8 @@
 
 setup_application() {
     # Check if CMS installation is already complete
+    PHP_VERSION=$(php -r 'echo phpversion();')
+
     if grep -q "^CMS_INSTALLATION=success" .env; then
         site_name=$(grep "^APP_NAME=" .env | cut -d'=' -f2)
         site_url=$(grep "^APP_URL=" .env | cut -d'=' -f2)
@@ -60,6 +62,7 @@ setup_application() {
     sed -i "s/{{DOMAIN_NAME}}/$(echo ${site_url} | sed 's|https\?://||')/g" /etc/nginx/sites-available/"${site_name}"
     sed -i "s/{{PORT}}/${port_number}/g" /etc/nginx/sites-available/"${site_name}"
     sed -i "s|{{DOCUMENT_ROOT}}|$(pwd)|g" /etc/nginx/sites-available/"${site_name}"
+    sed -i "s/{{PHP_VERSION}}/${PHP_VERSION}/g" /etc/nginx/sites-available/"${site_name}"
     ln -sf /etc/nginx/sites-available/"${site_name}" /etc/nginx/sites-enabled/"${site_name}"
     echo "✔ Nginx configuration for application ${site_name} created and symlink established."
     echo ""
