@@ -116,9 +116,9 @@ setup_environment_variables() {
     APP_DIR=$(pwd)
     APP_USER=$SUDO_USER
 
-    echo "Setting up environment variables for the application ..."
+    show_progress "Setting up environment variables for the application ..."
 
-    show_progress "Creating .env file"
+    show_progress "Creating environment file"
     source bin/env/host/environment "$APP_DIR"/vendor/postboxcms/desk/stubs/environment.stub .env
     show_complete "Environment file created"
 
@@ -126,10 +126,15 @@ setup_environment_variables() {
     sudo -u "$APP_USER" php artisan key:generate > /dev/null 2>&1
     show_complete "Application key generated"
 
+    # replace VITE_SSR_URL value in .env file
+    show_progress "Updating VITE_SSR_URL in .env file"
+    sed -i 's|^VITE_SSR_URL=.*|VITE_SSR_URL=http://localhost|' .env
+    show_complete "VITE_SSR_URL updated"
+
     # remove double quotes from .env file values
     show_progress "Cleaning up .env file"
     sed -i 's/="\(.*\)"/=\1/' .env
     show_complete "Environment file cleaned"
 
-    echo "Environment variables setup complete!"
+    show_complete "Environment variables setup complete!"
 }

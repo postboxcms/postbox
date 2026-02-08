@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+SEPERATOR=""
 
 show_help() {
     echo "Usage: bin/cms [OPTIONS]"
@@ -46,6 +47,8 @@ fi
 if [ "$1" = "--setup" ]; then
     source bin/env/host/application
     setup_application || exit 1
+    echo "$SEPERATOR"
+    setup_desk_alias || exit 1
 fi
 
 

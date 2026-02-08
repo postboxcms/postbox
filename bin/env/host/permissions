@@ -57,6 +57,13 @@ ensure_permissions() {
   find "$APP_DIR" -type f ! -perm 664  -exec chmod 664  {} \;
 }
 
+ensure_vendor_writable() {
+  if [ -d "$APP_DIR/vendor" ]; then
+    echo "🔧 Ensuring write access for vendor directory"
+    chmod -R 777 "$APP_DIR/vendor"
+  fi
+}
+
 ensure_laravel_writable() {
   for dir in storage bootstrap/cache; do
     if [ -d "$APP_DIR/$dir" ]; then
@@ -91,9 +98,10 @@ setup_permissions() {
   ensure_owner
   ensure_permissions
   ensure_laravel_writable
+  ensure_vendor_writable
   ensure_selinux
   echo "✅ Permission state verified and enforced"
-  echo "⚠️  Log out and back in if group membership was changed"
+  echo "⚠️ Log out and back in if group membership was changed"
 }
 
 # bin folder permissions

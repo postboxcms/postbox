@@ -94,3 +94,21 @@ setup_application() {
     # Application setup steps go here
     echo "✔ Host application setup complete"
 }
+
+setup_desk_alias() {
+    echo "⚙️ Setting up 'desk' command alias..."
+    BASHRC="$HOME/.bashrc"
+    ALIAS_NAME="desk"
+
+    if grep -qE "^[[:space:]]*alias[[:space:]]+$ALIAS_NAME=" "$BASHRC"; then
+        echo "✔ '$ALIAS_NAME' command alias already exists in ~/.bashrc"
+    else
+        DESK_CMD="vendor/bin/desk"
+        [ -f desk ] && DESK_CMD="desk"
+
+        echo "alias $ALIAS_NAME='sh $DESK_CMD'" >> "$BASHRC"
+        echo "✔ '$ALIAS_NAME' command alias added to ~/.bashrc"
+        source "$BASHRC"
+        echo "✔ '$ALIAS_NAME' command alias is now available in the current session"
+    fi
+}
