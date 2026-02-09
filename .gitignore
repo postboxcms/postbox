@@ -7,6 +7,7 @@
 /public/images
 /public/uploads
 /public/build
+/public/server
 /public/themes
 /storage/*.key
 /vendor

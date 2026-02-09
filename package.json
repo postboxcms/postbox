@@ -13,7 +13,7 @@
     "build:server": "vite build --ssr resources/js/website/server.js --outDir public/build/server",
     "build": "npm run build:client && npm run build:server",
     "build:prod": "cross-env NODE_ENV=production npm run prod && npm run build",
-    "build:ps": "cross-env NODE_ENV=production HOST=server mix --production && vite build --ssr resources/js/website/server.js --outDir public/server/build/server && vite build --outDir public/server/build --ssrManifest",
+    "build:ps": "cross-env NODE_ENV=production HOST=server mix --production && vite build --ssr resources/js/website/server.js --outDir public/build/server && vite build --outDir public/build --ssrManifest",
     "watch:server": "vite build --ssr resources/js/website/server.js --outDir public/build/server --watch",
     "watch:client": "vite build --outDir public/build --ssrManifest --watch",
     "watch:all": "npm run watch:client && npm run watch:server && npm run watch && npm start",
