@@ -8,6 +8,7 @@
 /public/uploads
 /public/build
 /public/server
+/public/mix-manifest.json
 /public/themes
 /storage/*.key
 /vendor
