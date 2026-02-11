@@ -30,6 +30,11 @@ if [ "$1" = "--with" ] || [ "$1" = "-w" ]; then
         fi
 
         if [ "$arg" = "host" ]; then
+            source .env
+            if [ "$CMS_INSTALLATION" == "success" ]; then
+                echo "Host environment is already set up. Skipping..."
+                exit 0
+            fi
             source bin/env/host/system
             source bin/env/host/permissions
             source bin/env/host/dependencies
