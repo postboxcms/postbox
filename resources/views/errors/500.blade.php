@@ -19,7 +19,6 @@
         p {
             font-size: 18px;
             color: #fafafa;
-            line-height: 0.5;
         }
     </style>
 </head>
