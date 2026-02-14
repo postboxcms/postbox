@@ -53,6 +53,7 @@ setup_application() {
         # update cms installation flag
         echo "🔧 Finalizing CMS installation..."
         sed -i 's/^CMS_INSTALLATION=.*/CMS_INSTALLATION=success/' .env > /dev/null 2>&1
+        sed -i 's/^CMS_INSTALLATION_MODE=.*/CMS_INSTALLATION_MODE=host/' .env > /dev/null 2>&1
         echo -e "✔ CMS installation DONE."
     fi
     echo ""
@@ -81,6 +82,9 @@ setup_application() {
     sed -i "s|{{DOCUMENT_ROOT}}|$(pwd)|g" /etc/systemd/system/ssr.service
     echo "✔ SSR systemd service file copied."
     echo ""    
+    echo "⚙️ Starting pm2 process manager for SSR..."
+    sudo pm2 start npm --name "ssr" -- run ssr --prefix "$(pwd)"
+    echo "✔ pm2 process for SSR started."
     echo "🔄 Reloading systemd daemon and enabling SSR service..."
     sudo systemctl daemon-reexec
     sudo systemctl daemon-reload
