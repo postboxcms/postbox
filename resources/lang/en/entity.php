@@ -21,4 +21,5 @@ return [
     'failed'            => 'Failed to save :name',
     'notfound'          => 'Entity :name not found',
     'emptyresponse'     => 'No data found for entity :name',
+    'maxrecordlimit'    => 'Total limit crossed max records'
 ];

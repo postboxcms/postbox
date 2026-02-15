@@ -3,12 +3,12 @@ import ConsumerContext from '@website/context';
 
 export const useConsumer = () => {
   // logic to retrieve and manage attributes
-  const consumerResponse = useContext(ConsumerContext);
-  console.log('Consumer Response:', consumerResponse);
+  const { consumer: consumerResponse, fetching } = useContext(ConsumerContext);
   const data =
     typeof consumerResponse === 'string' ? JSON.parse(consumerResponse)?.data?.data : null;
   const meta =
     typeof consumerResponse === 'string' ? JSON.parse(consumerResponse)?.data?.meta : null;
+
   if (data && data?.original?.[0].includes('No data found')) {
     return {
       meta: {
@@ -21,6 +21,7 @@ export const useConsumer = () => {
     data && {
       data: Object.keys(data).map((key) => data[key]),
       meta: { icon: meta?.[0]?.icon || 'fa-square' },
+      isFetching: fetching,
     }
   );
 };

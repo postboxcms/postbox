@@ -12,7 +12,7 @@ const Blog = () => {
       <Box>
         <Header />
         <Body />
-        <Footer />
+        {/* <Footer /> */}
       </Box>
     </div>
   );

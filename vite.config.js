@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       laravel([
         'resources/js/website/server.js',
+        'resources/js/app.js',
         'resources/css/app.css',
         'resources/css/theme.css',
       ]),
