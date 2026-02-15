@@ -11,7 +11,10 @@ class Controller extends Framework
 
     public function index(Request $request)
     {
-        $this->data = $this->fetchPublicEntityResponse($request->header('X-Entity'), [], $request->limit, $request->offset);
+        $limit = isset($request->limit) ? $request->limit : 10;
+        $offset = isset($request->offset) ? $request->offset : 0;
+
+        $this->data = $this->fetchPublicEntityResponse($request->header('X-Entity'), [], $limit, $offset);
         $this->meta = $this->fetchPublicEntityResponse('entities', ['slug' => $request->header('X-Entity')]);
         return response([
             'data' => $this->data,
