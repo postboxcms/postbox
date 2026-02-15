@@ -55,7 +55,7 @@ const DataProvider = ({ children }) => {
     return () => {};
   }, [token, notification]);
 
-   React.useEffect(() => {
+  React.useEffect(() => {
     if (typeof window !== typeof undefined) {
       window.document.title = `${websiteProps.name} - ${websiteProps.title}`;
       window.document.querySelector('meta[name="description"]')?.setAttribute('content', 'Postbox');

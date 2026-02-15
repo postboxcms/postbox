@@ -5,6 +5,7 @@
     header {
       box-shadow: none !important;
       margin-bottom: 20px !important;
+      position: fixed;
 
       div.MuiToolbar-root {
         min-height: 48px;
@@ -27,11 +28,19 @@
       text-decoration: none !important;
       color: $brand-color-dark;
     }
-    .menu-button:hover {
-      border-radius: 5px !important;
-    }
-    .menu-bar {
-      padding: 0 !important;
+    .menu-button {
+      .icon {
+        min-width: 30px !important;
+        font-size: 18px;
+      }
+      .text {
+        margin-top: 7px !important;
+      }
+      &:hover {
+        border-radius: 5px !important;
+        background-color: transparent;
+        color: $brand-color;
+      }
     }
     .avatar-icon {
       width: 100px;
@@ -40,6 +49,21 @@
       background-color: $brand-color-light !important;
       color: #fff !important;
       margin-bottom: 10px;
+    }
+    .menu-panel {
+      position: relative;
+      top: 66px;
+      .MuiCardContent-root {
+        padding: 0 !important;
+      }
+    }
+    .feed-panel {
+      position: relative;
+      top: 66px !important;
+    }
+    .user-panel {
+      position: relative;
+      top: 66px !important;
     }
   }
 }

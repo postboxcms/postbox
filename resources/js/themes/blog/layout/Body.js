@@ -24,7 +24,7 @@ export const Body = () => {
       <Consumer table="pages">
         <MenuBar />
       </Consumer>
-      <Consumer table="posts">
+      <Consumer table="posts" scroll={true} limit="1">
         <FeedPanel />
       </Consumer>
       <Consumer table="users">
@@ -34,7 +34,7 @@ export const Body = () => {
   );
 
   const ComingSoonContent = () => (
-    <Grid container justifyContent={'center'} flex={1} spacing={2}>
+    <Grid container style={{ marginTop: '66px' }} justifyContent={'center'} flex={1} spacing={2}>
       <Grid
         alignItems={'center'}
         textAlign={'center'}
@@ -46,7 +46,7 @@ export const Body = () => {
         lg={12}
         xl={12}
       >
-        <Icon name="fa-dolly" color="#ccc" size="240px" />
+        <Icon name="fa-dolly" color="#ccc" style={{ fontSize: '240px' }} />
       </Grid>
       <Grid
         alignItems={'center'}

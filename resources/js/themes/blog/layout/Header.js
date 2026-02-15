@@ -6,6 +6,7 @@ import { Container, Typography, Toolbar, AppBar } from '@mui/material';
 
 import { useAppCSS } from '@app/hooks';
 import { getWebsiteLogo, getWebsiteName } from '@modules/Settings/reducers/site';
+import { site } from '@app/utils/constants';
 
 export const Header = () => {
   const classes = useAppCSS();
@@ -18,7 +19,7 @@ export const Header = () => {
         <Toolbar className={classes.toolbar}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className="title">
             {websiteLogo ? (
-              <img src={`uploads/settings/${websiteLogo}`} style={{ maxHeight: '36px' }} />
+              <img src={`${site.url}/uploads/settings/${websiteLogo}`} style={{ maxHeight: '36px' }} />
             ) : (
               websiteName
             )}

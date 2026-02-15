@@ -11,7 +11,6 @@ import Website from '@website';
 
 /** React router to setup UI routes */
 const Web = () => {
-  // const RouterComponent = router || Router;
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
