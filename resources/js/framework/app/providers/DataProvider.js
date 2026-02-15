@@ -18,6 +18,10 @@ const DataProvider = ({ children }) => {
     usePermissions();
   const isUserAuthorized = hasUserAuthenticated(token) && hasAdminRoute();
   const isUserOnWebsite = !hasAdminRoute();
+  const websiteProps = useSelector((state) => ({
+    name: state.site.name,
+    title: state.site.title
+  }));
 
   React.useEffect(() => {
     if (token != null && token != undefined) {
