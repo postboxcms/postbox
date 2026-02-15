@@ -67,9 +67,13 @@ mix.webpackConfig({
   ],
 });
 
+const jsPublicPath = process.env.HOST === 'server' ? 'public/server/js' : 'public/js';
+const cssPublicPath = process.env.HOST === 'server' ? 'public/server/css' : 'public/css';
+const themesPublicPath = process.env.HOST === 'server' ? 'public/server/themes' : 'public/themes';
+
 mix
-  .js('resources/js/app.js', 'public/js')
-  .sass('resources/sass/app.scss', 'public/css', {
+  .js('resources/js/app.js', jsPublicPath)
+  .sass('resources/sass/app.scss', cssPublicPath, {
     sassOptions: {
       quietDeps: true,
     },
@@ -80,7 +84,7 @@ themes.forEach((theme) => {
   mix
     .sass(
       `resources/js/themes/${theme.dbval}/assets/theme.scss`,
-      `public/themes/${theme.dbval}/css/theme.css`,
+      `${themesPublicPath}/${theme.dbval}/css`,
       {
         sassOptions: {
           quietDeps: true,

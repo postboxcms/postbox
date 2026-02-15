@@ -4,6 +4,7 @@ const siteSlice = createSlice({
   name: 'site',
   initialState: {
     name: 'Postbox',
+    theme: 'blog',
     title: '',
     status: 'idle',
     isProductionReady: false,

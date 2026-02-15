@@ -1,0 +1,145 @@
+#!/bin/bash
+
+# Helper function to show progress and completion
+show_progress() {
+    local message=$1
+    echo -e "\n⏳ $message... "
+}
+
+show_complete() {
+    local message=$1
+    echo -e "\n✓ $message"
+}
+
+
+setup_system() {
+    set -e
+
+    echo "Installing PHP 8.1 FPM, Nginx, MySQL Server, Composer, Node.js 20, and npm..."
+
+    # Update package manager
+    show_progress "Updating system package manager"
+    sudo apt-get update > /dev/null 2>&1
+    show_complete "System package manager updated"
+
+    # Install PHP FPM
+    show_progress "Installing PHP FPM"
+    sudo apt-get install -y php-fpm php-cli php-common php-mysql > /dev/null 2>&1
+    show_complete "PHP FPM installed"
+
+    # Install Composer
+    show_progress "Installing Composer"
+    sudo apt-get install -y composer > /dev/null 2>&1
+    show_complete "Composer installed"
+
+    # Install Nginx
+    show_progress "Installing Nginx"
+    sudo apt-get install -y nginx > /dev/null 2>&1
+    show_complete "Nginx installed"
+
+    # Install MySQL Server
+    show_progress "Installing MySQL Server"
+    sudo apt-get install -y mysql-server > /dev/null 2>&1
+    show_complete "MySQL Server installed"
+
+    # Install Node.js 20 and npm
+    show_progress "Installing Node.js 20 and npm"
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - > /dev/null 2>&1
+    sudo apt-get install -y nodejs > /dev/null 2>&1
+    show_complete "Node.js 20 and npm installed"
+
+    # Enable services
+    show_progress "Enabling services"
+    sudo systemctl enable php8.4-fpm > /dev/null 2>&1
+    sudo systemctl enable nginx > /dev/null 2>&1
+    sudo systemctl enable mysql > /dev/null 2>&1
+    sudo systemctl start php8.4-fpm > /dev/null 2>&1
+    sudo systemctl start nginx > /dev/null 2>&1
+    sudo systemctl start mysql > /dev/null 2>&1
+    show_complete "Services enabled and started"
+
+    # Enable php extensions
+    show_progress "Enabling PHP extensions"
+    REQUIRED_EXTENSIONS=(xml curl gd imagick fileinfo openssl)
+    for EXT in "${REQUIRED_EXTENSIONS[@]}"; do
+        if ! php -m | grep -q "^${EXT}$"; then
+            sudo apt-get install -y "php-${EXT}" > /dev/null 2>&1 || {
+                echo -e "${RED}Failed to install php-${EXT}${RESET}" >&2
+                exit 1
+            }
+        fi
+    done
+    show_complete "PHP extensions enabled"
+
+    # Install pm2 for process management
+    show_progress "Installing pm2 for process management"
+    sudo npm install -g pm2 > /dev/null 2>&1
+    sudo pm2 startup systemd -u "$SUDO_USER" --hp "/home/$SUDO_USER" > /dev/null 2>&1
+    show_complete "pm2 installed"
+
+    echo "Installation complete!"
+}
+
+setup_php_composer() {
+    set -e
+
+    APP_DIR=$(pwd)
+    APP_USER=$SUDO_USER
+
+    echo "Setting up PHP Composer dependencies..."
+
+    show_progress "Installing Composer dependencies"
+    sudo -u "$APP_USER" composer install --no-interaction --prefer-dist --optimize-autoloader --working-dir="$APP_DIR" > /dev/null 2>&1
+    show_complete "Composer dependencies installed"
+
+    echo "PHP Composer setup complete!"
+}
+
+setup_assets() {
+    set -e
+
+    APP_DIR=$(pwd)
+    APP_USER=$SUDO_USER
+
+    echo "Building frontend assets..."
+
+    show_progress "Installing npm dependencies"
+    sudo -u "$APP_USER" npm install --prefix "$APP_DIR" > /dev/null 2>&1
+    show_complete "npm dependencies installed"
+
+    show_progress "Building assets with npm"
+    sudo -u "$APP_USER" npm run build --prefix "$APP_DIR" > /dev/null 2>&1
+    sudo -u "$APP_USER" npm run prod --prefix "$APP_DIR" > /dev/null 2>&1
+    show_complete "Assets built successfully"
+
+    echo "Frontend assets are ready!"
+}
+
+setup_environment_variables() {
+    set -e
+
+    APP_DIR=$(pwd)
+    APP_USER=$SUDO_USER
+
+    show_progress "Setting up environment variables for the application ..."
+
+    show_progress "Creating environment file"
+    source bin/env/host/environment "$APP_DIR"/vendor/postboxcms/desk/stubs/environment.stub .env
+    show_complete "Environment file created"
+
+    show_progress "Generating application key"
+    sudo -u "$APP_USER" php artisan key:generate > /dev/null 2>&1
+    show_complete "Application key generated"
+
+    # replace VITE_SSR_URL value in .env file
+    show_progress "Updating VITE_SSR_URL in .env file"
+    sed -i 's|^VITE_SSR_URL=.*|VITE_SSR_URL=http://localhost|' .env
+    show_complete "VITE_SSR_URL updated"
+
+    # remove double quotes from .env file values
+    show_progress "Cleaning up .env file"
+    sed -i 's/="\(.*\)"/=\1/' .env
+    show_complete "Environment file cleaned"
+
+    show_complete "Environment variables setup complete!"
+}

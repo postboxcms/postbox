@@ -4,10 +4,10 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 // store
 import { store, persistor } from '@app/store';
-// layout
-import Website from '@website';
 // core modules
 import DataProvider from '@providers/DataProvider';
+// layout
+import Website from '@website';
 
 /** React router to setup UI routes */
 const Web = () => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isLogin } from "../utils/login";
-import { api } from "../utils/constants";
+import { isLogin, api } from "@app/utils";
 
 export const PrivateRoute = ({ ...rest }) => {
     const loginUrl = api.adminPrefix + api.loginUrl;

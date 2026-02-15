@@ -105,21 +105,3 @@ export const useAppCSS = makeStyles((theme) => ({
     },
   },
 }));
-
-export const usePermissions = () => {
-  const hasNotification = (notification) => notification !== undefined && notification.message !== '';
-  const hasUserAuthenticated = (token) => token;
-  const hasAdminRoute = () =>
-  typeof window !== typeof undefined
-    ? window.location.href.includes('/admin')
-      ? true
-      : false
-    : false;
-
-
-  return {
-    hasNotification,
-    hasUserAuthenticated,
-    hasAdminRoute
-  }
-};

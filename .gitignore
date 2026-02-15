@@ -7,6 +7,8 @@
 /public/images
 /public/uploads
 /public/build
+/public/server
+/public/mix-manifest.json
 /public/themes
 /storage/*.key
 /vendor
@@ -18,6 +20,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-composer.lock
 /app/Models/*.php
 /dist
+composer.lock
