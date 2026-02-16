@@ -34,7 +34,7 @@ Route::get('/{any}', function (Settings $db) {
     $response = Http::get(env('VITE_SSR_URL') . ':' . env('VITE_SSR_PORT') . '/server?url=' . request()->getRequestUri());
     $html = $response->body();
     $properties = [
-        'theme' => $db->where('property', 'theme')->value('value')
+        'theme' => $db->where('property', 'theme')->value('value') ?? config('postbox.theme.website'),
     ];
     return view('web', ['html' => $html, 'web' => $properties]);
 })->where('any', '.*');

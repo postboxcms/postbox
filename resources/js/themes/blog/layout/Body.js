@@ -24,7 +24,7 @@ export const Body = () => {
       <Consumer table="pages">
         <MenuBar />
       </Consumer>
-      <Consumer table="posts" scroll={true} limit="1">
+      <Consumer table="posts" scroll={true} limit="10">
         <FeedPanel />
       </Consumer>
       <Consumer table="users">
