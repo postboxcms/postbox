@@ -17,9 +17,10 @@ export const useConsumer = () => {
       data: [],
     };
   }
+  
   return (
-    data && {
-      data: Object.keys(data).map((key) => data[key]),
+    {
+      data: data && Object.keys(data).map((key) => data[key]),
       meta: { icon: meta?.[0]?.icon || 'fa-square' },
       isFetching: fetching,
     }

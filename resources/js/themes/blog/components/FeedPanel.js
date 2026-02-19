@@ -18,6 +18,7 @@ import { Loader } from '@ui/components/Placeholder';
 export const FeedPanel = () => {
   const attributes = useConsumer();
   const [ready, setReady] = React.useState(false);
+  const feedIcon = attributes?.meta?.icon || 'fa-rss';
 
   const NoPosts = () => (
     <Grid container justifyContent={'center'} flex={1} spacing={2}>
@@ -32,7 +33,11 @@ export const FeedPanel = () => {
         lg={12}
         xl={12}
       >
-        <Icon name={attributes?.meta?.icon || 'fa-message'} color="#eee" size="120px" />
+        <Icon
+          name={feedIcon}
+          color="#eee"
+          style={{ fontSize: '120px' }}
+        />
       </Grid>
       <Grid
         alignItems={'center'}
@@ -81,7 +86,7 @@ export const FeedPanel = () => {
   );
 
   React.useEffect(() => {
-    if (attributes?.data?.length > 0) {
+    if (!attributes?.isFetching) {
       setReady(true);
     }
   }, [attributes]);
