@@ -9,16 +9,15 @@ import {
   CardActionArea,
   CardActions,
 } from '@mui/material';
-import Panel from '@ui/components/Panel';
 import Icon from '@ui/elements/Icon';
 import Title from '@ui/elements/Title';
 import { useConsumer } from '@website/hooks/consumer';
 import { Loader } from '@ui/components/Placeholder';
 
 export const FeedPanel = () => {
-  const attributes = useConsumer();
+  const { meta, isFetching, responsePayload } = useConsumer();
   const [ready, setReady] = React.useState(false);
-  const feedIcon = attributes?.meta?.icon || 'fa-rss';
+  const feedIcon = meta?.icon || 'fa-rss';
 
   const NoPosts = () => (
     <Grid container justifyContent={'center'} flex={1} spacing={2}>
@@ -33,11 +32,7 @@ export const FeedPanel = () => {
         lg={12}
         xl={12}
       >
-        <Icon
-          name={feedIcon}
-          color="#eee"
-          style={{ fontSize: '120px' }}
-        />
+        <Icon name={feedIcon} color="#eee" style={{ fontSize: '120px' }} />
       </Grid>
       <Grid
         alignItems={'center'}
@@ -86,15 +81,16 @@ export const FeedPanel = () => {
   );
 
   React.useEffect(() => {
-    if (!attributes?.isFetching) {
+    if (!isFetching) {
       setReady(true);
     }
-  }, [attributes]);
+  }, [isFetching]);
 
   return (
     <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className="feed-panel">
-      {attributes && attributes?.data?.length > 0 ? (
-        attributes?.data?.map((item, index) => (
+      {(responsePayload()?.length > 0 &&
+        !isFetching &&
+        responsePayload().map((item, index) => (
           <Card
             sx={{ alignContent: 'center', justifyContent: 'center', marginBottom: '16px' }}
             key={index}
@@ -132,13 +128,10 @@ export const FeedPanel = () => {
               </Button>
             </CardActions>
           </Card>
-        ))
-      ) : ready ? (
-        <NoPosts />
-      ) : (
-        <Placeholder />
-      )}
-      {attributes?.isFetching ? <>Loading ...</> : ''}
+        ))) ||
+        (ready && <NoPosts />)}
+      {!ready && <Placeholder />}
+      {isFetching ? <>Loading ...</> : ''}
     </Grid>
   );
 };

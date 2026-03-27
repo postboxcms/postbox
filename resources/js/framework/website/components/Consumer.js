@@ -29,7 +29,7 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
   }, [start, end]);
 
   React.useEffect(() => {
-      apiCheckOK &&
+    apiCheckOK &&
       api
         .get(`/consumer`, { limit, offset: start }, { headers: { 'X-Entity': table } })
         .then((response) => {

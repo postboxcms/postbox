@@ -57,10 +57,14 @@ const DataProvider = ({ children }) => {
 
   React.useEffect(() => {
     if (typeof window !== typeof undefined) {
-      window.document.title = `${websiteProps.name} - ${websiteProps.title}`;
-      window.document.querySelector('meta[name="description"]')?.setAttribute('content', 'Postbox');
+      if (websiteProps?.name && websiteProps?.title) {
+        window.document.title = `${websiteProps.title} - ${websiteProps.name}`;
+        window.document
+          .querySelector('meta[name="description"]')
+          ?.setAttribute('content', 'Postbox');
+      }
     }
-  },[]);
+  }, []);
 
   return <React.Fragment>{children}</React.Fragment>;
 };
