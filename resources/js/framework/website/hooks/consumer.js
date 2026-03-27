@@ -14,7 +14,7 @@ export const useConsumer = () => {
   if (data && errorMessages.includes(data?.original?.[0])) {
     return {
       meta: {
-        icon: first(meta?.icon) || 'fa-square',
+        icon: first(meta)?.icon || 'fa-square',
       },
       data: [],
     };
@@ -22,7 +22,7 @@ export const useConsumer = () => {
 
   return {
     data: data && Object.keys(data).map((key) => data[key]),
-    meta: { icon: first(meta?.icon) || 'fa-square' },
+    meta: { icon: first(meta)?.icon || 'fa-square' },
     isFetching: fetching,
     responsePayload: () => (data && data?.data?.length > 0 ? data?.data?.map : []),
   };

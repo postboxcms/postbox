@@ -39,11 +39,27 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
           if (first(response?.data?.data?.original)?.includes('Total limit crossed max records')) {
             setBlocked(true);
             setFetching(false);
+            setConsumer(
+              JSON.stringify({
+                data: {
+                  data: [],
+                  meta: [{ icon: response?.data?.meta?.[0]?.icon || 'fa-square' }],
+                },
+              })
+            );
             return;
           }
 
           if (first(response?.data?.data?.original)?.includes('No data found')) {
             setFetching(false);
+            setConsumer(
+              JSON.stringify({
+                data: {
+                  data: [],
+                  meta: [{ icon: response?.data?.meta?.[0]?.icon || 'fa-square' }],
+                },
+              })
+            );
             return;
           }
 

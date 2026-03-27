@@ -32,7 +32,7 @@ export const FeedPanel = () => {
         lg={12}
         xl={12}
       >
-        <Icon name={feedIcon} color="#eee" style={{ fontSize: '120px' }} />
+        <Icon name={feedIcon} color="#ddc1c9" style={{ fontSize: '120px' }} />
       </Grid>
       <Grid
         alignItems={'center'}
