@@ -15,7 +15,7 @@ import { useConsumer } from '@website/hooks/consumer';
 import { Loader } from '@ui/components/Placeholder';
 
 export const FeedPanel = () => {
-  const { meta, isFetching, responsePayload } = useConsumer();
+  const { meta, isFetching, renderCollection } = useConsumer();
   const [ready, setReady] = React.useState(false);
   const feedIcon = meta?.icon || 'fa-rss';
 
@@ -81,6 +81,7 @@ export const FeedPanel = () => {
   );
 
   React.useEffect(() => {
+    console.log('FeedPanel Response Payload:', renderCollection((item) => item));
     if (!isFetching) {
       setReady(true);
     }
@@ -88,9 +89,8 @@ export const FeedPanel = () => {
 
   return (
     <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className="feed-panel">
-      {(responsePayload()?.length > 0 &&
-        !isFetching &&
-        responsePayload().map((item, index) => (
+      {(!isFetching &&
+        renderCollection((item, index) => (
           <Card
             sx={{ alignContent: 'center', justifyContent: 'center', marginBottom: '16px' }}
             key={index}

@@ -24,6 +24,6 @@ export const useConsumer = () => {
     data: data && Object.keys(data).map((key) => data[key]),
     meta: { icon: first(meta)?.icon || 'fa-square' },
     isFetching: fetching,
-    responsePayload: () => (data && data?.data?.length > 0 ? data?.data?.map : []),
+    renderCollection: (fn) => data ? Object.keys(data).map(fn) : [],
   };
 };
