@@ -92,10 +92,10 @@ services:
           cpus: '${DESK_REDIS_CPU_LIMIT:-0.5}'
           memory: '${DESK_REDIS_MEMORY_LIMIT:-256M}'
 networks:
-  desk:
-    driver: bridge
-    name: postbox-network
+    desk:
+        driver: bridge
+        name: postbox-network
 volumes:
-  desk-mysql:
-    driver: local
-    name: postbox-storage
+    desk-mysql:
+        driver: local
+        name: DeskStorage
