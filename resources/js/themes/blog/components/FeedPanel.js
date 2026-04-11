@@ -81,7 +81,6 @@ export const FeedPanel = () => {
   );
 
   React.useEffect(() => {
-    console.log('FeedPanel Response Payload:', renderCollection((item) => item));
     if (!isFetching) {
       setReady(true);
     }
@@ -89,48 +88,32 @@ export const FeedPanel = () => {
 
   return (
     <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className="feed-panel">
-      {(!isFetching &&
-        renderCollection((item, index) => (
-          <Card
-            sx={{ alignContent: 'center', justifyContent: 'center', marginBottom: '16px' }}
-            key={index}
-          >
+      {renderCollection(
+        (item) => (
+          <Card key={item.id} sx={{ marginBottom: '16px' }}>
             <CardActionArea>
-              {item?.image ? (
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={`/uploads/posts/${item?.image}`}
-                  alt="green iguana"
-                />
-              ) : (
-                <div style={{ background: '#eee', display: 'inline-block', width: '100%' }}>
-                  <Icon
-                    name="fa-image"
-                    style={{ display: 'flex', margin: '0 auto' }}
-                    size="8x"
-                    color="#ddd"
-                  />
-                </div>
+              {item.image && (
+                <CardMedia component="img" height="140" image={item.image} alt={item.title} />
               )}
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  {item.title || `Post ${index + 1}`}
+                  {item.title}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {item.summary || 'No summary available.'}
+                  {item.excerpt}
                 </Typography>
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary">
-                Share
+              <Button size="small" color="primary" href={item.url}>
+                Read More
               </Button>
             </CardActions>
           </Card>
-        ))) ||
-        (ready && <NoPosts />)}
-      {!ready && <Placeholder />}
+        ),
+        () => <NoPosts />,
+        () => <Placeholder />
+      )}
       {isFetching ? <>Loading ...</> : ''}
     </Grid>
   );

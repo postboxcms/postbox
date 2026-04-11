@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import ConsumerContext from '@website/context';
 import { first } from 'lodash';
 
@@ -24,6 +24,19 @@ export const useConsumer = () => {
     data: data && Object.keys(data).map((key) => data[key]),
     meta: { icon: first(meta)?.icon || 'fa-square' },
     isFetching: fetching,
-    renderCollection: (fn) => data ? Object.keys(data).map(fn) : [],
+    renderCollection: useCallback(
+      (fn, renderFallback, renderPlaceholder) => {
+        if (fetching && renderPlaceholder) {
+          return renderPlaceholder();
+        }
+        if (!fetching && data && Object.keys(data)?.length > 0) {
+          return Object.keys(data).map((key) => fn(data[key], key));
+        }
+        if (!fetching && data && Object.keys(data)?.length === 0 && renderFallback) {
+          return renderFallback();
+        }
+      },
+      [data, fetching]
+    ),
   };
 };
