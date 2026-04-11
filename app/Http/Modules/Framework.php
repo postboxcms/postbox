@@ -84,13 +84,14 @@ class Framework extends BaseController
         return response(['error' => trans('database.success')]);
     }
 
-    protected function fetchPublicEntityResponse($table, $where, $limit = 9999, $offset = 0)
+    protected function fetchPublicEntityResponse($table, $where, $limit = 9999, $offset = 0, $statusColumn = 'status')
     {
         try {
             $totalEntityRecords = DB::table($table)->count();
             if ($totalEntityRecords > $offset) {
                 $entity = DB::table($table)
                     ->where($where)
+                    ->where($statusColumn, 1)
                     ->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
 
                 if (!$entity) {
