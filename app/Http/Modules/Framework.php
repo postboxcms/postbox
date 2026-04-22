@@ -90,9 +90,9 @@ class Framework extends BaseController
             $totalEntityRecords = DB::table($table)->count();
             if ($totalEntityRecords > $offset) {
                 $entity = DB::table($table)
-                    ->where($where)
-                    ->where($statusColumn, 1)
-                    ->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
+                            ->where($where)
+                            ->where($statusColumn, 1)
+                            ->limit($limit)->offset($offset)->orderBy('updated_at', 'desc')->get()->toArray();
 
                 if (!$entity) {
                     return response()->json([trans('entity.emptyresponse', ['name' => $table])], 200);
@@ -116,6 +116,7 @@ class Framework extends BaseController
         unset($data['state']);
         unset($data['token']);
         unset($data['endpoint']);
+        unset($data['refresh']);
         unset($data['_method']);
         $data['created_at'] = Carbon::now();
         $data['updated_at'] = Carbon::now();

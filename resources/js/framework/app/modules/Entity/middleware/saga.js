@@ -44,12 +44,15 @@ function* putEntity(action) {
     if (status !== 'pending') return;
     yield call(postRequest, action.payload);
     const payload = Object.fromEntries(action.payload);
-    const path = payload.endpoint.replace('/entity/','');
-    const data = yield call(getRequest, {
-      endpoint: `entity/${generateEntityPath(path, payload.eid)}`,
-      token: payload.token,
-    });
-    yield put(setEntity(data));
+    const refreshState = payload?.refresh === 'false' ? false : true;
+    const path = payload.endpoint.replace('/entity/', '');
+    if (refreshState) {
+      const data = yield call(getRequest, {
+        endpoint: `entity/${generateEntityPath(path, payload.eid)}`,
+        token: payload.token,
+      });
+      yield put(setEntity(data));
+    }
     yield put(setNotification({ message: 'Entity updated successfully', type: 'message' }));
   } catch (e) {
     console.error(e);
