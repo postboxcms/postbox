@@ -81,7 +81,6 @@ const List = (props) => {
       endpoint: `entity/${module}`,
       token: token,
       eid: data.row.uuid,
-      refresh: false,
       _method: 'put',
     });
     dispatch(updateEntity(formData));
