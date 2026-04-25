@@ -47,5 +47,5 @@ export const platform = {
 }
 
 export const entity = {
-    'successMessage': 'Entity updated successfully'
+    successMessage: 'Entity updated successfully'
 }

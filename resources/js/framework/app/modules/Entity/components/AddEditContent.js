@@ -193,7 +193,7 @@ export const AddEditContent = ({ query, type }) => {
             variant="outlined"
             fullWidth
             inputProps={field}
-          ></FormInput>
+          />
         );
       case 'editor':
         return (
