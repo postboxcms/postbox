@@ -44,13 +44,13 @@ function* putEntity(action) {
     const status = yield select((state) => state.entities.status);
     if (status !== 'pending') return;
     yield call(postRequest, action.payload);
-    // const payload = Object.fromEntries(action.payload);
-    // const path = payload.endpoint.replace('/entity/', '');
-    // const data = yield call(getRequest, {
-    //   endpoint: `entity/${generateEntityPath(path, payload.eid)}`,
-    //   token: payload.token,
-    // });
-    // yield put(setEntity(data));
+    const payload = Object.fromEntries(action.payload);
+    const path = payload.endpoint.replace('/entity/', '');
+    const data = yield call(getRequest, {
+      endpoint: `${generateEntityPath(path, payload.eid)}`,
+      token: payload.token,
+    });
+    yield put(setEntity(data));
     yield put(setNotification({ message: entity.successMessage, type: 'message' }));
   } catch (e) {
     console.error(e);
