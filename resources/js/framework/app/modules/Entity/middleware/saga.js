@@ -45,9 +45,8 @@ function* putEntity(action) {
     if (status !== 'pending') return;
     yield call(postRequest, action.payload);
     const payload = Object.fromEntries(action.payload);
-    const path = payload.endpoint.replace('/entity/', '');
     const data = yield call(getRequest, {
-      endpoint: `${generateEntityPath(path, payload.eid)}`,
+      endpoint: `${generateEntityPath(payload.endpoint, payload.eid)}`,
       token: payload.token,
     });
     yield put(setEntity(data));
