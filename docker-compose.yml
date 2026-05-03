@@ -1,7 +1,7 @@
 services:
     app:
         build:
-            context: ./vendor/postboxcms/desk/php/runtimes/8.3
+            context: ./vendor/postboxcms/desk/runtimes/php/8.3
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -39,10 +39,12 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${WEB_PORT:-3000}:3000'
+            - '${WEB_PORT:-5172}:80'
         environment:
             WWWUSER: '${WWWUSER}'
             NODE_ENV: '${NODE_ENV:-development}'
+            SSR_PORT: '80'
+            SSR_HOST: '0.0.0.0'
         volumes:
             - '.:/var/www/html'
         networks:

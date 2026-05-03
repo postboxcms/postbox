@@ -4,6 +4,7 @@ const { render } = require("../public/build/server/server.js");
 
 const app = express();
 const port = process.env.SSR_PORT || 5172;
+const host = process.env.SSR_HOST || "0.0.0.0";
 
 // app.use("/dist", express.static(path.resolve("./public/build/client/client.js")));
 
@@ -19,6 +20,6 @@ app.get("/server", (req, res) => {
     }
 });
 
-app.listen(port, "0.0.0.0", () => {
-    console.log(`SSR server is running at http://localhost:${port}`);
+app.listen(port, host, () => {
+    console.log(`SSR server is running at http://${host}:${port}`);
 });
