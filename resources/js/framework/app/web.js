@@ -6,8 +6,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from '@app/store';
 // core modules
 import DataProvider from '@providers/DataProvider';
-// layout
-import Website from '@website';
+// layout - use SSR version by default for hydration compatibility
+import WebsiteSSR from '@website/index-ssr';
 
 /** React router to setup UI routes */
 const Web = () => {
@@ -15,7 +15,7 @@ const Web = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <DataProvider>
-          <Website />
+          <WebsiteSSR />
         </DataProvider>
       </PersistGate>
     </Provider>

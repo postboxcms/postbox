@@ -45,3 +45,7 @@ export const platform = {
     companyURL: process.env.MIX_COMPANY_URL,
     companyYear: process.env.MIX_COMPANY_YEAR
 }
+
+export const entity = {
+    successMessage: 'Entity updated successfully'
+}

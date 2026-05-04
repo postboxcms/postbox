@@ -1,5 +1,9 @@
 @import './colors';
 
+body {
+  background-color: $body-bg-color !important;
+}
+
 #web {
   .web-root {
     header {

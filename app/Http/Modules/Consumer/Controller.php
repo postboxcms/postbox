@@ -19,7 +19,7 @@ class Controller extends Framework
         return response([
             'data' => $this->data,
             'meta' => $this->meta,
-            'message' => 'Consumer data fetched successfully'
+            'message' => trans('consumer.success')
         ], 200);
     }
 }

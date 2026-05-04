@@ -9,15 +9,15 @@ import {
   CardActionArea,
   CardActions,
 } from '@mui/material';
-import Panel from '@ui/components/Panel';
 import Icon from '@ui/elements/Icon';
 import Title from '@ui/elements/Title';
 import { useConsumer } from '@website/hooks/consumer';
 import { Loader } from '@ui/components/Placeholder';
 
 export const FeedPanel = () => {
-  const attributes = useConsumer();
+  const { meta, isFetching, renderCollection } = useConsumer();
   const [ready, setReady] = React.useState(false);
+  const feedIcon = meta?.icon || 'fa-rss';
 
   const NoPosts = () => (
     <Grid container justifyContent={'center'} flex={1} spacing={2}>
@@ -32,7 +32,7 @@ export const FeedPanel = () => {
         lg={12}
         xl={12}
       >
-        <Icon name={attributes?.meta?.icon || 'fa-message'} color="#eee" size="120px" />
+        <Icon name={feedIcon} color="#ddc1c9" style={{ fontSize: '120px' }} />
       </Grid>
       <Grid
         alignItems={'center'}
@@ -81,59 +81,40 @@ export const FeedPanel = () => {
   );
 
   React.useEffect(() => {
-    if (attributes?.data?.length > 0) {
+    if (!isFetching) {
       setReady(true);
     }
-  }, [attributes]);
+  }, [isFetching]);
 
   return (
     <Grid item xs={12} sm={12} md={6} lg={6} xl={6} className="feed-panel">
-      {attributes && attributes?.data?.length > 0 ? (
-        attributes?.data?.map((item, index) => (
-          <Card
-            sx={{ alignContent: 'center', justifyContent: 'center', marginBottom: '16px' }}
-            key={index}
-          >
+      {renderCollection(
+        (item) => (
+          <Card key={item.id} sx={{ marginBottom: '16px' }}>
             <CardActionArea>
-              {item?.image ? (
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={`/uploads/posts/${item?.image}`}
-                  alt="green iguana"
-                />
-              ) : (
-                <div style={{ background: '#eee', display: 'inline-block', width: '100%' }}>
-                  <Icon
-                    name="fa-image"
-                    style={{ display: 'flex', margin: '0 auto' }}
-                    size="8x"
-                    color="#ddd"
-                  />
-                </div>
+              {item.image && (
+                <CardMedia component="img" height="140" image={item.image} alt={item.title} />
               )}
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  {item.title || `Post ${index + 1}`}
+                  {item.title}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {item.summary || 'No summary available.'}
+                  {item.excerpt}
                 </Typography>
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary">
-                Share
+              <Button size="small" color="primary" href={item.url}>
+                Read More
               </Button>
             </CardActions>
           </Card>
-        ))
-      ) : ready ? (
-        <NoPosts />
-      ) : (
-        <Placeholder />
+        ),
+        () => <NoPosts />,
+        () => <Placeholder />
       )}
-      {attributes?.isFetching ? <>Loading ...</> : ''}
+      {isFetching ? <>Loading ...</> : ''}
     </Grid>
   );
 };

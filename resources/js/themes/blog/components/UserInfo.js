@@ -3,11 +3,11 @@ import { first } from 'lodash';
 import { Avatar, Grid } from '@mui/material';
 import Panel from '@ui/components/Panel';
 import { useConsumer } from '@website/hooks/consumer';
-import {Footer as WebsiteFooter } from '@ui/components/Footer';
+import { Footer as WebsiteFooter } from '@ui/components/Footer';
 
 export const UserInfo = () => {
-  const attributes = useConsumer();
-  const user = first(attributes?.data);
+  const { data } = useConsumer();
+  const user = first(data);
 
   return (
     <Grid item xs={12} sm={12} md={3} lg={3} xl={3} className="user-panel">

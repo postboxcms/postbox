@@ -7,3 +7,4 @@ export * from './modal';
 export * from './typography';
 export * from './auth';
 export * from './storage';
+export * from './data';

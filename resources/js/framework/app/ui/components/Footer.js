@@ -13,7 +13,7 @@ export const Footer = ({prefix, suffix, linkText, linkURL}) => {
             <Prefix /> {" "}
             <Link className={classes.footerLink} href={linkURL} underline="hover">
                 {/* {'Postbox'} */}
-                {linkText}
+                {linkText || 'Postbox'}
             </Link>{" "}
             {/* {' © '}
             {new Date().getFullYear()} */}

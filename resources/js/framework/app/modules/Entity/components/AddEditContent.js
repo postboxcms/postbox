@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { first, isEmpty } from 'lodash';
 
-import { useWebCSS, useSecureRoute, useNotifier, useAuth, ucfirst, singularize } from '@app/hooks';
+import { useWebCSS, useSecureRoute, useNotifier, useAuth, useTypography } from '@app/hooks';
 
 import { getUser } from '@modules/Auth/reducers/user';
 import { loadCRUD } from '@modules/CRUD/reducers/crud';
@@ -36,6 +36,7 @@ export const AddEditContent = ({ query, type }) => {
   const [entityData, setEntityData] = React.useState(entity?.details);
   const [rightCards, setRightCards] = React.useState([]);
   const [error, setError] = React.useState(false);
+  const { ucfirst, singularize } = useTypography();
 
   const generatePlaceholder = React.useCallback(
     (element) => {
@@ -192,7 +193,7 @@ export const AddEditContent = ({ query, type }) => {
             variant="outlined"
             fullWidth
             inputProps={field}
-          ></FormInput>
+          />
         );
       case 'editor':
         return (

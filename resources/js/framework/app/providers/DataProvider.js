@@ -6,7 +6,7 @@ import { loadThemes } from '@modules/Settings/reducers/platform';
 import { getNotification } from '@modules/Settings/reducers/platform';
 import { loadEntities } from '@modules/Entity/reducers/entities';
 import { clearUserState, logoutUser } from '@modules/Auth/reducers/user';
-import { api } from '@app/utils/constants';
+import { api, entity } from '@app/utils/constants';
 
 const DataProvider = ({ children }) => {
   const { token } = useAuth();
@@ -43,6 +43,10 @@ const DataProvider = ({ children }) => {
       dispatch(loadThemes());
     }
 
+    if (hasNotification(entity.successMessage) && hasAdminRoute()) {
+      dispatch(loadEntities(token));
+    }
+
     if (hasNotification(notification) && hasAdminRoute()) {
       if (notification.type == 'error') {
         notify(notification.message, 'error');
@@ -57,10 +61,14 @@ const DataProvider = ({ children }) => {
 
   React.useEffect(() => {
     if (typeof window !== typeof undefined) {
-      window.document.title = `${websiteProps.name} - ${websiteProps.title}`;
-      window.document.querySelector('meta[name="description"]')?.setAttribute('content', 'Postbox');
+      if (websiteProps?.name && websiteProps?.title) {
+        window.document.title = `${websiteProps.title} - ${websiteProps.name}`;
+        window.document
+          .querySelector('meta[name="description"]')
+          ?.setAttribute('content', 'Postbox');
+      }
     }
-  },[]);
+  }, []);
 
   return <React.Fragment>{children}</React.Fragment>;
 };

@@ -5,18 +5,17 @@ import { Provider } from "react-redux";
 import { StaticRouter } from 'react-router-dom';
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { setup } from "@app/init";
-import { store, persistor } from "@app/store";
-import Web from '@app/web';
+import { store } from "@app/store";
+import WebSSR from "@app/web-ssr";
 
-export function render() {
-    const ComponentToRender = () => <>testing component logic</>;
+export function render(url = '/') {
     const { theme } = setup();
     const html = renderToString(
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
-                <Provider store={store}>
-                        <Web />
-                </Provider>
+                <StaticRouter location={url}>
+                    <WebSSR />
+                </StaticRouter>
             </ThemeProvider>
         </StyledEngineProvider>
     );
