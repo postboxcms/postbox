@@ -17,7 +17,6 @@
     <div id="web">
         {!! $html !!}
     </div>
-    <script src="/build/client.js"></script>
 </body>
 
 </html>

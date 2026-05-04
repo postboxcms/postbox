@@ -1,10 +1,9 @@
 import React from 'react';
-import { Provider } from "react-redux";
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { setup } from "@app/init";
-import { store, persistor } from "@app/store";
 import Web from '@app/web';
+import WebSSR from '@app/web-ssr';
 
 const el = document.getElementById('web');
 const { theme } = setup();
@@ -13,9 +12,7 @@ if (el.hasChildNodes()) {
     hydrateRoot(el,
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
-                <Provider store={store}>
-                    <Web />
-                </Provider>
+                <WebSSR />
             </ThemeProvider>
         </StyledEngineProvider>
     );

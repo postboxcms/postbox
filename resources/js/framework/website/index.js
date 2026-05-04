@@ -1,24 +1,27 @@
 import React, { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
-import { Box } from '@mui/material';
+
+// Dynamic import for theme - memoized to prevent re-imports
+const createThemeComponent = (() => {
+  const cache = {};
+  return (theme) => {
+    if (!cache[theme]) {
+      cache[theme] = lazy(() =>
+        import(`@themes/${theme}/index.js`)
+      );
+    }
+    return cache[theme];
+  };
+})();
 
 export const Website = () => {
   const theme = useSelector((state) => state.site.theme);
-  const [isSiteReady, setIsSiteReady] = React.useState(false);
-  const ThemeComponent = lazy(() =>
-    import(`@themes/${theme}/index.js`)
-  );
+  const ThemeComponent = createThemeComponent(theme);
 
-  React.useEffect(() => {
-    setIsSiteReady(true); // to hydrate the theme variable
-  },[]);
-  
   return (
-    <Box>
-      <Suspense fallback={null}>
-        {isSiteReady && <ThemeComponent />}
-      </Suspense>
-    </Box>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ThemeComponent />
+    </Suspense>
   );
 };
 
