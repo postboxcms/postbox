@@ -20,7 +20,7 @@ const DataProvider = ({ children }) => {
   const isUserOnWebsite = !hasAdminRoute();
   const websiteProps = useSelector((state) => ({
     name: state.site.name,
-    title: state.site.title
+    title: state.site.title,
   }));
 
   React.useEffect(() => {
@@ -43,16 +43,13 @@ const DataProvider = ({ children }) => {
       dispatch(loadThemes());
     }
 
-    if (hasNotification(entity.successMessage) && hasAdminRoute()) {
-      dispatch(loadEntities(token));
-    }
-
     if (hasNotification(notification) && hasAdminRoute()) {
       if (notification.type == 'error') {
         notify(notification.message, 'error');
       }
       if (notification.type == 'message') {
         notify(notification.message);
+        dispatch(loadEntities(token));
       }
     }
 
