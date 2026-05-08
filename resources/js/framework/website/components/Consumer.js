@@ -81,7 +81,7 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
           setStart(start);
           setEnd(end);
         });
-  }, [fetching]);
+  }, []);
 
   return (
     <ConsumerContext.Provider value={{ consumer, fetching }}>{children}</ConsumerContext.Provider>
