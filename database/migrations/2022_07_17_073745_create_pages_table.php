@@ -21,7 +21,7 @@ class CreatePagesTable extends Migration
             $table->string('image',500)->nullable();
             $table->longText('content')->nullable();
             $table->integer('author')->default('1');
-            $table->tinyInteger('status')->default('1');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('image',500)->nullable()->default(null);
             $table->longText('content')->nullable()->default(null);
             $table->integer('author')->default(null);
-            $table->tinyInteger('status')->default(null);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
