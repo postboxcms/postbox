@@ -31,7 +31,7 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
   React.useEffect(() => {
     apiCheckOK &&
       api
-        .get(`/consumer`, { limit, offset: start }, { headers: { 'X-Entity': table } })
+        .post(`/consumer`, { limit, offset: start, entity: table })
         .then((response) => {
           setCalling(false);
           setFetching(false);

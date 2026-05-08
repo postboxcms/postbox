@@ -9,13 +9,14 @@ class Controller extends Framework
     protected $data;
     protected $meta;
 
-    public function index(Request $request)
+    public function store(Request $request)
     {
         $limit = isset($request->limit) ? $request->limit : 10;
         $offset = isset($request->offset) ? $request->offset : 0;
+        $entity = isset($request->entity) ? $request->entity : null;
 
-        $this->data = $this->fetchPublicEntityResponse($request->header('X-Entity'), [], $limit, $offset);
-        $this->meta = $this->fetchPublicEntityResponse('entities', ['slug' => $request->header('X-Entity')]);
+        $this->data = $this->fetchPublicEntityResponse($entity, [], $limit, $offset);
+        $this->meta = $this->fetchPublicEntityResponse('entities', ['slug' => $entity]);
         return response([
             'data' => $this->data,
             'meta' => $this->meta,
