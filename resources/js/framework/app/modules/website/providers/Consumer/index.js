@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { first } from 'lodash';
-import ConsumerContext from '@website/context';
+import ConsumerContext from './context';
 import { useSecureRoute } from '@app/hooks';
 import { useScrollEffect } from '@website/hooks';
 

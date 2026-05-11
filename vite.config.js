@@ -57,7 +57,7 @@ export default defineConfig(({ mode }) => {
         '@modules': path.resolve(__dirname, 'resources/js/framework/app/modules'),
         '@providers': path.resolve(__dirname, 'resources/js/framework/app/providers'),
         '@ui': path.resolve(__dirname, 'resources/js/framework/app/modules/ui'),
-        '@website': path.resolve(__dirname, 'resources/js/framework/website'),
+        '@website': path.resolve(__dirname, 'resources/js/framework/app/modules/website'),
         '@themes': path.resolve(__dirname, 'resources/js/themes'),
         'redux-persist/integration/react': 'redux-persist/lib/integration/react.js',
       },
