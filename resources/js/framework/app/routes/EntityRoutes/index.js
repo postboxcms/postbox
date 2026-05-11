@@ -2,10 +2,10 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 
 import { PrivateRoute } from "@app/routes";
-import { api } from "@app/utils";
+import { api } from "@app/constants";
 
-import { Entity, AddEditContent } from "@modules/Entity";
-import Frameset from "@ui/layout/Frameset";
+import { Entity, AddEditContent } from "@modules/entity";
+import Frameset from "@ui/components/layout/Frameset";
 
 import { useEntityRoutes } from './routes';
 

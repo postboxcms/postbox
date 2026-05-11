@@ -4,11 +4,11 @@ import { persistReducer, persistStore } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import rootSaga from "@app/middleware/rootSaga";
-import userReducer from "@modules/Auth/reducers/user";
-import entitiesReducer from "@modules/Entity/reducers/entities";
-import siteReducer from "@modules/Settings/reducers/site";
-import platformReducer from "@modules/Settings/reducers/platform";
-import crudReducer from "@modules/CRUD/reducers/crud";
+import userReducer from "@modules/auth/reducers/user";
+import entitiesReducer from "@modules/entity/reducers/entities";
+import siteReducer from "@modules/settings/reducers/site";
+import platformReducer from "@modules/settings/reducers/platform";
+import crudReducer from "@modules/crud/reducers/crud";
 
 const rootReducer = combineReducers({
     auth: userReducer,

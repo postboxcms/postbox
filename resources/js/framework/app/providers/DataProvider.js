@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNotifier, useAuth, usePermissions, useNavigation } from '@app/hooks';
-import { loadWebsite } from '@modules/Settings/reducers/site';
-import { loadThemes } from '@modules/Settings/reducers/platform';
-import { getNotification } from '@modules/Settings/reducers/platform';
-import { loadEntities } from '@modules/Entity/reducers/entities';
-import { clearUserState, logoutUser } from '@modules/Auth/reducers/user';
-import { api, entity } from '@app/utils/constants';
+import { useNotifier, useNavigation } from '@app/hooks';
+import { useAuth, usePermissions } from '@modules/auth/hooks';
+import { loadWebsite } from '@modules/settings/reducers/site';
+import { loadThemes } from '@modules/settings/reducers/platform';
+import { getNotification } from '@modules/settings/reducers/platform';
+import { loadEntities } from '@modules/entity/reducers/entities';
+import { clearUserState, logoutUser } from '@modules/auth/reducers/user';
+import { api, entity } from '@app/constants';
 
 const DataProvider = ({ children }) => {
   const { token } = useAuth();

@@ -7,9 +7,9 @@ import Web from "@app/web";
 
 const appRoot = document.getElementById("app");
 const webRoot = document.getElementById("web");
+const { theme } = setup();
 
 if (appRoot) {
-    const { theme } = setup();
     const app = createRoot(appRoot);
     app.render(
         <StyledEngineProvider injectFirst>
@@ -21,7 +21,6 @@ if (appRoot) {
 }
 
 if (webRoot) {
-    const { theme } = setup();
     const web = createRoot(webRoot);
     web.render(
         <StyledEngineProvider injectFirst>

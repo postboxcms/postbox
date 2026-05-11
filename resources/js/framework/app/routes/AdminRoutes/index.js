@@ -2,7 +2,7 @@ import React from "react";
 import { Switch } from "react-router-dom";
 
 import { PrivateRoute } from "@app/routes";
-import Frameset from "@ui/layout/Frameset";
+import Frameset from "@ui/components/layout/Frameset";
 
 import { routes } from "./routes";
 

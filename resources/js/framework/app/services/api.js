@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { api } from '@app/utils/constants';
+import { api } from '@app/constants';
 
 const setHeaders = (customHeaders) => {
   const { token } = customHeaders || {};

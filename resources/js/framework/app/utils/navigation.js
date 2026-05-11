@@ -1,4 +1,4 @@
-import { api } from "./constants";
+import { api } from "@app/constants";
 import { history } from "./history"
 
 export const navigate = (url) => {

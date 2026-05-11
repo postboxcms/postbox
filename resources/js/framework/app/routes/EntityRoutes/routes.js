@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { getEntities } from '@modules/Entity/reducers/entities';
+import { getEntities } from '@modules/entity/reducers/entities';
 
 // route manager hook
 export const useEntityRoutes = () => {

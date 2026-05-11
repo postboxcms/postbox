@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { Container, Typography, Toolbar, AppBar } from '@mui/material';
 
 import { useAppCSS } from '@app/hooks';
-import { getWebsiteLogo, getWebsiteName } from '@modules/Settings/reducers/site';
-import { site } from '@app/utils/constants';
+import { getWebsiteLogo, getWebsiteName } from '@modules/settings/reducers/site';
+import { site } from '@app/constants';
 
 export const Header = () => {
   const classes = useAppCSS();

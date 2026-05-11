@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import toastr from "toastr";
-import { setNotification } from "@modules/Settings/reducers/platform";
+import { setNotification } from "@modules/settings/reducers/platform";
 
 import "toastr/build/toastr.min.css";
 
