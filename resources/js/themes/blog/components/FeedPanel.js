@@ -80,6 +80,12 @@ export const FeedPanel = () => {
     </Card>
   );
 
+  const LoadingIndicator = () => (
+    <div key="loading" style={{ textAlign: 'center', padding: '16px', marginBottom: '16px' }}>
+      Loading ...
+    </div>
+  );
+
   React.useEffect(() => {
     if (!isFetching) {
       setReady(true);
@@ -112,9 +118,9 @@ export const FeedPanel = () => {
           </Card>
         ),
         () => <NoPosts />,
-        () => <Placeholder />
+        () => <Placeholder />,
+        () => <LoadingIndicator />
       )}
-      {isFetching ? <>Loading ...</> : ''}
     </Grid>
   );
 };

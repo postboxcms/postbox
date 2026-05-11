@@ -25,13 +25,20 @@ export const useConsumer = () => {
     meta: { icon: first(meta)?.icon || 'fa-square' },
     isFetching: fetching,
     renderCollection: useCallback(
-      (fn, renderFallback, renderPlaceholder) => {
-        if (fetching && renderPlaceholder) {
+      (fn, renderFallback, renderPlaceholder, renderLoading) => {
+        // Show placeholder only on initial load (no data yet, but fetching)
+        if (fetching && (!data || Object.keys(data).length === 0) && renderPlaceholder) {
           return renderPlaceholder();
         }
-        if (!fetching && data && Object.keys(data)?.length > 0) {
-          return Object.keys(data).map((key) => fn(data[key], key));
+        // Show existing posts with loading indicator at bottom (for infinite scroll)
+        if (data && Object.keys(data)?.length > 0) {
+          const posts = Object.keys(data).map((key) => fn(data[key], key));
+          if (fetching && renderLoading) {
+            posts.push(renderLoading());
+          }
+          return posts;
         }
+        // Show no posts message only when not fetching and no data
         if (!fetching && data && Object.keys(data)?.length === 0 && renderFallback) {
           return renderFallback();
         }
