@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Panel from '@ui/components/Panel';
 import { useConsumer } from '@website/hooks/consumer';
-import { Icon } from '@ui/elements/Icon';
+import { Icon } from '@ui/components/elements/Icon';
 
 export const MenuBar = () => {
   const attributes = useConsumer();

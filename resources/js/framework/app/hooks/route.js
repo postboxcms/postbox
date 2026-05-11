@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api, cms } from "@app/utils/constants";
+import { api, cms } from "@app/constants";
 import { useAuth } from "@app/hooks";
 
 export const useSecureRoute = () => {

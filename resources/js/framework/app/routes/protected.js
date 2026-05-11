@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isLogin } from "../utils/login";
-import { api } from "../utils/constants";
+import { isLogin } from "@app/utils";
+import { api } from "@app/constants";
 
 export const ProtectedRoute = ({ restricted, ...rest }) => {
     const adminUrl = api.adminPrefix;

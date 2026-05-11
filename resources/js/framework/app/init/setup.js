@@ -1,13 +1,18 @@
 import React from "react";
 import { admin, website } from "./theme";
+import { hydrateIcons } from "@app/utils";
 
 export const setup = () => {
     // app init code goes here
     const theme = getTheme();
     const status = getStatus();
+
+    // hydrate icons before app renders
+    hydrateIcons();
+    
     return {
         theme,
-        status
+        status,
     };
 }
 

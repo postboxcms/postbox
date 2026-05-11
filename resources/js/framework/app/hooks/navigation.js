@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { api } from "@app/utils/constants";
+import { api } from "@app/constants";
 
 export const useNavigation = () => {
     const history = useHistory();

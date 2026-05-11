@@ -9,8 +9,8 @@ import {
   CardActionArea,
   CardActions,
 } from '@mui/material';
-import Icon from '@ui/elements/Icon';
-import Title from '@ui/elements/Title';
+import Icon from '@ui/components/elements/Icon';
+import Title from '@ui/components/elements/Title';
 import { useConsumer } from '@website/hooks/consumer';
 import { Loader } from '@ui/components/Placeholder';
 
