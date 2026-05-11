@@ -45,11 +45,28 @@ function* putEntity(action) {
     if (status !== 'pending') return;
     yield call(postRequest, action.payload);
     const payload = Object.fromEntries(action.payload);
-    const data = yield call(getRequest, {
+    const updatedRecord = yield call(getRequest, {
       endpoint: `${generateEntityPath(payload.endpoint, payload.eid)}`,
       token: payload.token,
     });
-    yield put(setEntity(data));
+    
+    // Get current entity data and merge with updated record
+    const currentEntity = yield select((state) => state.entities.details);
+    if (currentEntity?.entity?.data) {
+      const updatedData = currentEntity.entity.data.map((record) => 
+        record.uuid?.value === payload.eid ? updatedRecord.entity.data[0] : record
+      );
+      yield put(setEntity({
+        ...currentEntity,
+        entity: {
+          ...currentEntity.entity,
+          data: updatedData
+        }
+      }));
+    } else {
+      yield put(setEntity(updatedRecord));
+    }
+    
     yield put(setNotification({ message: entity.successMessage, type: 'message' }));
   } catch (e) {
     console.error(e);
