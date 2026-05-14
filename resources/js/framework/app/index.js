@@ -7,7 +7,9 @@ import Engine from '@app/engine';
 
 const appRoot = document.getElementById('app');
 const webRoot = document.getElementById('web');
-const { theme } = setup();
+const { theme, hydrateIcons } = setup();
+
+hydrateIcons();
 
 if (appRoot) {
   const app = createRoot(appRoot);
