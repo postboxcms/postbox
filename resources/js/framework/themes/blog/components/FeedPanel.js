@@ -15,7 +15,7 @@ import { useConsumer } from '@website/hooks/consumer';
 import { Loader } from '@ui/components/Placeholder';
 
 export const FeedPanel = () => {
-  const { meta, isFetching, renderCollection, loadMore, scrollbarHidden } = useConsumer();
+  const { meta, isFetching, renderCollection, loadMore, scrollbarHidden, blocked } = useConsumer();
   const [ready, setReady] = React.useState(false);
   const feedIcon = meta?.icon || 'fa-rss';
 
@@ -93,8 +93,9 @@ export const FeedPanel = () => {
         color="primary" 
         onClick={loadMore}
         disabled={isFetching}
+        style={{borderRadius: '20px', fontSize: '11px'}}
       >
-        {isFetching ? 'Loading...' : 'View More'}
+        {isFetching ? 'Loading ...' : 'View More'}
       </Button>
     </div>
   );

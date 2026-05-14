@@ -101,7 +101,7 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
   }, [start, end, scroll, blocked, limit, fetchData]);
 
   return (
-    <ConsumerContext.Provider value={{ consumer, fetching, loadMore, scrollbarHidden }}>{children}</ConsumerContext.Provider>
+    <ConsumerContext.Provider value={{ consumer, fetching, loadMore, scrollbarHidden, blocked }}>{children}</ConsumerContext.Provider>
   );
 };
 
