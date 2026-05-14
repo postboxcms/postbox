@@ -9,7 +9,10 @@ import { store } from '@app/store';
 import { WebSSR } from '@app/web';
 
 export function render(url = '/') {
-  const { theme } = setup();
+  const { theme, hydrateIcons } = setup();
+
+  hydrateIcons();
+
   const html = renderToString(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>

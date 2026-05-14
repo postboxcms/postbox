@@ -5,7 +5,9 @@ import { setup } from '@app/init';
 import { Web, WebSSR } from '@app/web';
 
 const el = document.getElementById('web');
-const { theme } = setup();
+const { theme, hydrateIcons } = setup();
+
+hydrateIcons();
 
 if (el.hasChildNodes()) {
   hydrateRoot(
