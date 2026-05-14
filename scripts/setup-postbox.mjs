@@ -115,7 +115,7 @@ try {
 } catch {
   composerSpinner.fail('composer install failed. Ensure Composer is installed and on PATH.');
   console.log(
-    '\nPlease proceed with the next steps by installing php and node dependencies now.\n',
+    '\nPlease proceed with Desk installation. "php artisan desk:install"\n',
   );
   process.exit(1);
 }
