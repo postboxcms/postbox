@@ -4,9 +4,8 @@ PostboxCMS is a simple content management system to build beautiful blogs and we
 
 > Please note, if you are using Windows then you will need to enable and install WSL2 Subsystem for Linux. Once you install WSL2 enable the WSL2 terminal from VSCode. You will need PHP, composer, nodejs installed on WSL2 terminal before you begin with the installation process. Install Docker for desktop and enable WSL2 integration to manage the containers from your system. It's recommended to install git on Windows machine and the code to be cloned onto a directory in Linux.
 
-### Install dependencies
-* `composer install`
-* `npm install`
+### Setup PostboxCMS
+* `npm run setup:postbox`
 
 ### Install Desk
 * `php artisan desk:install`
