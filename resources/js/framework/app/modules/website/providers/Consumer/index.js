@@ -12,6 +12,7 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
   const [fetching, setFetching] = React.useState(false);
   const [blocked, setBlocked] = React.useState(false);
   const [consumer, setConsumer] = React.useState({});
+  const [scrollbarHidden, setScrollbarHidden] = React.useState(false);
   const generateParsedResponse = (response) => {
     const parsedConsumer = typeof consumer === 'string' ? JSON.parse(consumer) : {};
     let data = {};
@@ -53,6 +54,21 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
     [api, table, limit, blocked, consumer, fetching]
   );
 
+  // Manual load more function for when scrollbar is hidden
+  const loadMore = React.useCallback(() => {
+    if (blocked || fetching) return;
+    setFetching(true);
+    setStart(Number(end));
+    setEnd(Number(end) + Number(limit));
+    fetchData(Number(end));
+  }, [end, limit, blocked, fetching, fetchData]);
+
+  // Detect if scrollbar is hidden (content fits on screen)
+  const checkScrollbar = React.useCallback(() => {
+    const hasScrollbar = document.body.scrollHeight > window.innerHeight;
+    setScrollbarHidden(!hasScrollbar && !blocked);
+  }, [blocked]);
+
   // Initial load on mount
   React.useEffect(() => {
     if (!hasCalledRef.current && api) {
@@ -61,6 +77,15 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
       fetchData(offset || 0);
     }
   }, [table, api, offset, fetchData]);
+
+  // Check scrollbar status when data changes
+  React.useEffect(() => {
+    checkScrollbar();
+    // Also check on window resize
+    const handleResize = () => checkScrollbar();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [consumer, blocked, checkScrollbar]);
 
   useScrollEffect(() => {
     if (blocked) {
@@ -76,7 +101,7 @@ export const Consumer = ({ children, scroll, table, offset, limit }) => {
   }, [start, end, scroll, blocked, limit, fetchData]);
 
   return (
-    <ConsumerContext.Provider value={{ consumer, fetching }}>{children}</ConsumerContext.Provider>
+    <ConsumerContext.Provider value={{ consumer, fetching, loadMore, scrollbarHidden, blocked }}>{children}</ConsumerContext.Provider>
   );
 };
 

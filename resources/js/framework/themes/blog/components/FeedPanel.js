@@ -15,7 +15,7 @@ import { useConsumer } from '@website/hooks/consumer';
 import { Loader } from '@ui/components/Placeholder';
 
 export const FeedPanel = () => {
-  const { meta, isFetching, renderCollection } = useConsumer();
+  const { meta, isFetching, renderCollection, loadMore, scrollbarHidden, blocked } = useConsumer();
   const [ready, setReady] = React.useState(false);
   const feedIcon = meta?.icon || 'fa-rss';
 
@@ -86,6 +86,20 @@ export const FeedPanel = () => {
     </div>
   );
 
+  const ViewMoreButton = () => (
+    <div key="view-more" style={{ textAlign: 'center', padding: '16px', marginBottom: '16px' }}>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={loadMore}
+        disabled={isFetching}
+        style={{borderRadius: '20px', fontSize: '11px'}}
+      >
+        {isFetching ? 'Loading ...' : 'View More'}
+      </Button>
+    </div>
+  );
+
   React.useEffect(() => {
     if (!isFetching) {
       setReady(true);
@@ -119,7 +133,8 @@ export const FeedPanel = () => {
         ),
         () => <NoPosts />,
         () => <Placeholder />,
-        () => <LoadingIndicator />
+        () => <LoadingIndicator />,
+        () => <ViewMoreButton />
       )}
     </Grid>
   );

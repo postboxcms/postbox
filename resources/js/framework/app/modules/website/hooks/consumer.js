@@ -4,7 +4,7 @@ import { first } from 'lodash';
 
 export const useConsumer = () => {
   // logic to retrieve and manage attributes
-  const { consumer: consumerResponse, fetching } = useContext(ConsumerContext);
+  const { consumer: consumerResponse, fetching, loadMore, scrollbarHidden, blocked } = useContext(ConsumerContext);
   const data =
     typeof consumerResponse === 'string' ? JSON.parse(consumerResponse)?.data?.data : null;
   const meta =
@@ -17,6 +17,9 @@ export const useConsumer = () => {
         icon: first(meta)?.icon || 'fa-square',
       },
       data: [],
+      loadMore,
+      scrollbarHidden,
+      blocked,
     };
   }
 
@@ -24,8 +27,11 @@ export const useConsumer = () => {
     data: data && Object.keys(data).map((key) => data[key]),
     meta: { icon: first(meta)?.icon || 'fa-square' },
     isFetching: fetching,
+    loadMore,
+    scrollbarHidden,
+    blocked,
     renderCollection: useCallback(
-      (fn, renderFallback, renderPlaceholder, renderLoading) => {
+      (fn, renderFallback, renderPlaceholder, renderLoading, renderViewMore) => {
         // Show placeholder only on initial load (no data yet, but fetching)
         if (fetching && (!data || Object.keys(data).length === 0) && renderPlaceholder) {
           return renderPlaceholder();
@@ -35,6 +41,8 @@ export const useConsumer = () => {
           const posts = Object.keys(data).map((key) => fn(data[key], key));
           if (fetching && renderLoading) {
             posts.push(renderLoading());
+          } else if (scrollbarHidden && renderViewMore && !fetching && !blocked) {
+            posts.push(renderViewMore());
           }
           return posts;
         }
@@ -43,7 +51,7 @@ export const useConsumer = () => {
           return renderFallback();
         }
       },
-      [data, fetching]
+      [data, fetching, scrollbarHidden, blocked]
     ),
   };
 };
