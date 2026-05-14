@@ -9,7 +9,7 @@ import { useWebCSS } from '@app/hooks';
 import { getWebsiteStatus } from '@modules/settings/reducers/site';
 import { site } from '@app/constants';
 import Title from '@ui/components/elements/Title';
-import Consumer from '@website/components/Consumer';
+import Consumer from '@website/providers/Consumer';
 
 import { UserInfo, FeedPanel, MenuBar } from '@themes/blog/components';
 

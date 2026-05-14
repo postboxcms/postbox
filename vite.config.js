@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       laravel([
-        'resources/js/website/server.js',
+        'resources/js/framework/website/server.js',
         'resources/js/app.js',
         'resources/css/app.css',
         'resources/css/theme.css',
@@ -33,8 +33,8 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       rollupOptions: {
         input: {
-          client: 'resources/js/website/client.js',
-          server: 'resources/js/website/server.js',
+          client: 'resources/js/framework/website/client.js',
+          server: 'resources/js/framework/website/server.js',
         },
         output: {
           entryFileNames: '[name].js',
@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => {
     },
     esbuild: {
       loader: 'jsx',
-      include: /resources\/js\/.*\.js?$/,
+      include: /resources\/js\/framework\/.*\.js?$/,
       exclude: [],
     },
     resolve: {
@@ -57,8 +57,8 @@ export default defineConfig(({ mode }) => {
         '@modules': path.resolve(__dirname, 'resources/js/framework/app/modules'),
         '@providers': path.resolve(__dirname, 'resources/js/framework/app/providers'),
         '@ui': path.resolve(__dirname, 'resources/js/framework/app/modules/ui'),
-        '@website': path.resolve(__dirname, 'resources/js/framework/website'),
-        '@themes': path.resolve(__dirname, 'resources/js/themes'),
+        '@website': path.resolve(__dirname, 'resources/js/framework/app/modules/website'),
+        '@themes': path.resolve(__dirname, 'resources/js/framework/themes'),
         'redux-persist/integration/react': 'redux-persist/lib/integration/react.js',
       },
     },

@@ -1,5 +1,5 @@
 import { useCallback, useContext } from 'react';
-import ConsumerContext from '@website/context';
+import ConsumerContext from '@website/providers/Consumer/context';
 import { first } from 'lodash';
 
 export const useConsumer = () => {

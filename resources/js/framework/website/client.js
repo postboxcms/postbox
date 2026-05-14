@@ -1,30 +1,25 @@
-import * as React from 'react';
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { setup } from '@app/init';
-import { Web } from '@app/web';
-import Engine from '@app/engine';
+import { Web, WebSSR } from '@app/web';
 
-const appRoot = document.getElementById('app');
-const webRoot = document.getElementById('web');
+const el = document.getElementById('web');
 const { theme, hydrateIcons } = setup();
 
 hydrateIcons();
 
-if (appRoot) {
-  const app = createRoot(appRoot);
-  app.render(
+if (el.hasChildNodes()) {
+  hydrateRoot(
+    el,
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <Engine />
+        <WebSSR />
       </ThemeProvider>
     </StyledEngineProvider>
   );
-}
-
-if (webRoot) {
-  const web = createRoot(webRoot);
-  web.render(
+} else {
+  createRoot(el).render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Web />

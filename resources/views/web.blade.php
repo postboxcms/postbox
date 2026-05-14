@@ -8,7 +8,7 @@
 
     <title>{{ucfirst(env('APP_NAME','Postbox'))}}</title>
     @viteReactRefresh
-    @vite(['resources/js/website/client.js'])
+    @vite(['resources/js/framework/website/client.js'])
     <link href="{{asset('css/app.css')}}" rel="stylesheet" />
     <link href="{{asset('themes/' . $web['theme'] . '/css/theme.css')}}" rel="stylesheet" />
 </head>

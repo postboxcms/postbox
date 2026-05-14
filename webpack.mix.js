@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const getThemeConfigurations = () => {
   try {
-    const folderPath = './resources/js/themes/';
+    const folderPath = './resources/js/framework/themes/';
     const content = fs.readdirSync(folderPath);
     const folders = content.filter((folder) => {
       const fullPath = path.join(folderPath, folder);
@@ -56,8 +56,8 @@ mix.webpackConfig({
       '@modules': path.resolve(__dirname, 'resources/js/framework/app/modules'),
       '@providers': path.resolve(__dirname, 'resources/js/framework/app/providers'),
       '@ui': path.resolve(__dirname, 'resources/js/framework/app/modules/ui'),
-      '@website': path.resolve(__dirname, 'resources/js/framework/website'),
-      '@themes': path.resolve(__dirname, 'resources/js/themes'),
+      '@website': path.resolve(__dirname, 'resources/js/framework/app/modules/website'),
+      '@themes': path.resolve(__dirname, 'resources/js/framework/themes'),
     },
   },
   plugins: [
@@ -83,7 +83,7 @@ mix
 themes.forEach((theme) => {
   mix
     .sass(
-      `resources/js/themes/${theme.dbval}/assets/theme.scss`,
+      `resources/js/framework/themes/${theme.dbval}/assets/theme.scss`,
       `${themesPublicPath}/${theme.dbval}/css`,
       {
         sassOptions: {
