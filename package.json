@@ -19,7 +19,7 @@
     "watch:all": "npm run watch:client && npm run watch:server && npm run watch && npm start",
     "test": "jest",
     "start": "npm run build && node server",
-    "setup:postbox": "node scripts/setup-postbox.mjs"
+    "setup:cms": "node scripts/setup-postbox.mjs"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.3",
