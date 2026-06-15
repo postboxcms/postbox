@@ -59,7 +59,7 @@ function isPhp8OrNewer(versionString) {
   return !Number.isNaN(major) && major >= 8;
 }
 
-function isPhpVersionGreaterThan8_3(versionString) {
+function isPhpVersionGreaterThanExpected(versionString) {
   if (!versionString) return false;
   const parts = versionString.split('.');
   const major = Number.parseInt(parts[0], 10);
@@ -67,7 +67,7 @@ function isPhpVersionGreaterThan8_3(versionString) {
   
   if (Number.isNaN(major) || Number.isNaN(minor)) return false;
   
-  return major > 8 || (major === 8 && minor > 3);
+  return major > 8 || (major === 8 && minor > 5);
 }
 
 function getLoadedPhpExtensions() {
@@ -153,7 +153,7 @@ try {
     process.exit(1);
   }
 
-  if (isPhpVersionGreaterThan8_3(phpVersion)) {
+  if (isPhpVersionGreaterThanExpected(phpVersion)) {
     composerCheckSpinner.fail(`PHP ${phpVersion} is greater than 8.3. PostboxCMS requires PHP 8.3 or lower.`);
     process.exit(1);
   }
