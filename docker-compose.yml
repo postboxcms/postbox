@@ -1,7 +1,7 @@
 services:
     app:
         build:
-            context: ./vendor/postboxcms/desk/runtimes/php/8.3
+            context: ./vendor/postboxcms/desk/runtimes/php/8.5
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -22,8 +22,10 @@ services:
         networks:
             - desk
         depends_on:
-            - mysql
-            - redis
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_started
         deploy:
             resources:
                 limits:
@@ -51,7 +53,8 @@ services:
         networks:
             - desk
         depends_on:
-            - app
+            app:
+                condition: service_started
         deploy:
             resources:
                 limits:

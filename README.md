@@ -11,8 +11,7 @@ PostboxCMS is a simple content management system to build beautiful blogs and we
 ### Install Desk
 * `php artisan desk:install`
 
-(As a reference from the official documentation of Laravel Sail,if you wish to configure alias to allow Desk commands more easily, edit `~/.bashrc` and add the following snippet at the end of the file 
-`alias desk='sh $([ -f desk ] && echo desk || echo vendor/bin/desk)'`)
+>As a reference from the official documentation of Laravel Sail,if you wish to configure alias to allow Desk commands more easily, edit `~/.bashrc` and add the following snippet at the end of the file `alias desk='sh $([ -f desk ] && echo desk || echo vendor/bin/desk)'`
 
 ### Start the server
 * `desk up -d`
