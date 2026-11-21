@@ -18,11 +18,7 @@ class Model extends BaseModel
     }
 
     public function getTableColumns($table) {
-        return array_column($this->getConnection()->select(
-            (new \Illuminate\Database\Schema\Grammars\MySqlGrammar)->compileColumnListing()
-                .' order by ordinal_position',
-            [$this->getConnection()->getDatabaseName(), $table]
-        ),'column_name');
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($table);
     }
 
     public function getTableIcon($table) {
