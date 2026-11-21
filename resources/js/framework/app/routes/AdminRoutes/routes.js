@@ -6,7 +6,7 @@ import { api } from '@app/constants';
 export const routes = [
   {
     dashboard: {
-      path: api.adminPrefix + '/',
+      path: [api.adminPrefix, api.adminPrefix + '/'],
       title: '',
       icon: '',
       controller: Dashboard,
