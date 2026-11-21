@@ -1,23 +1,19 @@
 import React from "react";
-import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWebCSS } from "@ui/hooks/css";
 
 export const ClassicButton = (props) => {
     const classes = useWebCSS();
-    const { icon, color } = props;
+    const { icon, color, fullWidth, sx, className = "", children, ...buttonProps } = props;
 
     return (
-        <Button
-            size="medium"
-            className={classes.primaryButton}
-            {...props}
-            variant="contained"
-            color={color || "primary"}
-            startIcon={<FontAwesomeIcon size="lg" icon={icon} />}
+        <button
+            {...buttonProps}
+            className={`${classes.primaryButton} ${fullWidth ? "w-full" : ""} ${className}`}
         >
-            {props.children}
-        </Button>
+            {icon && <FontAwesomeIcon size="lg" icon={icon} />}
+            {children}
+        </button>
     );
 };
 

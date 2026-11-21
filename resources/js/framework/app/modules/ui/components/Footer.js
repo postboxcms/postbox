@@ -1,24 +1,19 @@
 import React from 'react';
-import {Typography, Link} from '@mui/material';
 import {useWebCSS} from '@ui/hooks/css';
 
 export const Footer = ({prefix, suffix, linkText, linkURL}) => {
     const classes = useWebCSS();
-    const Prefix = prefix;
-    const Suffix = suffix;
+    const Prefix = prefix || (() => null);
+    const Suffix = suffix || (() => null);
     
     return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {/* {'Powered by '} */}
+        <p className="text-center text-sm text-slate-500">
             <Prefix /> {" "}
-            <Link className={classes.footerLink} href={linkURL} underline="hover">
-                {/* {'Postbox'} */}
+            <a className={`${classes.footerLink} hover:underline`} href={linkURL}>
                 {linkText || 'Postbox'}
-            </Link>{" "}
-            {/* {' © '}
-            {new Date().getFullYear()} */}
+            </a>{" "}
             <Suffix />
-        </Typography>
+        </p>
     );
 }
 

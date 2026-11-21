@@ -1,310 +1,51 @@
-import makeStyles from '@mui/styles/makeStyles';
-import { green, grey } from '@mui/material/colors';
-import { lighten } from '@app/utils/colors';
+const appClasses = {
+  appBar: 'z-20 shadow-sm transition-all duration-300',
+  appBarShift: 'ml-[200px] w-[calc(100%-200px)]',
+  appToolbar: 'flex min-h-16 gap-2 pl-4 pr-3',
+  appToolbarShift: 'px-3',
+  toolbar: 'flex items-center',
+  menuButton: 'mr-2 text-slate-700 hover:bg-slate-100',
+  menuButtonHidden: 'hidden',
+  drawerPaper: 'relative z-30 min-h-screen w-[200px] shrink-0 whitespace-nowrap text-white transition-[width] duration-300',
+  drawerPaperClose: 'w-[60px] min-w-[60px] overflow-x-hidden',
+  paper: 'flex flex-col overflow-auto p-4',
+  fixedHeight: 'h-[200px]',
+  navbar: 'space-y-1 [&_a]:m-2 [&_a]:block [&_a]:rounded-md [&_a.submenu]:mt-0',
+};
 
-const drawerWidth = 200;
+const webClasses = {
+  panel: 'rounded-lg border border-slate-200 bg-white shadow-sm',
+  grid: 'h-[calc(100vh-175px)] w-full overflow-auto bg-white',
+  modal: 'absolute left-1/2 top-1/2 flex w-[min(400px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 flex-col rounded-md border border-slate-300 bg-white shadow-xl [&_h2]:mb-2 [&_h2]:w-full [&_h2]:border-b [&_h2]:px-3 [&_h2]:py-2',
+  cardText: 'flex-1',
+  cardIcons: 'text-4xl text-slate-300',
+  noRowsOverlay: 'text-slate-300',
+  body: 'pt-8',
+  avatar: 'bg-slate-500 text-white',
+  label: 'h-6 w-16 bg-green-500 px-1 text-xs font-medium text-white',
+  button: 'mr-2',
+  primaryButton: 'app-primary-button inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 font-semibold shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  header: 'mb-2 flex w-full flex-row items-center justify-between gap-3',
+  heading: 'mb-2',
+  headerIcon: 'mb-1 text-xl',
+  pageTitle: 'mb-0 text-2xl font-semibold text-slate-900',
+  iconClass: 'float-right [&_svg]:text-5xl',
+  breadcrumb: 'inline-flex items-center gap-2 rounded-full bg-[#281850] px-3 py-2 text-sm font-medium text-white',
+  icon: 'mr-1 inline-block h-5 w-5',
+  breadcrumbText: 'text-sm text-white no-underline hover:text-indigo-200',
+  coaster: 'border-l-4 app-primary-border',
+  draggable: 'border-2 border-dashed border-slate-300 p-2.5 [&_p]:m-0',
+  component: 'mt-2 flex gap-4',
+  leftPanel: 'flex-[7]',
+  rightPanel: 'flex-[3]',
+  tooltip: 'pt-2 text-sm',
+  footerLink: 'app-primary-text',
+  formInput: 'app-primary-focus mb-4 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:ring-2',
+  formOptions: 'flex items-center gap-2 [&_.label]:py-2',
+  radioSwitch: 'my-2 ml-4',
+  addEditWrapper: '[&_section]:border-0 [&_section]:p-8 [&_section]:text-center',
+};
 
-export const useAppCSS = makeStyles((theme) => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer - 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    // boxShadow: "none",
-    // marginBottom: "20px",
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  appToolbar: {
-    paddingRight: '10px',
-    paddingLeft: '66px',
-    '& .title': {
-      flexGrow: 1,
-    },
-  },
-  appToolbarShift: {
-    paddingLeft: '10px',
-    paddingRight: '10px',
-    '& .title': {
-      flexGrow: 1,
-    },
-  },
-  toolbar: {
-    // justifyContent: "center",
-  },
-  menuButton: {
-    marginRight: 18,
-    color: theme.palette.primary.dark,
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    backgroundColor: theme.palette.navigation.main,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: '60px',
-    minWidth: '60px',
-    [theme.breakpoints.up('sm')]: {
-      width: '60px',
-    },
-    '& ul a': {
-      margin: '10px 5px!important',
-    },
-    '& ul a > li': {
-      padding: '8px 15px!important',
-    },
-    '& ul > div > li': {
-      visibility: 'hidden',
-    },
-    '& ul a > li > div > span': {
-      visibility: 'hidden',
-    },
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 200,
-  },
-  navbar: {
-    '& a': {
-      display: 'block',
-      margin: '10px',
-      borderRadius: '5px',
-    },
-    '& a.active': {
-      backgroundColor: theme.palette.navigation.dark,
-    },
-    '& a.submenu': {
-      // marginLeft: '30px',
-      marginTop: '0',
-    },
-  },
-}));
+export const useAppCSS = () => appClasses;
 
-export const useWebCSS = makeStyles((theme) => ({
-  panel: {
-    boxShadow:
-      '0px 1px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
-  },
-  grid: {
-    height: 'calc(100vh - 175px)',
-    width: '100%',
-    backgroundColor: '#fff',
-  },
-  modal: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'left',
-    borderRadius: '5px',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    backgroundColor: '#fff',
-    border: '1px solid #aaa',
-
-    '& h2': {
-      width: '100%',
-      padding: '5px 10px',
-      marginBottom: '10px',
-      // borderBottom: "1px solid #ccc",
-      clear: 'both',
-    },
-
-    '& .MuiContainer-root': {
-      marginTop: '5px',
-    },
-  },
-  cardText: {
-    flex: 1,
-  },
-  cardIcons: {
-    fontSize: '2.5rem',
-    color: lighten(theme.palette.primary.main, 85),
-  },
-  noRowsOverlay: {
-    color: lighten(theme.palette.primary.main, 70),
-  },
-  body: {
-    paddingTop: theme.spacing(4),
-  },
-  avatar: {
-    color: '#fff',
-    backgroundColor: grey[500],
-  },
-  label: {
-    backgroundColor: green[500],
-    fontSize: theme.spacing(1.5),
-    fontWeight: 500,
-    paddingRight: theme.spacing(0.2),
-    paddingLeft: theme.spacing(0.2),
-    width: theme.spacing(8),
-    height: theme.spacing(3),
-  },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  primaryButton: {
-    fontWeight: 600,
-    boxShadow: 'none',
-    '&:hover': {
-      boxShadow: 'none',
-    },
-    '& .MuiButton-iconSizeMedium': {
-      '& svg': {
-        fontSize: '1rem',
-      },
-    },
-  },
-  header: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    '& button': {
-      alignSelf: 'right',
-    },
-  },
-  heading: {
-    marginBottom: '8px',
-  },
-  headerIcon: {
-    marginBottom: theme.spacing(0.6),
-    fontSize: theme.spacing(3.2),
-  },
-  pageTitle: {
-    float: 'left',
-    marginBottom: 0,
-    fontSize: theme.spacing(2.8),
-  },
-  iconClass: {
-    float: 'right',
-    '& .MuiSvgIcon-root': {
-      fontSize: 80,
-    },
-  },
-  breadcrumb: {
-    display: 'inline-block',
-    fontSize: theme.spacing(1.8),
-    fontWeight: theme.typography.fontWeight,
-    backgroundColor: theme.palette.primary.main,
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-    borderRadius: theme.spacing(5),
-    color: '#fff',
-    '& .MuiBreadcrumbs-separator': {
-      paddingBottom: '2px',
-    },
-    '& .MuiTypography-root': {
-      paddingBottom: '2px',
-      fontWeight: theme.typography.fontWeight,
-    },
-    '& .MuiTypography-root:hover': {
-      color: theme.palette.breadcrumb.hover,
-    },
-  },
-  icon: {
-    marginRight: theme.spacing(0.5),
-    marginBottom: theme.spacing(0.6),
-    width: 20,
-    height: 20,
-  },
-  breadcrumbText: {
-    textDecoration: 'none',
-    fontSize: theme.spacing(1.6),
-  },
-  coaster: {
-    borderLeft: 'solid 4px',
-    borderLeftColor: theme.palette.primary.main,
-  },
-  draggable: {
-    border: 'dashed 2px',
-    borderColor: theme.palette.element.border,
-    padding: '10px',
-    '& p': {
-      margin: 0,
-    },
-  },
-  component: {
-    display: 'flex',
-    gap: theme.spacing(2),
-    marginTop: theme.spacing(1),
-    '& .MuiCardContent-root': {
-      padding: 0,
-      '& h2': {
-        padding: theme.spacing(1, 2),
-        margin: 0,
-        borderBottom: `1px solid ${theme.palette.divider}`,
-      },
-    },
-  },
-  leftPanel: {
-    flex: 7,
-  },
-  rightPanel: {
-    flex: 3,
-  },
-  tooltip: {
-    paddingTop: theme.spacing(1),
-    fontSize: theme.spacing(1.6),
-  },
-  footerLink: {
-    color: theme.palette.primary.main,
-  },
-  formInput: {
-    width: '100%',
-    marginBottom: theme.spacing(2),
-    '& fieldset': {
-      border: 'none',
-    },
-  },
-  formOptions: {
-    display: 'flex',
-    '& .label': {
-      paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
-    },
-    '& .MuiCheckbox-root': {
-      width: 'fit-content',
-    },
-  },
-  radioSwitch: {
-    margin: theme.spacing(1, 0, 1, 2),
-  },
-  addEditWrapper: {
-    '& section': {
-      border: 'none',
-      textAlign: 'center',
-      padding: '2rem',
-    },
-  },
-}));
+export const useWebCSS = () => webClasses;

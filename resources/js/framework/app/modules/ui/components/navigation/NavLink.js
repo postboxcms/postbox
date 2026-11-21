@@ -1,13 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Tooltip } from "@mui/material";
-import { useWebCSS, useCurrentRoute } from "@app/hooks";
+import { useCurrentRoute } from "@app/hooks";
 import { getNavOpen } from "@modules/settings/reducers/platform";
 
 const NavLink = ({ children, to, hidden, submenu, title }) => {
     const isNavOpen = useSelector(getNavOpen);
-    const classes = useWebCSS();
     const { getCurrentRoute, getTargetRoute } = useCurrentRoute();
     const currentRoute = getCurrentRoute();
     const targetRoute = getTargetRoute(to);
@@ -16,22 +14,15 @@ const NavLink = ({ children, to, hidden, submenu, title }) => {
     const submenuClass = submenu ? "submenu" : "";
 
     return (
-        !hidden &&
-        (isNavOpen ? (
-            <Link className={`${activeClass} ${submenuClass}`} to={to}>
+        !hidden && (
+            <Link
+                className={`app-nav-link ${activeClass} ${submenuClass} block rounded-md ${isActive ? 'app-nav-active' : ''}`}
+                title={!isNavOpen ? title : undefined}
+                to={to}
+            >
                 {children}
             </Link>
-        ) : (
-            <Tooltip
-                title={<h5 className={classes.tooltip}>{title}</h5>}
-                placement="right"
-                arrow
-            >
-                <Link className={`${activeClass} ${submenuClass}`} to={to}>
-                    {children}
-                </Link>
-            </Tooltip>
-        ))
+        )
     );
 };
 

@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
+import { BrowserRouter } from 'react-router-dom';
 
 // store
-import { store, persistor } from '@app/store';
+import { store } from '@app/store';
 // core modules
 import DataProvider from '@providers/DataProvider';
 // layout - use SSR version by default for hydration compatibility
@@ -22,12 +21,12 @@ export const WebSSR = () => {
 /** React router to setup UI routes */
 export const Web = () => {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+    <BrowserRouter>
+      <Provider store={store}>
         <DataProvider>
           <WebsiteSSR />
         </DataProvider>
-      </PersistGate>
-    </Provider>
+      </Provider>
+    </BrowserRouter>
   );
 };

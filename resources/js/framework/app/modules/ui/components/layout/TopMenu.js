@@ -1,94 +1,64 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-// material components
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import Logout from '@mui/icons-material/Logout';
-import ListItemIcon from '@mui/material/ListItemIcon';
-// libs
+
 import { api } from '@app/constants';
 import { useNavigation, useAuth } from '@app/hooks';
 import { logoutUser } from '@modules/auth/reducers/user';
+import Icon from '@ui/components/elements/Icon';
 
 export const TopMenu = (props) => {
     const navigate = useNavigation();
     const { token } = useAuth();
     const dispatch = useDispatch();
-    const [anchor, setAnchor] = React.useState(null);
-    const [dropdown, setDropdown] = React.useState(false);
-    const switchDropdown = () => {
-        setDropdown(!Boolean(anchor))
-        setAnchor(null)
-        props.state(null);
-    }
+
     const processLogout = () => {
         dispatch(logoutUser(token));
+        props.state(false);
         navigate(api.loginUrl);
-    }
+    };
 
     React.useEffect(() => {
-        setDropdown(!Boolean(props.anchor));
-        if (dropdown) {
-            setAnchor(props.anchor)
-        }
-    }, [props.anchor]);
+        if (!props.anchor) return undefined;
+        const closeOnEscape = (event) => {
+            if (event.key === 'Escape') props.state(false);
+        };
+        window.addEventListener('keydown', closeOnEscape);
+        return () => window.removeEventListener('keydown', closeOnEscape);
+    }, [props.anchor, props.state]);
+
+    if (!props.anchor) return null;
 
     return (
-        <Menu
-            anchorEl={anchor}
-            id="account-menu"
-            open={Boolean(anchor)}
-            onClose={switchDropdown}
-            onClick={switchDropdown}
-            PaperProps={{
-                elevation: 0,
-                sx: {
-                    overflow: 'visible',
-                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                    mt: 1.5,
-                    '& .MuiAvatar-root': {
-                        width: 32,
-                        height: 32,
-                        ml: -0.5,
-                        mr: 1,
-                    },
-                    '&:before': {
-                        content: '""',
-                        display: 'block',
-                        position: 'absolute',
-                        top: 0,
-                        right: 14,
-                        width: 10,
-                        height: 10,
-                        bgcolor: 'background.paper',
-                        transform: 'translateY(-50%) rotate(45deg)',
-                        zIndex: 0,
-                    },
-                },
-            }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-            <MenuItem>
-                <Avatar /> Profile
-            </MenuItem>
-            <MenuItem>
-                <Avatar /> My account
-            </MenuItem>
-            <Divider />
-            <MenuItem>
-                <Link onClick={processLogout} className="menu-link MuiMenuItem-root">
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
-                    </ListItemIcon>
-                    <span>Logout</span>
+        <>
+            <button
+                type="button"
+                aria-label="Close account menu"
+                className="fixed inset-0 z-30 cursor-default"
+                onClick={() => props.state(false)}
+            />
+            <div id="account-menu" role="menu" className="absolute right-4 top-14 z-40 min-w-48 rounded-lg border border-slate-200 bg-white p-1 text-sm shadow-lg">
+                <button type="button" role="menuitem" className="flex w-full items-center gap-3 rounded px-3 py-2 text-left hover:bg-slate-50">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-200" aria-hidden="true" />
+                    Profile
+                </button>
+                <button type="button" role="menuitem" className="flex w-full items-center gap-3 rounded px-3 py-2 text-left hover:bg-slate-50">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-200" aria-hidden="true" />
+                    My account
+                </button>
+                <div className="my-1 border-t border-slate-200" />
+                <Link
+                    to={api.loginUrl}
+                    role="menuitem"
+                    onClick={processLogout}
+                    className="flex items-center gap-3 rounded px-3 py-2 text-slate-700 hover:bg-slate-50"
+                >
+                    <Icon name="fa-right-from-bracket" />
+                    Logout
                 </Link>
-            </MenuItem>
-        </Menu>
-    )
-}
+            </div>
+        </>
+    );
+};
 
 export default TopMenu;

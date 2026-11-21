@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box, CssBaseline } from '@mui/material';
 import { Body, Header, Footer } from './layout';
 
 const Blog = () => {
@@ -8,12 +7,11 @@ const Blog = () => {
   },[]);
   return (
     <div className="web-root">
-      <CssBaseline /> 
-      <Box>
+      <div>
         <Header />
         <Body />
         {/* <Footer /> */}
-      </Box>
+      </div>
     </div>
   );
 };

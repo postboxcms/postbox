@@ -1,28 +1,25 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-import HomeIcon from '@mui/icons-material/Home';
-import { useWebCSS } from '@ui/hooks/css';
+import { Link } from 'react-router-dom';
+import Icon from '@ui/components/elements/Icon';
 
 export default function Breadcrumb(props) {
-    const classes = useWebCSS();
-
     return (
-        <Breadcrumbs separator="/" aria-label="breadcrumb" className={classes.breadcrumb}>
+        <nav aria-label="breadcrumb" className="inline-flex max-w-full items-center gap-2 rounded-full bg-[#281850] px-3 py-2 text-sm font-medium text-white">
             <Link
-                color="inherit"
-                href="/"
-                className={classes.breadcrumbText}>
-                <HomeIcon className={classes.icon} />
+                to="/"
+                className="inline-flex items-center gap-2 text-white hover:text-violet-200">
+                <Icon icon="fa-house" />
                 Dashboard
             </Link>
             {props.title ? (
-                <Typography className={classes.breadcrumbText}>
+                <>
+                    <span aria-hidden="true">/</span>
+                    <span className="truncate">
                     {props.title}
-                </Typography>
+                    </span>
+                </>
             ) : ""
             }
-        </Breadcrumbs>
+        </nav>
     );
 }

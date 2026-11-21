@@ -1,6 +1,5 @@
 import React from 'react';
 import { first } from 'lodash';
-import { Avatar, Grid } from '@mui/material';
 import Panel from '@ui/components/Panel';
 import { useConsumer } from '@website/hooks/consumer';
 import { Footer as WebsiteFooter } from '@ui/components/Footer';
@@ -10,33 +9,15 @@ export const UserInfo = () => {
   const user = first(data);
 
   return (
-    <Grid item xs={12} sm={12} md={3} lg={3} xl={3} className="user-panel">
-      <Panel
-        style={{
-          padding: '16px',
-          height: '250px',
-          justifyContent: 'center',
-          position: 'sticky',
-          top: '66px',
-        }}
-      >
-        <Grid container justifyContent={'center'} flex={1} spacing={2}>
-          <Avatar className="avatar-icon">{user?.name.charAt(0)}</Avatar>
-        </Grid>
-        <Grid container justifyContent={'center'} flex={1} spacing={2}>
-          <h4 style={{ textAlign: 'center', width: '100%' }}>{user?.name}</h4>
-          <p>{user?.email}</p>
-        </Grid>
+    <div className="user-panel col-span-12 md:col-span-3">
+      <Panel className="sticky top-[66px] flex h-[250px] flex-col items-center justify-center">
+        <div className="avatar-icon flex h-16 w-16 items-center justify-center rounded-full bg-indigo-600 text-2xl font-semibold text-white">
+          {user?.name?.charAt(0)}
+        </div>
+        <h4 className="mt-3 w-full text-center font-semibold">{user?.name}</h4>
+        <p className="text-sm text-slate-500">{user?.email}</p>
       </Panel>
-      <Panel
-        style={{
-          padding: 0,
-          justifyContent: 'center',
-          margin: '0 auto',
-          position: 'sticky',
-          top: '330px',
-        }}
-      >
+      <Panel className="sticky top-[330px] mx-auto p-0">
         <WebsiteFooter
           prefix={() => <>Powered by</>}
           suffix={() => <>&copy; {new Date().getFullYear()}</>}
@@ -44,7 +25,7 @@ export const UserInfo = () => {
           linkURL="https://digitalbit.in"
         />
       </Panel>
-    </Grid>
+    </div>
   );
 };
 

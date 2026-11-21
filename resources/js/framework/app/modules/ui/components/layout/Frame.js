@@ -1,73 +1,82 @@
 import React from 'react';
-import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
+import moment from 'moment';
 import PropTypes from 'prop-types';
-
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppCSS, useWebCSS } from '@app/hooks';
 import {api} from '@app/constants';
 import Title from '@ui/components/elements/Title';
 import Icon from '../elements/Icon';
 
+const columnSpans = {
+    1: 'col-span-1',
+    2: 'col-span-2',
+    3: 'col-span-3',
+    4: 'col-span-4',
+    5: 'col-span-5',
+    6: 'col-span-6',
+    7: 'col-span-7',
+    8: 'col-span-8',
+    9: 'col-span-9',
+    10: 'col-span-10',
+    11: 'col-span-11',
+    12: 'col-span-12',
+};
+const responsiveSpans = Object.fromEntries(
+    Object.entries(columnSpans).map(([size, value]) => [size, value.replace('col-span', 'md:col-span')])
+);
+const largeSpans = Object.fromEntries(
+    Object.entries(columnSpans).map(([size, value]) => [size, value.replace('col-span', 'lg:col-span')])
+);
 
 export const Frame = (props) => {
     return (
-        <Grid container spacing={props.spacing} className={props.className}>
+        <div className={`grid grid-cols-12 ${props.spacing === 2 ? 'gap-2' : props.spacing === 6 ? 'gap-6' : 'gap-4'} ${props.className || ''}`}>
             {props.children}
-        </Grid>
+        </div>
     );
 }
 export const Card = (props) => {
     return (
-        <Grid item xs={props.xs} md={props.md} lg={props.lg} className={props.className}>
+        <div className={`${columnSpans[props.xs] || 'col-span-12'} ${props.md ? responsiveSpans[props.md] : ''} ${props.lg ? largeSpans[props.lg] : ''} ${props.className || ''}`}>
             {props.children}
-        </Grid>
+        </div>
     );
 }
 
 export const Body = (props) => {
     const classes = useAppCSS();
-    const paperClass = props.height == "fixed" ? (clsx(classes.paper, classes.fixedHeight)) + ' ' + props.className : classes.paper + ' ' + props.className;
+    const paperClass = `${classes.paper} ${props.height === "fixed" ? classes.fixedHeight : ''} ${props.className || ''}`;
     return (
-        <Paper elevation={3} className={paperClass}>
+        <section className={paperClass}>
             {props.children}
-        </Paper>
+        </section>
     )
 }
 
 export const DataCard = (props) => {
     const classes = useWebCSS();
     return (
-        <React.Fragment>
-            <Grid container>
-                <Grid item xs={10} md={9} lg={10}>
+        <div className="grid grid-cols-12 gap-3">
+                <div className="col-span-10 md:col-span-9 lg:col-span-10">
                     <Title variant="normal">{props.title}</Title>
-                    <Typography component="p" variant="h4">
+                    <p className="text-3xl font-semibold text-slate-900">
                         {props.records}
-                    </Typography>
-                    <Typography color="textSecondary" className={classes.cardText}>
+                    </p>
+                    <p className={`${classes.cardText} text-sm text-slate-500`}>
                         Last record added:
                         {props.updated_at !== null ? (
-                            <Moment fromNow>{props.updated_at}</Moment>
+                            moment(props.updated_at).fromNow()
                         ):''}
-                    </Typography>
-                    <Link color="primary" to={api.adminPrefix + '/' +props.slug + '/list'}>
+                    </p>
+                    <Link className="app-primary-text hover:underline" to={api.adminPrefix + '/' +props.slug + '/list'}>
                         View more
                     </Link>
-                </Grid>
-                <Grid item xs={2} md={3} lg={2}>
-                    <Typography align="right">
-                        {/* <FontAwesomeIcon icon={props.icon} size="xl" /> */}
-                        <Icon className={classes.cardIcons} name={props.icon} />
-                    </Typography>
-                </Grid>
-            </Grid>
-        </React.Fragment>
+                </div>
+                <div className="col-span-2 text-right md:col-span-3 lg:col-span-2">
+                    <Icon className={classes.cardIcons} name={props.icon} />
+                </div>
+        </div>
     );
 }
 

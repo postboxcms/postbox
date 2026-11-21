@@ -1,15 +1,14 @@
 import React from 'react';
-import Skeleton from '@mui/material/Skeleton';
 
 export const Loader = (props) => {
-    const { lines, height, width, variant } = props;
+    const { lines = 1, height = 20, width = '100%' } = props;
     return lines ? [...Array(lines)].map((e, i) => {
         return (
-            <div key={i} className='skeleton-loader' {...props}>
-                <Skeleton variant={variant} key={i} height={height} width={width} {...props} />
+            <div key={i} className='skeleton-loader' aria-hidden="true">
+                <div className="animate-pulse rounded bg-slate-200" style={{ height, width }} />
             </div>
         );
-    }) : <div className='skeleton-loader'><Skeleton key={0} height={height} width={width} {...props} /></div>;
+    }) : null;
 }
 const Placeholder = (props) => {
     const { map, check, repeat, children } = props;

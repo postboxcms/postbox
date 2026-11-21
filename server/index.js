@@ -23,7 +23,7 @@ app.get("/server", async (req, res) => {
         log("Received request for URL: " + req.query.url);
         const url = req.query.url || '/';
         log("Importing render function...");
-        const { render } = await import("../public/build/server/server.js");
+        const { render } = await import("../public/build/server/server.mjs");
         log("Render function imported");
         const { html } = render(url);
         log("SSR rendered for URL: " + url + " HTML length: " + html.length);

@@ -7,8 +7,8 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
 
     <title>Postbox</title>
-    <link href="{{asset('css/app.css')}}" rel="stylesheet" />
-    <link href="{{asset('css/theme.css')}}" rel="stylesheet" />
+    @viteReactRefresh
+    @vite(['resources/js/app.js', 'resources/sass/app.scss'])
 </head>
 
 <body>
@@ -23,7 +23,6 @@
         </div>
         {{-- React code UI rendered here --}}
     </div>
-    <script src="{{asset('js/app.js')}}"></script>
 </body>
 
 </html>

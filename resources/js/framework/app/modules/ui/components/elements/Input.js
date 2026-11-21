@@ -1,33 +1,42 @@
 import React from "react";
-import { MenuItem, Select, TextField } from "@mui/material";
 
 export const Input = (props) => {
-    const { type, options, inputProps } = props;
+    const {
+        type,
+        options = [],
+        inputProps,
+        className = "",
+        fullWidth = true,
+        label,
+        variant,
+        size,
+        ...inputPropsRest
+    } = props;
+    const { value, defaultValue, ...inputAttributes } = inputPropsRest;
+    const formValue = value !== undefined ? { value } : { defaultValue };
+    const classes = `app-primary-focus ${fullWidth ? "w-full" : "w-auto"} rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 ${className}`;
     switch (type) {
         case "text":
-            return <TextField size="small" variant="outlined" {...props} />;
+            return <input {...inputAttributes} {...formValue} className={classes} type="text" />;
         case "adornedText":
             return (
-                <TextField
-                    size="small"
-                    variant="outlined"
-                    InputProps={{
-                        startAdornment: inputProps?.startAdornment
-                    }}
-                    {...props}
-                />
+                <div className="app-primary-focus flex items-center rounded-md border border-slate-300 px-3 focus-within:ring-2">
+                    {inputProps?.startAdornment}
+                    <input {...inputAttributes} {...formValue} className="w-full border-0 bg-transparent px-2 py-2 text-sm outline-none" />
+                </div>
             );
         case "dropdown":
             return (
-                <TextField select variant="outlined" size="small" {...props}>
+                <select {...inputAttributes} value={value ?? defaultValue ?? ""} className={classes}>
                     {options.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                        <option key={option.value} value={option.value}>
                             {option.label}
-                        </MenuItem>
+                        </option>
                     ))}
-                </TextField>);
+                </select>
+            );
         default:
-            return <TextField size="small" variant="outlined" {...props} />;
+            return <input {...inputAttributes} {...formValue} className={classes} />;
     }
 }
 

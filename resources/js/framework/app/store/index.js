@@ -47,6 +47,13 @@ export const store = configureStore({
     middleware: [sagaMiddleware],
 });
 
-export const persistor = persistStore(store);
+export let persistor = null;
+
+export const startPersistence = () => {
+    if (!persistor) {
+        persistor = persistStore(store);
+    }
+    return persistor;
+};
 
 sagaMiddleware.run(rootSaga);

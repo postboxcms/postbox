@@ -1,9 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
-import { FormControlLabel } from '@mui/material';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -20,6 +17,7 @@ import Title from '@ui/components/elements/Title';
 import ClassicButton from '@ui/components/elements/ClassicButton';
 import NoRowsOverlay from '@ui/components/NoRowsOverlay';
 import Placeholder, { Loader } from '@ui/components/Placeholder';
+import { Table } from '@ui/components/DataTable';
 
 import { loadCRUD, getCRUD } from '@modules/crud/reducers/crud';
 
@@ -153,15 +151,10 @@ const List = (props) => {
                 ...column,
                 cellClassName: 'grid-image-column',
                 renderCell: (params) => (
-                  <>
-                    <FormControlLabel
-                      onChange={(event) => {
-                        updateCell(event, params);
-                      }}
-                      control={<IOSSwitch sx={{ m: 1 }} checked={Boolean(params?.value)} />}
-                      label=""
-                    />
-                  </>
+                  <IOSSwitch
+                    onChange={(event) => updateCell(event, params)}
+                    checked={Boolean(params?.value)}
+                  />
                 ),
               });
               columnData.splice(
@@ -212,38 +205,26 @@ const List = (props) => {
         <ClassicButton
           onClick={() => addContent()}
           icon="fa-plus"
-          sx={{ float: 'right', marginBottom: 1 }}
+          className="mb-2"
         >
           Add {title ? title : name}
         </ClassicButton>
       </div>
       <div className={classes.grid}>
-        <DataGrid
+        <Table
           rows={rows}
           columns={columns}
           pageSize={10}
           checkboxSelection
-          disableSelectionOnClick
-          sx={{
-            [`& .${gridClasses.cell}:focus-within`]: {
-              outline: 'none !important', // Removes the outline on focus
-            },
-            [`& .${gridClasses.columnHeader}:focus-within`]: {
-              outline: 'none !important', // Removes the outline on header focus
-            },
-          }}
-          components={{
-            NoRowsOverlay: function () {
-              return (
-                <>
-                  <Placeholder check={false}>
-                    <Loader height={50} lines={8} />
-                  </Placeholder>
-                  <NoRowsOverlay icon={Icon} message={noRowsMessage} />
-                </>
-              );
-            },
-          }}
+          onRowsChange={setRows}
+          emptyState={
+            <>
+              <Placeholder check={false}>
+                <Loader height={50} lines={4} />
+              </Placeholder>
+              <NoRowsOverlay icon={Icon} message={noRowsMessage} />
+            </>
+          }
         />
       </div>
     </React.Fragment>

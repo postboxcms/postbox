@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Checkbox, Radio, Select, TextField, MenuItem } from "@mui/material";
 import IOSSwitch from "@ui/components/elements/IOSSwitch";
 import ImageUploader from "@ui/components/ImageUploader";
 import { useWebCSS } from "@app/hooks";
@@ -31,61 +30,25 @@ export default function FormInput(props) {
     };
 
     const renderInput = () => {
+        const { options, ...selectProps } = inputProps || {};
+        const commonProps = {
+            name,
+            value: value ?? "",
+            onChange,
+            placeholder,
+            required,
+            className: `${classes.formInput} ${fullWidth ? 'w-full' : 'w-auto'}`,
+        };
         switch (type) {
             case "text":
-                return (
-                    <TextField
-                        name={name}
-                        variant="outlined"
-                        value={value}
-                        onChange={updateField}
-                        placeholder={placeholder}
-                        fullWidth={fullWidth}
-                        className={classes.formInput}
-                        required={required}
-                    />
-                );
+                return <input {...commonProps} onChange={updateField} type="text" />;
             case "number":
-                return (
-                    <TextField
-                        name={name}
-                        type="number"
-                        variant="outlined"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        fullWidth={fullWidth}
-                        className={classes.formInput}
-                        required={required}
-                    />
-                );
+                return <input {...commonProps} type="number" />;
             case "date":
-                return (
-                    <TextField
-                        name={name}
-                        type="date"
-                        variant="outlined"
-                        value={value}
-                        onChange={onChange}
-                        fullWidth={fullWidth}
-                        className={classes.formInput}
-                        required={required}
-                    />
-                );
+                return <input {...commonProps} type="date" />;
             case "textarea":
                 return (
-                    <TextField
-                        name={name}
-                        variant="outlined"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        fullWidth={fullWidth}
-                        multiline
-                        rows={rows}
-                        className={classes.formInput}
-                        required={required}
-                    />
+                    <textarea {...commonProps} rows={rows} />
                 );
             case "switch":
                 return (
@@ -103,54 +66,54 @@ export default function FormInput(props) {
             case "radio":
                 return (
                     <div className={classes.formOptions}>
-                        <Radio
+                        <input
+                            type="radio"
                             name={name}
                             checked={checked}
                             onChange={onChange}
-                            color="primary"
                             required={required}
-                            inputProps={inputProps}
+                            {...inputProps}
+                            className="app-primary-checkbox h-4 w-4"
                         />
                         <span className="label">{label}</span>
                     </div>
                 );
             case "dropdown":
                 return (
-                    <Select
+                    <select
                         name={name}
-                        value={value}
+                        value={value ?? ""}
                         onChange={onChange}
-                        fullWidth={fullWidth}
                         className={classes.formInput}
                         required={required}
-                        inputProps={inputProps}
-                        key={value} // Force re-mount when value changes
+                        {...selectProps}
                     >
-                        <MenuItem key={0} value={""}>
+                        <option value="">
                             Select {name}
-                        </MenuItem>
-                        {inputProps && inputProps.options
-                            ? inputProps.options.map((option) => (
-                                  <MenuItem
+                        </option>
+                        {options
+                            ? options.map((option) => (
+                                  <option
                                       key={option.value}
                                       value={option.value}
                                   >
                                       {option.label || option.value}
-                                  </MenuItem>
+                                  </option>
                               ))
                             : null}
-                    </Select>
+                    </select>
                 );
             case "checkbox":
                 return (
                     <div className={classes.formOptions}>
-                        <Checkbox
+                        <input
+                            type="checkbox"
                             name={name}
                             checked={checked}
                             onChange={onChange}
-                            color="primary"
                             required={required}
-                            inputProps={inputProps}
+                            {...inputProps}
+                            className="app-primary-checkbox h-4 w-4"
                         />{" "}
                         <span className="label">{label}</span>
                     </div>
@@ -166,16 +129,7 @@ export default function FormInput(props) {
                 );
             default:
                 return (
-                    <TextField
-                        name={name}
-                        variant="outlined"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        fullWidth={fullWidth}
-                        className={classes.formInput}
-                        required={required}
-                    />
+                    <input {...commonProps} type="text" />
                 );
         }
     };

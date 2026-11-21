@@ -9,15 +9,9 @@ body {
     header {
       box-shadow: none !important;
       margin-bottom: 20px !important;
-      position: fixed;
-
-      div.MuiToolbar-root {
-        min-height: 48px;
-      }
-    }
-    div.MuiGrid-root {
-      padding-top: 0;
-      margin-top: 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
     .toolbar {
       padding-left: 120px !important;
@@ -57,9 +51,6 @@ body {
     .menu-panel {
       position: relative;
       top: 66px;
-      .MuiCardContent-root {
-        padding: 0 !important;
-      }
     }
     .feed-panel {
       position: relative;

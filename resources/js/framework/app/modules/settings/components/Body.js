@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Typography } from '@mui/material';
 
 import { useWebCSS, useAuth } from '@app/hooks';
 import {
@@ -20,6 +19,7 @@ import SaveButton from '@ui/components/elements/SaveButton';
 import ImageUploader from '@ui/components/ImageUploader';
 import Panel from '@ui/components/Panel';
 import Form from '@ui/components/Form';
+import Grid from '@ui/components/elements/Grid';
 
 const Body = (props) => {
   const [title, setTitle] = React.useState('');
@@ -105,9 +105,9 @@ const Body = (props) => {
           <Grid container spacing={2} maxWidth="600px">
             {/* Column for labels */}
             <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-              <Typography variant="body1" align="right">
+              <p className="text-right">
                 Website Name
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Input
@@ -119,9 +119,9 @@ const Body = (props) => {
               />
             </Grid>
             <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-              <Typography variant="body1" align="right">
+              <p className="text-right">
                 Website Title
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Input
@@ -133,9 +133,9 @@ const Body = (props) => {
             </Grid>
 
             <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-              <Typography variant="body1" align="right">
+              <p className="text-right">
                 Website Live?
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={12} sm={6}>
               <IOSSwitch
@@ -145,9 +145,9 @@ const Body = (props) => {
             </Grid>
 
             <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-              <Typography variant="body1" align="right">
+              <p className="text-right">
                 Website theme
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Input
@@ -164,9 +164,9 @@ const Body = (props) => {
             </Grid>
 
             <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="center">
-              <Typography variant="body1" align="right">
+              <p className="text-right">
                 Website logo
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={12} sm={6}>
               <ImageUploader

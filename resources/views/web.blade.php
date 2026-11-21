@@ -8,15 +8,15 @@
 
     <title>{{ucfirst(env('APP_NAME','Postbox'))}}</title>
     @viteReactRefresh
-    @vite(['resources/js/framework/website/client.js'])
-    <link href="{{asset('css/app.css')}}" rel="stylesheet" />
-    <link href="{{asset('themes/' . $web['theme'] . '/css/theme.css')}}" rel="stylesheet" />
+    @vite([
+        'resources/js/framework/website/client.js',
+        'resources/sass/app.scss',
+        'resources/js/framework/themes/' . $web['theme'] . '/assets/theme.scss',
+    ])
 </head>
 
 <body>
-    <div id="web">
-        {!! $html !!}
-    </div>
+    <div id="web">{!! $html !!}</div>
 </body>
 
 </html>

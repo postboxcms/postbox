@@ -1,15 +1,12 @@
 import React from "react";
-import { Card, CardContent } from "@mui/material";
 
 const Panel = (props) => {
-    const { children, width } = props;
+    const { children, width, className = "", style, ...panelProps } = props;
     
     return (
-        <Card {...props} sx={{ width: width || '100%', marginBottom: 2 }}>
-            <CardContent>
-                {children}
-            </CardContent>
-        </Card>
+        <section {...panelProps} style={{ width: width || '100%', ...style }} className={`mb-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm ${className}`}>
+            {children}
+        </section>
     );
 }
 

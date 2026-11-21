@@ -1,20 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Container, CssBaseline, Grid } from '@mui/material';
-import Panel from '@ui/components/Panel';
 import Icon from '@ui/components/elements/Icon';
-import { useWebCSS } from '@app/hooks';
+import Title from '@ui/components/elements/Title';
 
 import { getWebsiteStatus } from '@modules/settings/reducers/site';
 import { site } from '@app/constants';
-import Title from '@ui/components/elements/Title';
 import Consumer from '@website/providers/Consumer';
 
 import { UserInfo, FeedPanel, MenuBar } from '@themes/blog/components';
 
-const BodyContent = ({ message, classes }) => (
-  <Grid container spacing={2} className={classes.body}>
+const BodyContent = () => (
+  <div className="grid grid-cols-12 gap-4 py-8">
     <Consumer table="pages">
       <MenuBar />
     </Consumer>
@@ -24,56 +21,25 @@ const BodyContent = ({ message, classes }) => (
     <Consumer table="users">
       <UserInfo />
     </Consumer>
-  </Grid>
+  </div>
 );
 
 const ComingSoonContent = () => (
-  <Grid container style={{ marginTop: '66px' }} justifyContent={'center'} flex={1} spacing={2}>
-    <Grid
-      alignItems={'center'}
-      textAlign={'center'}
-      justifyContent={'center'}
-      item
-      xs={12}
-      sm={12}
-      md={12}
-      lg={12}
-      xl={12}
-    >
-      <Icon name="fa-dolly" color="#ccc" style={{ fontSize: '240px' }} />
-    </Grid>
-    <Grid
-      alignItems={'center'}
-      textAlign={'center'}
-      justifyContent={'center'}
-      item
-      xs={12}
-      sm={12}
-      md={12}
-      lg={12}
-      xl={12}
-    >
-      <Title sx={{ marginTop: '10px' }} variant="normal">
-        {site.comingSoonMessage}
-      </Title>
-    </Grid>
-  </Grid>
+  <div className="mt-16 flex flex-col items-center justify-center gap-4 text-center">
+    <Icon name="fa-dolly" color="#ccc" style={{ fontSize: '240px' }} />
+    <Title variant="normal">{site.comingSoonMessage}</Title>
+  </div>
 );
 
 export const Body = () => {
   const websiteStatus = useSelector(getWebsiteStatus);
   const systemStatus = useSelector((state) => state.site.status);
-  const classes = useWebCSS();
+  const isWebsiteUnavailable = systemStatus === 'fulfilled' && !websiteStatus;
 
   return (
-    <Container maxWidth="lg" style={{ justifyContent: 'center', display: 'flex' }}>
-      {/* shift the above code to Theme and render the theme as a module through Website layout */}
-      {websiteStatus || systemStatus === 'idle' ? (
-        <BodyContent message={systemStatus === 'idle' ? site.loadingMessage : site.themeMessage} classes={classes} />
-      ) : (
-        <ComingSoonContent />
-      )}
-    </Container>
+    <main className="mx-auto w-full max-w-screen-xl px-4">
+      {isWebsiteUnavailable ? <ComingSoonContent /> : <BodyContent />}
+    </main>
   );
 };
 

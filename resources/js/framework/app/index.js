@@ -1,34 +1,23 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { setup } from '@app/init';
+import { startPersistence } from '@app/store';
 import { Web } from '@app/web';
 import Engine from '@app/engine';
 
 const appRoot = document.getElementById('app');
 const webRoot = document.getElementById('web');
-const { theme, hydrateIcons } = setup();
+const { hydrateIcons } = setup();
 
 hydrateIcons();
 
 if (appRoot) {
+  startPersistence();
   const app = createRoot(appRoot);
-  app.render(
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <Engine />
-      </ThemeProvider>
-    </StyledEngineProvider>
-  );
+  app.render(<Engine />);
 }
 
 if (webRoot) {
   const web = createRoot(webRoot);
-  web.render(
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <Web />
-      </ThemeProvider>
-    </StyledEngineProvider>
-  );
+  web.render(<Web />);
 }

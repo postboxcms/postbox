@@ -1,8 +1,6 @@
 import React from 'react';
 import { first } from 'lodash';
 
-import { MenuItem, Select, FormControl, FormControlLabel } from '@mui/material';
-
 import { useWebCSS, useModal } from '@app/hooks';
 import { useNotifier, useSecureRoute, useCMSRoute } from '@app/hooks';
 
@@ -114,22 +112,21 @@ const Body = (props) => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <>
-            <FormControl className="dropdown data-dropdown" sx={{ m: 1, minWidth: 120 }}>
-              <Select
+          <div className="min-w-32">
+              <select
                 defaultValue={'hidden'}
                 name="type"
                 value={params.value ? params.value : 'hidden'}
                 onChange={(event) => updateCell(event, params)}
+                className="w-full rounded border border-slate-300 bg-white px-2 py-1 text-sm"
               >
                 {fieldTypes.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
+                  <option key={option.value} value={option.value}>
                     {option.label}
-                  </MenuItem>
+                  </option>
                 ))}
-              </Select>
-            </FormControl>
-          </>
+              </select>
+          </div>
         );
       },
     },
@@ -141,15 +138,10 @@ const Body = (props) => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <>
-            <FormControlLabel
-              onChange={(event) => updateCell(event, params)}
-              control={
-                <IOSSwitch sx={{ m: 1 }} checked={params.value ? Boolean(params.value) : false} />
-              }
-              label=""
-            />
-          </>
+          <IOSSwitch
+            onChange={(event) => updateCell(event, params)}
+            checked={params.value ? Boolean(params.value) : false}
+          />
         );
       },
     },
@@ -161,24 +153,14 @@ const Body = (props) => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <>
-            <FormControlLabel
-              onChange={(event) => updateCell(event, params)}
-              control={
-                <IOSSwitch
-                  sx={{ m: 1 }}
-                  disabled={
-                    guardedFields.includes(params?.row?.field) ||
-                    guardedTypes.includes(params?.row?.type)
-                      ? true
-                      : false
-                  }
-                  checked={params.value ? Boolean(params.value) : false}
-                />
-              }
-              label=""
-            />
-          </>
+          <IOSSwitch
+            onChange={(event) => updateCell(event, params)}
+            disabled={
+              guardedFields.includes(params?.row?.field) ||
+              guardedTypes.includes(params?.row?.type)
+            }
+            checked={params.value ? Boolean(params.value) : false}
+          />
         );
       },
     },
@@ -190,26 +172,16 @@ const Body = (props) => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <>
-            <FormControlLabel
-              name="url"
-              onChange={(event) => updateCell(event, params)}
-              control={
-                <IOSSwitch
-                  sx={{ m: 1 }}
-                  disabled={
-                    guardedFields.includes(params?.row?.field) ||
-                    guardedTypes.includes(params?.row?.type) || 
-                    !inputFields.includes(params?.row?.type)
-                      ? true
-                      : false
-                  }
-                  checked={params.value ? Boolean(params.value) : false}
-                />
-              }
-              label=""
-            />
-          </>
+          <IOSSwitch
+            name="url"
+            onChange={(event) => updateCell(event, params)}
+            disabled={
+              guardedFields.includes(params?.row?.field) ||
+              guardedTypes.includes(params?.row?.type) ||
+              !inputFields.includes(params?.row?.type)
+            }
+            checked={params.value ? Boolean(params.value) : false}
+          />
         );
       },
     },
@@ -220,9 +192,8 @@ const Body = (props) => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <>
-            <FormControl className="dropdown data-dropdown" sx={{ m: 1, minWidth: 120 }}>
-              <Select
+          <div className="min-w-32">
+              <select
                 onChange={(event) => updateCell(event, params)}
                 defaultValue={'none'}
                 disabled={
@@ -232,15 +203,15 @@ const Body = (props) => {
                     : false
                 }
                 value={params.value ? params.value : 'none'}
+                className="w-full rounded border border-slate-300 bg-white px-2 py-1 text-sm"
               >
                 {editPagePositions.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
+                  <option key={option.value} value={option.value}>
                     {option.label}
-                  </MenuItem>
+                  </option>
                 ))}
-              </Select>
-            </FormControl>
-          </>
+              </select>
+          </div>
         );
       },
     },
@@ -251,14 +222,7 @@ const Body = (props) => {
       flex: 1,
       renderCell: (params) => {
         return (
-          <FormControl
-            sx={{
-              m: 1,
-              maxWidth: 50,
-              display: 'flex',
-              flexDirection: 'row',
-            }}
-          >
+          <div className="flex items-center gap-1">
             <IconButton
               disabled={
                 guardedFields.includes(params?.row?.field) ||
@@ -314,7 +278,7 @@ const Body = (props) => {
                 );
               }}
             />
-          </FormControl>
+          </div>
         );
       },
     },
@@ -404,7 +368,7 @@ const Body = (props) => {
     <React.Fragment>
       <div className={classes.header}>
         <Title icon={pageIcon}>{props['title'] ? props['title'] : props['name']}</Title>
-        <FormControl className="controls" sx={{ m: 1, minWidth: 80 }}>
+        <div className="controls">
           <ClassicButton
             type="button"
             onClick={() => {
@@ -428,23 +392,24 @@ const Body = (props) => {
           >
             New field
           </ClassicButton>
-          <Select
+          <select
             onChange={(e) =>
               e.target.value ? setEndpoint('/crud/' + e.target.value) : setEndpoint('')
             }
             defaultValue=""
             displayEmpty
+            className="rounded border border-slate-300 bg-white px-3 py-2 text-sm"
           >
-            <MenuItem value="">Entity</MenuItem>
+            <option value="">Entity</option>
             {props['entities']
               ? props['entities'].map((entity, i) => (
-                  <MenuItem key={entity.id} value={entity.slug}>
+                  <option key={entity.id} value={entity.slug}>
                     {entity.name}
-                  </MenuItem>
+                  </option>
                 ))
               : ''}
-          </Select>
-        </FormControl>
+          </select>
+        </div>
       </div>
       <div className={classes.grid}>
         <DataTable

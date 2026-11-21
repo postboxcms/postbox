@@ -13,7 +13,8 @@ import Panel from '@ui/components/Panel';
 import Form from '@ui/components/Form';
 import FormInput from '@ui/components/elements/FormInput';
 import Title from '@ui/components/elements/Title';
-import BoxEditor from '@ui/components/elements/BoxEditor';
+
+const BoxEditor = React.lazy(() => import('@ui/components/elements/BoxEditor'));
 
 export const AddEditContent = ({ query, type }) => {
   const classes = useWebCSS();
@@ -197,28 +198,30 @@ export const AddEditContent = ({ query, type }) => {
         );
       case 'editor':
         return (
-          <BoxEditor
-            name={field.field}
-            value={generateFieldValue(field.field)}
-            // onChange={updateEntityData}
-            onEditorChange={(content) => {
-              console.log('Editor content:', content);
-              if (query == 'add') {
-                setEditorContent({
-                  ...editorContent,
-                  [field.field]: content,
-                });
-              }
-              if (query == 'edit') {
-                updateEntityData({
-                  target: {
-                    name: field.field,
-                    value: content,
-                  },
-                });
-              }
-            }}
-          />
+          <React.Suspense fallback={<div className="p-3 text-sm text-slate-500">Loading editor...</div>}>
+            <BoxEditor
+              name={field.field}
+              value={generateFieldValue(field.field)}
+              // onChange={updateEntityData}
+              onEditorChange={(content) => {
+                console.log('Editor content:', content);
+                if (query == 'add') {
+                  setEditorContent({
+                    ...editorContent,
+                    [field.field]: content,
+                  });
+                }
+                if (query == 'edit') {
+                  updateEntityData({
+                    target: {
+                      name: field.field,
+                      value: content,
+                    },
+                  });
+                }
+              }}
+            />
+          </React.Suspense>
         );
       case 'textarea':
         return (

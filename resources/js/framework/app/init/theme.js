@@ -1,4 +1,3 @@
-import { createTheme } from "@mui/material/styles";
 import { darken, lighten } from "@app/utils/colors";
 import themeConfig from "@resources/config/theme.json";
 
@@ -6,28 +5,31 @@ const frameworkColor = themeConfig.css.frameworkColor;
 const brandColor = themeConfig.css.brandColor;
 const adminNavbarColor = themeConfig.css.adminNavbarColor;
 
-export const admin = createTheme({
+const typography = {
+    fontFamily: [
+        "Inter",
+        "-apple-system",
+        "Ubuntu",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+    ].join(","),
+    fontSize: 13,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+};
+
+export const admin = {
     typography: {
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            "Inter",
-            "-apple-system",
-            "Ubuntu",
-            "BlinkMacSystemFont",
-            '"Segoe UI"',
-            "Roboto",
-            '"Helvetica Neue"',
-            "Arial",
-            "sans-serif",
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(","),
-        fontSize: 13,
-        fontWeightLight: 300,
-        fontWeightRegular: 400,
-        fontWeightMedium: 500,
-        fontWeightBold: 700,
+        ...typography,
     },
     palette: {
         mode: "light",
@@ -52,25 +54,11 @@ export const admin = createTheme({
             border: "#ccc",
         },
     },
-});
+};
 
-export const website = createTheme({
+export const website = {
     typography: {
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            "Inter",
-            "-apple-system",
-            "Ubuntu",
-            "BlinkMacSystemFont",
-            '"Segoe UI"',
-            "Roboto",
-            '"Helvetica Neue"',
-            "Arial",
-            "sans-serif",
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(","),
+        ...typography,
         // fontSize: 13,
         // fontWeightLight: 300,
         // fontWeightRegular: 400,
@@ -99,4 +87,4 @@ export const website = createTheme({
             border: "#ccc",
         },
     },
-});
+};

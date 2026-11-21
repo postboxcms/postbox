@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { forEach, get } from "lodash";
-import { Grid } from "@mui/material";
 import { useNotifier, useCMSRoute, useSecureRoute, useAuth } from "@app/hooks";
 import { storeCRUD } from "@modules/crud/reducers/crud";
 import Form from "@ui/components/Form";
@@ -10,6 +9,7 @@ import SaveButton from "@ui/components/elements/SaveButton";
 import ClassicButton from "@ui/components/elements/ClassicButton";
 import Input from "@ui/components/elements/Input";
 import { fetchEntries, pushToObject } from "@app/utils";
+import Grid from "@ui/components/elements/Grid";
 
 export const AddEditField = (props) => {
     const { row, typeList, table, positionList, onClose, mode } = props;

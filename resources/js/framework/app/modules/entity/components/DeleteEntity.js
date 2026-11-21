@@ -1,8 +1,8 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
 import { useNotifier, useSecureRoute } from "@app/hooks";
 import Form from "@ui/components/Form";
 import DeleteButton from "@ui/components/elements/DeleteButton";
+import Grid from "@ui/components/elements/Grid";
 
 export const DeleteEntity = (props) => {
     const notify = useNotifier();
@@ -32,9 +32,9 @@ export const DeleteEntity = (props) => {
         <Form onSubmit={deleteEntity}>
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item xs={12} sm={12}>
-                    <Typography variant="h6" gutterBottom>
+                    <p className="mb-2 text-lg font-semibold text-slate-800">
                         Are you sure you want to delete this record?
-                    </Typography>
+                    </p>
                 </Grid>
             </Grid>
 

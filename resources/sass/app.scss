@@ -1,10 +1,11 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Inter');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import 'variables';
 
+@tailwind base;
+
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
 @import '../../resources/config/colors';
 
 $navbar-dark-color: lighten($framework-color, 50);
@@ -19,12 +20,19 @@ $scrollbar-color: $element-border-color;
 $scrollbar-color-hover: #aaa;
 $transparent: transparent;
 
+:root {
+  --framework-color: #{$framework-color};
+  --framework-color-dark: #{$framework-color-dark};
+  --framework-color-watermark: #{$framework-color-watermark};
+  --navbar-color: #{$framework-color};
+  --navbar-active-color: #{$framework-color-dark};
+}
+
 html {
   font-size: $element-font-size;
 }
 body {
-  font-family: 'Inter', 'Open Sans', 'Segoe UI', '-apple-system', 'Ubuntu', Tahoma, Geneva, Verdana,
-    sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 300;
   color: $font-color;
@@ -85,7 +93,7 @@ input[type='text'] {
 
 .navbar-dark {
   color: $navbar-dark-color;
-  // background-color: $navbar-dark-bg-color  !important;
+  background-color: var(--navbar-color) !important;
 
   a {
     color: $navbar-dark-color !important;
@@ -117,30 +125,70 @@ input[type='text'] {
   }
 }
 
+.app-primary-button {
+  background-color: var(--framework-color);
+  color: #fff;
+}
+.app-primary-button:hover {
+  background-color: var(--framework-color-dark);
+}
+.app-primary-text {
+  color: var(--framework-color) !important;
+}
+.app-primary-border {
+  border-color: var(--framework-color);
+}
+.app-primary-focus:focus {
+  border-color: var(--framework-color);
+  --tw-ring-color: color-mix(in srgb, var(--framework-color) 20%, transparent);
+}
+.app-primary-checkbox {
+  accent-color: var(--framework-color);
+}
+.app-primary-avatar {
+  background-color: var(--framework-color);
+}
+input.peer:checked + .app-primary-switch {
+  background-color: var(--framework-color);
+}
+.app-nav-link {
+  color: $navbar-dark-color !important;
+}
+.app-nav-active {
+  background-color: var(--navbar-active-color) !important;
+}
+.app-nav-item:hover {
+  background-color: rgb(255 255 255 / 12%);
+}
+.app-sidebar-label {
+  color: $navbar-dark-color;
+}
+
+#toast-container > .toast {
+  color: #fff !important;
+  opacity: 1;
+}
+#toast-container > .toast-success {
+  background-color: #51a351 !important;
+}
+#toast-container > .toast-error {
+  background-color: #bd362f !important;
+}
+#toast-container > .toast-info {
+  background-color: #2f96b4 !important;
+}
+#toast-container > .toast-warning {
+  background-color: #f89406 !important;
+}
+
 .table-header-light {
   text-transform: uppercase;
   color: $black;
 }
 
-.MuiDataGrid-cell {
-  .MuiSwitch-root {
-    margin: 0 50%;
-  }
-}
-
-.MuiTooltip-tooltip {
-  background-color: $gray-700;
-  .MuiTooltip-arrow {
-    color: $gray-700;
-  }
-}
-
 .auth-screen {
   a {
     text-decoration: none;
-  }
-  .MuiInputBase-root {
-    margin-bottom: 10px;
   }
 }
 
@@ -739,13 +787,10 @@ input[type='text'] {
       min-height: 64px;
     }
 
-    .container {
-      padding: 8px;
-    }
-
     .content {
       flex-grow: 1;
-      height: 100vh;
+      min-height: 0;
+      height: auto;
       overflow: auto;
     }
 
@@ -769,7 +814,7 @@ input[type='text'] {
         padding: 8px 15px;
         line-height: 20px;
       }
-      div.MuiSelect-select {
+      select {
         background-color: $white;
         padding: 8px 35px 8px 25px;
         line-height: 20px;
@@ -785,7 +830,7 @@ input[type='text'] {
         width: 0;
       }
 
-      div.MuiSelect-select {
+      select {
         background-color: $white;
         padding: 8px 35px 8px 25px;
         line-height: 20px;
@@ -818,8 +863,7 @@ input[type='text'] {
 
     .skeleton-loader {
       padding: 0 10px;
-      .MuiSkeleton-root {
-        // border-radius: 10px;
+      .animate-pulse {
         margin-bottom: 5px;
       }
     }
@@ -839,11 +883,11 @@ input[type='text'] {
       box-shadow: none;
     }
 
-    p.MuiTablePagination-displayedRows {
+    p.table-pagination {
       margin-bottom: 0;
     }
 
-    header.MuiPaper-root {
+    header.app-header {
       box-shadow: 1px 0 4px $element-border-color;
       background-color: $white;
     }
@@ -868,3 +912,6 @@ input[type='text'] {
     max-width: 100%;
   }
 }
+
+@tailwind components;
+@tailwind utilities;

@@ -2,17 +2,6 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "lodash";
 
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-
-import { admin } from "@app/init/theme";
 import { useNotifier, useNavigation, useAuth } from "@app/hooks";
 import { platform } from "@app/constants";
 
@@ -54,126 +43,65 @@ export const Auth = () => {
         if (user && token) {
             navigate("/");
         }
-    },[user,token]);
+    }, [user, token]);
 
     return (
-        <ThemeProvider theme={admin}>
-            <Grid container component="main" sx={{ height: "100vh" }}>
-                <CssBaseline />
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage:
-                            "url(https://picsum.photos/seed/" +
-                            randomWord +
-                            "/1920/1080)",
-                        backgroundRepeat: "no-repeat",
-                        backgroundColor: (t) =>
-                            t.palette.mode === "light"
-                                ? t.palette.grey[50]
-                                : t.palette.grey[900],
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                    }}
-                />
-                <Grid
-                    className="auth-screen"
-                    item
-                    xs={12}
-                    sm={8}
-                    md={5}
-                    component={Paper}
-                    elevation={6}
-                    square
-                >
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                        }}
-                    >
-                        {/* <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-                            <LockOutlinedIcon />
-                        </Avatar> */}
-                        <Logo width="80" style={{ marginBottom: 10 }} />
-                        <Typography component="h1" variant="h5">
-                            Sign in
-                        </Typography>
-                        <Box
-                            component="form"
-                            noValidate
-                            onSubmit={doLogin}
-                            sx={{ mt: 1 }}
+        <main className="flex min-h-screen bg-slate-50">
+            <div
+                aria-hidden="true"
+                className="hidden flex-1 bg-cover bg-center sm:block"
+                style={{
+                    backgroundImage: `url(https://picsum.photos/seed/${randomWord}/1920/1080)`,
+                }}
+            />
+            <section className="auth-screen flex w-full flex-col justify-center bg-white px-6 py-10 shadow-xl sm:w-2/3 sm:px-12 md:w-5/12">
+                <div className="mx-auto flex w-full max-w-sm flex-col items-center">
+                    <Logo width="80" style={{ marginBottom: 10 }} />
+                    <h1 className="mb-6 text-2xl font-semibold text-slate-900">Sign in</h1>
+                    <form noValidate onSubmit={doLogin} className="w-full space-y-3">
+                        <input
+                            className="app-primary-focus w-full rounded-md border border-slate-300 px-3 py-3 text-sm outline-none focus:ring-2"
+                            required
+                            id="email"
+                            placeholder="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            type="email"
+                        />
+                        <input
+                            className="app-primary-focus w-full rounded-md border border-slate-300 px-3 py-3 text-sm outline-none focus:ring-2"
+                            required
+                            name="password"
+                            placeholder="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+                        <label className="flex items-center gap-2 text-sm text-slate-600">
+                            <input type="checkbox" value="remember" className="app-primary-checkbox h-4 w-4" />
+                            Remember me
+                        </label>
+                        <ClassicButton
+                            icon="fa-sign-in-alt"
+                            type="submit"
+                            fullWidth
+                            className="mt-4"
                         >
-                            <OutlinedInput
-                                margin="dense"
-                                required
-                                fullWidth
-                                id="email"
-                                placeholder="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
+                            Sign In
+                        </ClassicButton>
+                        <div className="pt-8">
+                            <Footer
+                                prefix={() => <>Copyright &copy; </>}
+                                suffix={() => " " + new Date().getFullYear()}
+                                linkText={platform.company}
+                                linkURL={platform.companyURL}
                             />
-                            <OutlinedInput
-                                margin="dense"
-                                required
-                                fullWidth
-                                name="password"
-                                placeholder="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        value="remember"
-                                        color="primary"
-                                    />
-                                }
-                                label="Remember me"
-                            />
-                            <ClassicButton
-                                icon="fa-sign-in-alt"
-                                type="submit"
-                                fullWidth
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Sign In
-                            </ClassicButton>
-                            {/* <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </Grid>
-                            </Grid> */}
-                            <Box pt={4}>
-                                <Footer
-                                    prefix={() => <>Copyright &copy; </>}
-                                    suffix={() => " " + new Date().getFullYear()}
-                                    linkText={platform.company}
-                                    linkURL={platform.companyURL}
-                                    sx={{ mt: 5 }}
-                                />
-                            </Box>
-                        </Box>
-                    </Box>
-                </Grid>
-            </Grid>
-        </ThemeProvider>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
     );
 };
 
